@@ -4,10 +4,9 @@
             "path" : "pages/home/index/index",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/mine/index/index",
@@ -48,7 +47,16 @@
             "path" : "pages/mian/login/login",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationStyle": "custom",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mian/index/index",
+            "style" :                                                                                    
+            {
+                "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
             
@@ -63,7 +71,7 @@
 				// "iconPath": "static/images/tabbars/index.png",
 				// "selectedIconPath": "static/images/tabbars/index-select.png",
 				"text": "首页",
-				"pagePath": "pages/home/index/index"
+				"pagePath": "pages/mian/index/index"
 			},
 			{
 				// "iconPath": "static/images/tabbars/classify.png",

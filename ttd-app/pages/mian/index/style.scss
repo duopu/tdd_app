@@ -1,0 +1,94 @@
+.page-container {
+	padding: calc(var(--status-bar-height) + 40rpx) 0 0;
+	background-image: linear-gradient(180deg, #4a70ff 0%, rgba(35, 105, 213, 0), #ffffff);
+}
+.top {
+	margin: 0 32rpx;
+	flex-shrink: 0;
+	padding-left: 35rpx;
+	height: 75rpx;
+	background-color: rgba($color: #f6f6f6, $alpha: 0.2);
+	border-radius: 38rpx;
+	.image-logo {
+		width: 35rpx;
+		height: 35rpx;
+	}
+	.input {
+		padding-left: 14rpx;
+		flex: 1;
+		font-size: 26rpx;
+		color: #ffffff;
+		text-indent: 1rpx;
+		&-placeholder {
+			color: #ffffff;
+		}
+	}
+}
+.menu {
+	margin: 30rpx 20rpx 20rpx;
+	flex-shrink: 0;
+	color: #ffffff;
+	.item {
+		flex: 1;
+	}
+	.image {
+		width: 64rpx;
+		height: 64rpx;
+	}
+	.text {
+		margin-top: 14rpx;
+	}
+}
+.menu-arrow {
+	position: relative;
+	bottom: -12rpx;
+	width: 25rpx;
+	height: 25rpx;
+	background-color: #FFFFFF;
+	border-radius: 6rpx;
+	transform:translateX(-19rpx) rotate(45deg) ;
+	box-shadow: 0rpx 2rpx 6rpx 0rpx rgba(0, 0, 0, 0.03);
+	z-index: -1;
+}
+.menu-content.swiper {
+	position: relative;
+	flex: 1;
+	height: 100%;
+	z-index: 2;
+	.swiper-item{
+		padding: 0 32rpx 20rpx;
+		box-sizing: border-box;
+	}
+	::v-deep .uni-scroll-view-content {
+		height: auto;
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.menu-lists {
+		flex: 1;
+		padding: 15rpx 0;
+		height: 100%;
+		box-sizing: border-box;
+		background-color: #FFFFFF;
+		box-shadow: 0rpx 2rpx 6rpx 0rpx rgba(0, 0, 0, 0.03);
+		border-radius: 16rpx;
+		.item {
+			margin: 15rpx 0;
+			width: 25%;
+		}
+		.image {
+			width: 80rpx;
+			height: 80rpx;
+		}
+		.text {
+			margin-top: 14rpx;
+		}
+	}
+}
+.image-advertise {
+	margin:20rpx 32rpx;
+	flex-shrink: 0;
+	width: auto;
+	height: 240rpx;
+	border-radius: 16rpx;
+}
