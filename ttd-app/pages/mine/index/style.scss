@@ -1,0 +1,21 @@
+.image-bg{
+	width: 100%;
+}
+.top{
+	margin-bottom: 16rpx;
+}
+.white{
+	margin-bottom: 16rpx;
+	background-color: #FFFFFF;
+	.lists-item{
+		margin: auto 32rpx;
+		padding: 32rpx 0;
+		& + .lists-item{
+			border-top: 1rpx solid #f6f6f6;
+		}
+	}
+}
+.icon-arrow{
+	width: 30rpx;
+	height: 30rpx;
+}

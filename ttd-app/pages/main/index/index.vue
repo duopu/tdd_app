@@ -37,7 +37,7 @@
 export default {
 	data() {
 		return {
-			swiperIndex: 1,
+			swiperIndex: 0,
 			// 菜单项
 			menuItemLists: [
 				{
