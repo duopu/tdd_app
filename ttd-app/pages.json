@@ -1,6 +1,23 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-	    {
+	   {
+	       "path" : "pages/main/login/login",
+	       "style" :                                                                                    
+	       {
+	           "navigationStyle": "custom",
+	           "enablePullDownRefresh": false
+	       }
+	       
+	   },{
+	       "path" : "pages/main/index/index",
+	       "style" :                                                                                    
+	       {
+	           "navigationStyle": "custom",
+	           "enablePullDownRefresh": false
+	       }
+	       
+	   },
+	   {
             "path" : "pages/home/index/index",
             "style" :                                                                                    
             {
@@ -43,24 +60,7 @@
             }
             
         }
-        ,{
-            "path" : "pages/mian/login/login",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/mian/index/index",
-            "style" :                                                                                    
-            {
-                "navigationStyle": "custom",
-                "enablePullDownRefresh": false
-            }
-            
-        }
+        
     ],
 	"tabBar": {
 		"backgroundColor": "#FFFFFF",
@@ -71,29 +71,29 @@
 				// "iconPath": "static/images/tabbars/index.png",
 				// "selectedIconPath": "static/images/tabbars/index-select.png",
 				"text": "首页",
-				"pagePath": "pages/mian/index/index"
+				"pagePath": "pages/main/index/index"
 			},
 			{
-				// "iconPath": "static/images/tabbars/classify.png",
-				// "selectedIconPath": "static/images/tabbars/classify-select.png",
+				// "iconPath": "static/tabbars/order.png",
+				// "selectedIconPath": "static/tabbars/order-select.png",
 				"text": "订单",
 				"pagePath": "pages/order/index/index"
-			},
-			{
-				// "iconPath": "static/images/tabbars/course.png",
-				// "selectedIconPath": "static/images/tabbars/course-select.png",
-				"text": "接单",
-				"pagePath": "pages/place-order/index/index"
 			},
 			{
 				// "iconPath": "static/images/tabbars/mine.png",
 				// "selectedIconPath": "static/images/tabbars/mine-select.png",
 				"text": "发单",
+				"pagePath": "pages/place-order/index/index"
+			},
+			{
+				// "iconPath": "static/images/tabbars/course.png",
+				// "selectedIconPath": "static/images/tabbars/course-select.png",
+				"text": "接单",
 				"pagePath": "pages/receive-order/index/index"
 			},
 			{
-				// "iconPath": "static/images/tabbars/mine.png",
-				// "selectedIconPath": "static/images/tabbars/mine-select.png",
+				// "iconPath": "static/tabbars/my.png",
+				// "selectedIconPath": "static/tabbars/my-select.png",
 				"text": "我的",
 				"pagePath": "pages/mine/index/index"
 			}

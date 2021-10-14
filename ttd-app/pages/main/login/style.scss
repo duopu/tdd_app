@@ -1,0 +1,42 @@
+.page-container{
+	background-color: #FFFFFF;
+	justify-content: flex-start;
+}
+.image-logo{
+	margin-top: 100rpx;
+	width: 180rpx;
+	height: 180rpx;
+	border-radius: 50%;
+}
+.name{
+	margin-top: 20rpx;
+	font-size: 36rpx;
+	font-weight: bold;
+}
+.btn{
+	margin-top: 80rpx;
+	width:80%;
+	height: 85rpx;
+	line-height: 85rpx;
+	font-size: 28rpx;
+	&.grey{
+		background-color: transparent;
+		border: 1rpx solid #dcdcdc;
+	}
+	&.primary{
+		color: #FFFFFF;
+		background-color: $uni-color-primary;
+	}
+}
+.login-result{
+	margin: 40rpx 100rpx;
+	.describe{
+		font-size: 28rpx;
+		line-height: 1.8;
+		color: #999999;
+		text-align: center;
+	}
+	.btn + .btn{
+		margin-left: 40rpx;
+	}
+}

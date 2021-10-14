@@ -15,27 +15,21 @@
 		</view>
 		<!-- 滚动 单个 -->
 		<swiper class="swiper menu-content" :current="swiperIndex">
-			<swiper-item class="swiper-item">
-				<view class="menu-arrow" :style="getArrowLeftDistance(0)"></view>
+			<swiper-item class="swiper-item" v-for="(item,index) in menuItemLists" :key="index">
+				<view class="menu-arrow" :style="getArrowLeftDistance(index)"></view>
 				<scroll-view scroll-y="true" class="menu-lists">
-					<view class="item flex-column-center" v-for="(item, index) in menuLists" :key="index">
-						<image :src="item.image" mode="aspectFill" class="image"></image>
-						<text class="text">{{ item.text }}</text>
-					</view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item class="swiper-item">
-				<view class="menu-arrow" :style="getArrowLeftDistance(1)"></view>
-				<scroll-view scroll-y="true" class="menu-lists">
-					<view class="item flex-column-center" v-for="(item, index) in menuLists" :key="index">
-						<image :src="item.image" mode="aspectFill" class="image"></image>
-						<text class="text">{{ item.text }}</text>
+					<view class="item flex-column-center" v-for="(subItem, subIndex) in menuLists" :key="subIndex">
+						<image :src="subItem.image" mode="aspectFill" class="image"></image>
+						<text class="text">{{ subItem.text }}</text>
 					</view>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
 		<!-- 广告 -->
-		<image class="image-advertise" src="../../../static/default/advertise.png" mode="aspectFill"></image>
+		<swiper class="advertise-swiper" indicator-color="rgba(255,255,255,.3)" indicator-active-color="#ffffff" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="600">
+			<swiper-item class="swiper-item"><image class="image-advertise" src="../../../static/default/advertise.png" mode="aspectFill"></image></swiper-item>
+			<swiper-item class="swiper-item"><image class="image-advertise" src="../../../static/default/advertise.png" mode="aspectFill"></image></swiper-item>
+		</swiper>
 	</view>
 </template>
 
