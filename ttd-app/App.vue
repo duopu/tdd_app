@@ -25,6 +25,7 @@
 		background-color: #F6F6F6;
 		overflow: hidden;
 	}
+	// 滚动
 	.page-container{
 		height: 100%;
 		display: flex;
@@ -44,6 +45,11 @@
 		&-center-start{
 			@extend .flex;
 			align-items: center;
+		}
+		&-center-between{
+			@extend .flex;
+			align-items: center;
+			justify-content: space-between;
 		}
 		&-column-center{
 			@extend .flex-center;

@@ -10,8 +10,10 @@
 		margin-top: 80rpx;
 		width: 80%;
 		height: 85rpx;
-		line-height: 85rpx;
 		font-size: 28rpx;
+		line-height: 85rpx;
+		text-align: center;
+		border-radius: 8rpx;
 		&.primary {
 			color: #ffffff;
 			background-color: $uni-color-primary;

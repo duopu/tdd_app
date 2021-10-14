@@ -1,0 +1,132 @@
+// 滚动区域
+.scroll-content {
+	flex: 1;
+	height: 100%;
+	overflow: hidden;
+}
+// 标题
+.title {
+	margin: 20rpx;
+	font-size: 32rpx;
+	font-weight: bold;
+	&::before {
+		content: '';
+		margin-right: 21rpx;
+		width: 8rpx;
+		height: 40rpx;
+		background: $uni-color-primary;
+		border-radius: 20rpx;
+	}
+}
+// 搜索 区域
+.search-content {
+	padding-top: calc(var(--status-bar-height) + 10rpx);
+}
+// 选中区域
+.select-content {
+	margin-right: -20rpx;
+	padding-left: 32rpx;
+	padding-bottom: 32rpx;
+	display: flex;
+	flex-wrap: wrap;
+	background-color: #ffffff;
+	border-top: 1rpx solid rgba($color: #999, $alpha: 0.1);
+	.item {
+		margin-top: 20rpx;
+		margin-right: 20rpx;
+		min-width: 120rpx;
+		height: 40rpx;
+		line-height: 40rpx;
+		text-align: center;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		color: $uni-color-primary;
+		border: 2rpx solid $uni-color-primary;
+		border-radius: 20rpx;
+		background-color: #ffffff;
+		overflow: hidden;
+	}
+}
+// 承接方
+.apply {
+	.m-top-16 {
+		margin-top: 16rpx;
+	}
+	.white {
+		padding: 0 32rpx;
+		background-color: #ffffff;
+		&.list {
+			padding-bottom: 32rpx;
+		}
+		.list-item {
+			& + .list-item {
+				padding-top: 32rpx;
+				margin-top: 32rpx;
+				border-top: 1rpx solid rgba(#999999, 0.1);
+			}
+			.text {
+				font-size: 26rpx;
+			}
+			.describe {
+				margin-top: 16rpx;
+				font-size: 24rpx;
+				color: #999999;
+			}
+			.image-delete {
+				margin-left: 20rpx;
+				width: 33rpx;
+				height: 34rpx;
+			}
+		}
+	}
+	.input {
+		font-size: 30rpx;
+		&-placeholder {
+			color: inherit;
+		}
+	}
+	.profile-text {
+		padding-top: 20rpx;
+		width: 100%;
+	}
+}
+// 列表
+.list {
+	.radio {
+		margin-right: 16rpx;
+		width: 32rpx;
+		height: 32rpx;
+		border: 2rpx solid rgba($color: #999999, $alpha: 0.1);
+		border-radius: 23rpx;
+		box-sizing: border-box;
+		&.on {
+			border: 10rpx solid $uni-color-primary;
+		}
+	}
+	.list-item {
+		padding: 32rpx;
+		background-color: #ffffff;
+		& + .list-item {
+			margin-top: 1rpx;
+		}
+	}
+}
+// 按钮
+.btn {
+	height: 85rpx;
+	line-height: 85rpx;
+	box-sizing: border-box;
+	&.btn-add {
+		margin-top: 32rpx;
+		color: $uni-color-primary;
+		background-color: transparent;
+		border: 1rpx solid $uni-color-primary;
+		border-radius: 43rpx;
+	}
+	&.btn-save {
+		margin: 20rpx 40rpx;
+		color: #ffffff;
+		background-color: $uni-color-primary;
+		border-radius: 8rpx;
+	}
+}

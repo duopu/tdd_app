@@ -1,0 +1,24 @@
+.search-content{
+	padding: 10rpx 32rpx;
+	height: 80rpx;
+	background-color: #FFFFFF;
+	.search{
+		padding:10rpx 20rpx;
+		background-color:#F8F8F8;
+		border-radius: 30rpx;
+	}
+	.icon-clear{
+		color: #666666;
+	}
+	.input{
+		margin-left: 16rpx;
+		font-size: 26rpx;
+	}
+	.btn-text{
+		margin-left: 32rpx;
+		padding: 0;
+		width: 60rpx;
+		color: $uni-color-primary;
+		background-color: transparent;
+	}
+}
