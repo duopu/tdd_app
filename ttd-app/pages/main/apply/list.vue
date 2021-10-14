@@ -1,6 +1,6 @@
 <!--列表-->
 <template>
-	<view class="list page-container">
+	<view class="select-lists page-container">
 		<!--搜索-->
 		<custom-search-input class="search-content"></custom-search-input>
 		<!-- 选中区域 -->

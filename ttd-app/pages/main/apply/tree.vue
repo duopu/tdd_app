@@ -1,6 +1,6 @@
 <!-- 树形列表 -->
 <template>
-	<view class="page-container tree">
+	<view class="page-container select-lists">
 		<!--搜索-->
 		<custom-search-input class="search-content"></custom-search-input>
 		<!-- 选中区域 -->

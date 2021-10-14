@@ -47,6 +47,18 @@
 		overflow: hidden;
 	}
 }
+// 单选
+.radio {
+	margin-right: 16rpx;
+	width: 32rpx;
+	height: 32rpx;
+	border: 2rpx solid rgba($color: #999999, $alpha: 0.1);
+	border-radius: 23rpx;
+	box-sizing: border-box;
+	&.on {
+		border: 10rpx solid $uni-color-primary;
+	}
+}
 // 承接方
 .apply {
 	.m-top-16 {
@@ -91,18 +103,7 @@
 	}
 }
 // 列表
-.list {
-	.radio {
-		margin-right: 16rpx;
-		width: 32rpx;
-		height: 32rpx;
-		border: 2rpx solid rgba($color: #999999, $alpha: 0.1);
-		border-radius: 23rpx;
-		box-sizing: border-box;
-		&.on {
-			border: 10rpx solid $uni-color-primary;
-		}
-	}
+.select-lists {
 	.list-item {
 		padding: 32rpx;
 		background-color: #ffffff;
