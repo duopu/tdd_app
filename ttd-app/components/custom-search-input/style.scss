@@ -1,11 +1,13 @@
 .search-content{
 	padding: 10rpx 32rpx;
-	height: 80rpx;
 	background-color: #FFFFFF;
+	box-sizing: border-box;
 	.search{
+		height: 60rpx;
 		padding:10rpx 20rpx;
 		background-color:#F8F8F8;
 		border-radius: 30rpx;
+		box-sizing: border-box;
 	}
 	.icon-clear{
 		color: #666666;
