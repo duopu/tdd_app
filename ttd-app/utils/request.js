@@ -45,8 +45,9 @@ export default {
 			}
 			if (success) {
 				return data;
-			} else if(statusCode == 403){
-
+			} else if(statusCode == 202){
+				// token 失效
+				
 				throw {
 					message: msg
 				};

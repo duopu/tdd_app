@@ -14,12 +14,12 @@
 			</view>
 		</view>
 		<!-- 滚动 单个 -->
-		<swiper class="swiper menu-content" :current="swiperIndex">
+		<swiper class="swiper menu-content" :current="swiperIndex" @change="swiperChange">
 			<swiper-item class="swiper-item" v-for="(item,index) in menuItemLists" :key="index">
 				<view class="menu-arrow" :style="{left:getArrowLeftDistance(index)}"></view>
 				<scroll-view scroll-y="true" class="scroll-content">
 					<view class="menu-lists">
-						<view class="item flex-column-center" v-for="(subItem, subIndex) in menuLists" :key="subIndex">
+						<view class="item flex-column-center" v-for="(subItem, subIndex) in menuLists" :key="subIndex" @click="onItemClick(subItem)">
 							<image :src="subItem.image" mode="aspectFill" class="image"></image>
 							<text class="text">{{ subItem.text }}</text>
 						</view>
@@ -92,6 +92,145 @@ export default {
 				{
 					image: '../../../static/default/index-demo.png',
 					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '网络'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},{
+					image: '../../../static/default/index-demo.png',
+					text: '网络'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},{
+					image: '../../../static/default/index-demo.png',
+					text: '网络'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},{
+					image: '../../../static/default/index-demo.png',
+					text: '网络'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},{
+					image: '../../../static/default/index-demo.png',
+					text: '网络'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},{
+					image: '../../../static/default/index-demo.png',
+					text: '网络'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
+				},
+				{
+					image: '../../../static/default/index-demo.png',
+					text: '储存'
 				}
 			]
 		};
@@ -105,6 +244,18 @@ export default {
 		// 切换菜单列表
 		onMenuItem(index) {
 			this.swiperIndex = index;
+		},
+		// swiper 切换
+		swiperChange(event){
+			this.swiperIndex = event.detail.current;
+		},
+		// item 点击事件
+		onItemClick(item){
+			console.log(item);
+			console.log(this.swiperIndex);
+			this.$tool.actionForLogin(()=>{
+				console.log('eee');
+			})
 		}
 	}
 };
