@@ -84,6 +84,10 @@
 	.flex-1 {
 		flex: 1;
 	}
+	
+	.row{
+		flex-direction: row;
+	}
 
 	// 文本省略
 	.text-ellipis {

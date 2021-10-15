@@ -43,27 +43,27 @@ export default {
 			// 菜单项
 			menuItemLists: [
 				{
-					image: '../../../static/default/index-kc.png',
+					image: '../../../static/home/home_icon_implement.png',
 					text: '实施'
 				},
 				{
-					image: '../../../static/default/index-kc.png',
+					image: '../../../static/home/home_icon_maintenance.png',
 					text: '维修'
 				},
 				{
-					image: '../../../static/default/index-kc.png',
+					image: '../../../static/home/home_icon_survey.png',
 					text: '勘测'
 				},
 				{
-					image: '../../../static/default/index-kc.png',
+					image: '../../../static/home/home_icon_Rent to hire.png',
 					text: '租聘'
 				},
 				{
-					image: '../../../static/default/index-kc.png',
+					image: '../../../static/home/home_icon_training.png',
 					text: '培训'
 				},
 				{
-					image: '../../../static/default/index-kc.png',
+					image: '../../../static/home/home_icon_personnel.png',
 					text: '人员'
 				}
 			],
@@ -77,161 +77,6 @@ export default {
 					image: '../../../static/default/index-demo.png',
 					text: '储存'
 				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '网络'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},{
-					image: '../../../static/default/index-demo.png',
-					text: '网络'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},{
-					image: '../../../static/default/index-demo.png',
-					text: '网络'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},{
-					image: '../../../static/default/index-demo.png',
-					text: '网络'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},{
-					image: '../../../static/default/index-demo.png',
-					text: '网络'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},{
-					image: '../../../static/default/index-demo.png',
-					text: '网络'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				}
 			]
 		};
 	},
