@@ -19,9 +19,9 @@
 		font-size: 26rpx;
 		color: #ffffff;
 		text-indent: 1rpx;
-		&-placeholder {
-			color: #ffffff;
-		}
+	}
+	/deep/ .input-placeholder {
+		color: #ffffff;
 	}
 }
 .menu {
@@ -45,7 +45,7 @@
 	flex: 1;
 	height: 100%;
 	z-index: 2;
-	.swiper-item{
+	.swiper-item {
 		padding: 0 32rpx 20rpx;
 		box-sizing: border-box;
 	}
@@ -56,23 +56,29 @@
 	}
 	.menu-arrow {
 		position: relative;
-		bottom: -12rpx;
+		bottom: -14rpx;
 		width: 25rpx;
 		height: 25rpx;
-		background-color: #FFFFFF;
+		background-color: #ffffff;
 		border-radius: 6rpx;
-		transform:translateX(-20rpx) rotate(45deg) ;
+		transform: translateX(-20rpx) rotate(45deg);
 		box-shadow: 0rpx 2rpx 6rpx 0rpx rgba(0, 0, 0, 0.03);
 		z-index: -1;
 	}
-	.menu-lists {
+	.scroll-content {
 		flex: 1;
 		padding: 15rpx 0;
 		height: 100%;
 		box-sizing: border-box;
-		background-color: #FFFFFF;
+		background-color: #ffffff;
 		box-shadow: 0rpx 2rpx 6rpx 0rpx rgba(0, 0, 0, 0.03);
 		border-radius: 16rpx;
+	}
+	.menu-lists {
+		display: flex;
+		align-items: center;
+		flex-direction: row;
+		flex-wrap: wrap;
 		.item {
 			margin: 15rpx 0;
 			width: 25%;
@@ -87,10 +93,10 @@
 	}
 }
 
-.advertise-swiper{
+.advertise-swiper {
 	margin-top: 20rpx;
 	height: 240rpx;
-	.swiper-item{
+	.swiper-item {
 		padding: 0 32rpx;
 		box-sizing: border-box;
 	}

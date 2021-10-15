@@ -16,11 +16,13 @@
 		<!-- 滚动 单个 -->
 		<swiper class="swiper menu-content" :current="swiperIndex">
 			<swiper-item class="swiper-item" v-for="(item,index) in menuItemLists" :key="index">
-				<view class="menu-arrow" :style="getArrowLeftDistance(index)"></view>
-				<scroll-view scroll-y="true" class="menu-lists">
-					<view class="item flex-column-center" v-for="(subItem, subIndex) in menuLists" :key="subIndex">
-						<image :src="subItem.image" mode="aspectFill" class="image"></image>
-						<text class="text">{{ subItem.text }}</text>
+				<view class="menu-arrow" :style="{left:getArrowLeftDistance(index)}"></view>
+				<scroll-view scroll-y="true" class="scroll-content">
+					<view class="menu-lists">
+						<view class="item flex-column-center" v-for="(subItem, subIndex) in menuLists" :key="subIndex">
+							<image :src="subItem.image" mode="aspectFill" class="image"></image>
+							<text class="text">{{ subItem.text }}</text>
+						</view>
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -98,7 +100,7 @@ export default {
 		// 计算箭头的位置
 		getArrowLeftDistance(index) {
 			const distance = (100 / this.menuItemLists.length) * index + 100 / (this.menuItemLists.length * 2);
-			return { left: `${distance}%` };
+			return `${distance}%`;
 		},
 		// 切换菜单列表
 		onMenuItem(index) {
