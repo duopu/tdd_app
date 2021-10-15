@@ -3,12 +3,15 @@
 	<view class="page-container flex-column-center">
 		<image src="../../../static/logo.png" mode="aspectFill" class="image-logo"></image>
 		<text class="name">妥妥弟</text>
-		<view class="row flex">
-			<text>姓名：</text>
-			<input type="text" v-model="name" placeholder="请输入姓名" />
-		</view>
-		<button v-if="type == 'login'" class="btn primary" open-type="getPhoneNumber"
-			@getphonenumber="bindgetphonenumber">微信号码一键登录</button>
+		<template v-if="type == 'login'">
+			<view class="name-view flex">
+				<text>姓名： </text>
+				<input type="text" v-model="name" placeholder="请输入姓名" />
+			</view>
+			<button class="btn primary" open-type="getPhoneNumber"
+				@getphonenumber="bindgetphonenumber">微信号码一键登录</button>
+		</template>
+
 		<!-- 登录结果 -->
 		<view v-if="type == 'tip'" class="login-result">
 			<view class="describe">登录成功!您还没有注册师傅资质。快去接单吧！</view>
@@ -26,7 +29,7 @@
 			return {
 				type: 'login',
 				code: '',
-				name:'',
+				name: '',
 			};
 		},
 		onReady() {
@@ -60,7 +63,7 @@
 			// 用户授权手机号的回调
 			bindgetphonenumber(data) {
 				const info = data.detail;
-				console.log('用户授权手机号的回调',info);
+				console.log('用户授权手机号的回调', info);
 				this.type = 'tip'
 				const param = {
 					code: this.code,

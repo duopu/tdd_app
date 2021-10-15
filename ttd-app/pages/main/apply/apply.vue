@@ -7,19 +7,19 @@
 			<view class="title flex-center-start">基本信息</view>
 			<view class="white">
 				<custom-input-row label-text="姓名" required="true">
-					<input class="input" placeholder-class="input-placeholder" type="text" placeholder="请输入姓名" />
+					<input class="input" placeholder-class="input-placeholder" type="text" placeholder="请输入姓名"  v-model="name"/>
 				</custom-input-row>
 				<custom-input-row label-text="手机号码" required="true">
-					<input class="input" placeholder-class="input-placeholder" type="text" placeholder="请输入手机号码" />
+					<input class="input" placeholder-class="input-placeholder" type="number" placeholder="请输入手机号码"  v-model="phone"/>
 				</custom-input-row>
 				<custom-input-row label-text="身份证" required="true">
-					<input class="input" placeholder-class="input-placeholder" type="text" placeholder="请输入身份证号" />
+					<input class="input" placeholder-class="input-placeholder" type="idcard" placeholder="请输入身份证号" v-model="idcard" />
 				</custom-input-row>
 			</view>
 			<!-- 简介 -->
-			<view class="title flex-center-start m-top-16">简介</view>
+			<view class="title flex-center-start m-top-16" >简介</view>
 			<view class="white">
-				<textarea class="profile-text" maxlength="200" placeholder="请输入简介" placeholder-class="input-placeholder" />
+				<textarea class="profile-text" maxlength="200" placeholder="请输入简介" placeholder-class="input-placeholder" v-model="remark"/>
 			</view>
 			<!-- 从业信息 -->
 			<view class="title flex-center-start m-top-16">从业信息</view>
@@ -33,7 +33,7 @@
 					</view>
 					<image src="../../../static/delete.png" mode="aspectFill" class="image-delete"></image>
 				</view>
-				<button class="btn btn-add">新增技能</button>
+				<button class="btn btn-add" @click="addSkill">新增技能</button>
 			</view>
 			<!-- 人员 -->
 			<view class="white list m-top-16">
@@ -45,7 +45,7 @@
 					</view>
 					<image src="../../../static/delete.png" mode="aspectFill" class="image-delete"></image>
 				</view>
-				<button class="btn btn-add">新增人员</button>
+				<button class="btn btn-add" @click="addPeople">新增人员</button>
 			</view>
 			<!-- 项目 -->
 			<view class="white list m-top-16">
@@ -57,7 +57,7 @@
 					</view>
 					<image src="../../../static/delete.png" mode="aspectFill" class="image-delete"></image>
 				</view>
-				<button class="btn btn-add">新增项目</button>
+				<button class="btn btn-add" @click="addProject">新增项目</button>
 			</view>
 			<!-- 工具 -->
 			<view class="white list m-top-16">
@@ -69,19 +69,50 @@
 					</view>
 					<image src="../../../static/delete.png" mode="aspectFill" class="image-delete"></image>
 				</view>
-				<button class="btn btn-add">新增工具</button>
+				<button class="btn btn-add" @click="addTool">新增工具</button>
 			</view>
 		</scroll-view>
 		<!-- 底部保存 -->
-		<button class="btn primary btn-save">保存</button>
+		<button class="btn primary btn-save" @click="submitApply" >提交</button>
 	</view>
 </template>
 
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			name:'',
+			phone:'',
+			idcard:'',
+			remark:'',
+		};
+	},
+	onReady() {
+		
+	},
+	methods:{
+		// 添加技能
+		addSkill(){
+			
+		},
+		// 添加人员
+		addPeople(){
+			
+		},
+		// 添加项目
+		addProject(){
+			
+		},
+		// 添加工具
+		addTool(){
+			
+		},
+		// 提交申请
+		submitApply(){
+			
+		}
 	}
+	
 };
 </script>
 

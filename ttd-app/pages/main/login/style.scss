@@ -13,8 +13,20 @@
 	font-size: 36rpx;
 	font-weight: bold;
 }
-.btn{
+.name-view{
+	flex-direction: row;
+	align-items: center;
 	margin-top: 80rpx;
+	color: #333333;
+	font-size: 28rpx;
+	width:80%;
+	height: 60rpx;
+	border-bottom-color: #dcdcdc;
+	border-bottom-style: solid;
+	border-bottom-width: 2rpx;
+}
+.btn{
+	margin-top: 40rpx;
 	width:80%;
 	height: 85rpx;
 	line-height: 85rpx;
