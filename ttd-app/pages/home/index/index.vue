@@ -98,7 +98,18 @@ export default {
 		onItemClick(item){
 			console.log(item);
 			console.log(this.swiperIndex);
+			const user  = getApp().globalData.user;
+			
 			this.$tool.actionForLogin(()=>{
+				if(user.masterWorkFlag){
+					this.$tool.showToast('火速开发中，敬请期待')
+				}else{
+					this.$tool.showModal('提示','您还没有注册师傅资质。快去注册吧！',()=>{
+						uni.navigateTo({
+							url: '/pages/main/apply/apply'
+						});
+					})
+				}
 				console.log('eee');
 			})
 		}

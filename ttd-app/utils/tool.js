@@ -44,23 +44,29 @@ const logout = () => {
 	})
 }
 
+// 显示弹窗
+const showModal = (title,content,callback)=>{
+	uni.showModal({
+		title,
+		content,
+		success: (res) => {
+			if (res.confirm) {
+				callback && callback();
+			}
+		}
+	})
+}
+
 // 需要登录的操作 在此处过一遍
 const actionForLogin = (action) => {
 	const user = getApp().globalData.user;
 	if (user.token) {
 		if (action) action();
 	} else {
-		uni.showModal({
-			title: '提示',
-			content: '此操作需要先登录',
-			confirmText: '去登录',
-			success: (res) => {
-				if (res.confirm) {
-					uni.navigateTo({
-						url: '/pages/main/login/login'
-					})
-				}
-			}
+		showModal('提示','此操作需要先登录',()=>{
+			uni.navigateTo({
+				url: '/pages/main/login/login'
+			})
 		})
 	}
 }
@@ -70,6 +76,7 @@ const actionForLogin = (action) => {
 export default {
 	showToast,
 	showSuccess,
+	showModal,
 	logout,
 	login,
 	actionForLogin,

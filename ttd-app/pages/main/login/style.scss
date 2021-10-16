@@ -40,6 +40,10 @@
 		color: #FFFFFF;
 		background-color: $uni-color-primary;
 	}
+	&.green{
+		color: #FFFFFF;
+		background-color: $uni-color-success;
+	}
 }
 .login-result{
 	margin: 40rpx 100rpx;
