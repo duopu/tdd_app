@@ -21,23 +21,23 @@ export default {
 	},
 	data() {
 		return {
-			showClear:false,
 			searchValue:''
 		};
 	},
-	watch:{
-		searchValue(newValue,oldValue){
-			this.showClear =  Boolean(newValue.length);
+	computed:{
+		showClear(){
+			return this.searchValue.length
 		}
 	},
 	methods:{
 		//  清空数据
 		clear(){
 			this.searchValue = '';
+			this.$emit('search',this.searchValue)
 		},
 		// 搜索内容
 		search(){
-			
+			this.$emit('search',this.searchValue)
 		},
 	}
 };

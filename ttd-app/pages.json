@@ -65,7 +65,6 @@
             "path" : "pages/main/apply/list",
             "style" :                                                                                    
             {
-                "navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
             

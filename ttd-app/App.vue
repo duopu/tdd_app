@@ -92,6 +92,26 @@ page {
 	flex-direction: row;
 }
 
+.column{
+	flex-direction: column;
+}
+
+.align-center{
+	align-items: center;
+}
+
+.align-end{
+	align-items: flex-end;
+}
+
+.justify-center{
+	justify-content: center;
+}
+
+.justify-end{
+	justify-content: flex-end;
+}
+
 // 文本省略
 .text-ellipis {
 	width: 100%;
