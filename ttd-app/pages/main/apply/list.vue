@@ -2,7 +2,7 @@
 <template>
 	<view class="select-lists page-container">
 		<!--搜索-->
-		<!-- <custom-search-input class="search-content"></custom-search-input> -->
+		<custom-search-input class="search-content" v-model="searchText" @search="onSearchAction"></custom-search-input>
 		<!-- 选中区域 -->
 		<view class="title flex-center-start">已选项</view>
 		<view class="select-content">
@@ -31,10 +31,14 @@
 			return {
 				// 数据类型，brand：品牌  software：软件
 				sourceType: '',
+				// 搜索文字
+				searchText:'',
 				// 技能id
 				skillId:'',
 				// 当前展示的节点列表
 				dataList: [],
+				// 总数据源
+				tempDataList:[],
 				// 已经选中的节点列表
 				selectDataList: [],
 				// 信息字典
@@ -59,7 +63,6 @@
 		onLoad(option) {
 			this.sourceType = option.type;
 			this.skillId = option.skillId;
-			
 			this.queryDataList()
 		},
 		onReady() {
@@ -85,7 +88,12 @@
 					}else if(this.sourceType == 'software'){
 						this.dataList = res.map(d=>d.name)
 					}
+					this.tempDataList = this.dataList;
 				})
+			},
+			// 搜索文字
+			onSearchAction(st){
+				this.dataList  = this.tempDataList.filter(v=>v.includes(st));
 			},
 			// 选项选择事件
 			itemClick(item){

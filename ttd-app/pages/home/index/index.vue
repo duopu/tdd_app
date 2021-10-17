@@ -80,7 +80,11 @@ export default {
 	methods: {
 		// 查询首页选项数据
 		queryHomeItemData(){
-			this.$http.post('/b/homepageconf/queryList').then(res=>{
+			const param = {
+				pageNum:0,
+				pageSize:1000
+			}
+			this.$http.post('/b/homepageconf/queryList',param).then(res=>{
 				const dataList = res.dataList
 				const itemListList = [];
 				itemListList.push(dataList.filter(m=>m.module == 1));
