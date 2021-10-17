@@ -15,13 +15,13 @@
 		</view>
 		<!-- 滚动 单个 -->
 		<swiper class="swiper menu-content" :current="swiperIndex" @change="swiperChange">
-			<swiper-item class="swiper-item" v-for="(item,index) in menuItemLists" :key="index">
+			<swiper-item class="swiper-item" v-for="(itemList,index) in itemListList" :key="index">
 				<view class="menu-arrow" :style="{left:getArrowLeftDistance(index)}"></view>
 				<scroll-view scroll-y="true" class="scroll-content">
 					<view class="menu-lists">
-						<view class="item flex-column-center" v-for="(subItem, subIndex) in menuLists" :key="subIndex" @click="onItemClick(subItem)">
-							<image :src="subItem.image" mode="aspectFill" class="image"></image>
-							<text class="text">{{ subItem.text }}</text>
+						<view class="item flex-column-center" v-for="(item, subIndex) in itemList" :key="subIndex" @click="onItemClick(item)">
+							<image :src="item.icon" mode="aspectFill" class="image"></image>
+							<text class="text">{{ item.name }}</text>
 						</view>
 					</view>
 				</scroll-view>
@@ -29,8 +29,9 @@
 		</swiper>
 		<!-- 广告 -->
 		<swiper class="advertise-swiper" indicator-color="rgba(255,255,255,.3)" indicator-active-color="#ffffff" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="600">
-			<swiper-item class="swiper-item"><image class="image-advertise" src="../../../static/default/advertise.png" mode="aspectFill"></image></swiper-item>
-			<swiper-item class="swiper-item"><image class="image-advertise" src="../../../static/default/advertise.png" mode="aspectFill"></image></swiper-item>
+			<swiper-item class="swiper-item" v-for="banner in bannerList">
+				<image class="image-advertise" :src="banner.image" mode="aspectFill"></image>
+			</swiper-item>
 		</swiper>
 	</view>
 </template>
@@ -68,19 +69,35 @@ export default {
 				}
 			],
 			// 菜单内容
-			menuLists: [
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '网络'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-			]
+			itemListList: [],
+			bannerList:[],
 		};
 	},
+	onReady() {
+		this.queryHomeItemData();
+		this.queryBannerData();
+	},
 	methods: {
+		// 查询首页选项数据
+		queryHomeItemData(){
+			this.$http.post('/b/homepageconf/queryList').then(res=>{
+				const dataList = res.dataList
+				const itemListList = [];
+				itemListList.push(dataList.filter(m=>m.module == 1));
+				itemListList.push(dataList.filter(m=>m.module == 2));
+				itemListList.push(dataList.filter(m=>m.module == 3));
+				itemListList.push(dataList.filter(m=>m.module == 4));
+				itemListList.push(dataList.filter(m=>m.module == 5));
+				itemListList.push(dataList.filter(m=>m.module == 6));
+				this.itemListList = itemListList;
+			})
+		},
+		// 查询首页banner数据
+		queryBannerData(){
+			this.$http.post('/b/bannerconf/queryList',{module:1}).then(res=>{
+				this.bannerList = res
+			})
+		},
 		// 计算箭头的位置
 		getArrowLeftDistance(index) {
 			const distance = (100 / this.menuItemLists.length) * index + 100 / (this.menuItemLists.length * 2);
@@ -96,15 +113,13 @@ export default {
 		},
 		// item 点击事件
 		onItemClick(item){
-			console.log(item);
-			console.log(this.swiperIndex);
 			const user  = getApp().globalData.user;
-			
+			console.log(user);
 			this.$tool.actionForLogin(()=>{
 				if(user.masterWorkFlag){
 					this.$tool.showToast('火速开发中，敬请期待')
 				}else{
-					this.$tool.showModal('提示','您还没有注册师傅资质。快去注册吧！',()=>{
+					this.$tool.showModal('提示','您还没有注册承接方资质。快去注册吧！',()=>{
 						uni.navigateTo({
 							url: '/pages/main/apply/apply'
 						});
@@ -112,7 +127,7 @@ export default {
 				}
 				console.log('eee');
 			})
-		}
+		},
 	}
 };
 </script>

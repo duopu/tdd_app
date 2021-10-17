@@ -19,10 +19,10 @@
 
 		<!-- 登录结果 -->
 		<view v-if="type == 'tip'" class="login-result">
-			<view class="describe">登录成功!您还没有注册师傅资质。快去注册吧！</view>
+			<view class="describe">登录成功!您还没有注册承接方资质。快去注册吧！</view>
 			<view class="flex-center btn-group">
 				<button class="btn grey" @click="onBack">返回</button>
-				<button class="btn primary" @click="onRegister">注册师傅</button>
+				<button class="btn primary" @click="onRegister">注册承接方</button>
 			</view>
 		</view>
 	</view>

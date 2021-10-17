@@ -19,7 +19,7 @@
 		<!-- 底部 -->
 		<!-- 提交 -->
 		<view class="flex row">
-			<button class="btn btn-save flex-1" @click="customItemData">自定义</button>
+			<button class="btn btn-save flex-1" @click="customItemData">{{dictInfo.customTitle}}</button>
 			<button class="btn btn-save flex-1" @click="submitAction">提交</button>
 		</view>
 	</view>

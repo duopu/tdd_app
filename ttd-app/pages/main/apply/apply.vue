@@ -107,7 +107,9 @@ export default {
 		};
 	},
 	onReady() {
-		
+		const user  = getApp().globalData.user;
+		this.name = user.name;
+		this.phone = user.phone;
 	},
 	methods: {
 		// 打开弹窗
@@ -116,7 +118,7 @@ export default {
 		},
 		// 添加技能
 		confirmSkillData(data) {
-			this.skillData = data;
+			this.skillData = [...this.skillData,...data];
 		},
 		// 删除技能
 		deleteSkill(index){
@@ -124,7 +126,7 @@ export default {
 		},
 		// 添加人员
 		confirmUserroleData(data) {
-			this.userroleData = data;
+			this.userroleData = [...this.userroleData,...data];
 		},
 		// 删除人员
 		deleteSoftwareconf(index){
@@ -139,7 +141,7 @@ export default {
 		},
 		// 添加工具
 		confirmToolData(data) {
-			this.toolData = data;
+			this.toolData = [...this.toolData,...data]; 
 		},
 		// 删除工具
 		deleteTool(index){
@@ -147,14 +149,6 @@ export default {
 		},
 		// 提交申请
 		submitApply() {
-			// // 技能列表
-			// skillData:[],
-			// // 人员列表
-			// userroleData:[],
-			// // 项目列表
-			// projectData:[],
-			// // 工具列表
-			// toolData:[],
 			console.log(this.$data);
 			if(!this.name){
 				this.$tool.showToast('请输入姓名');

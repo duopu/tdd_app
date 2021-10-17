@@ -5,7 +5,7 @@
 		<view class="top">
 			<image class="image-bg" src="../../../static/mine.png" mode="aspectFill"></image>
 		</view>
-		<!-- 师傅中心 -->
+		<!-- 承接方 -->
 		<view class="white">
 			<view class="lists-item flex-center-between">
 				<text class="flex-1">我的服务地址</text>

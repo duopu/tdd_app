@@ -2,7 +2,7 @@
 <template>
 	<view class="page-container select-lists">
 		<!--搜索-->
-		<custom-search-input class="search-content" @search="onSearchAction"></custom-search-input>
+		<custom-search-input class="search-content" v-model="searchText" @search="onSearchAction"></custom-search-input>
 
 		<template v-if="type == 1">
 			<!-- 面包屑 -->
@@ -43,7 +43,7 @@
 		</scroll-view>
 		<!-- 提交 -->
 		<view class="flex row">
-			<button class="btn btn-save flex-1" @click="customItemData">自定义</button>
+			<button class="btn btn-save flex-1" @click="customItemData">{{dictInfo.customTitle}}</button>
 			<button class="btn btn-save flex-1" @click="submitAction">提交</button>
 		</view>
 
@@ -180,6 +180,7 @@
 				uni.showModal({
 					title: this.dictInfo.customTitle,
 					editable: true,
+					content:this.searchText,
 					placeholderText: this.dictInfo.customPlaceholder,
 					success: (res) => {
 						if (res.confirm) {
