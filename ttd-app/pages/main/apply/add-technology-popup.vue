@@ -91,10 +91,10 @@ export default {
 				return;
 			}
 			
-			if(this.brandList.length == 0){
-				this.$tool.showToast('请选择品牌');
-				return;
-			}
+			// if(this.brandList.length == 0){
+			// 	this.$tool.showToast('请选择品牌');
+			// 	return;
+			// }
 			
 			const skillData = this.skillList.map(skill=>{
 				return {

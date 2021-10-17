@@ -46,10 +46,11 @@ export default {
 				return;
 			}
 			
-			if(this.content.length == 0){
-				this.$tool.showToast('请输入项目履历');
-				return;
-			}
+			// if(this.content.length == 0){
+			// 	this.$tool.showToast('请输入项目履历');
+			// 	return;
+			// }
+			
 			this.$emit('confirmProjectData',{
 				name:this.name,
 				content:this.content

@@ -155,11 +155,9 @@ export default {
 				this.$tool.showToast('请输入姓名');
 			}else if(!this.phone){
 				this.$tool.showToast('请输入手机号');
-			}else if(!this.idCard){
-				this.$tool.showToast('请输入身份证号');
-			}else if(!this.remark){
-				this.$tool.showToast('请输入简介');
-			}else if(this.skillData.length ==0 && this.userroleData.length ==0 && this.projectData.length ==0 && this.toolData.length ==0 ){
+			}else if(!this.idCard || this.idCard.length !== 18 ){
+				this.$tool.showToast('请输入正确的身份证号');
+			}else if(this.skillData.length ==0 && this.userroleData.length ==0 && this.toolData.length ==0 ){
 				this.$tool.showToast('请输入从业信息');
 			}else{
 				const param = {

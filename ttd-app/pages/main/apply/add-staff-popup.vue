@@ -85,10 +85,10 @@ export default {
 				return;
 			}
 			
-			if(this.softwareconfList.length == 0){
-				this.$tool.showToast('请选择软件');
-				return;
-			}
+			// if(this.softwareconfList.length == 0){
+			// 	this.$tool.showToast('请选择软件');
+			// 	return;
+			// }
 			
 			const userroleData = this.userroleList.map(user=>{
 				return {
