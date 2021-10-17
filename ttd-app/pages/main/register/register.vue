@@ -4,16 +4,28 @@
 		<image src="../../../static/logo.png" mode="aspectFill" class="image-logo"></image>
 		<text class="name">妥妥弟</text>
 
-		<button class="btn green" @click="loginAction">微信一键登录</button>
-		
-		<button class="btn primary" @click="onRegister">注册</button>
-		
+			<view class="name-view flex">
+				<text>姓名： </text>
+				<input type="text" v-model="name" placeholder="注册请输入姓名" />
+			</view>
+			
+			<button class="btn primary" open-type="getPhoneNumber"
+				@getphonenumber="registerAction">微信号码一键注册</button>
+
+		<!-- 登录结果 -->
+		<!-- <view v-if="type == 'tip'" class="login-result">
+			<view class="describe">登录成功!您还没有注册承接方资质。快去注册吧！</view>
+			<view class="flex-center btn-group">
+				<button class="btn grey" @click="onBack">返回</button>
+				<button class="btn primary" @click="onRegister">注册承接方</button>
+			</view>
+		</view> -->
 	</view>
 </template>
 
 <script>
 	import config from '../../../utils/config.js';
-
+	
 	export default {
 		data() {
 			return {
@@ -47,25 +59,22 @@
 			// 去注册是否有
 			onRegister() {
 				uni.redirectTo({
-					url: '/pages/main/register/register'
+					url: '/pages/main/apply/apply'
 				});
 			},
 			// 登录操作
-			loginAction() {
+			loginAction(){
 				const param = {
-					appId: config.appId,
+					appId:config.appId,
 					code: this.code
 				};
 				this.$http.post('/core/grant/miniPhone', param, true).then(res => {
-					const user = {
-						...res.user,
-						token: res.token
-					}
+					const user = {...res.user,token:res.token}
 					this.$tool.login(user)
-					if (user.masterWorkFlag == false) {
+					if(user.masterWorkFlag == false){
 						this.type = 'tip'
-					} else {
-						this.$tool.showToast('登录成功', () => {
+					}else{
+						this.$tool.showToast('登录成功',()=>{
 							uni.navigateBack({})
 						})
 					}
@@ -74,10 +83,10 @@
 				});
 			},
 			// 注册操作
-			registerAction(data) {
-				if (this.name) {
+			registerAction(data){
+				if(this.name){
 					this.bindgetphonenumber(data)
-				} else {
+				}else{
 					this.$tool.showToast('注册操作需要输入姓名')
 				}
 			},
@@ -86,24 +95,21 @@
 				const info = data.detail;
 				console.log('用户授权手机号的回调', info);
 				const param = {
-					appId: config.appId,
+					appId:config.appId,
 					code: this.code,
 					encryptedData: info.encryptedData,
 					iv: info.iv,
-					loginName: this.name,
-					userType: 1,
+					loginName:this.name,
+					userType:1,
 				};
 
 				this.$http.post('/core/grant/miniPhone', param, true).then(res => {
-					const user = {
-						...res.user,
-						token: res.token
-					}
+					const user = {...res.user,token:res.token}
 					this.$tool.login(user)
-					if (user.masterWorkFlag == false) {
+					if(user.masterWorkFlag == false){
 						this.type = 'tip'
-					} else {
-						this.$tool.showToast('登录成功', () => {
+					}else{
+						this.$tool.showToast('登录成功',()=>{
 							uni.navigateBack({})
 						})
 					}

@@ -106,6 +106,9 @@ export default {
 		// 切换菜单列表
 		onMenuItem(index) {
 			this.swiperIndex = index;
+			if(this.swiperIndex >1 ){
+				this.$tool.actionForLogin()
+			}
 		},
 		// swiper 切换
 		swiperChange(event){

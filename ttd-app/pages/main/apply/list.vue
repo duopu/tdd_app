@@ -76,7 +76,7 @@
 			// 查询节点列表
 			queryDataList() {
 				const param = {}
-				if(this.sourceType == 'brand'){
+				if(this.sourceType == 'brand' && this.skillId){
 					param.idList = [this.skillId];
 				}
 				this.$http.post(this.dictInfo.listUrl, param, true).then(res => {

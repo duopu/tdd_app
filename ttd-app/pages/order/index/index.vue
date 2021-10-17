@@ -1,5 +1,6 @@
 <template>
 	<view>
+		<coming-soon></coming-soon>
 		
 	</view>
 </template>
@@ -10,6 +11,9 @@
 			return {
 				
 			}
+		},
+		onReady() {
+			this.$tool.actionForLogin()
 		},
 		methods: {
 			

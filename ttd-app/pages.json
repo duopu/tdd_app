@@ -11,16 +11,15 @@
 	       "path" : "pages/main/login/login",
 	       "style" :                                                                                    
 	       {
-	           "navigationStyle": "custom",
+			   "navigationBarTitleText": "登录",
 	           "enablePullDownRefresh": false
 	       }
-	       
 	   }
         ,{
             "path" : "pages/mine/index/index",
             "style" :                                                                                    
             {
-                "navigationStyle": "custom",
+				"navigationBarTitleText": "我的",
                 "enablePullDownRefresh": false
             }
         }
@@ -28,30 +27,26 @@
             "path" : "pages/order/index/index",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "订单",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/place-order/index/index",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "发单",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/receive-order/index/index",
             "style" :                                                                                    
             {
-                "navigationStyle": "custom",
+				"navigationBarTitleText": "接单",
                 "enablePullDownRefresh": false
             }
-            
         }
-        
         ,{
             "path" : "pages/main/apply/apply",
             "style" :                                                                                    
@@ -78,6 +73,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/main/register/register",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "注册",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"backgroundColor": "#FFFFFF",
@@ -85,32 +89,32 @@
 		"selectedColor": "#222222",
 		"borderStyle": "white",
 		"list": [{
-				// "iconPath": "static/images/tabbars/index.png",
-				// "selectedIconPath": "static/images/tabbars/index-select.png",
+				"iconPath": "static/tabbars/home.png",
+				"selectedIconPath": "static/tabbars/home-s.png",
 				"text": "首页",
 				"pagePath": "pages/home/index/index"
 			},
 			{
-				// "iconPath": "static/tabbars/order.png",
-				// "selectedIconPath": "static/tabbars/order-select.png",
+				"iconPath": "static/tabbars/order.png",
+				"selectedIconPath": "static/tabbars/order-s.png",
 				"text": "订单",
 				"pagePath": "pages/order/index/index"
 			},
 			{
-				// "iconPath": "static/images/tabbars/mine.png",
-				// "selectedIconPath": "static/images/tabbars/mine-select.png",
+				"iconPath": "static/tabbars/send.png",
+				"selectedIconPath": "static/tabbars/send-s.png",
 				"text": "发单",
 				"pagePath": "pages/place-order/index/index"
 			},
 			{
-				// "iconPath": "static/images/tabbars/course.png",
-				// "selectedIconPath": "static/images/tabbars/course-select.png",
+				"iconPath": "static/tabbars/receive.png",
+				"selectedIconPath": "static/tabbars/receive-s.png",
 				"text": "接单",
 				"pagePath": "pages/receive-order/index/index"
 			},
 			{
-				// "iconPath": "static/tabbars/my.png",
-				// "selectedIconPath": "static/tabbars/my-select.png",
+				"iconPath": "static/tabbars/mine.png",
+				"selectedIconPath": "static/tabbars/mine-s.png",
 				"text": "我的",
 				"pagePath": "pages/mine/index/index"
 			}

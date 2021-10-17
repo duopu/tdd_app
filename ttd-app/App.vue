@@ -9,8 +9,6 @@ export default {
 	},
 
 	onLaunch: function() {
-		console.log('App Launch');
-
 		uni.getStorage({
 			key: config.storageKeys.loginUserKey,
 			success: res => {
