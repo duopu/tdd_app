@@ -18,25 +18,27 @@
 			};
 		},
 		mounted() {
-
-			this.checkUserState()
 		},
-		methods:{
-			checkUserState(){
-				const user = getApp().globalData.user;
+		computed:{
+			
+			userStateDict(){
+				const user = this.$store.state.user;
 				if(!user.token){
 					this.tipText = '请先登录';
 					this.btnText = '去登录';
 					this.navUrl = '/pages/main/login/login'
 				}else if(user.masterWorkFlag){
-					this.tipText = '功能内侧中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！';
+					this.tipText = '功能内测中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！';
 					this.btnText = '';
 				}else{
 					this.tipText = '内测中，接单方先请注册完善技能信息';
 					this.btnText = '去完善';
 					this.navUrl = '/pages/main/apply/apply'
 				}
-			},
+			}
+		},
+		methods:{
+			
 			actionClick(){
 				uni.navigateTo({
 					url:this.navUrl

@@ -1,4 +1,5 @@
 import config from './config.js'
+import store from '../store/index.js';
 
 export default {
 
@@ -9,7 +10,7 @@ export default {
 			'Content-Type': method == 'POST' ? 'application/json; charset=utf-8' : 'application/x-www-form-urlencoded',
 			'x-uid':1
 		}
-		const user = getApp().globalData.user
+		const user = store.state.user
 		if (user.token) {
 			console.log('注入token',user.token);
 			header.Authorization = user.token

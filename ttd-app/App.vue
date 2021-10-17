@@ -12,7 +12,7 @@ export default {
 		uni.getStorage({
 			key: config.storageKeys.loginUserKey,
 			success: res => {
-				getApp().globalData.user = res.data;
+				this.$store.commit('setUser',res.data)
 			}
 		});
 	},

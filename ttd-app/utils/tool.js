@@ -1,4 +1,5 @@
 import config from "./config.js"
+import store from '../store/index.js';
 
 const showToastMessage = (title, icon, callback) => {
 	const duration = 1500;
@@ -25,20 +26,18 @@ const showSuccess = (title, callback) => {
 
 // 登录 保存数据
 const login = (user) => {
-
 	// 本地保存
 	uni.setStorage({
 		key: config.storageKeys.loginUserKey,
 		data: user
 	});
 	// 内存保存
-	getApp().globalData.user = user;
+	store.commit('setUser',user)
 }
 
 // 登出
 const logout = () => {
-	getApp().globalData.user = {};
-
+	store.commit('setUser',{})
 	uni.removeStorage({
 		key: config.storageKeys.loginUserKey,
 	})
@@ -59,7 +58,7 @@ const showModal = (title,content,callback)=>{
 
 // 需要登录的操作 在此处过一遍
 const actionForLogin = (action) => {
-	const user = getApp().globalData.user;
+	const user = store.state.user;
 	if (user.token) {
 		if (action) action();
 	} else {

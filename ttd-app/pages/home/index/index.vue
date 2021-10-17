@@ -116,13 +116,12 @@ export default {
 		},
 		// item 点击事件
 		onItemClick(item){
-			const user  = getApp().globalData.user;
-			console.log(user);
 			this.$tool.actionForLogin(()=>{
+				const user  = this.$store.state.user;
 				if(user.masterWorkFlag){
 					this.$tool.showToast('火速开发中，敬请期待')
 				}else{
-					this.$tool.showModal('提示','下单功能内侧中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！',()=>{
+					this.$tool.showModal('提示','下单功能内测中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！',()=>{
 						uni.navigateTo({
 							url: '/pages/main/apply/apply'
 						});

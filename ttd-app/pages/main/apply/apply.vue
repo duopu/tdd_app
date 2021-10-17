@@ -108,7 +108,7 @@ export default {
 		};
 	},
 	onReady() {
-		const user  = getApp().globalData.user;
+		const user  = this.$store.state.user;
 		this.name = user.name;
 		this.phone = user.phone;
 	},
