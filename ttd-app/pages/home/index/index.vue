@@ -122,7 +122,7 @@ export default {
 				if(user.masterWorkFlag){
 					this.$tool.showToast('火速开发中，敬请期待')
 				}else{
-					this.$tool.showModal('提示','您还没有注册承接方资质。快去注册吧！',()=>{
+					this.$tool.showModal('提示','下单功能内侧中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！',()=>{
 						uni.navigateTo({
 							url: '/pages/main/apply/apply'
 						});

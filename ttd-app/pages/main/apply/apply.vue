@@ -23,6 +23,7 @@
 			<view class="title flex-center-start m-top-16">从业信息</view>
 			<!-- 技能 -->
 			<view class="white list m-top-16">
+				<view class="tip-lable">所有非必填项，按您的实际情况填写</view>
 				<custom-input-row :required="true" label-text="技能"></custom-input-row>
 				<view class="list-item flex-center-between" v-for="(item, index) in skillData" :key="index">
 					<view class="flex-1">
@@ -33,9 +34,9 @@
 				</view>
 				<button class="btn btn-add" @click="openPopup('technologyPopup')">新增技能</button>
 			</view>
-			<!-- 人员 -->
+			<!-- 岗位 -->
 			<view class="white list m-top-16">
-				<custom-input-row :required="true" label-text="人员"></custom-input-row>
+				<custom-input-row :required="true" label-text="岗位"></custom-input-row>
 				<view class="list-item flex-center-between" v-for="(item, index) in userroleData" :key="index">
 					<view class="flex-1">
 						<view class="text text-ellipis">{{item.name}}</view>

@@ -4,9 +4,9 @@
 		<image src="../../../static/logo.png" mode="aspectFill" class="image-logo"></image>
 
 		<button class="btn green" @click="loginAction">微信一键登录</button>
-		
+
 		<button class="btn primary" @click="onRegister">注册</button>
-		
+
 	</view>
 </template>
 
@@ -47,6 +47,12 @@
 						console.log('faild');
 					},
 					complete: () => {}
+				});
+			},
+			// 去注册页面
+			onRegister() {
+				uni.redirectTo({
+					url: '/pages/main/register/register'
 				});
 			}
 		}
