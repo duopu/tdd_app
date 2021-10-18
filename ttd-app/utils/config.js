@@ -1,5 +1,5 @@
 
-const debug = false
+const debug = false;
 export default {
 	
 	baseUrl:debug ? 'http://139.196.182.247:8080' : 'https://ttuodi.com',

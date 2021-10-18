@@ -111,6 +111,7 @@
 				uni.showModal({
 					title: this.dictInfo.customTitle,
 					editable: true,
+					confirmText:this.searchText,
 					placeholderText: this.dictInfo.customPlaceholder,
 					success: (res) => {
 						if (res.confirm) {
