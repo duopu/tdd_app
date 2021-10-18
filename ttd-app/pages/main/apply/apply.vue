@@ -11,11 +11,11 @@
 						v-model="name" />
 				</custom-input-row>
 				<custom-input-row label-text="手机号码" :required="true">
-					<input class="input" placeholder-class="input-placeholder" type="number" placeholder="请输入手机号码"
+					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="number" placeholder="请输入手机号码"
 						v-model="phone" />
 				</custom-input-row>
 				<custom-input-row label-text="身份证" :required="true">
-					<input class="input" placeholder-class="input-placeholder" type="idcard" placeholder="请输入身份证号"
+					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="idcard" placeholder="请输入身份证号"
 						v-model="idCard" />
 				</custom-input-row>
 			</view>
