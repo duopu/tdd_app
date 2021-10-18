@@ -56,7 +56,7 @@ export default {
 					text: '勘测'
 				},
 				{
-					image: '../../../static/home/home_icon_Rent to hire.png',
+					image: '../../../static/home/home_icon_Renttohire.png',
 					text: '租聘'
 				},
 				{
