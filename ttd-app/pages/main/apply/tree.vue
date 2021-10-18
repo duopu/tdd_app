@@ -39,7 +39,8 @@
 					<text>{{type == 1 ? node.name : node.nodeLink}}</text>
 				</view>
 			</template>
-
+			<empty-view :tipText="dictInfo.emptyTip" v-if="nodeList.length == 0"></empty-view>
+			
 		</scroll-view>
 		<!-- 提交 -->
 		<view class="flex row">
@@ -75,6 +76,7 @@
 						navTitle:'选择技能',
 						customTitle:'自定义技能',
 						customPlaceholder:'请输入技能名称',
+						emptyTip:'请点击下方“自定义技能”按钮，添加技能；感谢您为平台新增加一个技能！',
 					},
 					userrole:{
 						listUrl:'/b/userrole/queryListByPid',
@@ -83,6 +85,7 @@
 						navTitle:'选择岗位',
 						customTitle:'自定义岗位',
 						customPlaceholder:'请输入岗位名称',
+						emptyTip:'请点击下方“自定义岗位”按钮，添加岗位；感谢您为平台新增加一个岗位！',
 					},
 					equipmenttool:{
 						listUrl:'/b/equipmenttool/queryListByPid',
@@ -91,6 +94,7 @@
 						navTitle:'选择工具',
 						customTitle:'自定义工具',
 						customPlaceholder:'请输入工具名称',
+						emptyTip:'请点击下方“自定义工具”按钮，添加工具；感谢您为平台新增加一个工具！',
 					}
 				}
 			};

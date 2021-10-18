@@ -15,6 +15,7 @@
 				<text class="radio" :class="{'on':selectDataList.includes(item)}"></text>
 				<text>{{item}}</text>
 			</view>
+			<empty-view :tipText="dictInfo.emptyTip" v-if="dataList.length == 0"></empty-view>
 		</scroll-view>
 		<!-- 底部 -->
 		<!-- 提交 -->
@@ -49,6 +50,7 @@
 						navTitle:'选择品牌',
 						customTitle:'自定义品牌',
 						customPlaceholder:'请输入品牌名称',
+						emptyTip:'请点击下方“自定义品牌”按钮，添加品牌；感谢您为平台新增加一个品牌！',
 					},
 					software:{
 						listUrl:'/b/softwareconf/queryList',
@@ -56,6 +58,7 @@
 						navTitle:'选择软件',
 						customTitle:'自定义软件',
 						customPlaceholder:'请输入软件名称',
+						emptyTip:'请点击下方“自定义软件”按钮，添加软件；感谢您为平台新增加一个软件！',
 					}
 				}
 			};

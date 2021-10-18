@@ -27,7 +27,8 @@
 			<view class="title flex-center-start m-top-16">从业信息</view>
 			<!-- 技能 -->
 			<view class="white list m-top-16">
-				<view class="tip-lable">所有非必填项，按您的实际情况填写</view>
+				<view class="tip-lable">所有非必填项，按您的实际情况填写；
+										填写内容关乎您接单的数量，请尽可能把您信息都上传，加大匹配订单成功率！</view>
 				<custom-input-row :required="true" label-text="技能"></custom-input-row>
 				<view class="list-item flex-center-between" v-for="(item, index) in skillData" :key="index">
 					<view class="flex-1">
