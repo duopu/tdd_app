@@ -77,6 +77,9 @@ export default {
 		this.queryHomeItemData();
 		this.queryBannerData();
 	},
+	onShow() {
+		this.$store.dispatch('queryApproveDetail');
+	},
 	methods: {
 		// 查询首页选项数据
 		queryHomeItemData(){
@@ -125,15 +128,39 @@ export default {
 				if(user.masterWorkFlag){
 					this.$tool.showToast('火速开发中，敬请期待')
 				}else{
-					this.$tool.showModal('提示','下单功能内测中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！',()=>{
-						uni.navigateTo({
-							url: '/pages/main/apply/apply'
-						});
+					let tipText = '下单功能内测中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！';
+					let navUrl = '/pages/main/apply/apply';
+					const approveDetail = this.$store.state.approveDetail
+					const approveState = approveDetail.approveState;
+					switch (approveState){
+						case -1:
+						tipText = '下单功能内测中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！';
+						navUrl = '/pages/main/apply/apply'
+						break
+						case 0:
+						tipText = '审核中（一般1至3个工作日）请您等待，谢谢！';
+						navUrl = ''
+						break
+						case 1:
+						tipText = '审核通过，你可以开始接单了！如要添加修改已申请信息，可以点修改后再提交';
+						navUrl = '/pages/main/apply/apply' 
+						break
+						case 2:
+						tipText = `审核被退回！有需要您修改的信息，请修改后再提交，谢谢！拒绝理由：${approveDetail.refusalReason}`;
+						navUrl = '/pages/main/apply/apply'
+						break
+					}
+					this.$tool.showModal('提示',tipText,()=>{
+						if(navUrl){
+							uni.navigateTo({
+								url: navUrl
+							});
+						}
 					})
 				}
 				console.log('eee');
 			})
-		},
+		}
 	}
 };
 </script>
