@@ -1,8 +1,8 @@
 <!-- 申请承接方 -->
 <template>
-	<view class="page-container apply">
+	<view class="page-container apply" >
 		<!-- 内容 -->
-		<scroll-view scroll-y="true" class="scroll-content">
+		<scroll-view scroll-y="true" class="scroll-content" :scroll-top="scrollTop">
 			<!-- 基本信息 -->
 			<view class="title flex-center-start">基本信息</view>
 			<view class="white">
@@ -119,6 +119,8 @@
 				projectData: [],
 				// 工具列表
 				toolData: [],
+				// 滚动的位置
+				scrollTop:0,
 				// 保存的tag
 				saveTag: false
 			};
@@ -148,6 +150,7 @@
 			// 添加技能
 			confirmSkillData(data) {
 				this.skillData = [...this.skillData, ...data];
+				this.scrollTopAction('skill')
 			},
 			// 删除技能
 			deleteSkill(index) {
@@ -156,6 +159,7 @@
 			// 添加人员
 			confirmUserroleData(data) {
 				this.userroleData = [...this.userroleData, ...data];
+				this.scrollTopAction('userrole')
 			},
 			// 删除人员
 			deleteSoftwareconf(index) {
@@ -164,6 +168,7 @@
 			// 添加项目
 			confirmProjectData(data) {
 				this.projectData = [...this.projectData, data]
+				this.scrollTopAction('project')
 			},
 			deleteProject(index) {
 				this.projectData = this.projectData.filter((v, i) => i != index)
@@ -171,6 +176,7 @@
 			// 添加工具
 			confirmToolData(data) {
 				this.toolData = [...this.toolData, ...data];
+				this.scrollTopAction('tool')
 			},
 			// 删除工具
 			deleteTool(index) {
@@ -218,6 +224,18 @@
 							uni.navigateBack({})
 						})
 					})
+				}
+			},
+			// 让列表滚动
+			scrollTopAction(type){
+				if(type == 'skill'){
+					this.scrollTop = this.skillData.length * 62;
+				}else if(type == 'userrole'){
+					this.scrollTop = this.skillData.length * 62 + 100 + this.userroleData.length * 62 ;
+				}else if(type == 'project'){
+					this.scrollTop = this.skillData.length * 62 + 100 + this.userroleData.length * 62  + 100 + this.projectData.length * 62;
+				}else if(type == 'tool'){
+					this.scrollTop =  this.skillData.length * 62 + 100 + this.userroleData.length * 62  + 100 + this.projectData.length * 62 + 1000 + this.toolData.length * 62;
 				}
 			},
 			// 保存信息到本地
