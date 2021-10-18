@@ -10,6 +10,8 @@ export default {
 		// 登录用户的信息
 		loginUserKey:'storageLoginUserKey',
 		// 历史搜索
-		historySearchKey:'storageHistorySearchKey'
+		historySearchKey:'storageHistorySearchKey',
+		// 保存申请信息
+		applyInfoStorage:'applyInfoStorage',
 	}
 }

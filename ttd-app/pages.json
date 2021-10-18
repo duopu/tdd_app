@@ -85,8 +85,8 @@
     ],
 	"tabBar": {
 		"backgroundColor": "#FFFFFF",
-		"color": "#999999",
-		"selectedColor": "#222222",
+		"color": "#333333",
+		"selectedColor": "#214DE2",
 		"borderStyle": "white",
 		"list": [{
 				"iconPath": "static/tabbars/home.png",
@@ -101,8 +101,8 @@
 				"pagePath": "pages/order/index/index"
 			},
 			{
-				"iconPath": "static/tabbars/send.png",
-				"selectedIconPath": "static/tabbars/send-s.png",
+				"iconPath": "static/tabbars/place.png",
+				"selectedIconPath": "static/tabbars/place-s.png",
 				"text": "发单",
 				"pagePath": "pages/place-order/index/index"
 			},

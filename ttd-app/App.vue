@@ -4,10 +4,7 @@ import config from './utils/config.js';
 export default {
 	// 全局数据对象
 	globalData: {
-		// 用户信息
-		user: {}
 	},
-
 	onLaunch: function() {
 		uni.getStorage({
 			key: config.storageKeys.loginUserKey,
