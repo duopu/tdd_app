@@ -51,7 +51,6 @@ page {
 // flex
 .flex {
 	display: flex;
-
 	&-center {
 		@extend .flex;
 		justify-content: center;

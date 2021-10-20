@@ -19,7 +19,7 @@
             "path" : "pages/mine/index/index",
             "style" :                                                                                    
             {
-				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom",
                 "enablePullDownRefresh": false
             }
         }
