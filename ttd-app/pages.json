@@ -54,7 +54,6 @@
                 "navigationBarTitleText": "申请承接方",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/main/apply/list",
@@ -62,7 +61,6 @@
             {
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/main/apply/tree",
@@ -71,7 +69,6 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
             "path" : "pages/main/register/register",
@@ -80,25 +77,22 @@
                 "navigationBarTitleText": "注册",
                 "enablePullDownRefresh": false
             }
-            
         }
         ,{
-            "path" : "pages/main/invite/invite",
+            "path" : "pages/mine/invite/invite",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "我的邀请",
                 "enablePullDownRefresh": false
             } 
-            
         }
         ,{
-            "path" : "pages/main/distribute/distribute",
+            "path" : "pages/mine/distribute/distribute",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "我的分销",
                 "enablePullDownRefresh": false
             }
-            
         }
     ],
 	"tabBar": {

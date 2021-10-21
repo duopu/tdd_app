@@ -8,7 +8,7 @@
 				<view class="content flex-1 flex-center-between">
 					<image class="avatar-image" src="../../../static/default/index-demo.png" mode="aspectFill"></image>
 					<view class="right flex-1">
-						<text class="name text-ellipis">可乐要加冰</text>
+						<text class="name text-ellipis">用户名</text>
 						<navigator url="" class="flex describe">
 							我的积分
 							<text class="color-yellow">8888</text>
@@ -25,7 +25,7 @@
 				</view>
 			</view>
 			<view class="white padding">
-				<!-- 签到 -->
+				<!-- tab -->
 				<view class="flex-center menu">
 					<view class="item first flex-1 flex-column-center">
 						<image src="../../../static/default/index-demo.png" class="image-item"></image>
@@ -40,8 +40,8 @@
 						<text class="text text-ellipis">我的钱包</text>
 					</view>
 				</view>
-				<!-- 广告位 -->
-				<image class="advertise-image" src="../../../static/default/advertise.png" mode="aspectFill"></image>
+				<!-- 邀请 -->
+				<image class="advertise-image" @click="navInvite" src="../../../static/default/advertise.png" mode="aspectFill"></image>
 			</view>
 			<!-- 承接方 -->
 			<view class="white">
@@ -99,6 +99,13 @@ export default {
 	},
 	onReady() {
 		this.$tool.actionForLogin();
+	},
+	methods:{
+		navInvite(){
+			uni.navigateTo({
+				url:'/pages/mine/invite/invite'
+			})
+		}
 	}
 };
 </script>
