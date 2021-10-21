@@ -33,10 +33,12 @@
 				<image class="image-advertise" :src="banner.image" mode="aspectFill"></image>
 			</swiper-item>
 		</swiper>
+		<text>{{testText}}</text>
 	</view>
 </template>
 
 <script>
+	import config from '../../../utils/config.js';
 export default {
 	data() {
 		return {
@@ -71,7 +73,21 @@ export default {
 			// 菜单内容
 			itemListList: [],
 			bannerList:[],
+			// 
+			testText:'asd',
 		};
+	},
+	onLoad(option) {
+		this.testText = JSON.stringify(option);
+		if(option.contentMapId){
+			this.$http.post('/core/contentmapping/query',{id:option.contentMapId}).then(res=>{
+				const data = JSON.parse(res.content);
+				uni.setStorage({
+					key:config.storageKeys.inviteInfoStorage,
+					data,
+				})
+			})
+		}
 	},
 	onReady() {
 		this.queryHomeItemData();

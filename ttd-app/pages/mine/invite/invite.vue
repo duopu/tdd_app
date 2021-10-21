@@ -3,14 +3,14 @@
 	<scroll-view scroll-y="true" class="invite">
 		<image class="invite-bg" src="../../../static/invite-bg.jpg" mode="widthFix"></image>
 		<!-- 查看详情 -->
-		<view class="details">查看详情</view>
+		<view class="details" @click="watchDetail">查看详情</view>
 		<!-- image text -->
 		<image src="../../../static/invite.png" class="image-text" mode="widthFix"></image>
 		<!-- 参加人数 -->
 		<view class="flex-center number-box">
 			<view class="number">
 				已有
-				<text>5000+</text>
+				<text>1000+</text>
 				用户参与活动
 			</view>
 		</view>
@@ -18,7 +18,7 @@
 		<view class="content">
 			<image class="image-content-bg" src="../../../static/invite-content.png" mode="widthFix"></image>
 			<view class="invite-message">
-				<image src="../../../static/default/code.png" mode="aspectFill" class="image-code"></image>
+				<image :src="qrCodeImg" mode="aspectFill" class="image-code"></image>
 				<!-- 规则 -->
 				<view class="rule">
 					<text class="title">活动规则：</text>
@@ -26,15 +26,15 @@
 				</view>
 				<!-- 分享 -->
 				<view class="share flex-center-between">
-					<view class="item flex-1 flex-column-center">
+					<button class="item flex-1 flex-column-center" open-type="share">
 						<image class="image-item" src="../../../static/invite-wx.png" mode="aspectFill"></image>
 						<text>分享到微信</text>
-					</view>
-					<view class="item flex-1 flex-column-center">
+					</button>
+					<!-- <view class="item flex-1 flex-column-center">
 						<image class="image-item" src="../../../static/invite-friend.png" mode="aspectFill"></image>
 						<text>分享到朋友圈</text>
-					</view>
-					<view class="item flex-1 flex-column-center">
+					</view> -->
+					<view class="item flex-1 flex-column-center" @click="downloadToAlbum">
 						<image class="image-item" src="../../../static/invite-download.png" mode="aspectFill"></image>
 						<text>下载至相册</text>
 					</view>
@@ -45,9 +45,70 @@
 </template>
 
 <script>
+	import config from '../../../utils/config.js';
+	
 export default {
 	data() {
-		return {};
+		return {
+			qrCodeImg:'',
+			title:'',
+			page:'pages/home/index/index',
+			scene:''
+		};
+	},
+	onReady() {
+		this.queryQrcode();
+	},
+	onShareAppMessage() {
+		console.log('分享配置',`${this.page}?${this.scene}`)
+		return {
+			title:'妥妥弟邀请您',
+			page:`${this.page}?${this.scene}`,
+			imageUrl:'',
+		}
+	},
+	methods:{
+		// 查询用户小程序二维码
+		queryQrcode(){
+			console.log(this.$store.state.user.id);
+			const userId = this.$store.state.user.id
+			// 二维码携带参数
+			const mapInfo = {
+				sourceType:2,
+				shareUserId:userId
+			}
+			this.$http.post('/core/contentmapping/add',{content:JSON.stringify(mapInfo)},true).then(res=>{
+				const contentMapId = res.id;
+				const param = {
+					appId:config.appId,
+					page:this.page,
+					scene:`contentMapId=${contentMapId}`
+				}
+				return this.$http.post('/crm/wechatminiwxa/getWxaCodeUnlimit',param,true)
+			}).then(res=>{
+				this.qrCodeImg = res.miniUrl;
+			})
+			
+			// 小程序分享携带参数
+			const mapInfo2 = {
+				sourceType:3,
+				shareUserId:userId
+			}
+			this.$http.post('/core/contentmapping/add',{content:JSON.stringify(mapInfo2)},true).then(res=>{
+				const contentMapId = res.id;
+				this.scene = `contentMapId=${contentMapId}`;
+			})
+		},
+		// 下载至相册
+		downloadToAlbum(){
+			
+		},
+		// 查看邀请详情
+		watchDetail(){
+			uni.navigateTo({
+				url:'/pages/mine/distribute/distribute'
+			})
+		}
 	}
 };
 </script>

@@ -45,7 +45,7 @@
 			</view>
 			<!-- 承接方 -->
 			<view class="white">
-				<view class="lists-item flex-center-between">
+				<!-- <view class="lists-item flex-center-between">
 					<image src="" mode="aspectFill" class="icon-image"></image>
 					<text class="flex-1">积分商城</text>
 					<uni-icons type="forward" class="icon-arrow" color="#9D9D9D"></uni-icons>
@@ -69,7 +69,7 @@
 					<image src="" mode="aspectFill" class="icon-image"></image>
 					<text class="flex-1">发票信息</text>
 					<uni-icons type="forward" color="#9D9D9D"></uni-icons>
-				</view>
+				</view> -->
 			</view>
 			<!-- 帮助中心 -->
 			<view class="white">

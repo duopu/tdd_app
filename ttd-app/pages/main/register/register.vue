@@ -20,13 +20,18 @@
 			return {
 				code: '',
 				name: '',
+				inviteInfo:{},
 			};
 		},
 		onReady() {
-
+			uni.getStorage({
+				key:config.storageKeys.inviteInfoStorage,
+				success: (res) => {
+					this.inviteInfo = res.data;
+				}
+			})
 		},
 		methods: {
-
 			// 注册操作
 			registerAction(data) {
 				if (this.name) {
@@ -51,6 +56,7 @@
 							iv: info.iv,
 							loginName: this.name,
 							userType: 1,
+							...this.inviteInfo,
 						};
 						this.$http.post('/core/grant/miniPhone', param, true).then(res => {
 							const user = {
@@ -70,8 +76,6 @@
 					},
 					complete: () => {}
 				});
-
-
 			}
 		}
 	};
