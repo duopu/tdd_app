@@ -6,7 +6,6 @@
 		<button class="btn green" @click="loginAction">微信一键登录</button>
 
 		<button class="btn primary" @click="onRegister">注册</button>
-
 	</view>
 </template>
 

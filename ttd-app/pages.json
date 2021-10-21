@@ -82,6 +82,24 @@
             }
             
         }
+        ,{
+            "path" : "pages/main/invite/invite",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的邀请",
+                "enablePullDownRefresh": false
+            } 
+            
+        }
+        ,{
+            "path" : "pages/main/distribute/distribute",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的分销",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"tabBar": {
 		"backgroundColor": "#FFFFFF",

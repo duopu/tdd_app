@@ -1,0 +1,81 @@
+.distribute {
+	position: relative;
+	background-image: linear-gradient(180deg, #f9694e 0%, #e32c4e 100%);
+	.image-transparent{
+		width: 100%;
+		height: 40rpx;
+	}
+	.scroll-content {
+		margin-top: -120rpx;
+		padding: 0 24rpx;
+		flex: 1;
+		height: 100%;
+		overflow: hidden;
+		box-sizing: border-box;
+	}
+	
+	.title {
+		margin: 52rpx 0 24rpx;
+		font-size: 32rpx;
+		color: #ffffff;
+	}
+	.box {
+		margin-bottom: 16rpx;
+		padding: 24rpx 32rpx;
+		background-color: #fefae3;
+		border-radius: 16rpx;
+	}
+	.name {
+		margin-right: 16rpx;
+		font-size: 32rpx;
+		font-weight: bold;
+		color: #8c4c31;
+	}
+	.phone {
+
+		font-size: 28rpx;
+		color: #8c4c31;
+	}
+	.time {
+		font-size: 24rpx;
+		color: #de6c26;
+	}
+	.avatar-image {
+		margin-right: 24rpx;
+		width: 96rpx;
+		height: 96rpx;
+		border-radius: 50%;
+	}
+	.message {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		.phone{
+			margin-top: 10rpx;
+		}
+	}
+	.no-more {
+		margin-top: 24rpx;
+		font-size: 24rpx;
+		color: #fefae3;
+		text-align: center;
+	}
+}
+.btn {
+	flex-shrink: 0;
+	width: auto;
+	margin: 10rpx 40rpx 40rpx;
+	height: 96rpx;
+	font-size: 36rpx;
+	font-weight: bold;
+	color: #8c4c31;
+	background-image: linear-gradient(180deg, #ffec93 0%, #ffaf4d 100%);
+	box-shadow: 0rpx 8rpx 12rpx 2rpx rgba(110, 0, 0, 0.25);
+	border: 4rpx solid #f9b47e;
+	border-radius: 61rpx;
+	box-sizing: border-box;
+	.icon {
+		margin-right: 16rpx;
+	}
+}
