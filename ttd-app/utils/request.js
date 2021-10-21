@@ -1,4 +1,5 @@
 import config from './config.js'
+import store from '../store/index.js';
 
 export default {
 
@@ -9,7 +10,7 @@ export default {
 			'Content-Type': method == 'POST' ? 'application/json; charset=utf-8' : 'application/x-www-form-urlencoded',
 			'x-uid':1
 		}
-		const user = getApp().globalData.user
+		const user = store.state.user
 		if (user.token) {
 			console.log('注入token',user.token);
 			header.Authorization = user.token
@@ -30,12 +31,12 @@ export default {
 		return uni.request(options).then(response => {
 			console.log('响应原始信息',response);
 			const res = response[1].data
-			const statusCode = response[1].statusCode;
-			const rescode = res.code;
-			const msg = res.message;
+
+			const rescode = res.rescode;
+			const msg = res.msg;
 			const data = res.data;
-			const success = res.success;
-			console.log('============接口请求============');
+
+			console.log('============接口响应============');
 			console.log('请求地址', url);
 			console.log('请求参数', options);
 			console.log('全部响应', res);
@@ -43,9 +44,9 @@ export default {
 			if (loading) {
 				uni.hideLoading()
 			}
-			if (success) {
+			if (rescode == 200) {
 				return data;
-			} else if(statusCode == 202){
+			} else if(rescode == 202){
 				// token 失效
 				
 				throw {
@@ -64,11 +65,6 @@ export default {
 						title: msg,
 						icon: 'none'
 					}) 
-				}else{
-					uni.showToast({
-						title: msg,
-						icon: 'none'
-					})
 				}
 				throw {
 					message: msg
@@ -133,15 +129,15 @@ export default {
 					const res = JSON.parse(uploadFileRes.data);
 					console.log('上传结束',res);
 					
-					const rescode = res.code;
-					const msg = res.message;
+					const rescode = res.rescode;
+					const msg = res.msg;
 					const data = res.data;
-					const success = res.success
+
 
 					if (loading) {
 						uni.hideLoading()
 					}
-					if (success) {
+					if (rescode == 200) {
 						resolve(data)
 					} else {
 						if (loading) {

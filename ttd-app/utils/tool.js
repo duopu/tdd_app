@@ -1,4 +1,5 @@
 import config from "./config.js"
+import store from '../store/index.js';
 
 const showToastMessage = (title, icon, callback) => {
 	const duration = 1500;
@@ -25,42 +26,46 @@ const showSuccess = (title, callback) => {
 
 // 登录 保存数据
 const login = (user) => {
-
 	// 本地保存
 	uni.setStorage({
 		key: config.storageKeys.loginUserKey,
 		data: user
 	});
 	// 内存保存
-	getApp().globalData.user = user;
+	store.commit('setUser',user)
 }
 
 // 登出
 const logout = () => {
-	getApp().globalData.user = {};
-
+	store.commit('setUser',{})
 	uni.removeStorage({
 		key: config.storageKeys.loginUserKey,
 	})
 }
 
+// 显示弹窗
+const showModal = (title,content,callback)=>{
+	uni.showModal({
+		title,
+		content,
+		success: (res) => {
+			if (res.confirm) {
+				callback && callback();
+			}
+		}
+	})
+}
+
 // 需要登录的操作 在此处过一遍
 const actionForLogin = (action) => {
-	const user = getApp().globalData.user;
+	const user = store.state.user;
 	if (user.token) {
 		if (action) action();
 	} else {
-		uni.showModal({
-			title: '提示',
-			content: '此操作需要先登录',
-			confirmText: '去登录',
-			success: (res) => {
-				if (res.confirm) {
-					uni.navigateTo({
-						url: '/pages/main/login/login'
-					})
-				}
-			}
+		showModal('提示','此操作需要先登录',()=>{
+			uni.navigateTo({
+				url: '/pages/main/login/login'
+			})
 		})
 	}
 }
@@ -70,6 +75,7 @@ const actionForLogin = (action) => {
 export default {
 	showToast,
 	showSuccess,
+	showModal,
 	logout,
 	login,
 	actionForLogin,

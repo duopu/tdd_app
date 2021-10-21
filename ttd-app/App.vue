@@ -4,17 +4,12 @@ import config from './utils/config.js';
 export default {
 	// 全局数据对象
 	globalData: {
-		// 用户信息
-		user: {}
 	},
-
 	onLaunch: function() {
-		console.log('App Launch');
-
 		uni.getStorage({
 			key: config.storageKeys.loginUserKey,
 			success: res => {
-				getApp().globalData.user = res.data;
+				this.$store.commit('setUser',res.data)
 			}
 		});
 	},
@@ -56,7 +51,6 @@ page {
 // flex
 .flex {
 	display: flex;
-
 	&-center {
 		@extend .flex;
 		justify-content: center;
@@ -90,6 +84,26 @@ page {
 
 .row {
 	flex-direction: row;
+}
+
+.column{
+	flex-direction: column;
+}
+
+.align-center{
+	align-items: center;
+}
+
+.align-end{
+	align-items: flex-end;
+}
+
+.justify-center{
+	justify-content: center;
+}
+
+.justify-end{
+	justify-content: flex-end;
 }
 
 // 文本省略

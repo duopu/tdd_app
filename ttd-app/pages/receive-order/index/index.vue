@@ -1,10 +1,7 @@
 <!-- 接单 -->
 <template>
-	<view class="order-tips">
-		<view class="describe">您还没有成为师傅，不能承接订单哦。快去成为师傅吧！</view>
-		<view class="flex-center btn-group">
-			<navigator url="../../main/apply/apply" class="btn primary" @click="onRegister">成功师傅</navigator>
-		</view>
+	<view >
+		<coming-soon></coming-soon>
 	</view>
 </template>
 
@@ -14,6 +11,9 @@
 			return {
 				
 			};
+		},
+		onReady() {
+			this.$tool.actionForLogin()
 		}
 	}
 </script>

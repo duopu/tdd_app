@@ -3,9 +3,12 @@
 	<view class="page-container flex-column-center">
 		<image src="../../../static/logo.png" mode="aspectFill" class="image-logo"></image>
 
-		<button class="btn green" @click="loginAction">微信一键登录</button>
+		<view class="name-view flex">
+			<text>姓名： </text>
+			<input type="text" v-model="name" placeholder="注册请输入姓名" />
+		</view>
 
-		<button class="btn primary" @click="onRegister">注册</button>
+		<button class="btn primary" open-type="getPhoneNumber" @getphonenumber="registerAction">微信号码一键注册</button>
 	</view>
 </template>
 
@@ -16,18 +19,38 @@
 		data() {
 			return {
 				code: '',
+				name: '',
 			};
 		},
+		onReady() {
+
+		},
 		methods: {
-			// 登录操作
-			loginAction() {
+
+			// 注册操作
+			registerAction(data) {
+				if (this.name) {
+					this.bindgetphonenumber(data)
+				} else {
+					this.$tool.showToast('注册操作需要输入姓名')
+				}
+			},
+			// 用户授权手机号的回调
+			bindgetphonenumber(data) {
 				uni.login({
 					provider: 'oauth',
 					success: res => {
-						const code = res.code;
+						console.log('oauth', res);
+						this.code = res.code;
+
+						const info = data.detail;
 						const param = {
 							appId: config.appId,
-							code
+							code: this.code,
+							encryptedData: info.encryptedData,
+							iv: info.iv,
+							loginName: this.name,
+							userType: 1,
 						};
 						this.$http.post('/core/grant/miniPhone', param, true).then(res => {
 							const user = {
@@ -35,7 +58,7 @@
 								token: res.token
 							}
 							this.$tool.login(user)
-							this.$tool.showToast('登录成功', () => {
+							this.$tool.showToast('注册成功', () => {
 								uni.navigateBack({})
 							})
 						}).catch(err => {
@@ -47,12 +70,8 @@
 					},
 					complete: () => {}
 				});
-			},
-			// 去注册页面
-			onRegister() {
-				uni.redirectTo({
-					url: '/pages/main/register/register'
-				});
+
+
 			}
 		}
 	};

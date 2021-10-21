@@ -15,13 +15,13 @@
 		</view>
 		<!-- 滚动 单个 -->
 		<swiper class="swiper menu-content" :current="swiperIndex" @change="swiperChange">
-			<swiper-item class="swiper-item" v-for="(item,index) in menuItemLists" :key="index">
+			<swiper-item class="swiper-item" v-for="(itemList,index) in itemListList" :key="index">
 				<view class="menu-arrow" :style="{left:getArrowLeftDistance(index)}"></view>
 				<scroll-view scroll-y="true" class="scroll-content">
 					<view class="menu-lists">
-						<view class="item flex-column-center" v-for="(subItem, subIndex) in menuLists" :key="subIndex" @click="onItemClick(subItem)">
-							<image :src="subItem.image" mode="aspectFill" class="image"></image>
-							<text class="text">{{ subItem.text }}</text>
+						<view class="item flex-column-center" v-for="(item, subIndex) in itemList" :key="subIndex" @click="onItemClick(item)">
+							<image :src="item.icon" mode="aspectFill" class="image"></image>
+							<text class="text">{{ item.name }}</text>
 						</view>
 					</view>
 				</scroll-view>
@@ -29,8 +29,9 @@
 		</swiper>
 		<!-- 广告 -->
 		<swiper class="advertise-swiper" indicator-color="rgba(255,255,255,.3)" indicator-active-color="#ffffff" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="600">
-			<swiper-item class="swiper-item"><image class="image-advertise" src="../../../static/default/advertise.png" mode="aspectFill"></image></swiper-item>
-			<swiper-item class="swiper-item"><image class="image-advertise" src="../../../static/default/advertise.png" mode="aspectFill"></image></swiper-item>
+			<swiper-item class="swiper-item" v-for="banner in bannerList">
+				<image class="image-advertise" :src="banner.image" mode="aspectFill"></image>
+			</swiper-item>
 		</swiper>
 	</view>
 </template>
@@ -55,7 +56,7 @@ export default {
 					text: '勘测'
 				},
 				{
-					image: '../../../static/home/home_icon_Rent to hire.png',
+					image: '../../../static/home/home_icon_Renttohire.png',
 					text: '租聘'
 				},
 				{
@@ -68,19 +69,42 @@ export default {
 				}
 			],
 			// 菜单内容
-			menuLists: [
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '网络'
-				},
-				{
-					image: '../../../static/default/index-demo.png',
-					text: '储存'
-				},
-			]
+			itemListList: [],
+			bannerList:[],
 		};
 	},
+	onReady() {
+		this.queryHomeItemData();
+		this.queryBannerData();
+	},
+	onShow() {
+		this.$store.dispatch('queryApproveDetail');
+	},
 	methods: {
+		// 查询首页选项数据
+		queryHomeItemData(){
+			const param = {
+				pageNum:0,
+				pageSize:1000
+			}
+			this.$http.post('/b/homepageconf/queryList',param).then(res=>{
+				const dataList = res.dataList
+				const itemListList = [];
+				itemListList.push(dataList.filter(m=>m.module == 1));
+				itemListList.push(dataList.filter(m=>m.module == 2));
+				itemListList.push(dataList.filter(m=>m.module == 3));
+				itemListList.push(dataList.filter(m=>m.module == 4));
+				itemListList.push(dataList.filter(m=>m.module == 5));
+				itemListList.push(dataList.filter(m=>m.module == 6));
+				this.itemListList = itemListList;
+			})
+		},
+		// 查询首页banner数据
+		queryBannerData(){
+			this.$http.post('/b/bannerconf/queryList',{module:1}).then(res=>{
+				this.bannerList = res
+			})
+		},
 		// 计算箭头的位置
 		getArrowLeftDistance(index) {
 			const distance = (100 / this.menuItemLists.length) * index + 100 / (this.menuItemLists.length * 2);
@@ -89,6 +113,9 @@ export default {
 		// 切换菜单列表
 		onMenuItem(index) {
 			this.swiperIndex = index;
+			if(this.swiperIndex >1 ){
+				this.$tool.actionForLogin()
+			}
 		},
 		// swiper 切换
 		swiperChange(event){
@@ -96,9 +123,41 @@ export default {
 		},
 		// item 点击事件
 		onItemClick(item){
-			console.log(item);
-			console.log(this.swiperIndex);
 			this.$tool.actionForLogin(()=>{
+				const user  = this.$store.state.user;
+				if(user.masterWorkFlag){
+					this.$tool.showToast('火速开发中，敬请期待')
+				}else{
+					let tipText = '下单功能内测中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！';
+					let navUrl = '/pages/main/apply/apply';
+					const approveDetail = this.$store.state.approveDetail
+					const approveState = approveDetail.approveState;
+					switch (approveState){
+						case -1:
+						tipText = '下单功能内测中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！';
+						navUrl = '/pages/main/apply/apply'
+						break
+						case 0:
+						tipText = '审核中（一般1至3个工作日）请您等待，谢谢！';
+						navUrl = ''
+						break
+						case 1:
+						tipText = '审核通过，你可以开始接单了！如要添加修改已申请信息，可以点修改后再提交';
+						navUrl = '/pages/main/apply/apply' 
+						break
+						case 2:
+						tipText = `审核被退回！有需要您修改的信息，请修改后再提交，谢谢！拒绝理由：${approveDetail.refusalReason}`;
+						navUrl = '/pages/main/apply/apply'
+						break
+					}
+					this.$tool.showModal('提示',tipText,()=>{
+						if(navUrl){
+							uni.navigateTo({
+								url: navUrl
+							});
+						}
+					})
+				}
 				console.log('eee');
 			})
 		}

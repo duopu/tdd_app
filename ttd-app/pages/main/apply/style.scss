@@ -20,7 +20,7 @@
 }
 // 搜索 区域
 .search-content {
-	padding-top: calc(var(--status-bar-height) + 10rpx);
+	// padding-top: calc(var(--status-bar-height) + 10rpx);
 }
 // 选中区域
 .select-content {
@@ -36,6 +36,7 @@
 		margin-right: 20rpx;
 		min-width: 120rpx;
 		height: 40rpx;
+		padding: 0rpx 10rpx;
 		line-height: 40rpx;
 		text-align: center;
 		white-space: nowrap;
@@ -86,6 +87,10 @@
 		background-color: #ffffff;
 		&.list {
 			padding-bottom: 32rpx;
+		}
+		.tip-lable{
+			color: #4B71FF;
+			font-size: 28rpx;
 		}
 		.list-item {
 			& + .list-item {
