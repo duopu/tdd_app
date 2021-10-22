@@ -1,5 +1,5 @@
 
-const debug = false;
+const debug = true;
 export default {
 	
 	baseUrl:debug ? 'http://139.196.182.247:8080' : 'https://ttuodi.com',
@@ -9,9 +9,9 @@ export default {
 	storageKeys:{
 		// 登录用户的信息
 		loginUserKey:'storageLoginUserKey',
-		// 历史搜索
-		historySearchKey:'storageHistorySearchKey',
 		// 保存申请信息
 		applyInfoStorage:'applyInfoStorage',
+		// 保存邀请信息
+		inviteInfoStorage:'inviteInfoStorage',
 	}
 }
