@@ -1,11 +1,11 @@
 <!-- 我的分销 -->
 <template>
 	<view class="distribute page-container">
-		<image src="../../../static/invite-transparent-image.png" mode="widthFix" class="image-transparent"></image>
+		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-transparent-image.png" mode="widthFix" class="image-transparent"></image>
 		<scroll-view scroll-y="true" class="scroll-content">
 			<view class="title">我的邀请人</view>
 			<view class="box flex-center-between">
-				<image src="../../../static/default/index-demo.png" mode="aspectFill" class="avatar-image"></image>
+				<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" mode="aspectFill" class="avatar-image"></image>
 				<view class="message">
 					<text class="name">张达</text>
 					<text class="phone">154****4844</text>

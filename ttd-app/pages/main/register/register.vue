@@ -1,7 +1,7 @@
 <!--登录-->
 <template>
 	<view class="page-container flex-column-center">
-		<image src="../../../static/logo.png" mode="aspectFill" class="image-logo"></image>
+		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/logo.png" mode="aspectFill" class="image-logo"></image>
 
 		<view class="name-view flex">
 			<text>姓名： </text>

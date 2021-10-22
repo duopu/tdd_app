@@ -12,7 +12,7 @@
 							<!-- <uni-icons type="clear" class="icon-close" color="#DA1A00"></uni-icons> -->
 						</view>
 					</view>
-					<image class="icon-arrow" src="../../../static/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
+					<image class="icon-arrow" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
 				</view>
 				<view class="row flex-center-between">
 					<text class="text">是否租赁</text>

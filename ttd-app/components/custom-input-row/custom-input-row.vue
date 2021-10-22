@@ -10,7 +10,7 @@
 			<slot></slot>
 		</view>
 		<!-- 右箭头 -->
-		<image v-if="arrow" mode="aspectFill" class="icon-arrow" src="../../static/icon/icon-arrow-right-black.svg"></image>
+		<image v-if="arrow" mode="aspectFill" class="icon-arrow" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/icon/icon-arrow-right-black.svg"></image>
 	</view>
 </template>
 

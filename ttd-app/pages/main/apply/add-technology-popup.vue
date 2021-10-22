@@ -11,7 +11,7 @@
 						<view class="" v-if="skillList.length == 0">请选择技能</view>
 					</view>
 					
-					<image class="icon-arrow" src="../../../static/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
+					<image class="icon-arrow" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
 				</view>
 				<view class="row flex-center-between" @click="selectBrand">
 					<text class="text">选择品牌</text>
@@ -22,7 +22,7 @@
 						</view>
 						<view class="" v-if="brandList.length == 0">请选择品牌</view>
 					</view>
-					<image class="icon-arrow" src="../../../static/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
+					<image class="icon-arrow" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
 				</view>
 			</scroll-view>
 			<view class="bottom flex-center-between">

@@ -11,7 +11,7 @@
 						<view  v-for="node in userroleList">{{node.name}}</view>
 						<view class="" v-if="userroleList.length == 0">请选择岗位</view>
 					</view>
-					<image class="icon-arrow" src="../../../static/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
+					<image class="icon-arrow" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
 				</view>
 				<!-- 选软件 -->
 				<view class="row flex-center-between" @click="selectSoftwareconf">
@@ -23,11 +23,11 @@
 						</view>
 						<view class="" v-if="softwareconfList.length == 0">请选择软件</view>
 					</view>
-					<image class="icon-arrow" src="../../../static/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
+					<image class="icon-arrow" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/icon/icon-arrow-right-black.svg" mode="aspectFill"></image>
 				</view>
 			</scroll-view>
 			<view class="bottom flex-center-between">
-				<button class="btn btn-cancel" @click="close">取消</button>
+				<button class="btn btn-cancel  @click="close">取消</button>
 				<button class="btn btn-confirm" @click="confirmAction">确定</button>
 			</view>
 		</view>

@@ -4,9 +4,9 @@
 		<scroll-view class="scroll-content" scroll-y="true">
 			<!-- 头部 -->
 			<view class="top">
-				<image class="image-bg" src="../../../static/mine.png" mode="aspectFill"></image>
+				<image class="image-bg" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine.png" mode="aspectFill"></image>
 				<view class="content flex-1 flex-center-between">
-					<image class="avatar-image" src="../../../static/default/index-demo.png" mode="aspectFill"></image>
+					<image class="avatar-image" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" mode="aspectFill"></image>
 					<view class="right flex-1">
 						<text class="name text-ellipis">用户名</text>
 						<navigator url="" class="flex describe">
@@ -15,7 +15,7 @@
 						</navigator>
 					</view>
 					<view class="flex-column-center turntable">
-						<image src="../../../static/turntable.png" mode="aspectFill" class="image-turntable"></image>
+						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/turntable.png" mode="aspectFill" class="image-turntable"></image>
 						<view class="text">
 							剩余抽奖次数
 							<text class="color-red">2</text>
@@ -28,20 +28,20 @@
 				<!-- tab -->
 				<view class="flex-center menu">
 					<view class="item first flex-1 flex-column-center">
-						<image src="../../../static/default/index-demo.png" class="image-item"></image>
+						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" class="image-item"></image>
 						<text class="text text-ellipis">签到打卡</text>
 					</view>
 					<view class="item second flex-1 flex-column-center">
-						<image src="../../../static/default/index-demo.png" class="image-item"></image>
+						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" class="image-item"></image>
 						<text class="text text-ellipis">我的优惠券</text>
 					</view>
 					<view class="item three flex-1 flex-column-center">
-						<image src="../../../static/default/index-demo.png" class="image-item"></image>
+						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" class="image-item"></image>
 						<text class="text text-ellipis">我的钱包</text>
 					</view>
 				</view>
 				<!-- 邀请 -->
-				<image class="advertise-image" @click="navInvite" src="../../../static/default/advertise.png" mode="aspectFill"></image>
+				<image class="advertise-image" @click="navInvite" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/advertise.png" mode="aspectFill"></image>
 			</view>
 			<!-- 承接方 -->
 			<view class="white">
