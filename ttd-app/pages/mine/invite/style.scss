@@ -3,6 +3,10 @@
 	width: 100%;
 	height: 100%;
 	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
 	background-image: url('https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-bg.jpg');
@@ -52,7 +56,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	height: 800rpx;
 	padding-top: 60rpx;
 	position: relative;
 	width: 100%;
@@ -71,8 +74,8 @@
 		}
 	}
 	.image-code {
-		width: 200rpx; 
-		height: 200rpx;
+		width: 250rpx; 
+		height: 250rpx;
 	}
 	.share {
 		padding-bottom: 40rpx;
