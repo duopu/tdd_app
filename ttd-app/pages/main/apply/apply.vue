@@ -35,7 +35,7 @@
 						<view class="text text-ellipis">{{item.name}}</view>
 						<view class="describe">{{item.brandList.join('、')}}</view>
 					</view>
-					<image src="../../../static/delete.png" mode="aspectFill" class="image-delete"
+					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
 						@click="deleteSkill(index)"></image>
 				</view>
 				<button class="btn btn-add" @click="openPopup('technologyPopup')">新增技能</button>
@@ -48,7 +48,7 @@
 						<view class="text text-ellipis">{{item.name}}</view>
 						<view class="describe">{{item.softwareconfList.join('、')}}</view>
 					</view>
-					<image src="../../../static/delete.png" mode="aspectFill" class="image-delete"
+					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
 						@click="deleteSoftwareconf(index)"></image>
 				</view>
 				<button class="btn btn-add" @click="openPopup('staffPopup')">新增人员</button>
@@ -61,7 +61,7 @@
 						<view class="text text-ellipis">行业名称：{{item.name}}</view>
 						<view class="describe">履历：{{item.content}}</view>
 					</view>
-					<image src="../../../static/delete.png" mode="aspectFill" class="image-delete"
+					<image src="https://ttd-public.s.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
 						@click="deleteProject(index)"></image>
 				</view>
 				<button class="btn btn-add" @click="openPopup('projectPopup')">新增项目</button>
@@ -74,7 +74,7 @@
 						<view class="text text-ellipis">{{item.name}}</view>
 						<view class="describe">是否租赁：{{item.leaseFlag ? '是' : '否'}}</view>
 					</view>
-					<image src="../../../static/delete.png" mode="aspectFill" class="image-delete"
+					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
 						@click="deleteTool(index)"></image>
 				</view>
 				<button class="btn btn-add" @click="openPopup('toolsPopup')">新增工具</button>
