@@ -7,20 +7,22 @@
 			<view class="box flex-center-between">
 				<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" mode="aspectFill" class="avatar-image"></image>
 				<view class="message">
-					<text class="name">张达</text>
-					<text class="phone">154****4844</text>
+					<text class="name">{{myDistInfo.distName || '暂无邀请人'}}</text>
+					<text class="phone">{{myDistInfo.distPhone}}</text>
 				</view>
-				<text class="time">10-20 00:03</text>
+				<text class="time">{{myDistInfo.distTime}}</text>
 			</view>
 			<view class="title">我邀请了{{mySubordinateList.length}}人</view>
 			<view class="box flex-center-between" v-for="(item, index) in mySubordinateList" :key="index">
-				<text class="name">{{item.name}}</text>
-				<text class="phone flex-1">154****4844</text>
-				<text class="time">10-20 00:03</text>
+				<text class="name">{{item.userName}}</text>
+				<text class="phone flex-1">{{item.userPhone}}</text>
+				<text class="time">{{item.addTime}}</text>
 			</view>
 			<view class="no-more">已经到头了~</view>
 		</scroll-view>
-		<button class="btn flex-center"><uni-icons size="22" type="scan" class="icon" color="#8C4C31" @click="scanCodeAction"></uni-icons>扫码绑定邀请人</button>
+		<button class="btn flex-center" @click="scanCodeAction" v-if="!myDistInfo.distId">
+			<uni-icons size="22" type="scan" class="icon" color="#8C4C31" ></uni-icons>扫码绑定邀请人
+		</button>
 	</view>
 </template>
 
@@ -30,6 +32,7 @@ export default {
 		return {
 			myInviter:{},
 			mySubordinateList:[],
+			myDistInfo:{},
 		};
 	},
 	onReady() {
@@ -40,7 +43,10 @@ export default {
 		
 		// 查询我的邀请人
 		queryMyInviter(){
-			
+			const id = this.$store.state.user.id
+			this.$http.post('/b/customer/query',{id}).then(res=>{
+				this.myDistInfo = res.distInfo
+			})
 		},
 		// 查询我邀请到的人
 		queryMySubordinate(){
@@ -55,6 +61,17 @@ export default {
 			    success:  (res) =>{
 			        console.log('条码类型：' + res.scanType);
 			        console.log('条码内容：' + res.result);
+					// 获取映射id
+					const contentMapId = res.result.split('=')[1];
+					console.log('获取映射 id',contentMapId); 
+					// 获取暂存信息
+					this.$http.post('/core/contentmapping/query', { id: contentMapId },true).then(res => {
+						const data = JSON.parse(res.content);
+						return this.$http.post('/b/distinvitationrecord/bindInvitation',{shareUserId:data.shareUserId},true)
+					}).then(res=>{
+						this.$tool.showSuccess('绑定成功！') 
+						this.queryMyInviter();
+					})
 			    }
 			});
 		}

@@ -54,14 +54,16 @@ export default {
 	},
 	onReady() {
 		this.queryQrcode();
+		this.$tool.actionForLogin();
 	},
 	onShareAppMessage() {
-		console.log('分享配置', `${this.page}?${this.scene}`);
-		return {
+		const configObj = {
 			title: '妥妥弟邀请您',
-			page: `${this.page}?${this.scene}`,
-			imageUrl: ''
-		};
+			path: `/${this.page}?${this.scene}`
+		}
+		console.log('分享配置', configObj);
+		
+		return configObj;
 	},
 	methods: {
 		// 查询用户小程序二维码
