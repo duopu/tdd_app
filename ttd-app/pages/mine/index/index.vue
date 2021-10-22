@@ -41,7 +41,7 @@
 					</view>
 				</view>
 				<!-- 邀请 -->
-				<image class="advertise-image" @click="navInvite" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/advertise2.png" mode="aspectFill"></image>
+				<image class="advertise-image" @click="navInvite" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/advertise3.png" mode="aspectFill"></image>
 			</view>
 			<!-- 承接方 -->
 			<view class="white">

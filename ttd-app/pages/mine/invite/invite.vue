@@ -4,27 +4,31 @@
 		<!-- 查看详情 -->
 		<view class="details" @click="watchDetail">查看详情</view>
 		<!-- image text -->
-		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-text.png" class="image-text" mode="widthFix"></image>
+		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-text3.png" class="image-text"
+			mode="widthFix"></image>
 		<!-- 参加人数 -->
-		<view class="flex-center number-box">
+		<!-- <view class="flex-center number-box">
 			<view class="number">
 				已有
 				<text>1000+</text>
 				用户参与活动
 			</view>
-		</view>
+		</view> -->
 		<!-- 内容 -->
 		<view class="content">
-			<image :src="qrCodeImg" mode="aspectFill" class="image-code"></image>
+			<image :src="qrCodeImg" mode="aspectFit" class="image-code"></image>
 			<!-- 规则 -->
 			<view class="rule">
-				<text class="title">活动规则：</text>
-				<view class="message">邀请新人扫码注册妥妥弟，将获得1000积分。并且邀请新用户将成为你的分销下级，您将享受他5%的收益。</view>
+				<text class="title">两次分佣机会：</text>
+				<view class="message">1、你直接推荐给朋友A，A在平台上下单或接单，你可以得到一笔分佣。</view>
+				<view class="message">2、你推荐的朋友A注册了，A再推荐给他的朋友B，B在平台上下单或接单，你还可以得到一笔分佣。</view>
 			</view>
 			<!-- 分享 -->
 			<view class="share flex-center-between">
 				<button class="item" open-type="share">
-					<image class="image-item" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-wx.png" mode="aspectFill"></image>
+					<image class="image-item"
+						src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-wx.png"
+						mode="aspectFill"></image>
 					<text>分享到微信</text>
 				</button>
 				<!-- <view class="item flex-1 flex-column-center">
@@ -32,7 +36,9 @@
 						<text>分享到朋友圈</text>
 					</view> -->
 				<view class="item" @click="downloadToAlbum">
-					<image class="image-item" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-download.png" mode="aspectFill"></image>
+					<image class="image-item"
+						src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-download.png"
+						mode="aspectFill"></image>
 					<text>下载至相册</text>
 				</view>
 			</view>
@@ -41,76 +47,103 @@
 </template>
 
 <script>
-import config from '../../../utils/config.js';
+	import config from '../../../utils/config.js';
 
-export default {
-	data() {
-		return {
-			qrCodeImg: '',
-			title: '',
-			page: 'pages/home/index/index',
-			scene: ''
-		};
-	},
-	onReady() {
-		this.queryQrcode();
-		this.$tool.actionForLogin();
-	},
-	onShareAppMessage() {
-		const configObj = {
-			title: '妥妥弟邀请您',
-			path: `/${this.page}?${this.scene}`
-		}
-		console.log('分享配置2', configObj);
-		return configObj;
-	},
-	methods: {
-		// 查询用户小程序二维码
-		queryQrcode() {
-			console.log(this.$store.state.user);
-			const user = this.$store.state.user;
-			// 二维码携带参数
-			const mapInfo = {
-				sourceType: 2,
-				shareUserId: user.id,
-				shareUserName:user.name,
+	export default {
+		data() {
+			return {
+				qrCodeImg: '',
+				title: '',
+				page: 'pages/home/index/index',
+				scene: ''
 			};
-			this.$http
-				.post('/core/contentmapping/add', { content: JSON.stringify(mapInfo) }, true)
-				.then(res => {
-					const contentMapId = res.id;
-					const param = {
-						appId: config.appId,
-						page: this.page,
-						scene: `contentMapId=${contentMapId}`
-					};
-					return this.$http.post('/crm/wechatminiwxa/getWxaCodeUnlimit', param, true);
-				})
-				.then(res => {
-					this.qrCodeImg = res.miniUrl;
-				});
-
-			// 小程序分享携带参数
-			const mapInfo2 = {
-				sourceType: 3,
-				shareUserId: user.id,
-				shareUserName:user.name,
-			};
-			this.$http.post('/core/contentmapping/add', { content: JSON.stringify(mapInfo2) }, true).then(res => {
-				const contentMapId = res.id;
-				this.scene = `contentMapId=${contentMapId}`;
-			});
 		},
-		// 下载至相册
-		downloadToAlbum() {},
-		// 查看邀请详情
-		watchDetail() {
-			uni.navigateTo({
-				url: '/pages/mine/distribute/distribute'
-			});
+		onReady() {
+			this.queryQrcode();
+			this.$tool.actionForLogin();
+		},
+		onShareAppMessage() {
+			const configObj = {
+				title: '妥妥弟邀请您',
+				path: `/${this.page}?${this.scene}`
+			}
+			console.log('分享配置2', configObj);
+			return configObj;
+		},
+		methods: {
+			// 查询用户小程序二维码
+			queryQrcode() {
+				console.log(this.$store.state.user);
+				const user = this.$store.state.user;
+				// 二维码携带参数
+				const mapInfo = {
+					sourceType: 2,
+					shareUserId: user.id,
+					shareUserName: user.name,
+				};
+				this.$http
+					.post('/core/contentmapping/add', {
+						content: JSON.stringify(mapInfo)
+					}, true)
+					.then(res => {
+						const contentMapId = res.id;
+						const param = {
+							appId: config.appId,
+							page: this.page,
+							scene: `contentMapId=${contentMapId}`
+						};
+						return this.$http.post('/crm/wechatminiwxa/getWxaCodeUnlimit', param, true);
+					})
+					.then(res => {
+						this.qrCodeImg = res.miniUrl;
+					});
+
+				// 小程序分享携带参数
+				const mapInfo2 = {
+					sourceType: 3,
+					shareUserId: user.id,
+					shareUserName: user.name,
+				};
+				this.$http.post('/core/contentmapping/add', {
+					content: JSON.stringify(mapInfo2)
+				}, true).then(res => {
+					const contentMapId = res.id;
+					this.scene = `contentMapId=${contentMapId}`;
+				});
+			},
+			// 下载至相册
+			downloadToAlbum() {
+				const downLoadUrl = 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/invite_bg.png'
+				this.downloadAndSaveImage(downLoadUrl);
+			},
+			// 图片 下载并保存到相册
+			downloadAndSaveImage(downLoadUrl){
+				uni.downloadFile({
+					url: downLoadUrl, //仅为示例，并非真实的资源
+					success: (res) => {
+						if (res.statusCode === 200) {
+							console.log('下载成功');
+							const tempFilePath = res.tempFilePath;
+							uni.saveImageToPhotosAlbum({
+								filePath: tempFilePath,
+								success: () => {
+									this.$tool.showSuccess('图片已保存至相册，快去分享给您的好友吧！')
+								}
+							});
+						} else {
+							this.$tool.showToast('图片获取失败')
+						}
+					}
+				});
+			},
+			// 查看邀请详情
+			watchDetail() {
+				uni.navigateTo({
+					url: '/pages/mine/distribute/distribute'
+				});
+			}
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss" src="./style.scss" lang="scss"></style>
