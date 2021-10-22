@@ -27,7 +27,7 @@
 				</view>
 			</scroll-view>
 			<view class="bottom flex-center-between">
-				<button class="btn btn-cancel  @click="close">取消</button>
+				<button class="btn btn-cancel"  @click="close">取消</button>
 				<button class="btn btn-confirm" @click="confirmAction">确定</button>
 			</view>
 		</view>
