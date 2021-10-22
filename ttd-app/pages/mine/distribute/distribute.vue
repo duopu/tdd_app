@@ -40,7 +40,6 @@ export default {
 		this.queryMySubordinate();
 	},
 	methods:{
-		
 		// 查询我的邀请人
 		queryMyInviter(){
 			const id = this.$store.state.user.id
