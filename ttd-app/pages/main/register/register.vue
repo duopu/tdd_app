@@ -34,10 +34,12 @@
 		methods: {
 			// 注册操作
 			registerAction(data) {
-				if (this.name) {
-					this.bindgetphonenumber(data)
-				} else {
+				if (!this.name) {
 					this.$tool.showToast('注册操作需要输入姓名')
+				} else if(/\d/.test(this.name)){
+					this.$tool.showToast('姓名中不能含有数字')
+				}else{
+					this.bindgetphonenumber(data)
 				}
 			},
 			// 用户授权手机号的回调
