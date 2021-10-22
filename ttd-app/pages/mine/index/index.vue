@@ -8,17 +8,17 @@
 				<view class="content flex-1 flex-center-between">
 					<image class="avatar-image" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" mode="aspectFill"></image>
 					<view class="right flex-1">
-						<text class="name text-ellipis">用户名</text>
+						<text class="name text-ellipis">{{userName}}</text>
 						<navigator url="" class="flex describe">
 							我的积分
-							<text class="color-yellow">8888</text>
+							<text class="color-yellow">0</text>
 						</navigator>
 					</view>
 					<view class="flex-column-center turntable">
 						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/turntable.png" mode="aspectFill" class="image-turntable"></image>
 						<view class="text">
 							剩余抽奖次数
-							<text class="color-red">2</text>
+							<text class="color-red">0</text>
 							次
 						</view>
 					</view>
@@ -94,11 +94,14 @@
 export default {
 	data() {
 		return {
-			demo: true
+			demo: true,
+			userName:'',
 		};
 	},
 	onReady() {
 		this.$tool.actionForLogin();
+		this.userName = this.$store.state.user.name;
+		console.log(this.$store.state.user)
 	},
 	methods:{
 		navInvite(){

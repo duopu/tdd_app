@@ -13,10 +13,11 @@
 				<text class="time">{{myDistInfo.distTime}}</text>
 			</view>
 			<view class="title">我邀请了{{mySubordinateList.length}}人</view>
-			<view class="box flex-center-between" v-for="(item, index) in mySubordinateList" :key="index">
+			<view class="box flex-center-between" v-for="(item, index) in mySubordinateList" :key="index" @click="watchUserInvite(item)">
 				<text class="name">{{item.userName}}</text>
 				<text class="phone flex-1">{{item.userPhone}}</text>
 				<text class="time">{{item.addTime}}</text>
+				<uni-icons type="forward" class="icon-arrow" color="#9D9D9D"></uni-icons>
 			</view>
 			<view class="no-more">已经到头了~</view>
 		</scroll-view>
@@ -30,7 +31,6 @@
 export default {
 	data() {
 		return {
-			myInviter:{},
 			mySubordinateList:[],
 			myDistInfo:{},
 		};
@@ -74,6 +74,14 @@ export default {
 					})
 			    }
 			});
+		},
+		// 查看用户分销信息
+		watchUserInvite(item){
+			const userName = item.userName;
+			const userId = item.userId;
+			uni.navigateTo({
+				url:`/pages/mine/distribute-users/distribute-users?userName=${userName}&userId=${userId}`
+			})
 		}
 	}
 };

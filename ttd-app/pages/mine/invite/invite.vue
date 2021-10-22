@@ -61,19 +61,19 @@ export default {
 			title: '妥妥弟邀请您',
 			path: `/${this.page}?${this.scene}`
 		}
-		console.log('分享配置', configObj);
-		
+		console.log('分享配置2', configObj);
 		return configObj;
 	},
 	methods: {
 		// 查询用户小程序二维码
 		queryQrcode() {
-			console.log(this.$store.state.user.id);
-			const userId = this.$store.state.user.id;
+			console.log(this.$store.state.user);
+			const user = this.$store.state.user;
 			// 二维码携带参数
 			const mapInfo = {
 				sourceType: 2,
-				shareUserId: userId
+				shareUserId: user.id,
+				shareUserName:user.name,
 			};
 			this.$http
 				.post('/core/contentmapping/add', { content: JSON.stringify(mapInfo) }, true)
@@ -93,7 +93,8 @@ export default {
 			// 小程序分享携带参数
 			const mapInfo2 = {
 				sourceType: 3,
-				shareUserId: userId
+				shareUserId: user.id,
+				shareUserName:user.name,
 			};
 			this.$http.post('/core/contentmapping/add', { content: JSON.stringify(mapInfo2) }, true).then(res => {
 				const contentMapId = res.id;

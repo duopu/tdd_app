@@ -2,7 +2,7 @@
 <template>
 	<view class="page-container flex-column-center">
 		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/logo.png" mode="aspectFill" class="image-logo"></image>
-
+		<text class="invite-text" v-if="inviteInfo.shareUserId">邀请人：{{inviteInfo.shareUserName}}</text>
 		<view class="name-view flex">
 			<text>姓名： </text>
 			<input type="text" v-model="name" placeholder="注册请输入姓名" />

@@ -8,7 +8,7 @@ export default {
 	// 本地存储的key值
 	storageKeys:{
 		// 登录用户的信息
-		loginUserKey:'storageLoginUserKey',
+		loginUserKey: debug ? 'storageLoginUserKey_test' : 'storageLoginUserKey',
 		// 保存申请信息
 		applyInfoStorage:'applyInfoStorage',
 		// 保存邀请信息

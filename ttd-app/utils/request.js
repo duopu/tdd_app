@@ -1,5 +1,6 @@
 import config from './config.js'
 import store from '../store/index.js';
+import tool from './tool.js';
 
 export default {
 
@@ -47,8 +48,8 @@ export default {
 			if (rescode == 200) {
 				return data;
 			} else if(rescode == 202){
-				// token 失效
-				
+				// token 失效 移除登录信息
+				tool.logout();
 				throw {
 					message: msg
 				};

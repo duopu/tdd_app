@@ -93,7 +93,15 @@
                 "navigationBarTitleText": "我的分销",
                 "enablePullDownRefresh": false
             }
-        }
+        },
+		{
+			"path":"pages/mine/distribute-users/distribute-users",
+			"style" :
+			{
+			    "navigationBarTitleText": "分享详情",
+			    "enablePullDownRefresh": false
+			}
+		}
     ],
 	"tabBar": {
 		"backgroundColor": "#FFFFFF",
