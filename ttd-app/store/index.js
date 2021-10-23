@@ -22,7 +22,7 @@ const store = new Vuex.Store({
 	},
 	actions:{
 		queryApproveDetail({commit, state}){
-			http.post('/b/applyundertaker/queryApproveState').then(res=>{
+			http.post('/b/applyundertaker/queryApproveDetail').then(res=>{
 				commit('setApproveDetail',res);
 			})
 		}

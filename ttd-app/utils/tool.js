@@ -33,6 +33,10 @@ const login = (user) => {
 	});
 	// 内存保存
 	store.commit('setUser',user)
+	
+	// 更新 申请承接方 信息
+	store.dispatch('queryApproveDetail');
+	
 }
 
 // 登出

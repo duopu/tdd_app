@@ -41,7 +41,7 @@
 				<image class="image-advertise" :src="banner.image" mode="aspectFill"></image>
 			</swiper-item>
 		</swiper>
-		<text>{{ testText }}</text>
+		<!-- <text>{{ testText }}</text> -->
 	</view>
 </template>
 

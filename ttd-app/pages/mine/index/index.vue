@@ -28,20 +28,20 @@
 				<!-- tab -->
 				<view class="flex-center menu">
 					<view class="item first flex-1 flex-column-center">
-						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" class="image-item"></image>
+						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/my_icon_sgin.png" class="image-item"></image>
 						<text class="text text-ellipis">签到打卡</text>
 					</view>
 					<view class="item second flex-1 flex-column-center">
-						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" class="image-item"></image>
+						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/my_icon_tick.png" class="image-item"></image>
 						<text class="text text-ellipis">我的优惠券</text>
 					</view>
 					<view class="item three flex-1 flex-column-center">
-						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/index-demo.png" class="image-item"></image>
+						<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/my_icon_wallet.png" class="image-item"></image>
 						<text class="text text-ellipis">我的钱包</text>
 					</view>
 				</view>
 				<!-- 邀请 -->
-				<image class="advertise-image" @click="navInvite" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/advertise3.png" mode="aspectFill"></image>
+				<image class="advertise-image" @click="navInvite" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/advertise.png" mode="aspectFill"></image>
 			</view>
 			<!-- 承接方 -->
 			<view class="white">

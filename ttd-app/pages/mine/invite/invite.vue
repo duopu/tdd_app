@@ -20,8 +20,8 @@
 			<!-- 规则 -->
 			<view class="rule">
 				<text class="title">两次分佣机会：</text>
-				<view class="message">1、你直接推荐给朋友A，A在平台上下单或接单，你可以得到一笔分佣。</view>
-				<view class="message">2、你推荐的朋友A注册了，A再推荐给他的朋友B，B在平台上下单或接单，你还可以得到一笔分佣。</view>
+				<view class="message">1、您直接推荐给朋友A，A在平台上下单或接单，您可以得到一笔分佣。</view>
+				<view class="message">2、您推荐的朋友A注册了，A再推荐给他的朋友B，B在平台上下单或接单，您还可以得到一笔分佣。</view>
 			</view>
 			<!-- 分享 -->
 			<view class="share flex-center-between">
@@ -113,8 +113,25 @@
 			},
 			// 下载至相册
 			downloadToAlbum() {
-				const downLoadUrl = 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/invite_bg.png'
-				this.downloadAndSaveImage(downLoadUrl);
+				const bgUrl = 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/invite_share_bg.png';
+				const param = {
+					bgImg:bgUrl,
+					picModelList:[
+						{
+							width:350,
+							height:350,
+							type:1,
+							x:200,
+							y:860,
+							content:this.qrCodeImg
+						}
+					]
+				}
+				
+				this.$http.post('/core/upload/composeSharePic',param,true).then(res=>{
+					console.log('上传',res);
+					this.downloadAndSaveImage(res);
+				})
 			},
 			// 图片 下载并保存到相册
 			downloadAndSaveImage(downLoadUrl){
@@ -127,7 +144,7 @@
 							uni.saveImageToPhotosAlbum({
 								filePath: tempFilePath,
 								success: () => {
-									this.$tool.showSuccess('图片已保存至相册，快去分享给您的好友吧！')
+									this.$tool.showSuccess('已保存至相册，快分享给好友吧！')
 								}
 							});
 						} else {

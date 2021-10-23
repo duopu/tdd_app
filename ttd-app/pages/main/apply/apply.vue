@@ -11,21 +11,21 @@
 			<view class="white">
 				<custom-input-row label-text="姓名" :required="true">
 					<input class="input" placeholder-class="input-placeholder" type="text" placeholder="请输入姓名"
-						v-model="name" />
+						:value="name" @input="nameChange" />
 				</custom-input-row>
 				<custom-input-row label-text="手机号码" :required="true">
 					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="number" placeholder="请输入手机号码"
-						v-model="phone" />
+						:value="phone" @input="phoneChange" />
 				</custom-input-row>
 				<custom-input-row label-text="身份证" :required="true">
 					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="idcard" placeholder="请输入身份证号"
-						v-model="idCard" />
+						 :value="idCard" @input="idCardChange" />
 				</custom-input-row>
 			</view>
 			<!-- 简介 -->
 			<view class="title flex-center-start m-top-16">简介</view>
 			<view class="white"><textarea class="profile-text" maxlength="200" placeholder="请输入简介"
-					placeholder-class="input-placeholder" v-model="remark" /></view>
+					placeholder-class="input-placeholder" :value="remark" @input="remarkChange" /></view>
 			<!-- 从业信息 -->
 			<view class="title flex-center-start m-top-16">从业信息</view>
 			<!-- 技能 -->
@@ -63,7 +63,7 @@
 						<view class="text text-ellipis">行业名称：{{item.name}}</view>
 						<view class="describe">履历：{{item.content}}</view>
 					</view>
-					<image src="https://ttd-public.s.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
+					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
 						@click="deleteProject(index)"></image>
 				</view>
 				<button class="btn btn-add" @click="openPopup('projectPopup')">新增项目</button>
@@ -124,28 +124,37 @@
 				toolData: [],
 				// 滚动的位置
 				scrollTop:0,
-				// 保存的tag
-				saveTag: false
 			};
 		},
 		computed: {
-			watchData() {
-				this.name;
-				this.phone;
-				this.idCard;
-				this.remark;
-				this.skillData;
-				this.userroleData;
-				this.projectData;
-				this.toolData;
-				if (this.saveTag) this.saveInfoStorage()
+			approveDetail(){
+				return this.$store.state.approveDetail || {};
 			}
 		},
 		onReady() {
 			this.recoveryInfoStorage()
-			this.saveTag = true;
 		},
 		methods: {
+			// 姓名改变
+			nameChange(e){
+				this.name = e.detail.value;
+				this.saveInfoStorage();
+			},
+			// 手机号改变
+			phoneChange(e){
+				this.phone = e.detail.value;
+				this.saveInfoStorage();
+			},
+			// 身份证号改变
+			idCardChange(e){
+				this.idCard = e.detail.value;
+				this.saveInfoStorage();
+			},
+			// 简介改变
+			remarkChange(e){
+				this.remark = e.detail.value;
+				this.saveInfoStorage();
+			},
 			// 打开弹窗
 			openPopup(refName) {
 				this.$refs[refName].open();
@@ -154,40 +163,48 @@
 			confirmSkillData(data) {
 				this.skillData = [...this.skillData, ...data];
 				this.scrollTopAction('skill')
+				this.saveInfoStorage();
 			},
 			// 删除技能
 			deleteSkill(index) {
 				this.skillData = this.skillData.filter((v, i) => i != index)
+				this.saveInfoStorage();
 			},
 			// 添加人员
 			confirmUserroleData(data) {
 				this.userroleData = [...this.userroleData, ...data];
 				this.scrollTopAction('userrole')
+				this.saveInfoStorage();
 			},
 			// 删除人员
 			deleteSoftwareconf(index) {
 				this.userroleData = this.userroleData.filter((v, i) => i != index)
+				this.saveInfoStorage();
 			},
 			// 添加项目
 			confirmProjectData(data) {
 				this.projectData = [...this.projectData, data]
 				this.scrollTopAction('project')
+				this.saveInfoStorage();
 			},
+			// 删除姓名
 			deleteProject(index) {
 				this.projectData = this.projectData.filter((v, i) => i != index)
+				this.saveInfoStorage();
 			},
 			// 添加工具
 			confirmToolData(data) {
 				this.toolData = [...this.toolData, ...data];
 				this.scrollTopAction('tool')
+				this.saveInfoStorage();
 			},
 			// 删除工具
 			deleteTool(index) {
 				this.toolData = this.toolData.filter((v, i) => i != index)
+				this.saveInfoStorage();
 			},
 			// 提交申请
 			submitApply() {
-				console.log(this.$data);
 				if (!this.name) {
 					this.$tool.showToast('请输入姓名');
 				} else if (!this.phone) {
@@ -257,6 +274,8 @@
 				uni.getStorage({
 					key: config.storageKeys.applyInfoStorage,
 					success: (res) => {
+						console.log('从本地拉出信息成功 ',res);
+						
 						const data = res.data
 						this.name = data.name;
 						this.phone = data.phone;
@@ -268,9 +287,54 @@
 						this.toolData = data.toolData;
 					},
 					fail: () => {
-						const user = this.$store.state.user;
-						this.name = user.name;
-						this.phone = user.phone;
+						console.log('从本地拉出信息失败 ',this.approveDetail);
+						if(this.approveDetail.id){
+							this.name = this.approveDetail.name;
+							this.phone = this.approveDetail.phone;
+							this.idCard = this.approveDetail.idCard;
+							this.remark = this.approveDetail.remark;
+							if(this.approveDetail.skillApplyList){
+								this.skillData = this.approveDetail.skillApplyList.map(s=>{
+									return {
+										id:s.skillId,
+										name:s.nodeLink,
+										brandList:s.brandList
+									}
+								})
+							}
+							if(this.approveDetail.userRoleApplyList){
+								this.userroleData = this.approveDetail.userRoleApplyList.map(u=>{
+									return {
+										softwareconfList:u.softwareList,
+										id:u.userRoleId,
+										name:u.nodeLink
+									}
+								})
+							}
+							
+							if(this.approveDetail.projectApplyList){
+								this.projectData = this.approveDetail.projectApplyList.map(p=>{
+									return {
+										name:p.projectName,
+										content:p.resume
+									}
+								})
+							}
+							
+							if(this.approveDetail.toolApplyList ){
+								this.toolData = this.approveDetail.toolApplyList.map(t=>{
+									return {
+										id:t.toolId,
+										name:t.nodeLink,
+										leaseFlag:t.leaseFlag
+									}
+								})
+							}
+						}else{
+							const user = this.$store.state.user;
+							this.name = user.name;
+							this.phone = user.phone;
+						}
 					}
 				})
 			}

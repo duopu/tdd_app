@@ -35,8 +35,8 @@
 					
 					switch (approveState){
 						case -1:
-						this.tipText = '内测中，接单方先请注册完善技能信息';
-						this.btnText = '去完善';
+						this.tipText = '内测中，接单方先请注册完善技能信息。';
+						this.btnText = '申请成为承接方，去完善';
 						this.navUrl = '/pages/main/apply/apply'
 						break
 						case 0:
