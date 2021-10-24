@@ -90,7 +90,7 @@
 						const param = {
 							appId: config.appId,
 							page: this.page,
-							scene: contentMapId
+							scene: `${contentMapId}`
 						};
 						return this.$http.post('/crm/wechatminiwxa/getWxaCodeUnlimit', param, true);
 					})

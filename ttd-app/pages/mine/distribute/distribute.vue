@@ -58,10 +58,9 @@ export default {
 		scanCodeAction(){
 			uni.scanCode({
 			    success:  (res) =>{
-			        console.log('条码类型：' + res.scanType);
-			        console.log('条码内容：' + res.result);
+			        console.log('条码内容：' + JSON.stringify(res));
 					// 获取映射id
-					const contentMapId = res.result.split('=')[1];
+					const contentMapId = res.path.split('=')[1];
 					console.log('获取映射 id',contentMapId); 
 					// 获取暂存信息
 					this.$http.post('/core/contentmapping/query', { id: contentMapId },true).then(res => {
