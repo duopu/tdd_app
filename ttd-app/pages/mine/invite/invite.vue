@@ -4,8 +4,7 @@
 		<!-- 查看详情 -->
 		<view class="details" @click="watchDetail">查看详情</view>
 		<!-- image text -->
-		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-text4.png" class="image-text"
-			mode="widthFix"></image>
+		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-text4.png" class="image-text" mode="widthFix"></image>
 		<!-- 参加人数 -->
 		<!-- <view class="flex-center number-box">
 			<view class="number">
@@ -16,19 +15,20 @@
 		</view> -->
 		<!-- 内容 -->
 		<view class="content">
-			<image :src="qrCodeImg" mode="aspectFit" class="image-code"></image>
-			<!-- 规则 -->
-			<view class="rule">
-				<text class="title">两次分佣机会：</text>
-				<view class="message">1、您直接推荐给朋友A，A在平台上下单或接单，您可以得到一笔分佣。</view>
-				<view class="message">2、您推荐的朋友A注册了，A再推荐给他的朋友B，B在平台上下单或接单，您还可以得到一笔分佣。</view>
+			<view class="content-top">
+				<image :src="qrCodeImg" mode="aspectFit" class="image-code"></image>
+				<!-- 规则 -->
+				<view class="rule">
+					<text class="title">两次分佣机会：</text>
+					<view class="message">1、您直接推荐给朋友A，A在平台上下单或接单，您可以得到一笔分佣。</view>
+					<view class="message">2、您推荐的朋友A注册了，A再推荐给他的朋友B，B在平台上下单或接单，您还可以得到一笔分佣。</view>
+				</view>
 			</view>
+
 			<!-- 分享 -->
 			<view class="share flex-center-between">
 				<button class="item" open-type="share">
-					<image class="image-item"
-						src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-wx.png"
-						mode="aspectFill"></image>
+					<image class="image-item" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-wx.png" mode="aspectFill"></image>
 					<text>分享到微信</text>
 				</button>
 				<!-- <view class="item flex-1 flex-column-center">
@@ -36,9 +36,7 @@
 						<text>分享到朋友圈</text>
 					</view> -->
 				<view class="item" @click="downloadToAlbum">
-					<image class="image-item"
-						src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-download.png"
-						mode="aspectFill"></image>
+					<image class="image-item" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-download.png" mode="aspectFill"></image>
 					<text>下载至相册</text>
 				</view>
 			</view>
@@ -127,7 +125,7 @@
 						}
 					]
 				}
-				
+
 				this.$http.post('/core/upload/composeSharePic',param,true).then(res=>{
 					console.log('上传',res);
 					this.downloadAndSaveImage(res);
