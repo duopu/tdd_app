@@ -82,32 +82,15 @@
 			};
 		},
 		onLoad(option) {
-			// this.testText = JSON.stringify(option);
+
 			console.log('启动页传参', option);
-			if (option.contentMapId) {
-				this.$http.post('/core/contentmapping/query', {
-					id: option.contentMapId
-				}).then(res => {
-					const data = JSON.parse(res.content);
-					uni.setStorage({
-						key: config.storageKeys.inviteInfoStorage,
-						data
-					});
-				});
-			} else if (option.scene) {
+			if (option.contentMapId) { // 分享小程序 打开获取的参数
+				this.queryContentmapping(option.contentMapId)
+			} else if (option.scene) { // 扫码打开小程序  获取的参数
 				// scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
 				const contentMapId = decodeURIComponent(option.scene)
-				console.log('scene',contentMapId);
-				
-				this.$http.post('/core/contentmapping/query', {
-					id: contentMapId
-				}).then(res => {
-					const data = JSON.parse(res.content);
-					uni.setStorage({
-						key: config.storageKeys.inviteInfoStorage,
-						data
-					});
-				});
+				console.log('scene contentMapId',contentMapId);
+				this.queryContentmapping(contentMapId)
 			}
 		},
 		onReady() {
@@ -118,6 +101,18 @@
 			this.$store.dispatch('queryApproveDetail');
 		},
 		methods: {
+			// 查找映射数据
+			queryContentmapping(contentMapId){
+				this.$http.post('/core/contentmapping/query', {
+					id: contentMapId
+				}).then(res => {
+					const data = JSON.parse(res.content);
+					uni.setStorage({
+						key: config.storageKeys.inviteInfoStorage,
+						data
+					});
+				});
+			},
 			// 查询首页选项数据
 			queryHomeItemData() {
 				const param = {
