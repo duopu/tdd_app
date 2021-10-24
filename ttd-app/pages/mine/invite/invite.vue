@@ -45,130 +45,120 @@
 </template>
 
 <script>
-import config from '../../../utils/config.js';
+	import config from '../../../utils/config.js';
 
-export default {
-	data() {
-		return {
-			qrCodeImg: '',
-			title: '',
-			page: 'pages/home/index/index',
-			scene: ''
-		};
-	},
-	onReady() {
-		this.queryQrcode();
-		this.$tool.actionForLogin();
-	},
-	onShareAppMessage() {
-		const configObj = {
-			title: '妥妥弟邀请您',
-			path: `/${this.page}?${this.scene}`
-		};
-		console.log('分享配置2', configObj);
-		return configObj;
-	},
-	methods: {
-		// 查询用户小程序二维码
-		queryQrcode() {
-			console.log(this.$store.state.user);
-			const user = this.$store.state.user;
-			// 二维码携带参数
-			const mapInfo = {
-				sourceType: 2,
-				shareUserId: user.id,
-				shareUserName: user.name
+	export default {
+		data() {
+			return {
+				qrCodeImg: '',
+				title: '',
+				page: 'pages/home/index/index',
+				scene: ''
 			};
-			this.$http
-				.post(
-					'/core/contentmapping/add',
-					{
+		},
+		onReady() {
+			this.queryQrcode();
+			this.$tool.actionForLogin();
+		},
+		onShareAppMessage() {
+			const configObj = {
+				title: '妥妥弟邀请您',
+				path: `/${this.page}?${this.scene}`
+			}
+			console.log('分享配置2', configObj);
+			return configObj;
+		},
+		methods: {
+			// 查询用户小程序二维码
+			queryQrcode() {
+
+				const user = this.$store.state.user;
+				// 二维码携带参数
+				const mapInfo = {
+					sourceType: 2,
+					shareUserId: user.id,
+					shareUserName: user.name,
+				};
+				this.$http
+					.post('/core/contentmapping/add', {
 						content: JSON.stringify(mapInfo)
-					},
-					true
-				)
-				.then(res => {
-					const contentMapId = res.id;
-					const param = {
-						appId: config.appId,
-						page: this.page,
-						scene: `contentMapId=${contentMapId}`
-					};
-					return this.$http.post('/crm/wechatminiwxa/getWxaCodeUnlimit', param, true);
-				})
-				.then(res => {
-					this.qrCodeImg = res.miniUrl;
-				});
+					}, true)
+					.then(res => {
+						const contentMapId = res.id;
+						const param = {
+							appId: config.appId,
+							page: this.page,
+							scene: contentMapId
+						};
+						return this.$http.post('/crm/wechatminiwxa/getWxaCodeUnlimit', param, true);
+					})
+					.then(res => {
+						this.qrCodeImg = res.miniUrl;
+					});
 
-			// 小程序分享携带参数
-			const mapInfo2 = {
-				sourceType: 3,
-				shareUserId: user.id,
-				shareUserName: user.name
-			};
-			this.$http
-				.post(
-					'/core/contentmapping/add',
-					{
-						content: JSON.stringify(mapInfo2)
-					},
-					true
-				)
-				.then(res => {
+				// 小程序分享携带参数
+				const mapInfo2 = {
+					sourceType: 3,
+					shareUserId: user.id,
+					shareUserName: user.name,
+				};
+				this.$http.post('/core/contentmapping/add', {
+					content: JSON.stringify(mapInfo2)
+				}, true).then(res => {
 					const contentMapId = res.id;
 					this.scene = `contentMapId=${contentMapId}`;
 				});
-		},
-		// 下载至相册
-		downloadToAlbum() {
-			const bgUrl = 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/invite_share_bg.png';
-			const param = {
-				bgImg: bgUrl,
-				picModelList: [
-					{
-						width: 350,
-						height: 350,
-						type: 1,
-						x: 200,
-						y: 860,
-						content: this.qrCodeImg
-					}
-				]
-			};
-
-			this.$http.post('/core/upload/composeSharePic', param, true).then(res => {
-				console.log('上传', res);
-				this.downloadAndSaveImage(res);
-			});
-		},
-		// 图片 下载并保存到相册
-		downloadAndSaveImage(downLoadUrl) {
-			uni.downloadFile({
-				url: downLoadUrl, //仅为示例，并非真实的资源
-				success: res => {
-					if (res.statusCode === 200) {
-						console.log('下载成功');
-						const tempFilePath = res.tempFilePath;
-						uni.saveImageToPhotosAlbum({
-							filePath: tempFilePath,
-							success: () => {
-								this.$tool.showSuccess('已保存至相册，快分享给好友吧！');
-							}
-						});
-					} else {
-						this.$tool.showToast('图片获取失败');
-					}
+			},
+			// 下载至相册
+			downloadToAlbum() {
+				const bgUrl = 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/invite_share_bg.png';
+				const param = {
+					bgImg:bgUrl,
+					picModelList:[
+						{
+							width:350,
+							height:350,
+							type:1,
+							x:200,
+							y:860,
+							content:this.qrCodeImg
+						}
+					]
 				}
-			});
-		},
-		// 查看邀请详情
-		watchDetail() {
-			uni.navigateTo({
-				url: '/pages/mine/distribute/distribute'
-			});
+
+				this.$http.post('/core/upload/composeSharePic',param,true).then(res=>{
+					console.log('上传',res);
+					this.downloadAndSaveImage(res);
+				})
+			},
+			// 图片 下载并保存到相册
+			downloadAndSaveImage(downLoadUrl){
+				uni.downloadFile({
+					url: downLoadUrl, //仅为示例，并非真实的资源
+					success: (res) => {
+						if (res.statusCode === 200) {
+							console.log('下载成功');
+							const tempFilePath = res.tempFilePath;
+							uni.saveImageToPhotosAlbum({
+								filePath: tempFilePath,
+								success: () => {
+									this.$tool.showSuccess('已保存至相册，快分享给好友吧！')
+								}
+							});
+						} else {
+							this.$tool.showToast('图片获取失败')
+						}
+					}
+				});
+			},
+			// 查看邀请详情
+			watchDetail() {
+				uni.navigateTo({
+					url: '/pages/mine/distribute/distribute'
+				});
+			}
 		}
-	}
-};
+	};
 </script>
 
 <style lang="scss" src="./style.scss" lang="scss"></style>
