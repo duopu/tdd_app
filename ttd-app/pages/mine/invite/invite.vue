@@ -73,7 +73,7 @@
 		methods: {
 			// 查询用户小程序二维码
 			queryQrcode() {
-				console.log(this.$store.state.user);
+
 				const user = this.$store.state.user;
 				// 二维码携带参数
 				const mapInfo = {
@@ -90,7 +90,7 @@
 						const param = {
 							appId: config.appId,
 							page: this.page,
-							scene: `contentMapId=${contentMapId}`
+							scene: contentMapId
 						};
 						return this.$http.post('/crm/wechatminiwxa/getWxaCodeUnlimit', param, true);
 					})

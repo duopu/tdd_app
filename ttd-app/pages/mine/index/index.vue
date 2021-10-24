@@ -95,13 +95,15 @@ export default {
 	data() {
 		return {
 			demo: true,
-			userName:'',
 		};
 	},
 	onReady() {
 		this.$tool.actionForLogin();
-		this.userName = this.$store.state.user.name;
-		console.log(this.$store.state.user)
+	},
+	computed:{
+		userName(){
+			return this.$store.state.user.name
+		}
 	},
 	methods:{
 		navInvite(){
