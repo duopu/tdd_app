@@ -4,7 +4,7 @@
 		<!-- 查看详情 -->
 		<view class="details" @click="watchDetail">查看详情</view>
 		<!-- image text -->
-		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-text4.png" class="image-text" mode="widthFix"></image>
+		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/invite-text5.png" class="image-text" mode="widthFix"></image>
 		<!-- 参加人数 -->
 		<!-- <view class="flex-center number-box">
 			<view class="number">

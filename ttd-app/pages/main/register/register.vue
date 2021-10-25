@@ -30,8 +30,24 @@
 					this.inviteInfo = res.data;
 				}
 			})
+			// 获取code
+			this.getAuthCode();
 		},
 		methods: {
+			// 获取code
+			getAuthCode(){
+				uni.login({
+					provider: 'oauth',
+					success: res => {
+						console.log('获取code', res);
+						this.code = res.code;
+					},
+					fail: () => {
+						console.log('faild');
+					},
+					complete: () => {}
+				});
+			},
 			// 注册操作
 			registerAction(data) {
 				if (!this.name) {
@@ -44,39 +60,28 @@
 			},
 			// 用户授权手机号的回调
 			bindgetphonenumber(data) {
-				uni.login({
-					provider: 'oauth',
-					success: res => {
-						console.log('oauth', res);
-						this.code = res.code;
-
-						const info = data.detail;
-						const param = {
-							appId: config.appId,
-							code: this.code,
-							encryptedData: info.encryptedData,
-							iv: info.iv,
-							loginName: this.name,
-							userType: 1,
-							...this.inviteInfo,
-						};
-						this.$http.post('/core/grant/miniPhone', param, true).then(res => {
-							const user = {
-								...res.user,
-								token: res.token
-							}
-							this.$tool.login(user)
-							this.$tool.showToast('注册成功', () => {
-								uni.navigateBack({})
-							})
-						}).catch(err => {
-							this.getAuthCode();
-						});
-					},
-					fail: () => {
-						console.log('faild');
-					},
-					complete: () => {}
+				const info = data.detail;
+				const param = {
+					appId: config.appId,
+					code: this.code,
+					encryptedData: info.encryptedData,
+					iv: info.iv,
+					loginName: this.name,
+					userType: 1,
+					...this.inviteInfo,
+				};
+				this.$http.post('/core/grant/miniPhone', param, true).then(res => {
+					const user = {
+						...res.user,
+						token: res.token
+					}
+					this.$tool.login(user)
+					this.$tool.showToast('注册成功', () => {
+						uni.navigateBack({})
+					})
+				}).catch(err => {
+					this.$tool.showToast('注册错误，请重试一次')
+					this.getAuthCode();
 				});
 			}
 		}
