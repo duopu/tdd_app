@@ -243,6 +243,8 @@
 						this.$tool.showToast('申请已提交，等待管理员审核', () => {
 							uni.navigateBack({})
 						})
+						// 刷新审核状态
+						this.$store.dispatch('queryApproveDetail');
 					})
 				}
 			},
