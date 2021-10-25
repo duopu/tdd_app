@@ -188,8 +188,10 @@
 					placeholderText: this.dictInfo.customPlaceholder,
 					success: (res) => {
 						if (res.confirm) {
-							this.selectNodeList = [{name:res.content}];
-							this.submitAction();
+							if(res.content){
+								this.selectNodeList = [{name:res.content}];
+								this.submitAction();
+							}
 						}
 					}
 				})

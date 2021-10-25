@@ -111,12 +111,14 @@
 				uni.showModal({
 					title: this.dictInfo.customTitle,
 					editable: true,
-					confirmText:this.searchText,
+					content:this.searchText,
 					placeholderText: this.dictInfo.customPlaceholder,
 					success: (res) => {
-						if (res.confirm) {
-							this.selectDataList = [res.content];
-							this.submitAction();
+						if (res.confirm ) {
+							if(res.content){
+								this.selectDataList = [res.content];
+								this.submitAction();
+							}
 						}
 					}
 				})
