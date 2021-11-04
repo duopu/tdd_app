@@ -1,0 +1,15 @@
+.top{
+	padding: 32rpx 20rpx;
+	background-color: $uni-color-primary;
+	::v-deep .custom-menu {
+		.item{
+			color: #EDEDED;
+			&.on{
+				
+			}
+		}
+		 .menu-bar{
+			background-color: #FFFFFF;
+		}
+	}
+}
