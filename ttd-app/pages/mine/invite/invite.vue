@@ -90,7 +90,7 @@
 							page: this.page,
 							scene: `${contentMapId}`
 						};
-						return this.$http.post('/crm/wechatminiwxa/getWxaCodeUnlimit', param, true);
+						return this.$http.post('/core/wechatminiwxa/getWxaCodeUnlimit', param, true);
 					})
 					.then(res => {
 						this.qrCodeImg = res.miniUrl;
