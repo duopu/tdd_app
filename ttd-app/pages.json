@@ -95,6 +95,16 @@
             }
         },
 		{
+		    "path" : "pages/place-order/list/list",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "发单列表",
+				"navigationBarBackgroundColor":"#1059FA",
+				"navigationBarTextStyle":"white",
+		        "enablePullDownRefresh": false
+		    }
+		},
+		{
 			"path":"pages/mine/distribute-users/distribute-users",
 			"style" :
 			{
