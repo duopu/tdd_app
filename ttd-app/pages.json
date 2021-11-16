@@ -24,14 +24,6 @@
             }
         }
         ,{
-            "path" : "pages/order/index/index",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "订单",
-                "enablePullDownRefresh": false
-            }
-        }
-        ,{
             "path" : "pages/place-order/index/index",
             "style" :                                                                                    
             {
@@ -123,12 +115,6 @@
 				"selectedIconPath": "static/tabbars/home-s.png",
 				"text": "首页",
 				"pagePath": "pages/home/index/index"
-			},
-			{
-				"iconPath": "static/tabbars/order.png",
-				"selectedIconPath": "static/tabbars/order-s.png",
-				"text": "订单",
-				"pagePath": "pages/order/index/index"
 			},
 			{
 				"iconPath": "static/tabbars/place.png",
