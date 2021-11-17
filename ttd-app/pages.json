@@ -113,6 +113,39 @@
       "path": "pages/mine/myIntegral/myIntegral",
       "style": {
         "navigationBarTitleText": "我的积分",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/myWallet/myWallet",
+      "style": {
+        "navigationBarTitleText": "我的钱包",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/myBankCard/myBankCard",
+      "style": {
+        "navigationBarTitleText": "我的银行卡",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/bankAccount/bankAccount",
+      "style": {
+        "navigationBarTitleText": "银行账户",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/myComplain/myComplain",
+      "style": {
+        "navigationBarTitleText": "我的投诉",
+        "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
     }

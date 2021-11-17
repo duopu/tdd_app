@@ -2,7 +2,7 @@
   <view class="back-container">
     <view class="container-header" :style="{minHeight: headerHeight + 'rpx'}">
       <slot name="headerSlot">
-        <!--  demo <view v-slot:headerSlot><view>headerSlot</view></view>-->
+        <!-- demo <template v-slot:headerSlot><view>headerSlot</view></template> -->
       </slot>
     </view>
     <view class="container-body" :style="{minHeight: bodyHeight + 'rpx'}">
@@ -27,20 +27,6 @@ export default {
       type: Number,
       default: 17
     },
-    // 顶部深色区域样式
-    headerStyle: {
-      type: Object,
-      default() {
-        return {}
-      }
-    },
-    // 白色区域样式
-    bodyStyle: {
-      type: Object,
-      default() {
-        return {}
-      }
-    }
   }
 }
 </script>

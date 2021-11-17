@@ -41,7 +41,7 @@
                    class="image-item"></image>
             <text class="text text-ellipis">我的优惠券</text>
           </view>
-          <view class="item three flex-1 flex-column-center">
+          <view class="item three flex-1 flex-column-center" @click="toWallet">
             <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/my_icon_wallet.png"
                    class="image-item"></image>
             <text class="text text-ellipis">我的钱包</text>
@@ -118,8 +118,9 @@ export default {
         { title: '积分商城', url: '' },
         { title: '我的服务地址', url: '/pages/mine/addressManage/addressManage' },
         { title: '实名认证', url: '' },
-        { title: '我的银行卡', url: '' },
+        { title: '我的银行卡', url: '/pages/mine/myBankCard/myBankCard' },
         { title: '发票信息', url: '' },
+        { title: '发票投诉-临时', url: '/pages/mine/myComplain/myComplain' },
       ]
     }
   },
@@ -131,6 +132,9 @@ export default {
     },
     toPage(row) {
       uni.navigateTo({ url: row.url })
+    },
+    toWallet() {
+      uni.navigateTo({ url: `/pages/mine/myWallet/myWallet` })
     }
   }
 };

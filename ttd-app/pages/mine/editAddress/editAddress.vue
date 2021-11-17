@@ -115,7 +115,7 @@ export default {
     }
   }
 
-  /deep/ .input-placeholder {
+  /deep/.input-placeholder {
     font-size: 28rpx;
     font-family: PingFang SC-Regular, PingFang SC;
     font-weight: 400;
