@@ -17,6 +17,10 @@ Vue.prototype.$store = store
 // 注入tool
 Vue.prototype.$tool = tool
 
+import CustomNavBar from './components/custom-navbar/custom-navbar.vue';
+Vue.component('custom-navbar', CustomNavBar); // 自定义navbar
+
+
 const app = new Vue({
 	...App
 })
