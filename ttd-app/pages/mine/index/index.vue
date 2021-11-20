@@ -121,6 +121,8 @@ export default {
         { title: '我的银行卡', url: '/pages/mine/myBankCard/myBankCard' },
         { title: '发票信息', url: '' },
         { title: '发票投诉-临时', url: '/pages/mine/myComplain/myComplain' },
+        { title: '发票发票-临时', url: '/pages/mine/myInvoice/myInvoice' },
+        { title: '发票抬头-临时', url: '/pages/mine/chooseLookUp/chooseLookUp' },
       ]
     }
   },

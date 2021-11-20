@@ -148,6 +148,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/mine/myInvoice/myInvoice",
+      "style": {
+        "navigationBarTitleText": "我的发票",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/chooseLookUp/chooseLookUp",
+      "style": {
+        "navigationBarTitleText": "选择抬头",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {
