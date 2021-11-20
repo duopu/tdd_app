@@ -33,6 +33,7 @@
       "path": "pages/receive-order/index/index",
       "style": {
         "navigationBarTitleText": "接单",
+        "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
     },
