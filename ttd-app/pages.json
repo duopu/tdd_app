@@ -198,8 +198,32 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
-    }
+    },
     /*我的 - end */
+    {
+      "path": "pages/receive-order/offer/offer",
+      "style": {
+        "navigationBarTitleText": "报价",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/receive-order/incomeDistribute/incomeDistribute",
+      "style": {
+        "navigationBarTitleText": "收益分配",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/receive-order/offerDetail/offerDetail",
+      "style": {
+        "navigationBarTitleText": "报价详情",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    }
   ],
   "tabBar": {
     "backgroundColor": "#FFFFFF",

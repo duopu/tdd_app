@@ -66,6 +66,18 @@
         </template>
       </view>
 
+
+      <view class="mm-3 mm-4">
+        <template v-for="(i, index) in menuList">
+          <view class="mm-31" @click="toPage(i)" :key="i.url">
+            <image class="mm-32" :src="i.img" />
+            <view class="mm-33">{{ i.title }}</view>
+            <uni-icons type="arrowright" color="#BDBDBD" size="16" />
+          </view>
+          <view class="mm-35" v-if="index < (menuList.length - 1)" />
+        </template>
+      </view>
+
     </view>
 
 
@@ -235,6 +247,9 @@ export default {
         { title: '我的优惠券-临时', url: '/pages/mine/myCoupons/myCoupons' },
         { title: '实名认证-临时', url: '/pages/mine/realNameAuth/realNameAuth' },//
         { title: '帮助中心-临时', url: '/pages/mine/helpCenter/helpCenter' }, //
+        { title: '报价-临时', url: '/pages/receive-order/offer/offer' },
+        { title: '收益分配-临时', url: '/pages/receive-order/incomeDistribute/incomeDistribute' },
+        { title: '报价详情-临时', url: '/pages/receive-order/offerDetail/offerDetail' },
       ]
     }
   },
