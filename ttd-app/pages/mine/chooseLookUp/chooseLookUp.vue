@@ -33,9 +33,5 @@ export default {
 }
 </style>
 <style lang="scss">
-page {
-  background-color: #ECEDF9;
-  max-height: 100vh;
-  overflow-y: scroll;
-}
+@import "../addressManage/_pageStyle.scss";
 </style>

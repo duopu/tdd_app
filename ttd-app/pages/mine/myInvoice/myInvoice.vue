@@ -32,7 +32,7 @@ export default {
   components: { InvoiceInfoCard, InvoiceCard, BlueTab, BackContainer },
   data() {
     return {
-      activeKey: '3',
+      activeKey: '1',
       tabList: [
         { text: '已开票', key: '1' },
         { text: '开票中', key: '2' },

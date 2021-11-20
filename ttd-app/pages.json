@@ -164,6 +164,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/mine/editInvoice/editInvoice",
+      "style": {
+        "navigationBarTitleText": "发票信息添加",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/myCoupons/myCoupons",
+      "style": {
+        "navigationBarTitleText": "我的优惠券",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {

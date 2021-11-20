@@ -123,6 +123,8 @@ export default {
         { title: '发票投诉-临时', url: '/pages/mine/myComplain/myComplain' },
         { title: '发票发票-临时', url: '/pages/mine/myInvoice/myInvoice' },
         { title: '发票抬头-临时', url: '/pages/mine/chooseLookUp/chooseLookUp' },
+        { title: '发票信息添加-临时', url: '/pages/mine/editInvoice/editInvoice' },
+        { title: '我的优惠券-临时', url: '/pages/mine/myCoupons/myCoupons' },
       ]
     }
   },
