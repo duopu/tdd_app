@@ -206,4 +206,96 @@
       }
     }
   }
+
+  .mine-middle {
+    box-sizing: border-box;
+    margin: -84rpx 24rpx 0 24rpx;
+    width: 706rpx;
+
+    .mm-1 {
+      display: flex;
+      justify-content: space-between;
+      height: 180rpx;
+      background: #FFFFFF;
+      border-radius: 16rpx;
+      padding: 32rpx 78rpx;
+      box-sizing: border-box;
+
+      .mm-11 {
+        .mm-12 {
+          font-size: 52rpx;
+          font-family: PingFang SC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #4F4F4F;
+          line-height: 64rpx;
+          text-align: center;
+        }
+        .mm-14 {
+          color: #FF3B30;
+
+          .mm-15 {
+            padding-left: 6rpx;
+            font-size: 20rpx;
+          }
+        }
+        .mm-13 {
+          text-align: center;
+          font-size: 28rpx;
+          font-family: PingFang SC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #4F4F4F;
+          line-height: 36rpx;
+          margin-top: 16rpx;
+
+        }
+      }
+    }
+
+    .mm-2 {
+      margin: 24rpx 0;
+      width: 704rpx;
+      height: 160rpx;
+      border-radius: 16rpx;
+      border: 1rpx solid red; // TODO  替换正式图片之后将 border 删掉
+    }
+
+    .mm-3 {
+      margin-top: 24rpx;
+      background: #FFFFFF;
+      padding: 16rpx 0;
+      border-radius: 16rpx;
+
+      .mm-31 {
+        width: 706rpx;
+        height: 89rpx;
+        display: flex;
+        align-items: center;
+        padding: 0 32rpx;
+        box-sizing: border-box;
+
+        .mm-32 {
+          width: 48rpx;
+          height: 48rpx;
+          margin-right: 16rpx;
+        }
+        .mm-33 {
+          flex: 1;
+          background-color: white;
+        }
+      }
+
+      .mm-35 {
+        background-color: #EBEDF0;
+        height: 1rpx;
+        width: calc(100% - 52rpx);
+        margin-left: 52rpx;
+        box-sizing: border-box;
+      }
+    }
+
+    .mm-4 {
+      margin-bottom: 120rpx;
+    }
+
+  }
 }

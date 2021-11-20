@@ -93,6 +93,7 @@
         "enablePullDownRefresh": false
       }
     },
+    /*我的 - begin */
     {
       "path": "pages/mine/addressManage/addressManage",
       "style": {
@@ -197,6 +198,7 @@
         "enablePullDownRefresh": false
       }
     }
+    /*我的 - end */
   ],
   "tabBar": {
     "backgroundColor": "#FFFFFF",
