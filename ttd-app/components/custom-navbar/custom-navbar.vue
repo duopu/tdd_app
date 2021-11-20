@@ -3,7 +3,10 @@
     <view class="navbar-top">
       <view class="bar1" :style="{height: statusBarHeight + 'px'}"></view>
       <view class="bar2" :style="{height: navbarHeight + 'px'}">
-        <uni-icons type="arrowleft" class="back" color="#FFFFFF" size="20" @click="back" />
+        <view>
+          <uni-icons v-if="showLeftIcon && hasBack" type="arrowleft" class="back" color="#FFFFFF" size="20" @click="back" />
+          <uni-icons v-if="showLeftIcon && !hasBack" type="home-filled" class="back to-home" color="#FFFFFF" size="20" @click="toHome" />
+        </view>
         <view class="title">{{ title }}</view>
         <view class="empty" />
       </view>
@@ -32,6 +35,11 @@ export default {
       type: Function,
       default: undefined
     },
+    // 是否显示左上角按钮
+    showLeftIcon: {
+      type: Boolean,
+      default: true,
+    }
   },
   methods: {
     back() {
@@ -42,6 +50,10 @@ export default {
         if (pages?.length < 2) return uni.switchTab({ url: '/pages/home/index/index' }); // 当前路由栈没有页面 返回首页
         uni.navigateBack(); // 默认返回上一页
       }
+    },
+    // 跳转首页
+    toHome() {
+      uni.switchTab({ url: '/pages/home/index/index' });
     }
   },
   computed: {
@@ -59,6 +71,12 @@ export default {
       let height = systemInfo.platform == 'ios' ? 44 : 48;
       return this.height ? this.height : height;
       // #endif
+    },
+
+    // 当前页面是否有上一页
+    hasBack() {
+      let pages = getCurrentPages();
+      return pages?.length > 1
     }
   }
 }
@@ -77,6 +95,10 @@ export default {
 
   .back {
     padding-left: 10rpx;
+  }
+
+  .to-home {
+    padding-left: 20rpx;
   }
 
   .title {

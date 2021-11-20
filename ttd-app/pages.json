@@ -180,6 +180,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/mine/realNameAuth/realNameAuth",
+      "style": {
+        "navigationBarTitleText": "实名认证",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/helpCenter/helpCenter",
+      "style": {
+        "navigationBarTitleText": "帮助中心",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {
