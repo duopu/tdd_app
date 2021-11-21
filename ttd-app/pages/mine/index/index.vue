@@ -257,6 +257,8 @@ export default {
         { title: '我的团队-详情-临时', url: '/pages/receive-order/viewMyTeam/viewMyTeam' },
         { title: '团队详情-临时', url: '/pages/receive-order/teamDetail/teamDetail' },
         { title: '接单设置-临时', url: '/pages/receive-order/orderToSet/orderToSet' },
+        { title: '选择人员-临时', url: '/pages/receive-order/selectPerson/selectPerson' },
+        { title: '人员详情-临时', url: '/pages/receive-order/peopleDetail/peopleDetail' },
       ]
     }
   },

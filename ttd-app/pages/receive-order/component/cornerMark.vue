@@ -1,11 +1,15 @@
 <template>
-  <view class="corner-mark" :style="{backgroundColor: color}">{{ num }}</view>
+  <view class="corner-mark" :class="className" :style="{backgroundColor: color}">{{ num }}</view>
 </template>
 <script>
 export default {
   name: "cornerMark",
   props: {
     num: {
+      type: String,
+      default: ''
+    },
+    className: {
       type: String,
       default: ''
     },

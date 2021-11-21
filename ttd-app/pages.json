@@ -271,6 +271,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/receive-order/selectPerson/selectPerson",
+      "style": {
+        "navigationBarTitleText": "选择人员",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/receive-order/peopleDetail/peopleDetail",
+      "style": {
+        "navigationBarTitleText": "人员详情",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {
