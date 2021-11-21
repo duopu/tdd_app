@@ -1,7 +1,7 @@
 <template>
   <view class="offer-head">
     <view class="oh-title">{{ title }}</view>
-    <view class="oh-text">订单编号：{{ text }}</view>
+    <view class="oh-text">{{ text }}</view>
   </view>
 </template>
 <script>
@@ -14,7 +14,7 @@ export default {
     },
     text: {
       type: String,
-      default: '19089786675643'
+      default: '订单编号：19089786675643'
     },
   }
 }
@@ -26,6 +26,7 @@ export default {
   height: 162rpx;
   box-sizing: border-box;
   padding: 32rpx 48rpx;
+
   .oh-title {
     font-size: 36rpx;
     font-family: PingFang SC-Medium, PingFang SC;
@@ -33,6 +34,7 @@ export default {
     color: #FFFFFF;
     line-height: 42rpx;
   }
+
   .oh-text {
     font-size: 24rpx;
     margin-top: 12rpx;

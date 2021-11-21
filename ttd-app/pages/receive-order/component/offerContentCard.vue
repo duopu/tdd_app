@@ -4,9 +4,9 @@
       <image :src="MDicon4" class="oc-card-img" />
       <view class="oc-middle">
         <view class="oc-middle-title">实施</view>
-        <view class="oc-middle-text">技能：服务器</view>
-        <view class="oc-middle-text">品牌/型号：华为/p30</view>
-        <view class="oc-middle-text">数量：100</view>
+        <view class="oc-middle-text" v-for="i in specItem" :key="i.label">
+          {{ i.label }} {{ i.value }}
+        </view>
       </view>
 
       <view class="oc-right-set" v-if="rightType == '2'">设置报价</view>
@@ -36,10 +36,20 @@ export default {
       type: Boolean,
       default: false
     },
-    // 右边区域类型  1 修改按钮+价格   2 设置报价  3 分配金额
+    // 右边区域类型 0 不显示按钮区域 1 修改按钮+价格   2 设置报价  3 分配金额
     rightType: {
       type: String,
       default: '1'
+    },
+    specItem: {
+      type: Array,
+      default() {
+        return [
+          { label: '技能：', value: '服务器' },
+          { label: '品牌/型号：', value: '华为/p30' },
+          { label: '数量：', value: '100' },
+        ]
+      }
     }
   },
   data() {

@@ -102,7 +102,5 @@ export default {
 }
 </style>
 <style lang="scss">
-page {
-  background-color: #ECEDF9;
-}
+@import "../../mine/addressManage/_pageStyle.scss";
 </style>

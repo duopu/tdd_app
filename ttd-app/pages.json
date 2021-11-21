@@ -200,6 +200,8 @@
       }
     },
     /*我的 - end */
+
+    // 接单 begin
     {
       "path": "pages/receive-order/offer/offer",
       "style": {
@@ -300,6 +302,17 @@
       "path": "pages/receive-order/changeRecord/changeRecord",
       "style": {
         "navigationBarTitleText": "变更记录",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    // 接单 end
+
+    // 发单 begin
+    {
+      "path": "pages/place-order/receiptOrderZy/receiptOrderZy",
+      "style": {
+        "navigationBarTitleText": "发单子页",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
