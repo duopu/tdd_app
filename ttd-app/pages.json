@@ -239,6 +239,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/receive-order/myTeam/myTeam",
+      "style": {
+        "navigationBarTitleText": "我的团队",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/receive-order/viewMyTeam/viewMyTeam",
+      "style": {
+        "navigationBarTitleText": "查看我的团队",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {

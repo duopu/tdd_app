@@ -252,6 +252,9 @@ export default {
         { title: '报价详情-临时', url: '/pages/receive-order/offerDetail/offerDetail' },
         { title: '申请开始工作-临时', url: '/pages/receive-order/applyBeginWork/applyBeginWork' },
         { title: '投诉-临时', url: '/pages/receive-order/complaint/complaint' },
+        { title: '投诉-临时', url: '/pages/receive-order/complaint/complaint' },
+        { title: '我的团队-临时', url: '/pages/receive-order/myTeam/myTeam' },
+        { title: '我的团队-详情-临时', url: '/pages/receive-order/viewMyTeam/viewMyTeam' },
       ]
     }
   },
