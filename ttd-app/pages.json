@@ -255,6 +255,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/receive-order/teamDetail/teamDetail",
+      "style": {
+        "navigationBarTitleText": "团队详情",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/receive-order/orderToSet/orderToSet",
+      "style": {
+        "navigationBarTitleText": "接单设置",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {

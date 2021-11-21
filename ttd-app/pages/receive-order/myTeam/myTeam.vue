@@ -27,12 +27,7 @@
   import TeamListItem from "./teamListItem";
   export default {
 		name: "myTeam",
-    components: { TeamListItem, MemberTitle, EarningNums, TeamCard, BackContainer },
-    data() {
-			return {
-				
-			};
-		}
+    components: { TeamListItem, MemberTitle, EarningNums, TeamCard, BackContainer }
 	}
 </script>
 <style lang="scss" scoped>

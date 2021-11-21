@@ -50,6 +50,7 @@ export default {
     .icon-style {
 
     }
+
     .member-right-text {
       font-size: 28rpx;
       font-family: PingFang SC-Regular, PingFang SC;

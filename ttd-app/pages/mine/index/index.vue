@@ -255,6 +255,8 @@ export default {
         { title: '投诉-临时', url: '/pages/receive-order/complaint/complaint' },
         { title: '我的团队-临时', url: '/pages/receive-order/myTeam/myTeam' },
         { title: '我的团队-详情-临时', url: '/pages/receive-order/viewMyTeam/viewMyTeam' },
+        { title: '团队详情-临时', url: '/pages/receive-order/teamDetail/teamDetail' },
+        { title: '接单设置-临时', url: '/pages/receive-order/orderToSet/orderToSet' },
       ]
     }
   },

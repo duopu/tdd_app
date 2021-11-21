@@ -1,0 +1,139 @@
+<template>
+  <view class="edit-team" v-if="visible">
+
+    <uni-icons size="26" class="edit-team-close" @click="hide" type="close" color="#FFFFFF" />
+
+    <view class="edit-team-box">
+
+      <view class="edit-team-title">团队信息</view>
+
+      <view class="edit-team-add">
+        <uni-icons size="44" type="plusempty" color="#BDBDBD" />
+      </view>
+
+      <view class="edit-team-name">
+        <input class="edit-team-input" placeholder="请输入团队名称" placeholder-class="input-placeholder" />
+      </view>
+
+      <view class="edit-team-intro">
+        <textarea class="edit-team-intro-dt" placeholder="请输入团队介绍" />
+      </view>
+
+      <view class="edit-team-btn" @click="hide">保存</view>
+
+    </view>
+  </view>
+</template>
+<script>
+export default {
+  name: "editTeam",
+  data() {
+    return {
+      visible: false
+    }
+  },
+  methods: {
+    show() {
+      this.visible = true;
+    },
+    hide() {
+      this.visible = false;
+    }
+  }
+}
+</script>
+<style scoped lang="scss">
+.edit-team {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 750rpx;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  @include flexCenter;
+  flex-direction: column;
+
+  .edit-team-close {
+    margin: 0 64rpx 32rpx 64rpx;
+    align-self: flex-end;
+  }
+
+  .edit-team-box {
+    width: 622rpx;
+    height: 772rpx;
+    background: #FFFFFF;
+    border-radius: 32rpx;
+    padding: 48rpx;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .edit-team-title {
+      font-size: 36rpx;
+      font-family: PingFang SC-Medium, PingFang SC;
+      font-weight: 500;
+      color: #323335;
+      line-height: 44rpx;
+    }
+
+    .edit-team-add {
+      width: 200rpx;
+      height: 200rpx;
+      background: #F3F4F5;
+      border-radius: 200rpx;
+      @include flexCenter;
+      margin: 32rpx;
+    }
+
+    .edit-team-name {
+      box-sizing: border-box;
+      padding: 26rpx 32rpx;
+      width: 462rpx;
+      height: 88rpx;
+      background: #F3F4F5;
+      border-radius: 8rpx;
+      margin: 0 auto;
+
+      .edit-team-input {
+
+      }
+    }
+
+    .edit-team-intro {
+      width: 462rpx;
+      box-sizing: border-box;
+      padding: 32rpx;
+      height: 128rpx;
+      background: #F3F4F5;
+      border-radius: 8rpx;
+      margin: 32rpx auto 48rpx auto;
+
+      .edit-team-intro-dt {
+        width: 398rpx;
+        height: 72rpx;
+      }
+    }
+
+    .edit-team-btn {
+      width: 526rpx;
+      height: 72rpx;
+      background: linear-gradient(181deg, #3340A0 0%, #2C3580 94%);
+      border-radius: 50rpx;
+      @include flexCenter;
+      font-size: 28rpx;
+      font-family: PingFang SC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #FFFFFF;
+    }
+  }
+
+  /deep/ .input-placeholder, /deep/ .textarea-placeholder {
+    font-size: 28rpx;
+    font-family: PingFang SC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #BDBDBD;
+  }
+}
+</style>

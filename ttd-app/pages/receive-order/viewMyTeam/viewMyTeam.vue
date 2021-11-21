@@ -11,12 +11,12 @@
 
     </back-container>
 
-    <view class="my-team">
+    <view class="view-my-team">
       <member-title />
       <team-list-item v-for="i in 2" :key="i" :show-del-btn="false" />
     </view>
 
-    <view class="my-team">
+    <view class="view-my-team view-my-team-bom">
       <member-title :show-right="false" title="评价" />
       <evaluate-card v-for="i in 2" :key="i" />
     </view>
@@ -40,9 +40,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.my-team {
+.view-my-team {
   background-color: white;
   margin: 32rpx 0 0 0;
+}
+
+.view-my-team-bom {
+  margin-bottom: 100rpx;
 }
 </style>
 <style lang="scss">

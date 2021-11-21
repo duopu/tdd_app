@@ -4,7 +4,7 @@
     <view class="team-card-dtl">
       <view class="team-card-1">
         <text class="team-card-name">大湾区哥哥</text>
-        <uni-icons size="18" v-if="showEdit" class="icon-sty" type="compose" color="#FFFFFF" />
+        <uni-icons size="18" v-if="showEdit" @click="edit" class="icon-sty" type="compose" color="#FFFFFF" />
         <uni-icons size="18" v-if="showView" class="icon-sty" type="list" color="#FFFFFF" />
         <uni-icons size="18" v-if="showSetting" class="icon-sty" type="gear-filled" color="#FFFFFF" />
       </view>
@@ -14,13 +14,17 @@
       <view class="team-card-dtl">我躺在床上看天花板，想着我工作的天花板，只是别人的地板只是别人的地板只是别人的地板。(文字最多两行，多了截掉……)</view>
 
     </view>
+
+    <edit-team ref="editTeam" />
   </view>
 </template>
 <script>
 import MDicon from '../../../static/mine/MDicon.png';
+import EditTeam from "./editTeam";
 
 export default {
   name: "teamCard",
+  components: { EditTeam },
   data() {
     return {
       MDicon
@@ -39,6 +43,11 @@ export default {
       type: Boolean,
       default: true
     },
+  },
+  methods: {
+    edit() {
+      this.$refs.editTeam.show();
+    }
   }
 }
 </script>

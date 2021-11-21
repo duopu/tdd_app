@@ -1,5 +1,6 @@
 <template>
   <view class="my-star">
+    <!-- 满星 -->
     <uni-icons :size="size"
                v-for="i in fullNum"
                :key="i"
@@ -8,6 +9,7 @@
                color="#FF9500"
     />
 
+    <!-- 半星 -->
     <uni-icons :size="size"
                class="star-i star-half"
                type="starhalf"
@@ -15,6 +17,7 @@
                color="#FF9500"
     />
 
+    <!-- 空星 -->
     <uni-icons :size="size"
                v-for="i in emptyNum"
                :key="i"
@@ -23,31 +26,41 @@
                color="#FF9500"
     />
 
-    <text class="my-star-num">{{ num }} fullNum:{{fullNum}} halfNum:{{halfNum}}  emptyNum:{{emptyNum}} 分</text>
+    <text class="my-star-num" v-if="showScore">{{ num }} 分</text>
   </view>
 </template>
 <script>
 export default {
   name: "myStar",
   props: {
+    // 星星分数 默认 2.5
     num: {
       type: Number,
-      default: 0.1
+      default: 2.5
     },
+    // 星星大小
     size: {
       type: String,
-      default: '14'
+      default: '15'
     },
+    // 是否 显示分数
+    showScore: {
+      type: Boolean,
+      default: true
+    }
   },
   computed: {
+    // 满星数量
     fullNum() {
       return parseInt(this.num)
     },
+    // 是否有半星
     halfNum() {
-      return (this.num - this.fullNum) >= 0
+      return (this.num - this.fullNum) > 0
     },
+    // 空星个数
     emptyNum() {
-      return 4 - this.fullNum
+      return (this.halfNum ? 4 : 5) - this.fullNum
     }
   }
 }
@@ -59,15 +72,6 @@ export default {
 
   .star-i {
     margin-left: 6rpx;
-  }
-  .star-full {
-
-  }
-  .star-half {
-
-  }
-  .star-empty {
-
   }
 
   .my-star-num {
