@@ -30,14 +30,32 @@
       <view class="pd-header-info">意大利民事保护部门24日发布的数据显示，意大利当天新增新冠死亡病例420例，是3月18日以来最低日增幅，累计死亡病例25969例。</view>
     </view>
 
+    <view class="pd-skill" v-for="i in 3" :key="i">
+      <member-title :show-right="false" title="技能" />
+      <view class="pd-skill-item" v-for="i in 3" :key="i">
+        <view class="pd-skill-it1">金鱼{{ i }}</view>
+        <view class="pd-skill-it2">
+          <text class="pd-skill-it3" v-for="i in ['技能', '技能1', '技能2']" :key="i">{{ i }}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="pd-comment">
+      <member-title :show-right="false" title="评价" />
+      <evaluate-card v-for="i in 2" :key="i" />
+    </view>
+
   </view>
 </template>
 <script>
 import trophyIcon from '../../../static/mine/trophy-icon.svg';
 import MDicon from '../../../static/mine/MDicon.png';
+import MemberTitle from "../myTeam/memberTitle";
+import EvaluateCard from "../myTeam/evaluateCard";
 
 export default {
   name: "peopleDetail",
+  components: { EvaluateCard, MemberTitle },
   data() {
     return {
       trophyIcon,
@@ -148,6 +166,45 @@ export default {
     line-height: 48rpx;
     margin-top: 32rpx;
   }
+}
+
+.pd-skill {
+  background-color: white;
+  margin-top: 32rpx;
+  .pd-skill-item {
+    margin-left: 32rpx;
+    border-bottom: 1rpx solid #EBEDF0;
+    padding-bottom: 24rpx;
+    &:nth-last-child(1){
+      border: none;
+    }
+
+    .pd-skill-it1 {
+      font-size: 28rpx;
+      font-family: PingFang SC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #323335;
+      line-height: 36rpx;
+      margin: 28rpx 0 20rpx 0;
+    }
+    .pd-skill-it2 {
+      display: inline-flex;
+      flex-flow: row wrap;
+      .pd-skill-it3 {
+        margin-right: 16rpx;
+        min-width: 72rpx;
+        height: 40rpx;
+        border-radius: 8rpx;
+        @include flexCenter;
+        border: 2rpx solid #EDEDED;
+      }
+    }
+  }
+}
+
+.pd-comment {
+  background-color: white;
+  margin: 32rpx 0;
 }
 </style>
 <style lang="scss">

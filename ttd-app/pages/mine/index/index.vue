@@ -259,6 +259,8 @@ export default {
         { title: '接单设置-临时', url: '/pages/receive-order/orderToSet/orderToSet' },
         { title: '选择人员-临时', url: '/pages/receive-order/selectPerson/selectPerson' },
         { title: '人员详情-临时', url: '/pages/receive-order/peopleDetail/peopleDetail' },
+        { title: '人员变更-临时', url: '/pages/receive-order/personChange/personChange' },
+        { title: '变更记录-临时', url: '/pages/receive-order/changeRecord/changeRecord' },
       ]
     }
   },

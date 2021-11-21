@@ -287,6 +287,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/receive-order/personChange/personChange",
+      "style": {
+        "navigationBarTitleText": "人员变更",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/receive-order/changeRecord/changeRecord",
+      "style": {
+        "navigationBarTitleText": "变更记录",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {

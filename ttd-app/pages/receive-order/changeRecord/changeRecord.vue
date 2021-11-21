@@ -1,0 +1,190 @@
+<template>
+  <view>
+    <custom-navbar title="变更记录" />
+
+    <back-container>
+      <view class="root-box">
+        <view class="cr-item-box" v-for="i in 3" :key="i">
+          <view class="cr-item">
+            <view class="cr-item-l">
+              <image :src="MDicon" class="cr-item-lp" />
+              <view class="cr-item-line" />
+              <image :src="MDicon" class="cr-item-lp" />
+            </view>
+
+            <view class="cr-item-r">
+              <view class="cr-item-r1">
+                <view class="cr-item-r11">变更后人员</view>
+                <view
+                    class="cr-item-r12"
+                    :class="{'cr-item-orange': i == 2, 'cr-item-red': i == 1}"
+                >已通过
+                </view>
+              </view>
+
+              <view class="cr-item-r2">2021-10-06 18:46</view>
+
+              <view class="cr-item-r3">
+                <view class="cr-item-r31" v-for="i in 4" :key="i">
+                  <image :src="MDicon" class="cr-item-r32" />
+                  <view class="cr-item-r33">孙慧</view>
+                </view>
+              </view>
+
+              <view class="cr-item-r1">
+                <view class="cr-item-r11 cr-item-r11-pre">之前人员</view>
+              </view>
+            </view>
+          </view>
+
+          <view class="cr-item-r3 cr-item-r8">
+            <view class="cr-item-r31" v-for="i in 4" :key="i">
+              <image :src="MDicon" class="cr-item-r32" />
+              <view class="cr-item-r33">孙慧</view>
+            </view>
+          </view>
+
+        </view>
+      </view>
+    </back-container>
+
+  </view>
+</template>
+
+<script>
+import BackContainer from "../../mine/addressManage/component/backContainer";
+import MDicon from '../../../static/mine/MDicon.png';
+
+export default {
+  name: "changeRecord",
+  components: { BackContainer },
+  data() {
+    return {
+      MDicon
+    };
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+
+.root-box {
+  background-color: #ECEDF9;
+}
+
+.cr-item-box {
+  margin-bottom: 32rpx;
+  background-color: white;
+}
+
+.cr-item {
+  display: flex;
+  padding: 32rpx 0 0 32rpx;
+
+  .cr-item-l {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .cr-item-lp {
+      width: 48rpx;
+      height: 48rpx;
+      flex-shrink: 0;
+      border-radius: 100%;
+      border: 1rpx solid #2C3580;
+    }
+
+    .cr-item-line {
+      height: 100%;
+      width: 1rpx;
+      background-color: #EDEDED;
+    }
+  }
+
+  .cr-item-r {
+    flex: 1;
+    padding: 0 32rpx 0 16rpx;
+
+    .cr-item-r1 {
+      @include flexBetween;
+
+      .cr-item-r11 {
+        font-size: 32rpx;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        line-height: 40rpx;
+        color: #2C3580;
+      }
+
+      .cr-item-r11-pre {
+        padding: 32rpx 0 8rpx 0;
+      }
+
+      .cr-item-r12 {
+        padding: 0 16rpx;
+        height: 48rpx;
+        background: #34C759;
+        border-radius: 8rpx;
+        font-size: 28rpx;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        @include flexCenter;
+      }
+
+      .cr-item-orange {
+        background: #FF9500;
+      }
+
+      .cr-item-red {
+        background: #FF3B30;
+      }
+    }
+
+    .cr-item-r2 {
+      font-size: 28rpx;
+      font-family: PingFang SC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #969799;
+      line-height: 36rpx;
+      margin: 16rpx 0 32rpx 0;
+    }
+  }
+}
+
+.cr-item-r3 {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: wrap row;
+  border-bottom: 1rpx solid #ECEDF9;
+
+  .cr-item-r31 {
+    width: 128rpx;
+
+    .cr-item-r32 {
+      width: 128rpx;
+      height: 128rpx;
+      border-radius: 8rpx;
+    }
+
+    .cr-item-r33 {
+      font-size: 28rpx;
+      font-family: PingFang SC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #323232;
+      line-height: 36rpx;
+      text-align: center;
+      padding: 16rpx 0 34rpx 0;
+    }
+  }
+}
+
+.cr-item-r8 {
+  padding: 36rpx 34rpx 0 96rpx;
+}
+</style>
+
+<style lang="scss">
+@import "../../mine/addressManage/_pageStyle.scss";
+</style>
