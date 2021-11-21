@@ -250,6 +250,8 @@ export default {
         { title: '报价-临时', url: '/pages/receive-order/offer/offer' },
         { title: '收益分配-临时', url: '/pages/receive-order/incomeDistribute/incomeDistribute' },
         { title: '报价详情-临时', url: '/pages/receive-order/offerDetail/offerDetail' },
+        { title: '申请开始工作-临时', url: '/pages/receive-order/applyBeginWork/applyBeginWork' },
+        { title: '投诉-临时', url: '/pages/receive-order/complaint/complaint' },
       ]
     }
   },

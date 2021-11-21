@@ -223,6 +223,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/receive-order/applyBeginWork/applyBeginWork",
+      "style": {
+        "navigationBarTitleText": "申请开始工作",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/receive-order/complaint/complaint",
+      "style": {
+        "navigationBarTitleText": "投诉",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {
