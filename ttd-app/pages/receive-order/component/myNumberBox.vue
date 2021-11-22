@@ -1,7 +1,7 @@
 <template>
   <view class="number-box">
     <text class="nb-btn nb-btn-plus">-</text>
-    <input class="nb-input" v-model="newValue" />
+    <input class="nb-input" v-model="value1" />
     <text class="nb-btn nb-btn-minus">+</text>
   </view>
 </template>
@@ -12,9 +12,14 @@ export default {
     prop: 'value',
     event: 'change'
   },
-  computed:{
-    newValue() {
-
+  // computed:{
+  //   newValue() {
+  //     return 1
+  //   }
+  // },
+  data()  {
+    return {
+      value1: 9
     }
   },
   methods: {
@@ -47,6 +52,7 @@ export default {
     height: 56rpx;
     margin: 0 4rpx;
     background: #F2F3F4;
+    text-align: center;
   }
 }
 </style>

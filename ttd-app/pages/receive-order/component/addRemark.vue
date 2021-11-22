@@ -1,21 +1,40 @@
 <template>
   <view>
-    <view class="offer-3">备注：</view>
+    <view class="offer-3">
+      {{ label }}
+      <red-star v-if="required" />
+    </view>
+
     <view class="offer-4">
       <textarea
           class="offer-6"
           :value="value" @input="input"
           placeholder-class="placeholder-class"
-          placeholder="可以的话，多少写点！\n 方便工作人员快速排队故障。"
+          :placeholder="placeholder"
       />
     </view>
   </view>
 </template>
 <script>
+import RedStar from "./redStar";
+
 export default {
   name: "addRemark",
+  components: { RedStar },
   props: {
-    value: ''
+    value: {
+      type: String,
+      default: ''
+    },
+    label: {
+      type: String,
+      default: '备注：'
+    },
+    required: Boolean,
+    placeholder: {
+      type: String,
+      default: '可以的话，多少写点！\n 方便工作人员快速排队故障。'
+    },
   },
   methods: {
     input(e) {
