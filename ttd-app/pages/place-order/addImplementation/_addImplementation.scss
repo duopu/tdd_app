@@ -1,0 +1,77 @@
+.add-im {
+  .add-imple {
+    box-sizing: border-box;
+    padding: 15rpx 0 0 32rpx;
+
+    .add-i-item {
+      display: flex;
+      align-items: center;
+      height: 88rpx;
+      padding-right: 32rpx;
+
+      &:not(:nth-last-child(1)) {
+        border-bottom: 1rpx solid #EBEDF0;
+      }
+
+      .add-i-lable {
+        flex-shrink: 0;
+        font-size: 28rpx;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #323335;
+      }
+
+      .add-i-midle {
+        margin-left: auto;
+        font-size: 28rpx;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #BDBDBD;
+        text-align: right;
+      }
+
+      .add-i-unit {
+        font-size: 28rpx;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #828282;
+        padding-left: 8rpx;
+      }
+
+      .add-i-right {
+        padding-left: 18rpx;
+      }
+    }
+  }
+
+  /deep/ .input-placeholder {
+    font-size: 28rpx;
+    font-family: PingFang SC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #BDBDBD;
+  }
+}
+
+.add-i-aline {
+  margin-left: 32rpx;
+  height: 1rpx;
+  background-color: #EAECEF;
+}
+
+.up-list {
+  padding: 32rpx;
+  display: flex;
+  flex-flow: wrap row;
+}
+
+.up-list1 {
+  padding-bottom: 16rpx;
+}
+
+.add-im-tips {
+  font-size: 24rpx;
+  font-family: PingFang SC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #828282;
+  padding: 16rpx 32rpx;
+}

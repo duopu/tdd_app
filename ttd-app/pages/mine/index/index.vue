@@ -263,6 +263,13 @@ export default {
         { title: '变更记录-临时', url: '/pages/receive-order/changeRecord/changeRecord' },
         { title: '发单子页-临时', url: '/pages/place-order/receiptOrderZy/receiptOrderZy' },
         { title: '添加实施工作-临时', url: '/pages/place-order/addImplementation/addImplementation' },
+        { title: '添加勘设工作-临时', url: '/pages/place-order/addCanBeSetWork/addCanBeSetWork' },
+        { title: '添加人员工作-临时', url: '/pages/place-order/addPersonWork/addPersonWork' },
+        { title: '添加租赁工作-临时', url: '/pages/place-order/addLeaseWork/addLeaseWork' },
+        { title: '添加软件开发-临时', url: '/pages/place-order/addSoftwareDevelop/addSoftwareDevelop' },
+
+        { title: '发单主页-临时', url: '/pages/place-order/placeOrder/placeOrder' },
+        { title: '发单列表-临时', url: '/pages/place-order/placeOrderList/placeOrderList' },
       ]
     }
   },

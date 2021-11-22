@@ -242,5 +242,5 @@ export default {
 }
 </style>
 <style lang="scss">
-@import "../../mine/addressManage/_pageStyle.scss";
+  @import "../../mine/addressManage/_pageStyle.scss";
 </style>

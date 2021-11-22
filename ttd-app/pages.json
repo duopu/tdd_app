@@ -324,6 +324,54 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/place-order/addCanBeSetWork/addCanBeSetWork",
+      "style": {
+        "navigationBarTitleText": "添加勘设工作",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/place-order/addPersonWork/addPersonWork",
+      "style": {
+        "navigationBarTitleText": "添加人员工作",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/place-order/addLeaseWork/addLeaseWork",
+      "style": {
+        "navigationBarTitleText": "添加租赁工作",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/place-order/addSoftwareDevelop/addSoftwareDevelop",
+      "style": {
+        "navigationBarTitleText": "添加软件开发",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/place-order/placeOrder/placeOrder",
+      "style": {
+        "navigationBarTitleText": "发单主页",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/place-order/placeOrderList/placeOrderList",
+      "style": {
+        "navigationBarTitleText": "发单列表",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {
