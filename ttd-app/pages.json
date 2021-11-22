@@ -316,6 +316,14 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/place-order/addImplementation/addImplementation",
+      "style": {
+        "navigationBarTitleText": "添加实施工作",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {

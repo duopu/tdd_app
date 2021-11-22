@@ -262,6 +262,7 @@ export default {
         { title: '人员变更-临时', url: '/pages/receive-order/personChange/personChange' },
         { title: '变更记录-临时', url: '/pages/receive-order/changeRecord/changeRecord' },
         { title: '发单子页-临时', url: '/pages/place-order/receiptOrderZy/receiptOrderZy' },
+        { title: '添加实施工作-临时', url: '/pages/place-order/addImplementation/addImplementation' },
       ]
     }
   },
