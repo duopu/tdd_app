@@ -1,16 +1,16 @@
 <template>
   <view class="address-item">
-    <name-header :style="{margin: '32rpx 20rpx 32rpx 32rpx'}" text="李" />
+    <name-header :style="{margin: '32rpx 20rpx 32rpx 32rpx'}" :text="address.name.split(0, 1)" />
     <view class="item-right">
       <view class="item-right1">
         <view class="item-right1-1">
-          <view class="item-default">默认</view>
-          <view class="item-right1-12">吴静</view>
-          <view class="item-right1-13">13492777304</view>
+          <view class="item-default" v-if="address.defaultFlag == 1" >默认</view>
+          <view class="item-right1-12">{{  address.name }}</view>
+          <view class="item-right1-13">{{ address.phone }}</view>
         </view>
-        <view class="item-right1-2">上海市嘉定区马陆镇丰饶路600号</view>
+        <view class="item-right1-2">{{ address.province + address.city + address.district + address.address}}</view>
       </view>
-      <uni-icons class="item-right3" type="compose" size="30" color="#828282" @click="$emit('rightClick')" />
+      <uni-icons class="item-right3" type="compose" size="30" color="#828282" @click="$emit('rightClick', address.id)" />
       <uni-icons class="item-right3" type="arrowright" size="18" color="#BDBDBD" />
     </view>
   </view>
@@ -20,7 +20,25 @@ import NameHeader from "./nameHeader";
 
 export default {
   name: "addressItem",
-  components: { NameHeader }
+  components: { NameHeader },
+	props: {
+		address: {
+			address: '',
+			city: '',
+			cityId: 0,
+			customerId: '',
+			defaultFlag: 0,
+			district: '',
+			districtId: 0,
+			id: 0,
+			latitude: 0,
+			longitude: 0,
+			name: '',
+			phone: '',
+			province: '',
+			provinceId: 0,
+		}
+	}
 }
 </script>
 <style scoped lang="scss">

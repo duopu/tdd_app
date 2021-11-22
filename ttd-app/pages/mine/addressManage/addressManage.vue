@@ -2,26 +2,41 @@
   <view class="address-manage">
     <custom-navbar title="地址管理" />
     <back-container>
-      <view>
-        <address-item v-for="i in 5" :key="i" @rightClick="rightClick" />
-      </view>
-    </back-container>
+	  <view>
+		<address-item v-for="(item, index) in addressList" :key="index" :address="item" @rightClick="rightClick" />
+	  </view>
+	</back-container>
   </view>
 </template>
 
 <script>
-import BackContainer from "./component/backContainer";
-import AddressItem from "./component/addressItem";
+import config from '../../../utils/config.js';
+import BackContainer from './component/backContainer';
+import AddressItem from './component/addressItem';
 
 export default {
   components: { AddressItem, BackContainer },
   data() {
-    return {};
+	  return {
+	    addressList: []
+	  };
+  },
+  onReady() {},
+  onShow() {
+	this.queryAddressData();
   },
   methods: {
-    rightClick() {
-      uni.navigateTo({ url: `/pages/mine/editAddress/editAddress?id=${123}` })
-    }
+	  rightClick(id) {
+	    uni.navigateTo({ url: `/pages/mine/editAddress/editAddress?id=${id}` });
+	  },
+	  queryAddressData() {
+	    this.$http.post('/b/customeraddress/queryPageList', {
+			  pageSize: 1000,
+			  }, true)
+		  .then(res => {
+		    this.addressList = res.dataList;
+		  })
+	  }
   }
 }
 </script>
