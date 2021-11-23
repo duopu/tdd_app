@@ -372,6 +372,14 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/place-order/choosePrice/choosePrice",
+      "style": {
+        "navigationBarTitleText": "选价",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {

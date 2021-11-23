@@ -270,6 +270,7 @@ export default {
 
         { title: '发单主页-临时', url: '/pages/place-order/placeOrder/placeOrder' },
         { title: '发单列表-临时', url: '/pages/place-order/placeOrderList/placeOrderList' },
+        { title: '选价-临时', url: '/pages/place-order/choosePrice/choosePrice' },
       ]
     }
   },
