@@ -26,12 +26,22 @@ export default {
   data() {
     return {
       activeKey: 1,
+			complainList: [],
     };
   },
+	onReady() {
+		this.queryComplainList();
+	},
   methods: {
     change(data) {
       this.activeKey = data;
-    }
+    },
+		queryComplainList() {
+			this.$http.post('/b/ordercomplain/queryPageList', { state: 0 }, true)
+			.then(res => {
+			  this.complainList = res.dataList;
+			})
+		},
   }
 }
 </script>

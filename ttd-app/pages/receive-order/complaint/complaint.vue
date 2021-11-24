@@ -7,8 +7,8 @@
       <view class="complaint">
         <view class="complaint-text">评价内容：</view>
         <view class="complaint-content">
-          可以的话，多少写点！
-          方便工作人员快速排队故障。可以的话，多少写点！方便工作人员快速排队故障。
+					<input :value="content" @input="onInput()" placeholder="可以的话，多少写点！\n方便工作人员快速排队故障。可以的话，多少写点！方便工作人员快速排队故障。" />
+          
         </view>
 
         <upload-list upload-text="添加照片" upload-icon="image" :img-list="[1, 2]" />
@@ -17,7 +17,7 @@
     </back-container>
 
     <iphonex-bottom>
-      <big-btn />
+      <big-btn  @click="commitComplaint()"/>
     </iphonex-bottom>
 
 	</view>
@@ -32,8 +32,28 @@
     components: { UploadList, BigBtn, IphonexBottom, BackContainer },
     data() {
 			return {
-				
+				content: '',
+				imageList: [],
 			};
+		},
+		methods: {
+			onInput(e) {
+				this.content = e.target.value;
+			},
+			commitComplaint() {
+				const params = {
+					detail: this.content,
+				};
+				this.$http.post('/b/ordercomplain/add', params, true)
+				.then(res => {
+				  uni.showToast({
+				  	title: '投诉已提交',
+						success: () => {
+						uni.navigateBack({});
+						},
+				  });
+				})
+			}
 		}
 	}
 </script>
