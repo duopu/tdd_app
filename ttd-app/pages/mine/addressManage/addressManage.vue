@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import config from '../../../utils/config.js';
 import BackContainer from './component/backContainer';
 import AddressItem from './component/addressItem';
 

@@ -1,17 +1,17 @@
 <template>
   <view class="my-wallet">
-    <custom-navbar title="我的积分" />
+    <custom-navbar title="我的钱包" />
     <back-container>
       <template v-slot:headerSlot>
         <view class="wallet-top">
           <view class="wallet-rule">查看提现规则</view>
           <view class="wallet-top-num">
             我的余额
-            <uni-icons type="eye-slash-filled" class="eye-slash-filled" size="16" color="#ffffff" />
+            <uni-icons type="eye-slash-filled" class="eye-slash-filled" size="16" color="#ffffff" @click="changeShowBalanceType()"/>
           </view>
           <view class="wallet-top-ac">
-            <view class="wallet-top-number">2343</view>
-            <view class="wallet-top-btn">提现</view>
+            <view class="wallet-top-number">{{ showBalance ? balance : '***'}}</view>
+            <view class="wallet-top-btn" @click="withdrawMoney()">提现</view>
           </view>
         </view>
       </template>
@@ -23,13 +23,15 @@
           <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" />
         </view>
 
-        <view class="wallet-detail-item" v-for="i in 3" :key="i">
+        <view class="wallet-detail-item" v-for="(item, index) in balanceList" :key="index">
           <view class="wallet-detail-item-left">
-            <view class="wallet-item-left1">新用户注册</view>
-            <view class="wallet-item-left2">+ 800</view>
+            <view class="wallet-item-left1">{{ item.title }}</view>
+            <view class="wallet-item-left2">
+						{{ `${item.inOutType == 1 ? '+': '-'} ${item.inOutType == 1 ? item.inMoney : item.payMoney }`}}
+						</view>
           </view>
           <view class="wallet-detail-item-right">
-            <view class="wallet-item-right1">2021-06-26 02:17</view>
+            <view class="wallet-item-right1">{{ item.addTime }}</view>
             <view class="wallet-item-right2">交易成功</view>
           </view>
         </view>
@@ -48,6 +50,42 @@ import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-ic
 export default {
   name: 'myWallet',
   components: { UniIcons, BottomOperate, IphonexBottom, BackContainer },
+	data() {
+	  return {
+	    balance: 0,
+			balanceList: [],
+			showBalance: true,
+	  };
+	},
+	onReady() {},
+	onShow() {
+		this.queryBalanceInfo();
+		this.queryBalanceList();
+	},
+	methods: {
+	  queryBalanceInfo() {
+			this.$http.post('/b/account/queryBalance', { }, true)
+			.then(res => {
+			  this.balance = res.balance;
+			})
+	  },
+		queryBalanceList() {
+			this.$http.post('/b/account/queryBookKeepPageList', { pageSize: 5 }, true)
+			.then(res => {
+			  this.balanceList = res.dataList;
+			})
+		},
+		changeShowBalanceType() {
+			this.showBalance = !this.showBalance;
+		},
+		// 提现申请
+		withdrawMoney() {
+			this.$http.post('/b/account/withdrawApply', { }, true)
+			.then(res => {
+			  uni.showToast({ title: '申请提现成功' })
+			})
+		}
+	},
 }
 </script>
 <style lang="scss" scoped>

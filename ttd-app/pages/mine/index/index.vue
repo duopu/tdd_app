@@ -31,7 +31,7 @@
           <view class="mm-12">3</view>
           <view class="mm-13">我的优惠券</view>
         </view>
-        <view class="mm-11">
+        <view class="mm-11" @click="toPage({url: '/pages/mine/myWallet/myWallet'})">
           <view class="mm-12 mm-14">
             <text>12</text>
             <text class="mm-15">00</text>
