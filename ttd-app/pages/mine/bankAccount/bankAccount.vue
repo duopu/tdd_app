@@ -16,12 +16,12 @@
 
         <view class="bank-ac-item">
           <view class="bank-ac-lable">户名</view>
-          <input class="bank-ac-midle" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="bank-ac-midle" :value="householderName" @input="(e) => onInput(e, 'name')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="bank-ac-item">
           <view class="bank-ac-lable">卡号</view>
-          <input class="bank-ac-midle" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="bank-ac-midle" :value="bankCardNo" @input="(e) => onInput(e, 'number')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
       </view>
@@ -41,16 +41,112 @@ import BottomOperate from "../addressManage/component/bottomOperate";
 export default {
   name: 'bankAccount',
   components: { BottomOperate, IphonexBottom, BackContainer },
+	data() {
+		return {
+			id: 0,
+			bankName: '',
+			bankCardNo: '',
+			householderName: '',
+			bankList: [],
+		}
+	},
+	onLoad(option) {
+		if (option.id) { // 编辑地址
+		  this.id = Number(option.id);
+			this.queryCardInfo(this.id);
+		}
+	},
+	onReady() {
+		this.queryBankList();
+	},
   methods: {
-    rightClick() {
-      console.log(123);
-    },
-    operateSave() {
-      console.log('operateSave');
-    },
-    operateDel() {
-      console.log('operateDel');
-    },
+		queryBankList() {
+			this.$http
+				.post('/core/bankCard/getBankNameList', { }, true)
+				.then(res => {
+					this.bankList = res;
+				})
+		},
+		queryCardInfo(id) {
+			this.$http
+				.post('/b/customerbank/query', { id }, true)
+				.then(res => {
+					this.bankName = res.bankName;
+					this.bankCardNo = res.bankCardNo;
+					this.householderName = res.householderName;
+				})
+		},
+		onInput(event, type) {
+			if (type == 'name') {
+				this.householderName = event.target.value;		
+			} else if (type == 'number') {
+				this.bankCardNo = event.target.value;	
+			}
+		},
+		checkParams() {
+			if (!this.bankName) {
+				uni.showToast({ title:  '请选择开户行', icon:  'none' });
+				return false;
+			}
+			if (!this.householderName) {
+				uni.showToast({ title:  '请输入户名', icon:  'none' });
+				return false;
+			}
+			if (!this.bankCardNo) {
+				uni.showToast({ title:  '请输入卡号', icon:  'none' });
+				return false;
+			}
+			return true;
+		},
+		// 新增/编辑地址
+		operateSave() {
+			
+			if (!this.checkParams()) return;
+			
+			const params  = {
+				id: this.id,
+				bankName: this.bankName,
+				bankCardNo: this.bankCardNo,
+				householderName: this.householderName,
+			};
+			
+			const url = `/b/customerbank/${this.id ? 'update' : 'add'}`; 
+			
+			this.$http
+				.post(url, params, true)
+				.then(res => {
+					uni.showToast({
+						title: '编辑成功',
+					  success: () => {
+						uni.navigateBack({});
+					  },
+					});
+				})
+		},
+		// 删除地址
+		operateDel() {
+			
+			uni.showModal({
+				content: '是否删除该银行卡?',
+				success: (res) => {
+					if (res.confirm) {
+					  this.deleleCard();
+					}
+				}
+			})
+		},
+		deleleCard() {
+			this.$http
+				.post('/b/customerbank/delete', { id: this.id }, true)
+				.then(res => {
+					uni.showToast({
+						title: '删除成功',
+					  success: () => {
+						uni.navigateBack({});
+					  },
+					});
+				})
+		},
   }
 }
 </script>

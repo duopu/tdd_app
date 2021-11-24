@@ -4,12 +4,12 @@
 
     <back-container>
       <view class="bc-center">
-        <view class="bc-item" v-for="i in 4" :key="i" @click="toAccount">
+        <view class="bc-item" v-for="(item, i) in cardList" :key="i" @click="toAccount">
           <image src="http://jycrm.bm001.com/favicon.png" class="bc-left"></image>
           <view class="bc-midle">
-            <view class="bc-midle-name">吴静</view>
-            <view class="bc-midle-bank-name">开户行：交通银行栖霞分行</view>
-            <view class="bc-midle-bank-name">银行卡号：8514 3788 7815 4518</view>
+            <view class="bc-midle-name">{{ item.householderName }}</view>
+            <view class="bc-midle-bank-name">开户行：{{ item.bankName }}</view>
+            <view class="bc-midle-bank-name">银行卡号：{{ item.bankCardNo }}</view>
           </view>
           <uni-icons v-if="i === 1" type="circle-filled" size="22" color="#FF3B30" />
           <uni-icons v-else-if="i === 2" type="arrowright" size="22" color="#969799" />
@@ -26,10 +26,25 @@ import BackContainer from "../addressManage/component/backContainer";
 export default {
   name: 'myBankCard',
   components: { BackContainer },
+	data() {
+		return {
+			cardList: [],
+		}
+	},
+	onReady() {},
+	onShow() {
+		this.queryCardList();
+	},
   methods: {
     toAccount() {
       uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount` })
-    }
+    },
+		queryCardList() {
+			this.$http.post('/b/customerbank/queryPageList', { pageSize: 1000 }, true)
+			.then(res => {
+			  this.cardList = res.dataList;
+			})
+		},
   }
 }
 </script>
