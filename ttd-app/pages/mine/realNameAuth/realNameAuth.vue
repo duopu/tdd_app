@@ -9,7 +9,7 @@
         <view class="rn-middle" />
         <view class="rn-end">
           <view class="rn-end-text">身份证人像面</view>
-          <view class="rn-end-face">
+          <view class="rn-end-face" @click="chooseImage(1)">
             <image :src="IDcardFace" class="rn-end-img" />
             <view class="take-photo">
               <image :src="takePhotoIcon" class="take-photo-img" />
@@ -17,7 +17,7 @@
             </view>
           </view>
           <view class="rn-end-text">身份证国徽面</view>
-          <view class="rn-end-face">
+          <view class="rn-end-face" @click="chooseImage(2)">
             <image :src="IDcardBack" class="rn-end-img" />
             <view class="take-photo">
               <image :src="takePhotoIcon" class="take-photo-img" />
@@ -30,7 +30,7 @@
     </back-container>
 
     <iphonex-bottom>
-      <big-btn @click="click" />
+      <big-btn @click="commitAuth" />
     </iphonex-bottom>
   </view>
 </template>
@@ -53,10 +53,50 @@ export default {
       IDcardBack,
     };
   },
+	onReady() {},
+	onShow() {
+		this.queryAuthInfo();
+	},
   methods: {
-    click() {
-      console.log('click');
-    }
+		queryAuthInfo() {
+			this.$http.post('/b/customerrealauth/query', { }, true)
+			.then(res => {
+			  // uni.showToast({ title: '申请提现成功' })
+			})
+		},
+		chooseImage(index) {
+			uni.chooseImage({
+			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			    success: (res) => {
+							const path = res.tempFilePaths[0];
+							this.uploadImage(index, path);
+			    }
+			});
+		},
+		uploadImage(index, path) {
+			const param = {
+				file: path,
+			};
+			this.$http.upload({ path }, true)
+			.then(res=>{
+				if (index == 1) {
+					this.IDcardFace = res;
+				} else {
+					this.IDcardBack = res;
+				}
+			});
+		},
+		commitAuth() {
+			const params = {
+				faceImage: '',
+				faceIdcardImage: '',
+				backIdcardImage: '',
+			}
+		  this.$http.post('/b/customerrealauth/realAuth', params, true)
+		  .then(res => {
+		    uni.showToast({ title: '实名认证已提交' });
+		  })
+		},
   }
 }
 </script>
