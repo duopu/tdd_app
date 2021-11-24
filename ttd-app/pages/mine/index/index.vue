@@ -9,7 +9,7 @@
         <image :src="IDcardBack" class="mt-11" />
         <view class="mt-12">
           <text class="mt-14">晚上好，坡先生</text>
-          <view class="mt-15">
+          <view class="mt-15" @click="toPage({url: '/pages/mine/myIntegral/myIntegral'})">
             <text class="mt-16">我的积分：2890</text>
             <uni-icons type="arrowright" class="mt-17" color="rgba(256, 256, 256, 0.2)" size="14" />
           </view>

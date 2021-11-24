@@ -30,9 +30,7 @@ export default {
 	    uni.navigateTo({ url: `/pages/mine/editAddress/editAddress?id=${id}` });
 	  },
 	  queryAddressData() {
-	    this.$http.post('/b/customeraddress/queryPageList', {
-			  pageSize: 1000,
-			  }, true)
+	    this.$http.post('/b/customeraddress/queryPageList', { pageSize: 1000 }, true)
 		  .then(res => {
 		    this.addressList = res.dataList;
 		  })

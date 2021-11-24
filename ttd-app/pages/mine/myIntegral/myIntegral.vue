@@ -6,25 +6,25 @@
         <view class="integral-top">
           <view class="integral-top-num">积分</view>
           <view class="integral-top-ac">
-            <view class="integral-top-number">2343</view>
+            <view class="integral-top-number">{{ balance }}</view>
             <view class="integral-top-btn">积分商城</view>
           </view>
         </view>
       </template>
 
       <view class="integral-center">
-        <view class="integral-item">
+        <view class="integral-item" @click="toIntegralListPage()">
           <view class="edit-lable">收支明细</view>
           <view class="edit-midle">查看更多</view>
           <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" />
         </view>
 
-        <view class="detail-item" v-for="i in 3" :key="i">
+        <view class="detail-item" v-for="(item, index) in integralList" :key="index">
           <view class="detail-item-left">
-            <view class="item-left1">注册登录</view>
-            <view class="item-left2">2021-05-17 03:25</view>
+            <view class="item-left1">{{ showIntegralType(item.type) }}</view>
+            <view class="item-left2">{{ item.addTime }}</view>
           </view>
-          <view class="detail-item-right" :class="i === 1 ? 'detail-item-right-minus' : ''">+ 800</view>
+          <view class="detail-item-right" :class="i === 1 ? 'detail-item-right-minus' : ''">{{ `${item.actNum ? '+ ' : ''}${item.actNum}`}}</view>
         </view>
       </view>
     </back-container>
@@ -50,6 +50,46 @@ import BottomOperate from "../addressManage/component/bottomOperate";
 export default {
   name: 'myIntegral',
   components: { BottomOperate, IphonexBottom, BackContainer },
+	data() {
+	  return {
+	    balance: 0,
+			integralList: [],
+	  };
+	},
+	onReady() {},
+	onShow() {
+		this.queryIntegralInfo();
+		this.queryIntegralList();
+	},
+	methods: {
+	  queryIntegralInfo() {
+			this.$http.get('/b/integral/query', { }, true)
+			.then(res => {
+			  this.balance = res.balance;
+			})
+	  },
+		queryIntegralList() {
+			this.$http.post('/b/integralrecord/queryPageList', { pageSize: 5 }, true)
+			.then(res => {
+			  this.integralList = res.dataList;
+			})
+		},
+		showIntegralType(t) {
+			if (t == 1) {
+				return '签到';
+			} else if (t == 2) {
+				return '订单';
+			} else if (t == 3) {
+				return '订单抵扣';
+			} else if (t == 4) {
+				return '手动赠送';
+			}
+			return '';
+		},
+		toIntegralListPage() {
+			uni.navigateTo({ url: '/pages/mine/addressManage/addressManage' })
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>
