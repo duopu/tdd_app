@@ -30,7 +30,7 @@
     </back-container>
 
     <iphonex-bottom>
-      <big-btn @click="commitAuth" />
+      <big-btn @click="commitAuth()" />
     </iphonex-bottom>
   </view>
 </template>
