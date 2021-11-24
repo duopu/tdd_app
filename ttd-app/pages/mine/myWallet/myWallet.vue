@@ -57,11 +57,11 @@ export default {
 			showBalance: true,
 	  };
 	},
-	onReady() {},
-	onShow() {
+	onReady() {
 		this.queryBalanceInfo();
 		this.queryBalanceList();
 	},
+	onShow() {},
 	methods: {
 	  queryBalanceInfo() {
 			this.$http.post('/b/account/queryBalance', { }, true)

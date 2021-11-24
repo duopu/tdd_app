@@ -56,11 +56,11 @@ export default {
 			integralList: [],
 	  };
 	},
-	onReady() {},
-	onShow() {
+	onReady() {
 		this.queryIntegralInfo();
 		this.queryIntegralList();
 	},
+	onShow() {},
 	methods: {
 	  queryIntegralInfo() {
 			this.$http.get('/b/integral/query', { }, true)
