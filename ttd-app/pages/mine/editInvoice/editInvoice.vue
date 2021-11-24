@@ -7,32 +7,32 @@
       <view class="edit-in-addr">
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">公司名称</view>
-          <input class="edit-in-ac-midle" placeholder="请务必输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle" :value="name" @input="(e) => onInput(e, 'name')" placeholder="请务必输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">统一税号</view>
-          <input class="edit-in-ac-midle" placeholder="请务必输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle" :value="dutyNo" @input="(e) => onInput(e, 'duty')" placeholder="请务必输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">单位地址</view>
-          <input class="edit-in-ac-midle" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle" :value="address" @input="(e) => onInput(e, 'address')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">开户银行</view>
-          <input class="edit-in-ac-midle" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle" :value="openingBank" @input="(e) => onInput(e, 'bank')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">银行帐户</view>
-          <input class="edit-in-ac-midle" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle" :value="bankAccount" @input="(e) => onInput(e, 'account')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="up-box">
           <view class="up-box-title">营业执照</view>
-          <view class="up-box-area">
+          <view class="up-box-area" @click="chooseImage()">
             <view class="up-box-center">
               <image class="up-box-center-image" :src="addImage" />
               <view class="up-box-center-text">添加照片</view>
@@ -61,18 +61,147 @@ export default {
   data() {
     return {
       addImage,
+			id: 0,
+			name: '',
+			phone: '',
+			dutyNo: '',
+			address: '',
+			openingBank: '',
+			bankAccount: '',
+			businessLicense: '',
     }
   },
+	onLoad(option) {
+		if (option.id) { // 编辑地址
+		  this.id = Number(option.id);
+			this.queryInvoiceInfo(this.id);
+		}
+	},
   methods: {
-    rightClick() {
-      console.log(123);
-    },
+		queryInvoiceInfo(id) {
+			this.$http
+				.post('/b/customerinvoiceinfo/query', { id }, true)
+				.then(res => {
+					this.name = res.name;
+					this.phone = res.phone;
+					this.dutyNo = res.dutyNo;
+					this.address = res.address;
+					this.openingBank = res.openingBank;
+					this.bankAccount = res.bankAccount;
+					this.businessLicense = res.businessLicense;
+				})
+		},
+		onInput(e, type) {
+			const text = e.target.value;
+			if (type == 'name') {
+				this.name = text;
+			} else if (type == 'duty') {
+				this.dutyNo = text;
+			} else if (type == 'address') {
+				this.address = text;
+			} else if (type == 'bank') {
+				this.openingBank = text;
+			} else if (type == 'account') {
+				this.bankAccount = text;
+			}
+		},
+		chooseImage() {
+			uni.chooseImage({
+			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			    success: (res) => {
+							const path = res.tempFilePaths[0];
+							this.uploadImage(path);
+			    }
+			});
+		},
+		uploadImage(path) {
+			const param = {
+				file: path,
+			};
+			this.$http.upload({ path }, true)
+			.then(res=>{
+				this.businessLicense = res;
+			});
+		},
+		checkParams() {
+			if (!this.name) {
+				uni.showToast({ title:  '请输入公司名称', icon:  'none' });
+				return false;
+			}
+			if (!this.dutyNo) {
+				uni.showToast({ title:  '请输入统一税号', icon:  'none' });
+				return false;
+			}
+			if (!this.address) {
+				uni.showToast({ title:  '请输入单位地址', icon:  'none' });
+				return false;
+			}
+			if (!this.openingBank) {
+				uni.showToast({ title:  '请输入开户银行', icon:  'none' });
+				return false;
+			}
+			if (!this.bankAccount) {
+				uni.showToast({ title:  '请输入银行帐户', icon:  'none' });
+				return false;
+			}
+			if (!this.businessLicense) {
+				uni.showToast({ title:  '请选择营业执照', icon:  'none' });
+				return false;
+			}
+			return true;
+		},
+		// 新增/编辑发票
     operateSave() {
-      console.log('operateSave');
+			
+			if (!this.checkParams()) return;
+			
+			const params  = {
+				id: this.id,
+				name: this.name,
+				phone: this.phone,
+				dutyNo: this.dutyNo,
+				address: this.address,
+				openingBank: this.openingBank,
+				bankAccount: this.bankAccount,
+				businessLicense: this.businessLicense,
+			};
+			
+			const url = `/b/customerinvoiceinfo/${this.id ? 'update' : 'add'}`; 
+			
+			this.$http
+				.post(url, params, true)
+				.then(res => {
+					uni.showToast({
+						title: '编辑成功',
+					  success: () => {
+						uni.navigateBack({});
+					  },
+					});
+				})
     },
+		// 删除发票信息
     operateDel() {
-      console.log('operateDel');
+      uni.showModal({
+      	content: '是否删除发票?',
+      	success: (res) => {
+					if (res.confirm) {
+      		  this.deleleInvoice();
+					}
+      	},
+      })
     },
+		deleleInvoice() {
+			this.$http
+				.post('/b/customerinvoiceinfo/delete', { id: this.id }, true)
+				.then(res => {
+					uni.showToast({
+						title: '删除成功',
+					  success: () => {
+						uni.navigateBack({});
+					  },
+					});
+				})
+		},
   }
 }
 </script>

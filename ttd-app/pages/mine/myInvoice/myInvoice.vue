@@ -13,8 +13,9 @@
         <!-- 发票 信息  -->
         <invoice-info-card
             v-if="['3'].includes(activeKey)"
-            v-for="i in 10"
+            v-for="(item, i) in invoiceList"
             :key="i"
+						:invoice="item"
             :item="{ iconType: i }"
         />
       </view>
@@ -37,13 +38,30 @@ export default {
         { text: '已开票', key: '1' },
         { text: '开票中', key: '2' },
         { text: '发票信息', key: '3' },
-      ]
+      ],
+			invoiceList: [],
     };
   },
+	onReady() {
+		this.queryInvoiceList();
+		this.queryMyInvoiceInfo();
+	},
   methods: {
     change(data) {
       this.activeKey = data;
-    }
+    },
+		queryInvoiceList() {
+			this.$http.post('/b/orderinvoice/queryPageList', { invoiceState: this.activeKey }, true)
+			.then(res => {
+			  this.invoiceList = res.dataList;
+			})
+		},
+		queryMyInvoiceInfo() {
+			this.$http.post('/b/customerinvoiceinfo/queryPageList', { }, true)
+			.then(res => {
+			  this.invoiceList = res.dataList;
+			})
+		}
   }
 }
 </script>

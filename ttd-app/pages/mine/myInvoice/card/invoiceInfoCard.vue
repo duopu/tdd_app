@@ -1,8 +1,8 @@
 <template>
   <view class="ii-card">
     <view class="ii-card-left">
-      <view class="ii-card-left-title">上海电气集团股份有限公司</view>
-      <view class="ii-card-left-text">统一税号：1323493157062991</view>
+      <view class="ii-card-left-title">{{ invoice.name }}</view>
+      <view class="ii-card-left-text">统一税号：{{ invoice.dutyNo }}</view>
     </view>
 
     <!-- 右箭头 -->
@@ -19,6 +19,7 @@
 export default {
   name: "invoiceInfoCard",
   props: {
+		invoice: {},
     item: {
       type: Object,
       default() {
