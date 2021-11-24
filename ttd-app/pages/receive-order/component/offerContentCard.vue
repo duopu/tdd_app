@@ -18,6 +18,9 @@
         <view class="oc-right-btn">修改</view>
       </view>
 
+      <view v-if="rightType == '4'" class="oc-right4">未选价</view>
+      <view v-if="rightType == '5'" class="oc-right4 oc-right5">已选价</view>
+
       <uni-icons class="oc-arrow" type="arrowright" size="20" color="#BDBDBD" />
     </view>
     <view v-if="showLastBorderBottom" class="oc-bottom" />
@@ -36,7 +39,7 @@ export default {
       type: Boolean,
       default: false
     },
-    // 右边区域类型 0 不显示按钮区域 1 修改按钮+价格   2 设置报价  3 分配金额
+    // 右边区域类型 0 不显示按钮区域 1 修改按钮+价格   2 设置报价  3 分配金额  4 未选价  5 已选价
     rightType: {
       type: String,
       default: '1'
@@ -132,6 +135,20 @@ export default {
   .oc-arrow {
     align-self: center;
     margin-left: 12rpx;
+  }
+
+  .oc-right4 {
+    width: 116rpx;
+    color: white;
+    align-self: center;
+    height: 48rpx;
+    background: #FF3B30;
+    border-radius: 8rpx;
+    @include flexCenter;
+  }
+
+  .oc-right5 {
+    background: #34C759;
   }
 }
 

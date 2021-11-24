@@ -84,7 +84,6 @@ export default {
     display: flex;
 
     .chp-13 {
-      border: 1rpx solid red;
       width: 128rpx;
       height: 128rpx;
       border-radius: 8rpx;

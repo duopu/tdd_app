@@ -1,5 +1,6 @@
 <template>
   <view class="my-price" :class="className" :style="{transform: `scale(${scale})`}">
+    <text class="yang" v-if="showYang">￥</text>
     <text class="my-price-zheng">{{ zheng }}</text>
     <text class="my-price-fen">.{{ fen }}</text>
   </view>
@@ -19,7 +20,8 @@ export default {
     className: {
       type: String,
       default: ''
-    }
+    },
+    showYang: Boolean,
   },
   computed: {
     zheng() {
@@ -33,6 +35,12 @@ export default {
 </script>
 <style scoped lang="scss">
 .my-price {
+  .yang {
+    color: #828282;
+    font-size: 24rpx;
+    padding-right: 10rpx;
+  }
+
   .my-price-zheng {
     font-size: 36rpx;
     font-family: PingFang SC-Medium, PingFang SC;
@@ -40,6 +48,7 @@ export default {
     color: #FF3B30;
     line-height: 44rpx;
   }
+
   .my-price-fen {
     font-size: 24rpx;
     font-family: PingFang SC-Medium, PingFang SC;

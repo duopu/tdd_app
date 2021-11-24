@@ -252,7 +252,6 @@ export default {
         { title: '报价详情-临时', url: '/pages/receive-order/offerDetail/offerDetail' },
         { title: '申请开始工作-临时', url: '/pages/receive-order/applyBeginWork/applyBeginWork' },
         { title: '投诉-临时', url: '/pages/receive-order/complaint/complaint' },
-        { title: '投诉-临时', url: '/pages/receive-order/complaint/complaint' },
         { title: '我的团队-临时', url: '/pages/receive-order/myTeam/myTeam' },
         { title: '我的团队-详情-临时', url: '/pages/receive-order/viewMyTeam/viewMyTeam' },
         { title: '团队详情-临时', url: '/pages/receive-order/teamDetail/teamDetail' },
@@ -271,6 +270,8 @@ export default {
         { title: '发单主页-临时', url: '/pages/place-order/placeOrder/placeOrder' },
         { title: '发单列表-临时', url: '/pages/place-order/placeOrderList/placeOrderList' },
         { title: '选价-临时', url: '/pages/place-order/choosePrice/choosePrice' },
+        { title: '发单-订单详情-临时', url: '/pages/place-order/orderDetail/orderDetail' },
+        { title: '发单-订单详情(完成订单)-临时', url: '/pages/place-order/orderDetailFinish/orderDetailFinish' },
       ]
     }
   },

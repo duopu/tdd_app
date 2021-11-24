@@ -22,11 +22,20 @@
       </template>
     </back-container>
 
+    <view class="place-order-img-box">
+      <image class="place-order-img" v-for="(i, index) in imageList" :key="index" :src="i.url" @click="ssss" />
+    </view>
+
   </view>
 </template>
 
 <script>
 import BackContainer from "../../mine/addressManage/component/backContainer";
+import image1 from '../../../static/mine/place_order__renyuan.svg';
+import image2 from '../../../static/mine/place_order__ruanjian.svg';
+import image3 from '../../../static/mine/place_order__shishi.svg';
+import image4 from '../../../static/mine/place_order__zulin.svg';
+import image5 from '../../../static/mine/place_order_kanshe.svg';
 
 export default {
   components: { BackContainer },
@@ -38,7 +47,19 @@ export default {
         { num: 1, title: '待确认' },
         { num: 3, title: '待确认' },
       ],
+      imageList: [
+        { url: image1 },
+        { url: image2 },
+        { url: image3 },
+        { url: image4 },
+        { url: image5 },
+      ]
     };
+  },
+  methods: {
+    ssss() {
+      console.log(111);
+    }
   }
 }
 </script>
@@ -86,6 +107,18 @@ export default {
     height: 104rpx;
     background: #FFFFFF;
     opacity: 0.15;
+  }
+}
+
+.place-order-img-box {
+  background-color: white;
+  margin-bottom: 100rpx;
+  padding-bottom: 30rpx;
+
+  .place-order-img {
+    width: 686rpx;
+    height: 228rpx;
+    margin: 16rpx 32rpx 0 32rpx;
   }
 }
 </style>

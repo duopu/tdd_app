@@ -380,6 +380,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/place-order/orderDetail/orderDetail",
+      "style": {
+        "navigationBarTitleText": "发单-订单详情",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/place-order/orderDetailFinish/orderDetailFinish",
+      "style": {
+        "navigationBarTitleText": "发单-订单详情(完成订单)",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {
