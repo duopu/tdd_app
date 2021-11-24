@@ -167,8 +167,10 @@ export default {
 			
 			uni.showModal({
 				content: '是否删除该地址?',
-				success: () => {
-					this.deleleAddress();
+				success: (res) => {
+					if (res.confirm) {
+					  this.deleleAddress();
+					}
 				}
 			})
     },
