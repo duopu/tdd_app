@@ -272,6 +272,7 @@ export default {
         { title: '选价-临时', url: '/pages/place-order/choosePrice/choosePrice' },
         { title: '发单-订单详情-临时', url: '/pages/place-order/orderDetail/orderDetail' },
         { title: '发单-订单详情(完成订单)-临时', url: '/pages/place-order/orderDetailFinish/orderDetailFinish' },
+        { title: '评价订单-临时', url: '/pages/place-order/evaluationOrder/evaluationOrder' },
       ]
     }
   },

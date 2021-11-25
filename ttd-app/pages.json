@@ -396,6 +396,14 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/place-order/evaluationOrder/evaluationOrder",
+      "style": {
+        "navigationBarTitleText": "评价订单",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {
