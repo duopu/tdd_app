@@ -17,8 +17,7 @@
 
           <view class="eva-ostar-box">
             <view class="eva-ostar">
-              <!-- TODO 后续完善该组件  -->
-              <my-star num="2.5" />
+              <uni-rate :value="4" size="32" :margin="5" allow-half />
             </view>
             <view class="eva-ostart-text">2.5分 一般般，需要再努力</view>
           </view>
@@ -26,7 +25,7 @@
           <add-remark label="评价内容：" :value="value" @change="change" />
 
           <view class="upload-list-obox">
-          <upload-list />
+            <upload-list />
           </view>
         </view>
       </view>
@@ -112,8 +111,9 @@ export default {
       border-bottom: 1rpx solid #EAECEF;
 
       .eva-ostar {
-
+        margin: 32rpx;
       }
+
       .eva-ostart-text {
         font-size: 28rpx;
         font-family: PingFang SC-Regular, PingFang SC;
