@@ -2,22 +2,27 @@
   <view class="coupon-card">
 
     <view class="c-card1">
-      <view class="c-card1-money">200</view>
-      <view class="c-card1-mj">满100减30</view>
+      <view class="c-card1-money">{{ coupon.couponNature == '3' ? `${coupon.discount}折` : coupon.parvalue / 100 }}</view>
+      <view class="c-card1-mj" v-if="coupon.couponNature != '2' ">
+				{{ coupon.couponNature == 1
+				 ? `满${ coupon.useMinPrice / 100 }减${ coupon.parvalue / 100 }`
+				 : `最高${ coupon.useMaxPrice / 100 }`
+				 }}
+			</view>
     </view>
 
     <view class="c-card2">
       <view class="c-card21">
-        <view class="c-card24" :class="minusType == '1' ? 'c-card24-red' : ''">满减</view>
-        <view class="c-card25">双十一特别放送券</view>
+        <view class="c-card24" :class="coupon.couponNature == '2' ? 'c-card24-red' : ''">{{ couponType(coupon.couponNature) }}</view>
+        <view class="c-card25">{{ coupon.title }}</view>
       </view>
-      <view class="c-card22">用途</view>
+      <view class="c-card22">{{ orderType(coupon.orderType) }}可用</view>
       <view>
         <view class="c-card23">
-          <text class="c-card23-text">2021-01-15 - 2021-3-4</text>
+          <text class="c-card23-text">{{ coupon.effectTime }} - {{ coupon.expireTime }}</text>
           <uni-icons :type="spread ? 'arrowup' : 'arrowdown'" color="#BDBDBD" size="12" @click="changeSpread" />
         </view>
-        <text v-if="spread" class="c-card23-text">我是折叠信息我是折叠信息我是折叠信息我是折叠信息</text>
+        <text v-if="spread" class="c-card23-text">{{ coupon.remark }}</text>
       </view>
     </view>
 
@@ -27,7 +32,7 @@
       <view class="c-card33" />
     </view>
 
-    <view class="c-card4">使用</view>
+    <view class="c-card4" @click="$emit('useCoupon', coupon)">使用</view>
 
   </view>
 </template>
@@ -38,7 +43,21 @@ export default {
     minusType: {
       type: String,
       default: '1'
-    }
+    },
+		coupon: {
+			id: 0,
+			couponNature: 1, // 1: 满减   2: 直减   3: 折扣
+			discount: 0, // 折扣
+			effectTime: '',  // 生效时间
+			expireTime: '',  // 失效时间
+			orderType:  0,  // 适用订单类型 1:实施/维修,2:勘测,3:人员,4:租赁,5:软件
+			parvalue: 0,  // 优惠券的面值(分)
+			publishId: 0, // 发行编号
+			remark: '', // 描述
+			title: '', // 标题
+			useMaxPrice: 0, // 使用最高限制价格条件（分）
+			useMinPrice:  0, // 使用最低价格条件（分）
+		},
   },
   data() {
     return {
@@ -48,7 +67,29 @@ export default {
   methods: {
     changeSpread() {
       this.spread = !this.spread
-    }
+    },
+		couponType(t) {
+			if (t ==1) {
+				return '满减';
+			} else if (t  ==  2) {
+				return '直减';
+			} else if (t == 3) {
+				return '折扣';
+			}
+		},
+		orderType(t) {
+			if (t ==1) {
+				return '实施/维修';
+			} else if (t  ==  2) {
+				return '勘测';
+			} else if (t == 3) {
+				return '人员';
+			} else if (t == 4) {
+				return '租赁';
+			} else if (t == 5) {
+				return '软件';
+			}
+		}
   }
 }
 </script>

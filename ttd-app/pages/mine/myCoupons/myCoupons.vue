@@ -7,8 +7,8 @@
         <blue-tab :active-key="activeKey" :list="tabList" @change="change" />
       </template>
       <view class="my-coupon">
-        <view class="my-coupon-item" v-for="i in 3" :key="i">
-          <coupon-card :minus-type="i" />
+        <view class="my-coupon-item" v-for="(item, i) in couponsList" :key="i">
+          <coupon-card :minus-type="i" :coupon="item" @useCoupon="useCoupon" />
         </view>
       </view>
     </back-container>
@@ -25,18 +25,32 @@ export default {
   components: { CouponCard, BlueTab, BackContainer },
   data() {
     return {
-      activeKey: '1',
+      activeKey: '0',
       tabList: [
-        { text: '未使用', key: '1' },
-        { text: '已使用', key: '2' },
+        { text: '未使用', key: '0' },
+        { text: '已使用', key: '1' },
         { text: '已过期', key: '3' },
-      ]
+      ],
+			couponsList: [],
     };
   },
+	onReady() {
+		this.queryCouponsList();
+	},
   methods: {
     change(data) {
       this.activeKey = data;
-    }
+			this.queryCouponsList();
+    },
+		queryCouponsList() {
+			this.$http.post('/b/coupon/queryPageList', { state: this.activeKey }, true)
+			.then(res => {
+			  this.couponsList = res.dataList;
+			})
+		},
+		useCoupon(coupon) {
+			// todo: 跳转页面
+		}
   }
 }
 </script>
