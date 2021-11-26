@@ -10,19 +10,29 @@
         <view class="rn-end">
           <view class="rn-end-text">身份证人像面</view>
           <view class="rn-end-face" @click="chooseImage(1)">
-            <image :src="IDcardFace" class="rn-end-img" />
-            <view class="take-photo">
-              <image :src="takePhotoIcon" class="take-photo-img" />
-              <view class="take-photo-text">拍照</view>
-            </view>
+            <view v-if="faceIdcardImage">
+							<image :src="faceIdcardImage" class="rn-end-img" />
+						</view>
+						<view v-else>
+							<image :src="IDcardFace" class="rn-end-img" />
+							<view class="take-photo">
+							  <image :src="takePhotoIcon" class="take-photo-img" />
+							  <view class="take-photo-text">拍照</view>
+							</view>
+						</view>
           </view>
           <view class="rn-end-text">身份证国徽面</view>
           <view class="rn-end-face" @click="chooseImage(2)">
-            <image :src="IDcardBack" class="rn-end-img" />
-            <view class="take-photo">
-              <image :src="takePhotoIcon" class="take-photo-img" />
-              <view class="take-photo-text">拍照</view>
-            </view>
+						<view v-if="backIdcardImage">
+							<image :src="backIdcardImage" class="rn-end-img" />
+						</view>
+						<view v-else>
+							<image :src="IDcardBack" class="rn-end-img" />
+							<view class="take-photo">
+							  <image :src="takePhotoIcon" class="take-photo-img" />
+							  <view class="take-photo-text">拍照</view>
+							</view>
+						</view>
           </view>
         </view>
       </view>
@@ -30,7 +40,7 @@
     </back-container>
 
     <iphonex-bottom>
-      <big-btn @click="commitAuth()" />
+      <big-btn buttonText="自拍" @click="facePhoto()" />
     </iphonex-bottom>
   </view>
 </template>
@@ -51,6 +61,9 @@ export default {
       IDcardFace,
       takePhotoIcon,
       IDcardBack,
+			faceImage: '',
+			faceIdcardImage: '',
+			backIdcardImage: '',
     };
   },
 	onReady() {},
@@ -61,11 +74,11 @@ export default {
 		queryAuthInfo() {
 			this.$http.post('/b/customerrealauth/query', { }, true)
 			.then(res => {
-			  // uni.showToast({ title: '申请提现成功' })
 			})
 		},
 		chooseImage(index) {
 			uni.chooseImage({
+				  sourceType: ['camera'],
 			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 			    success: (res) => {
 							const path = res.tempFilePaths[0];
@@ -80,22 +93,63 @@ export default {
 			this.$http.upload({ path }, true)
 			.then(res=>{
 				if (index == 1) {
-					this.IDcardFace = res;
+					this.faceIdcardImage = res;
+				} else if (index == 2) {
+					this.backIdcardImage = res;
 				} else {
-					this.IDcardBack = res;
+					this.faceImage = res;
+					this.commitAuth();
 				}
+			});
+		},
+		facePhoto() {
+			uni.chooseImage({
+				  sourceType: ['camera'],
+					crop: {
+						width: 300,
+						height: 300,
+					},
+			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			    success: (res) => {
+							const path = res.tempFilePaths[0];
+							this.uploadImage(3, path);
+			    }
 			});
 		},
 		commitAuth() {
 			const params = {
-				faceImage: '',
-				faceIdcardImage: '',
-				backIdcardImage: '',
+				faceImage: this.faceImage,
+				faceIdcardImage: this.faceIdcardImage,
+				backIdcardImage: this.backIdcardImage,
 			}
-		  this.$http.post('/b/customerrealauth/realAuth', params, true)
+			uni.showLoading({
+				title: '认证提交中...',
+				mask: true,
+			})
+		  this.$http.post('/b/customerrealauth/realAuth', params)
 		  .then(res => {
-		    uni.showToast({ title: '实名认证已提交' });
-		  })
+				uni.hideLoading();
+		    uni.showToast({
+					title: '实名认证已成功', 
+					success: () => {
+						uni.navigateBack({ });
+					}
+				});
+		  }).catch((e) => {
+				uni.hideLoading();
+				uni.showModal({
+					title: '认证失败',
+					content: e.message,
+					confirmText: '重新认证',
+					success: (res) => {
+						if (res.confirm) {
+							this.faceImage = '';
+							this.faceIdcardImage = '';
+							this.backIdcardImage = '';
+						}
+					}
+				})
+			})
 		},
   }
 }
