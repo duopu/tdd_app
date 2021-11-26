@@ -21,6 +21,11 @@
         </view>
 
         <view class="edit-in-ac-item">
+          <view class="edit-in-ac-lable">电话号码</view>
+          <input class="edit-in-ac-midle" :value="phone" @input="(e) => onInput(e, 'phone')" placeholder="请输入" placeholder-class="input-placeholder" />
+        </view>
+				
+        <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">开户银行</view>
           <input class="edit-in-ac-midle" :value="openingBank" @input="(e) => onInput(e, 'bank')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
@@ -33,7 +38,10 @@
         <view class="up-box">
           <view class="up-box-title">营业执照</view>
           <view class="up-box-area" @click="chooseImage()">
-            <view class="up-box-center">
+						<view v-if="businessLicense">
+							 <image class="up-box-center-image" :src="businessLicense" />
+						</view>
+            <view v-else class="up-box-center">
               <image class="up-box-center-image" :src="addImage" />
               <view class="up-box-center-text">添加照片</view>
             </view>
@@ -99,6 +107,8 @@ export default {
 				this.dutyNo = text;
 			} else if (type == 'address') {
 				this.address = text;
+			} else if (type == 'phone') {
+				this.phone = text;
 			} else if (type == 'bank') {
 				this.openingBank = text;
 			} else if (type == 'account') {
@@ -134,6 +144,10 @@ export default {
 			}
 			if (!this.address) {
 				uni.showToast({ title:  '请输入单位地址', icon:  'none' });
+				return false;
+			}
+			if (!this.phone) {
+				uni.showToast({ title:  '请输入电话号码', icon:  'none' });
 				return false;
 			}
 			if (!this.openingBank) {

@@ -17,6 +17,7 @@
             :key="i"
 						:invoice="item"
             :item="{ iconType: i }"
+						@onClick="toMyInvoice()"
         />
       </view>
     </back-container>
@@ -61,7 +62,10 @@ export default {
 			.then(res => {
 			  this.invoiceList = res.dataList;
 			})
-		}
+		},
+		toMyInvoice(invoice) {
+			uni.navigateTo({ url: `/pages/mine/editInvoice/editInvoice?id=${invoice.id}` });
+		},
   }
 }
 </script>
