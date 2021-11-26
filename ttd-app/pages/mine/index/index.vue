@@ -48,6 +48,7 @@
           <view class="mm-31" @click="toPage(i)" :key="i.url">
             <image class="mm-32" :src="i.img" />
             <view class="mm-33">{{ i.title }}</view>
+						<view class="mm-33" v-if="i.title == '实名认证' && realAuth">已认证</view>
             <uni-icons type="arrowright" color="#BDBDBD" size="16" />
           </view>
           <view class="mm-35" v-if="index < (newList.length - 1)" />
@@ -207,10 +208,12 @@ export default {
       demo: true,
       mineTopBack,
       IDcardBack,
+			realAuth: false,
     };
   },
   onReady() {
     // this.$tool.actionForLogin();
+		this.queryAuthInfo();
   },
   computed: {
     userName() {
@@ -287,7 +290,14 @@ export default {
     },
     toWallet() {
       uni.navigateTo({ url: `/pages/mine/myWallet/myWallet` })
-    }
+    },
+		// 查询是否实名认证
+		queryAuthInfo() {
+			this.$http.post('/b/customerrealauth/query', { }, true)
+			.then(res => {
+				this.realAuth = res.state == 1;
+			})
+		},
   }
 };
 </script>
