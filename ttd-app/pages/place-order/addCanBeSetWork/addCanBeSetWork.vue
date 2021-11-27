@@ -44,7 +44,6 @@
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../../receive-order/component/offerHead";
 import CheckdItem from "../receiptOrderZy/checkdItem";
-import MyNumberBox from "../../receive-order/component/myNumberBox";
 import AddRemark from "../../receive-order/component/addRemark";
 import UploadList from "../../receive-order/component/uploadList";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
@@ -52,7 +51,7 @@ import BigBtn from "../../mine/addressManage/component/bigBtn";
 
 export default {
   name: "addCanBeSetWork",
-  components: { BigBtn, IphonexBottom, UploadList, AddRemark, MyNumberBox, CheckdItem, OfferHead, BackContainer },
+  components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
       value: '1',

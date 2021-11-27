@@ -8,7 +8,8 @@
       </template>
 
       <view class="add-imple">
-        <checkd-item :value="value" label="下单类型" :list="[{text: '实施', value: '1'}, {text: '维修', value: '2'}]" @change="change" />
+        <checkd-item :value="value" label="下单类型" :list="[{text: '实施', value: '1'}, {text: '维修', value: '2'}]"
+                     @change="change" />
 
         <view class="add-i-item">
           <view class="add-i-lable">服务内容</view>
@@ -30,7 +31,7 @@
         <view class="add-i-item">
           <view class="add-i-lable">数量</view>
           <view class="add-i-midle">
-            <my-number-box v-model="value1" />
+            <uni-number-box v-model="value1" />
           </view>
         </view>
 
@@ -60,7 +61,6 @@
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../../receive-order/component/offerHead";
 import CheckdItem from "../receiptOrderZy/checkdItem";
-import MyNumberBox from "../../receive-order/component/myNumberBox";
 import AddRemark from "../../receive-order/component/addRemark";
 import UploadList from "../../receive-order/component/uploadList";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
@@ -68,7 +68,7 @@ import BigBtn from "../../mine/addressManage/component/bigBtn";
 
 export default {
   name: "addImplementation",
-  components: { BigBtn, IphonexBottom, UploadList, AddRemark, MyNumberBox, CheckdItem, OfferHead, BackContainer },
+  components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
       value: '1',
