@@ -10,17 +10,18 @@
         </view>
         <view class="item-right1-2">{{ address.province + address.city + address.district + address.address}}</view>
       </view>
-      <uni-icons class="item-right3" type="compose" size="30" color="#828282" @click="$emit('rightClick', address.id)" />
-      <uni-icons class="item-right3" type="arrowright" size="18" color="#BDBDBD" />
+      <image class="item-right3" src="/static/mine/iconEditGray.svg" @click="$emit('rightClick', address.id)" />
+      <right-img-icon />
     </view>
   </view>
 </template>
 <script>
 import NameHeader from "./nameHeader";
+import RightImgIcon from "./rightImgIcon";
 
 export default {
   name: "addressItem",
-  components: { NameHeader },
+  components: { RightImgIcon, NameHeader },
 	props: {
 		address: {
 			address: '',
@@ -104,7 +105,9 @@ export default {
     }
 
     .item-right3 {
-      padding-left: 15rpx;
+      padding: 0 15rpx;
+      width: 48rpx;
+      height: 48rpx;
     }
   }
 }
