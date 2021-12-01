@@ -7,7 +7,11 @@
       </view>
     </view>
     <view class="upload-item upload-item-ic" @click="upload" v-if="!hideUploadBtn">
-      <uni-icons size="20" :type="uploadIcon" color="#BDBDBD" />
+<!--      <uni-icons size="20" :type="uploadIcon" color="#BDBDBD" />-->
+      <image v-if="uploadIcon == 2" src="/static/mine/uploadPdf.svg" class="upload-icon-imgss" />
+      <image v-if="uploadIcon == 1" src="/static/mine/uploadImageJia.svg" class="upload-icon-imgss" />
+      <image v-if="uploadIcon == 3" src="/static/mine/uploadYuyin.svg" class="upload-icon-imgss" />
+      <image v-if="uploadIcon == 4" src="/static/mine/uploadImageTake.svg" class="upload-icon-imgss" />
       <view class="up-text">{{ uploadText }}</view>
     </view>
   </view>
@@ -32,7 +36,7 @@ export default {
     },
     uploadIcon: {
       type: String,
-      default: 'upload'
+      default: '1'
     },
     hideUploadBtn: Boolean,
   },
@@ -93,6 +97,11 @@ export default {
     align-items: center;
     justify-content: center;
     border: 2rpx solid #EDEDED;
+  }
+
+  .upload-icon-imgss {
+    width: 48rpx;
+    height: 48rpx;
   }
 
   .up-text {

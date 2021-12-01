@@ -11,7 +11,7 @@
           
         </view>
 
-        <upload-list upload-text="添加照片" upload-icon="image" :img-list="[1, 2]" />
+        <upload-list upload-text="添加照片" :img-list="[1, 2]" />
       </view>
 
     </back-container>

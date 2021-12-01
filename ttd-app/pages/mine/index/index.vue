@@ -36,7 +36,7 @@
             <text>12</text>
             <text class="mm-15">00</text>
           </view>
-          <view class="mm-13">我的钱包</view>
+          <view class="mm-13 mm-131">我的钱包</view>
         </view>
       </view>
 
@@ -81,6 +81,7 @@
 
     </view>
 
+    <view class="logout">退出登录</view>
 
     <!--
         <view class="page-container">

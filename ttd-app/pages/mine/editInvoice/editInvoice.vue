@@ -42,7 +42,7 @@
 							 <image class="up-box-center-image" :src="businessLicense" />
 						</view>
             <view v-else class="up-box-center">
-              <image class="up-box-center-image" :src="addImage" />
+              <image class="up-box-center-image" src="/static/mine/upload-image-icon.svg" />
               <view class="up-box-center-text">添加照片</view>
             </view>
           </view>
@@ -61,14 +61,12 @@
 import BackContainer from "../addressManage/component/backContainer";
 import IphonexBottom from "../addressManage/component/iphonexBottom";
 import BottomOperate from "../addressManage/component/bottomOperate";
-import addImage from '../../../static/mine/upload-image-icon.svg';
 
 export default {
   name: 'editInvoice',
   components: { BottomOperate, IphonexBottom, BackContainer },
   data() {
     return {
-      addImage,
 			id: 0,
 			name: '',
 			phone: '',

@@ -1,14 +1,15 @@
 <template>
   <view class="edit-team" v-if="visible">
 
-    <uni-icons size="26" class="edit-team-close" @click="hide" type="close" color="#FFFFFF" />
+<!--    <uni-icons size="26" class="" type="close" color="#FFFFFF" />-->
+    <image src="/static/mine/iconClose.svg"  @click="hide" class="edit-team-close" />
 
     <view class="edit-team-box">
 
       <view class="edit-team-title">团队信息</view>
 
       <view class="edit-team-add">
-        <uni-icons size="44" type="plusempty" color="#BDBDBD" />
+        <image src="/static/mine/uploadAdd.svg" class="edit-team-add-imag" />
       </view>
 
       <view class="edit-team-name">
@@ -57,6 +58,8 @@ export default {
   .edit-team-close {
     margin: 0 64rpx 32rpx 64rpx;
     align-self: flex-end;
+    width: 48rpx;
+    height: 48rpx;
   }
 
   .edit-team-box {
@@ -85,6 +88,11 @@ export default {
       border-radius: 200rpx;
       @include flexCenter;
       margin: 32rpx;
+
+      .edit-team-add-imag {
+        width: 100rpx;
+        height: 100rpx;
+      }
     }
 
     .edit-team-name {

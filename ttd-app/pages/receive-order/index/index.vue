@@ -18,7 +18,8 @@
 
           <view class="ro-1 ro-16">
             <view class="ro-11">
-              <uni-icons type="email-filled" size="20" color="white" />
+              <!--  TODO 此图片需要ui重新提供 -->
+              <image class="email-filled" src="/static/mine/teamView.svg" />
             </view>
             <view class="ro-12 ro-13">所有订单</view>
           </view>
@@ -39,7 +40,7 @@
 
     <view class="ro-4">
       <view class="ro-41">我的团队：</view>
-      <uni-icons type="plus" color="#1059FA" size="18" />
+      <image src="/static/mine/iconCircleAdd.svg" class="add-img" />
       <text class="ro-43">创建团队</text>
     </view>
 
@@ -111,6 +112,11 @@ export default {
       text-align: center;
     }
 
+    .email-filled {
+      width: 50rpx;
+      height: 50rpx;
+    }
+
     .ro-12 {
       margin-top: 16rpx;
       text-align: center;
@@ -122,7 +128,7 @@ export default {
     }
 
     .ro-13 {
-      margin-top: 10rpx;
+      margin-top: 17rpx;
     }
   }
 
@@ -198,6 +204,12 @@ export default {
     font-family: PingFang SC-Regular, PingFang SC;
     font-weight: 400;
     color: #4F4F4F;
+  }
+
+  .add-img {
+    width: 32rpx;
+    margin-top: 5rpx;
+    height: 32rpx;
   }
 
   .ro-43 {

@@ -28,9 +28,9 @@
 
       <view class="abwp-body">
         <view class="abwp-l">
-          <image class="abwp-lt1" :src="MDicon" />
+          <image class="abwp-lt1" src="/static/mine/applyJob1.svg" />
           <view class="abwp-lt3" />
-          <image class="abwp-lt1" :src="MDicon" />
+          <image class="abwp-lt1" src="/static/mine/applyJob.svg" />
         </view>
         <view class="abwp-r">
           <view class="abwp-r1">
@@ -43,7 +43,7 @@
 
           <view class="abwp-rtime">2021-07-12 13:37</view>
 
-          <upload-list :img-list="[1, 3, 4, 5]" />
+          <upload-list upload-icon="2" :img-list="[1, 3, 4, 5]" />
 
           <view class="iamaline" />
 
@@ -53,13 +53,13 @@
 
       <view class="abwp-bottom">
         <view class="abwp-bo-1">
-          <uni-icons size="20" type="plus" color="#2C3580" />
+          <image src="/static/mine/iconCircleAdd.svg" class="apply-add-jia" />
           <view class="abwp-bo-1text">添加位置</view>
         </view>
 
-        <upload-list upload-text="添加照片" upload-icon="image" />
+        <upload-list upload-text="添加照片" />
 
-        <upload-list />
+        <upload-list upload-icon="2" />
 
       </view>
     </view>
@@ -171,6 +171,8 @@ export default {
         height: 48rpx;
         border-radius: 100%;
         border: 2rpx solid #2C3580;
+        box-sizing: border-box;
+        padding: 6rpx;
       }
 
       .abwp-lt3 {
@@ -256,12 +258,18 @@ export default {
       background: #F3F4F5;
       margin-bottom: 32rpx;
 
+      .apply-add-jia {
+        width: 48rpx;
+        height: 48rpx;
+      }
+
       .abwp-bo-1text {
         font-size: 28rpx;
         font-family: PingFang SC-Regular, PingFang SC;
         font-weight: 400;
         line-height: 36rpx;
-        color: #2C3580;
+        margin-top: 8rpx;
+        color: #3340A0;
       }
     }
   }

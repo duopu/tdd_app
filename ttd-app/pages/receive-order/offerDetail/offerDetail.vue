@@ -10,7 +10,7 @@
       <view class="offer-detail">
         <view class="od-it" v-for="i in 5" :key="i">
           <view class="od-1">
-            <image :src="MDicon" class="od-1image" />
+            <image src="/static/mine/MDicon.png" class="od-1image" />
             <view class="od-1right">
               <view class="od-1right-top">
                 <text class="od-1tag">标签</text>
@@ -24,7 +24,7 @@
           </view>
 
           <view class="od-1 od-2">
-            <image :src="MDicon" class="od-1image" />
+            <image src="/static/mine/reply.svg" class="od-1image" />
             <view class="od-1right">
               <view class="od-1right-top">
                 <text class="od-1tag od-2tag">发单者回复</text>
@@ -84,7 +84,9 @@ export default {
     }
 
     .od-1image {
-      width: 32px;
+      flex-shrink: 0;
+      margin-top: 5rpx;
+      width: 32rpx;
       height: 32rpx;
     }
 

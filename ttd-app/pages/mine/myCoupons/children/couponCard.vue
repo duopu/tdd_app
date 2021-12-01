@@ -172,6 +172,7 @@ export default {
 
     .c-card23 {
       @include flexBetween;
+      padding-right: 16rpx;
     }
 
     .c-card23-text {

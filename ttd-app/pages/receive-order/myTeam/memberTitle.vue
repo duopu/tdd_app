@@ -3,7 +3,8 @@
     <text class="member-text">{{ title }}</text>
 
     <view class="member-right" v-if="showRight" @click="$emit('add')">
-      <uni-icons size="15" class="icon-style" type="plus" color="#1059FA" />
+<!--      <uni-icons size="15" class="icon-style" type="plus" color="#1059FA" />-->
+      <image src="/static/mine/iconCircleAdd.svg" class="icon-style" />
       <text class="member-right-text">{{ rightText }}</text>
     </view>
   </view>
@@ -48,7 +49,8 @@ export default {
     @include flexCenter;
 
     .icon-style {
-
+      width: 32rpx;
+      height: 32rpx;
     }
 
     .member-right-text {

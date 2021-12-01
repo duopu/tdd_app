@@ -4,9 +4,9 @@
     <view class="team-card-dtl">
       <view class="team-card-1">
         <text class="team-card-name">大湾区哥哥</text>
-        <uni-icons size="18" v-if="showEdit" @click="edit" class="icon-sty" type="compose" color="#FFFFFF" />
-        <uni-icons size="18" v-if="showView" class="icon-sty" type="list" color="#FFFFFF" />
-        <uni-icons size="18" v-if="showSetting" class="icon-sty" type="gear-filled" color="#FFFFFF" />
+        <image src="/static/mine/iconEditWhite.svg" v-if="showEdit" @click="edit" class="icon-sty"  />
+        <image src="/static/mine/teamView.svg" v-if="showView" class="icon-sty"  />
+        <image src="/static/mine/iconSet.svg" v-if="showSetting" class="icon-sty" />
       </view>
 
       <view class="team-card-dz">队长：杰哥</view>
@@ -80,6 +80,8 @@ export default {
 
       .icon-sty {
         margin-left: 32rpx;
+        width: 36rpx;
+        height: 36rpx;
       }
     }
 
