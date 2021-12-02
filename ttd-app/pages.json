@@ -26,6 +26,7 @@
       "path": "pages/place-order/index/index",
       "style": {
         "navigationBarTitleText": "发单",
+        "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
     },
@@ -353,14 +354,6 @@
       "path": "pages/place-order/addSoftwareDevelop/addSoftwareDevelop",
       "style": {
         "navigationBarTitleText": "添加软件开发",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/placeOrder/placeOrder",
-      "style": {
-        "navigationBarTitleText": "发单主页",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }

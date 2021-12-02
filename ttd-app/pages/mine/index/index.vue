@@ -273,7 +273,6 @@ export default {
         { title: '添加租赁工作-临时', url: '/pages/place-order/addLeaseWork/addLeaseWork' },
         { title: '添加软件开发-临时', url: '/pages/place-order/addSoftwareDevelop/addSoftwareDevelop' },
 
-        { title: '发单主页-临时', url: '/pages/place-order/placeOrder/placeOrder' },
         { title: '发单列表-临时', url: '/pages/place-order/placeOrderList/placeOrderList' },
         { title: '选价-临时', url: '/pages/place-order/choosePrice/choosePrice' },
         { title: '发单-订单详情-临时', url: '/pages/place-order/orderDetail/orderDetail' },
