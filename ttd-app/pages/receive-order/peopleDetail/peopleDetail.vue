@@ -3,35 +3,38 @@
     <custom-navbar title="人员详情" />
 
     <view class="pd-top">
-      <view class="pd-top1">
+      <view v-if="idCard" class="pd-top1">
         <image class="pd-top1-img" src="/static/mine/trophy-icon.svg" />
         <text class="pd-top1-text">已实名认证</text>
       </view>
     </view>
 
     <view class="pd-header">
-      <image :src="MDicon" class="pd-header-img" />
+      <image v-if="headImgUrl" :src="headImgUrl" class="pd-header-img" />
+      <image v-else :src="MDicon" class="pd-header-img" />
       <view class="pd-header-text">
         <image class="pd-header-edit-image" src="/static/mine/iconEditBlack.svg" />
         <text class="pd-header-edtext">编辑信息</text>
       </view>
-      <view class="pd-header-name">李娉婷</view>
+      <view class="pd-header-name">{{ name }}</view>
 
       <view class="pd-header-phone pd-header-phone1">
         <image src="/static/mine/linkPhoneIcon.svg" class="pd-header-edit-icon" />
-        <text class="pd-header-phonenum">手机号：186 5440 3053</text>
+        <text class="pd-header-phonenum">手机号：{{ phone.slice(0, 3) }} {{ phone.slice(3, 7) }} {{ phone.slice(7, 11) }}</text>
       </view>
 
       <view class="pd-header-phone">
         <image src="/static/mine/linkPeopleIcon.svg" class="pd-header-edit-icon" />
-        <text class="pd-header-phonenum">身份证：430225 19010509 3064</text>
+        <text class="pd-header-phonenum">
+					身份证：{{ idCard ? `${ idCard.slice(0, 6) } ${ idCard.slice(6, 14) } ${ idCard.slice(14, 18) }` : '-' }}
+				</text>
       </view>
 
       <view class="pd-header-info">意大利民事保护部门24日发布的数据显示，意大利当天新增新冠死亡病例420例，是3月18日以来最低日增幅，累计死亡病例25969例。</view>
     </view>
 
-    <view class="pd-skill" v-for="i in 3" :key="i">
-      <member-title :show-right="false" title="技能" />
+    <view class="pd-skill" v-for="i in ['技能', '岗位', '项目', '工具']" :key="i">
+      <member-title :show-right="false" :title="i" />
       <view class="pd-skill-item" v-for="i in 3" :key="i">
         <view class="pd-skill-it1">金鱼{{ i }}</view>
         <view class="pd-skill-it2">
@@ -42,7 +45,7 @@
 
     <view class="pd-comment">
       <member-title :show-right="false" title="评价" />
-      <evaluate-card v-for="i in 2" :key="i" />
+      <evaluate-card v-for="i in commentList" :key="i.id" :comment="i"/>
     </view>
 
   </view>
@@ -57,9 +60,52 @@ export default {
   components: { EvaluateCard, MemberTitle },
   data() {
     return {
-      MDicon // TODO 更换图片后可删掉
+      MDicon, // TODO 更换图片后可删掉
+			id: '',
+			idCard: '',
+			headImgUrl: '',
+			name: '',
+			phone: '',
+			projectSet: [], // 项目列表
+			skillSet: [], // 技能
+			toolSet: [], // 工具
+			userRoleSet: [], // 岗位
+			commentList: [], // 评论列表
     };
-  }
+  },
+	onLoad(option) {
+		if (option.id) { // 编辑地址
+		  this.id = option.id;
+			this.queryPersonInfo(this.id);
+			this.queryComments(this.id);
+		}
+	},
+	methods: {
+		queryPersonInfo(id) {
+			this.$http
+				.post('/b/customer/queryDetailInfo', { id }, true)
+				.then(res => {
+					this.idCard = res.idCard;
+					this.headImgUrl = res.headImgUrl;
+					this.name = res.name;
+					this.phone = res.phone;
+					this.projectSet = res.projectSet;
+					this.skillSet = res.skillSet;
+					this.toolSet = res.toolSet;
+					this.userRoleSet = res.userRoleSet;
+				});
+		},
+		queryComments(userId) {
+			this.$http
+				.post('/b/ordercomment/queryPageList', { 
+					userId,
+					userType: 1,
+				}, true)
+				.then(res => {
+					this.commentList = res.dataList;
+				});
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>

@@ -1,19 +1,19 @@
 <template>
   <view class="team-list-item">
 
-    <image :src="MDicon" class="team-list-img" />
+    <image :src="member.headImgUrl || ''" class="team-list-img" @click="$emit('onClick')" />
 
-    <view class="team-list-right">
+    <view class="team-list-right" @click="$emit('onClick')" >
       <view class="team-list-right1">
         <view class="tlr-1">
-          <text class="tlr-name">周子喧</text>
-          <text class="tlr-phone">18605909636</text>
+          <text class="tlr-name">{{ member.userName }}</text>
+          <text class="tlr-phone">{{ member.phone }}</text>
         </view>
         <view class="tlr-2">
-          <text class="tlr-2-item" v-for="i in tagList" :key="i">{{ i }}</text>
+          <text class="tlr-2-item" v-for="i in skillList" :key="i">{{ i }}</text>
         </view>
       </view>
-      <view v-if="showDelBtn" class="team-list-right2" @click="$emit('del')">删除</view>
+      <view v-if="member.leaderFlag" class="team-list-right2" hover-stop-propagation @click="$emit('onDelete')">删除</view>
       <uni-icons size="18" class="team-list-right3" type="forward" color="#BDBDBD" />
     </view>
 
@@ -30,17 +30,26 @@ export default {
     }
   },
   props: {
+		member: {
+			phone: '',
+			userId: '',
+			userName: '',
+			headImgUrl: '',
+			leaderFlag: false,
+			skills: [],
+		},
     tagList: {
       type: Array,
       default() {
         return ['技能1', '技能2', '技能3']
       }
     },
-    showDelBtn: {
-      type: Boolean,
-      default: true
-    }
-  }
+  },
+	computed: {
+	  skillList() {
+	    return (this.member.skills || []).slice(0, 3);
+	  },
+	},
 }
 </script>
 <style scoped lang="scss">

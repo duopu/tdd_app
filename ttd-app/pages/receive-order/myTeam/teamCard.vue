@@ -1,21 +1,21 @@
 <template>
   <view class="team-card">
-    <image class="team-card-img" :src="MDicon" />
+    <image class="team-card-img" :src="team.teamLogo" />
     <view class="team-card-dtl">
       <view class="team-card-1">
-        <text class="team-card-name">大湾区哥哥</text>
+        <text class="team-card-name">{{ team.teamName || '' }}</text>
         <image src="/static/mine/iconEditWhite.svg" v-if="showEdit" @click="edit" class="icon-sty"  />
-        <image src="/static/mine/teamView.svg" v-if="showView" class="icon-sty"  />
-        <image src="/static/mine/iconSet.svg" v-if="showSetting" class="icon-sty" />
+        <image src="/static/mine/teamView.svg" v-if="showView" @click="$emit('onComment')" class="icon-sty"  />
+        <image src="/static/mine/iconSet.svg" v-if="showSetting" @click="$emit('onSetting')" class="icon-sty" />
       </view>
 
-      <view class="team-card-dz">队长：杰哥</view>
+      <view class="team-card-dz">队长：{{ team.leaderName || '' }}</view>
 
-      <view class="team-card-dtl">我躺在床上看天花板，想着我工作的天花板，只是别人的地板只是别人的地板只是别人的地板。(文字最多两行，多了截掉……)</view>
+      <view class="team-card-dtl">{{ team.teamIntroduce || '' }}</view>
 
     </view>
 
-    <edit-team ref="editTeam" />
+    <edit-team ref="editTeam" :logo="team.teamLogo" :title="team.teamName" :intro="team.teamIntroduce" @onSave="updateTeam" />
   </view>
 </template>
 <script>
@@ -43,11 +43,20 @@ export default {
       type: Boolean,
       default: true
     },
+		team: {
+			teamLogo: '',
+			teamName: '',
+			teamIntroduce: '',
+			leaderName: '',
+		}
   },
   methods: {
     edit() {
       this.$refs.editTeam.show();
-    }
+    },
+		updateTeam(teamLogo, teamName, teamIntroduce) {
+			this.$emit('onSave', teamLogo, teamName, teamIntroduce);
+		}
   }
 }
 </script>

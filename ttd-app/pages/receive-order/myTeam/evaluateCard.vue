@@ -1,20 +1,18 @@
 <template>
   <view class="evaluate-card">
 
-    <image :src="MDicon" class="evaluate-img" />
+    <image v-if="comment.commenterHeadImg" :src="comment.commenterHeadImg" class="evaluate-img" />
+    <image v-else :src="MDicon" class="evaluate-img" />
 
     <view class="eva-right">
       <view class="eva-right-1">
-        <view class="eva-right-name">吴县平</view>
-        <my-star />
+        <view class="eva-right-name">{{ comment.commenterName }}</view>
+        <my-star :num="comment.score"/>
       </view>
 
-      <view class="eva-right-2">2021-01-15 07:23:23</view>
+      <view class="eva-right-2">{{ comment.addTime }}</view>
 
-      <view class="eva-right-3">
-        可以的话，多少写点！
-        方便工作人员快速排队故障。
-      </view>
+      <view class="eva-right-3">{{ comment.content }}</view>
     </view>
 
   </view>
@@ -26,6 +24,16 @@ import MyStar from "./myStar";
 export default {
   name: "evaluateCard",
   components: { MyStar },
+	props: {
+		comment: {
+			addTime: '',
+			commenterHeadImg: '',
+			commenterName: '',
+			content: '',
+			imgUrlList: [],
+			score: 0,
+		}
+	},
   data() {
     return {
       MDicon

@@ -4,7 +4,14 @@
 
     <back-container>
       <template v-slot:headerSlot>
-        <team-card />
+        <team-card
+				 :team="team"
+				 :showEdit="team.leaderFlag"
+				 :showSetting="team.leaderFlag"
+				 @onSave="updateTeam" 
+				 @onComment="toCommentPage"
+				 @onSetting="toSettingPage" 
+				/>
       </template>
 
       <earning-nums />
@@ -12,9 +19,9 @@
     </back-container>
 
     <view class="my-team">
-      <member-title />
+      <member-title :showRight="team.leaderFlag" @add="toSelectPersonPage"/>
 
-      <team-list-item v-for="i in 2" />
+      <team-list-item v-for="(item, i) in memberList" :member="item" @onClick="toPersonDetail(item)" @onDelete="removePerson(item.id)"/>
     </view>
 
 	</view>
@@ -27,7 +34,94 @@
   import TeamListItem from "./teamListItem";
   export default {
 		name: "myTeam",
-    components: { TeamListItem, MemberTitle, EarningNums, TeamCard, BackContainer }
+    components: { TeamListItem, MemberTitle, EarningNums, TeamCard, BackContainer },
+		data() {
+			return {
+				id: '',
+				team: {
+					teamLogo: '',
+					teamName: '',
+					teamIntroduce: '',
+					leaderFlag: false,
+				},
+				memberList: [],
+			}
+		},
+		onLoad(option) {
+			if (option.id) { // 编辑地址
+			  this.id = option.id;
+				this.queryTeamInfo();
+			}
+		},
+		onReady() {
+			this.id = 'T993383817580672';
+			this.queryTeamInfo();
+			this.queryTeamMember();
+		},
+		methods: {
+			queryTeamInfo() {
+				this.$http
+					.post('/b/teaminfo/query', { id: this.id }, true)
+					.then(res => {
+						this.team = res;
+					});
+			},
+			queryTeamMember() {
+				this.$http
+					.post('/b/teammember/queryList', { id: this.id }, true)
+					.then(res => {
+						this.memberList = res;
+					});
+			},
+			updateTeam(teamLogo, teamName, teamIntroduce) {
+				if (!teamName) {
+					uni.showToast({ title:  '请输入团队名称', icon:  'none' });
+					return;
+				}
+				if (!teamIntroduce) {
+					uni.showToast({ title:  '请输入团队介绍', icon:  'none' });
+					return;
+				}
+				const params = {
+					id: this.id,
+					teamLogo,
+					teamName,
+					teamIntroduce,
+				}
+				this.$http.post('/b/teaminfo/update', params, true)
+				.then(res => {
+					uni.showToast({ title:  '修改成功' });
+					this.queryTeamInfo();
+				})
+			},
+			removePerson(id) {
+				this.$http.post('/b/teammember/delete', { id }, true)
+				.then(res => {
+					uni.showToast({ title:  '删除成功' });
+					this.queryTeamMember();
+				})
+			},
+			toCommentPage() {
+				uni.navigateTo({
+					url: `/pages/receive-order/teamDetail/teamDetail?id=${this.id}`,
+				})
+			},
+			toSettingPage() {
+				uni.navigateTo({
+					url: `/pages/receive-order/orderToSet/orderToSet?id=${this.id}`
+				})
+			},
+			toSelectPersonPage() {
+				uni.navigateTo({
+					url: `/pages/receive-order/selectPerson/selectPerson?id=${this.id}`
+				})
+			},
+			toPersonDetail(item) {
+				uni.navigateTo({
+					url: `/pages/receive-order/peopleDetail/peopleDetail?id=${item.userId}`
+				})
+			}
+		},
 	}
 </script>
 <style lang="scss" scoped>

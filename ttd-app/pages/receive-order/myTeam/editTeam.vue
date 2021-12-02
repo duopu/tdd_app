@@ -8,19 +8,20 @@
 
       <view class="edit-team-title">团队信息</view>
 
-      <view class="edit-team-add">
-        <image src="/static/mine/uploadAdd.svg" class="edit-team-add-imag" />
+      <view class="edit-team-add" @click="chooseImage()">
+				<image v-if="image" :src="image" class="edit-team-add-imag" />
+        <image v-else src="/static/mine/uploadAdd.svg" class="edit-team-add-imag" />
       </view>
 
       <view class="edit-team-name">
-        <input class="edit-team-input" placeholder="请输入团队名称" placeholder-class="input-placeholder" />
+        <input class="edit-team-input" :value="name" @input="(e) => onInput(e, 'name')" placeholder="请输入团队名称" placeholder-class="input-placeholder" />
       </view>
 
       <view class="edit-team-intro">
-        <textarea class="edit-team-intro-dt" placeholder="请输入团队介绍" />
+        <textarea class="edit-team-intro-dt" :value="desc" @input="(e) => onInput(e, 'desc')" placeholder="请输入团队介绍" />
       </view>
 
-      <view class="edit-team-btn" @click="hide">保存</view>
+      <view class="edit-team-btn" @click="hide">{{ btnText }}</view>
 
     </view>
   </view>
@@ -28,9 +29,21 @@
 <script>
 export default {
   name: "editTeam",
+	props: {
+	  btnText: {
+	    type: String,
+	    default: '保存',
+	  },
+		logo: '',
+		title: '',
+		intro: '',
+	},
   data() {
     return {
-      visible: false
+      visible: false,
+			image: this.logo,
+			name: this.title,
+			desc: this.intro,
     }
   },
   methods: {
@@ -39,7 +52,35 @@ export default {
     },
     hide() {
       this.visible = false;
-    }
+			this.$emit('onSave', this.image, this.name, this.desc);
+    },
+		onInput(e, type) {
+			const text = e.target.value;
+			if (type == 'name') {
+				this.name = text;
+			} else if (type == 'desc') {
+				this.desc = text;
+			} 
+		},
+		chooseImage() {
+			uni.chooseImage({
+				  sourceType: ['camera'],
+			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			    success: (res) => {
+							const path = res.tempFilePaths[0];
+							this.uploadImage(path);
+			    }
+			});
+		},
+		uploadImage(path) {
+			const param = {
+				file: path,
+			};
+			this.$http.upload({ path }, true)
+			.then(res=>{
+				this.image = res;
+			});
+		},
   }
 }
 </script>

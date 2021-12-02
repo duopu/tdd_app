@@ -29,7 +29,28 @@ import CornerMark from "../component/cornerMark";
 export default {
   name: "selectPerson",
   components: { CornerMark, BackContainer, PeopleItem, BigBtn, IphonexBottom },
+	data() {
+		return {
+			id: '',
+			personList: [],
+		}
+	},
+	onLoad(option) {
+		if (option.id) { // 编辑地址
+		  this.id = option.id;
+		}
+	},
+	onReady() {
+		this.queryPersonList();
+	},
   methods: {
+		queryPersonList() {
+			this.$http
+				.post('/b/teammember/queryList', { id: this.id }, true)
+				.then(res => {
+					this.personList = res;
+				});
+		},
     change(data) {
       console.log(data);
     }

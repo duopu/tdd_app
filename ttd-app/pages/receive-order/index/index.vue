@@ -40,15 +40,17 @@
     <view class="ro-4">
       <view class="ro-41">我的团队：</view>
       <image src="/static/mine/iconCircleAdd.svg" class="add-img" />
-      <text class="ro-43">创建团队</text>
+      <text class="ro-43" @click="showCreateTeam()">创建团队</text>
     </view>
 
     <view class="ro-5">
-      <view class="ro-51" v-for="i in peopleList" :key="i.name">
-        <image :src="i.header || MDicon4" class="ro-52" />
-        <view class="ro-53">{{ i.name }}</view>
+      <view class="ro-51" v-for="(item, i) in teamList" :key="i" @click="toTeamDetail(item)">
+        <image :src="item.teamLogo || MDicon4" class="ro-52" />
+        <view class="ro-53">{{ item.teamName }}</view>
       </view>
     </view>
+		
+		<edit-team ref="editTeam" btnText="创建" @onSave="createTeam" />
 
   </view>
 </template>
@@ -56,9 +58,10 @@
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-icons";
 import MDicon4 from '../../../static/mine/MDicon-4.png';
+import EditTeam from "../myTeam/editTeam";
 
 export default {
-  components: { UniIcons, BackContainer },
+  components: { UniIcons, BackContainer, EditTeam },
   data() {
     return {
       list: [
@@ -81,12 +84,50 @@ export default {
         { name: '钱浩然5', header: '' },
         { name: '钱浩然6', header: '' },
       ],
+			teamList: [],
       MDicon4,
     };
   },
   onReady() {
     // this.$tool.actionForLogin()
-  }
+		this.queryMyTeamList();
+  },
+	methods: {
+		queryMyTeamList() {
+			this.$http.post('/b/teaminfo/teamList', {}, true)
+			.then(res => {
+				this.teamList = res;
+			})
+		},
+		showCreateTeam() {
+			this.$refs.editTeam.show();
+		},
+		createTeam(teamLogo, teamName, teamIntroduce) {
+			if (!teamName) {
+				uni.showToast({ title:  '请输入团队名称', icon:  'none' });
+				return;
+			}
+			if (!teamIntroduce) {
+				uni.showToast({ title:  '请输入团队介绍', icon:  'none' });
+				return;
+			}
+			const params = {
+				teamLogo,
+				teamName,
+				teamIntroduce,
+			}
+			this.$http.post('/b/teaminfo/add', params, true)
+			.then(res => {
+				uni.showToast({ title:  '创建成功' });
+				this.queryMyTeamList();
+			})
+		},
+		toTeamDetail(team) {
+			uni.navigateTo({
+				url: `/pages/receive-order/myTeam/myTeam?id=${team.id}`
+			})
+		}
+	}
 }
 </script>
 <style lang="scss" src="./style.scss" scoped>

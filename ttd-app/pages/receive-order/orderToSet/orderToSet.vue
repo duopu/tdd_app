@@ -4,7 +4,7 @@
 
     <back-container>
       <view>
-        <title-with-switch show-switch :switch-value="switchValue" @changeSwitch="changeSwitch" />
+        <title-with-switch show-switch :switch-value="setting.onOffReceivingFlag" title="开启接单" @changeSwitch="changeSwitch(false)" />
         <view class="order-set1">
           <view class="order-set11">
             <view class="order-set11-title">接单位置</view>
@@ -17,17 +17,17 @@
     </back-container>
 
     <view class="order-set2">
-      <title-with-switch show-switch :switch-value="switchValue" title="开启无范围限制接单" @changeSwitch="changeSwitch" />
+      <title-with-switch show-switch :switch-value="setting.onOffLimitFlag" title="开启无范围限制接单" @changeSwitch="changeSwitch(true)" />
 
       <view class="order-set21">
         <view class="order-set21-title">接单范围</view>
-        <input placeholder="请输入" class="input-so" placeholder-class="placeholder-class" />
+        <input placeholder="请输入" class="input-so" :value="setting.receivingDistance" @input="(e) => onInput(e, 'distance')" placeholder-class="placeholder-class" />
         <text class="order-set2-unit">公里</text>
       </view>
     </view>
 
     <iphonex-bottom>
-      <big-btn />
+      <big-btn @click="updateSetting"/>
     </iphonex-bottom>
   </view>
 </template>
@@ -43,13 +43,72 @@ export default {
   components: { BigBtn, IphonexBottom, TitleWithSwitch, BackContainer },
   data() {
     return {
-      switchValue: false,
+      setting: {
+				address: '',
+				city: '',
+				cityId: 0,
+				customerType: 0, // 客户类型 1：团队，2：个人
+				district: '',
+				districtId: 0,
+				latitude: 0,
+				longitude: 0,
+				onOffLimitFlag: 0,
+				onOffReceivingFlag: 0,
+				province: '',
+				provinceId: 0,
+				receivingDistance: 0
+			}
     };
   },
+	onLoad(option) {
+		if (option.id) { // 编辑地址
+		  this.id = option.id;
+			this.querySettingInfo(this.id);
+		}
+	},
   methods: {
-    changeSwitch() {
-      this.switchValue = !this.switchValue
-    }
+		querySettingInfo(id) {
+			this.$http
+				.post('/b/systemconfig/queryReceivingConf', { id }, true)
+				.then(res => {
+					this.setting = res;
+				});
+		},
+		changeSwitch(isLimit) {
+			if (isLimit) {
+				this.setting.onOffLimitFlag = this.setting.onOffLimitFlag == 0 ? 1 : 0;
+			} else {
+				this.setting.onOffReceivingFlag = this.setting.onOffReceivingFlag == 0 ? 1 : 0;
+			}
+		},
+		onInput(e, type) {
+			const text = e.target.value;
+			if (type == 'name') {
+				this.name = text;
+			} else if (type == 'duty') {
+				this.dutyNo = text;
+			} else if (type == 'address') {
+				this.address = text;
+			} else if (type == 'phone') {
+				this.phone = text;
+			} else if (type == 'bank') {
+				this.openingBank = text;
+			} else if (type == 'distance') {
+				this.setting.receivingDistance = text;
+			}
+		},
+		updateSetting() {
+			this.$http
+				.post('/b/systemconfig/updateReceivingConf', this.setting, true)
+				.then(res => {
+					uni.showToast({
+						title: '设置成功',
+						success: () => {
+							uni.navigateBack({});
+						},
+					})
+				});
+		}
   }
 }
 </script>

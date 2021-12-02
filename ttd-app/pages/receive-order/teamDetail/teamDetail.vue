@@ -5,11 +5,11 @@
 
     <back-container>
       <template v-slot:headerSlot>
-        <team-card />
+        <team-card :team="team" :showEdit="false" :showView="false" :showSetting="false"/>
       </template>
       <view class="team-dtl">
         <member-title :show-right="false" title="评价" />
-        <evaluate-card v-for="i in 5" :key="i" />
+        <evaluate-card v-for="i in commentList" :key="i.id" :comment="i" />
       </view>
     </back-container>
 
@@ -26,8 +26,35 @@
     components: { MemberTitle, EvaluateCard, TeamCard, BackContainer },
     data() {
 			return {
-
+				team: {},
+				commentList: [],
 			};
+		},
+		onLoad(option) {
+			if (option.id) { // 编辑地址
+			  this.id = option.id;
+				this.queryTeamInfo(this.id);
+				this.queryTeamComment(this.id);
+			}
+		},
+		methods: {
+			queryTeamInfo(id) {
+				this.$http
+					.post('/b/teaminfo/query', { id }, true)
+					.then(res => {
+						this.team = res;
+					});
+			},
+			queryTeamComment(userId) {
+				this.$http
+					.post('/b/ordercomment/queryPageList', { 
+						userId,
+						userType: 2,
+					}, true)
+					.then(res => {
+						this.commentList = res.dataList;
+					});
+			},
 		}
 	}
 </script>
