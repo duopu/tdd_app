@@ -14,7 +14,7 @@
 
           <view class="po-1 po-16">
             <view class="po-11">
-              <uni-icons type="email-filled" size="20" color="white" />
+              <image class="email-filled11" src="/static/mine/teamView.svg" />
             </view>
             <view class="po-12 po-13">所有订单</view>
           </view>
@@ -83,6 +83,11 @@ export default {
       text-align: center;
     }
 
+    .email-filled11 {
+      width: 50rpx;
+      height: 50rpx;
+    }
+
     .po-12 {
       margin-top: 16rpx;
       text-align: center;
@@ -94,7 +99,7 @@ export default {
     }
 
     .po-13 {
-      margin-top: 10rpx;
+      margin-top: 16rpx;
     }
   }
 

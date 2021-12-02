@@ -18,7 +18,6 @@
 
           <view class="ro-1 ro-16">
             <view class="ro-11">
-              <!--  TODO 此图片需要ui重新提供 -->
               <image class="email-filled" src="/static/mine/teamView.svg" />
             </view>
             <view class="ro-12 ro-13">所有订单</view>

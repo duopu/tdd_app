@@ -43,9 +43,9 @@
 
       <view class="up-list">
         <upload-list upload-text="添加照片" />
-        <upload-list upload-text="拍照" />
-        <upload-list />
-        <upload-list upload-text="添加语音" />
+        <upload-list upload-icon="4" upload-text="拍照" />
+        <upload-list upload-icon="2" />
+        <upload-list upload-icon="3" upload-text="添加语音" />
       </view>
     </back-container>
 

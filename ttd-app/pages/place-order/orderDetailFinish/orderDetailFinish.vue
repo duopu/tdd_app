@@ -72,13 +72,11 @@
       </view>
 
       <view class="fini-51" v-for="i in payList" :key="i.value" @click="changePayWay(i.value)">
-        <uni-icons :type="i.leftIcon" size="17" color="#969799" />
+        <image :src="i.picPath" class="bank-img-style" />
         <text class="fini-51l fini-51kl">{{ i.label }}</text>
         <text class="fini-51m" />
-        <uni-icons :type="i.value === payWay  ? 'circle-filled' : 'circle'"
-                   size="20"
-                   :color="payWay == i.value ? '#3340A0' : '#969799'"
-        />
+        <image v-if="payWay == i.value" src="/static/mine/radioSelect.svg" class="circle-filled1" />
+        <image v-else src="/static/mine/radioEmpty.svg" class="circle-filled1" />
       </view>
 
     </view>
@@ -129,9 +127,9 @@ export default {
       remark1: '',
       value22: 1,
       payList: [
-        { label: '银行支付', leftIcon: 'chat-filled', value: 1 },
-        { label: '授信支付', leftIcon: 'chat', value: 2 },
-        { label: '线下支付', leftIcon: 'chatboxes', value: 3 },
+        { label: '银行支付', leftIcon: 'chat-filled', value: 1, picPath: '/static/mine/bankCard.svg' },
+        { label: '授信支付', leftIcon: 'chat', value: 2, picPath: '/static/mine/bankPay.svg' },
+        { label: '线下支付', leftIcon: 'chatboxes', value: 3, picPath: '/static/mine/bankUnderline.svg' },
       ],
       payWay: 1
     };
@@ -209,8 +207,13 @@ export default {
       }
     }
 
+    .bank-img-style {
+      width: 48rpx;
+      height: 48rpx;
+    }
+
     .fini-51kl {
-      margin-left: 20rpx;
+      margin-left: 16rpx;
     }
 
     .fini-51m {
@@ -221,6 +224,12 @@ export default {
       font-family: PingFang SC-Regular, PingFang SC;
       font-weight: 400;
       color: #828282;
+    }
+
+    .circle-filled1 {
+      width: 36rpx;
+      height: 36rpx;
+      flex-shrink: 0;
     }
 
     .fini-51r {

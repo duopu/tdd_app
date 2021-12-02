@@ -7,9 +7,13 @@
         <view class="cr-item-box" v-for="i in 3" :key="i">
           <view class="cr-item">
             <view class="cr-item-l">
-              <image :src="MDicon" class="cr-item-lp" />
+              <view class="cr-item-lpbox">
+                <image src="/static/mine/biangengRen.svg" class="cr-item-lp" />
+              </view>
               <view class="cr-item-line" />
-              <image :src="MDicon" class="cr-item-lp" />
+              <view class="cr-item-lpbox">
+                <image src="/static/mine/biangengTu.svg" class="cr-item-lp" />
+              </view>
             </view>
 
             <view class="cr-item-r">
@@ -87,12 +91,18 @@ export default {
     flex-direction: column;
     align-items: center;
 
-    .cr-item-lp {
+    .cr-item-lpbox {
       width: 48rpx;
       height: 48rpx;
       flex-shrink: 0;
       border-radius: 100%;
+      @include flexCenter;
       border: 1rpx solid #2C3580;
+    }
+
+    .cr-item-lp {
+      width: 36rpx;
+      height: 36rpx;
     }
 
     .cr-item-line {

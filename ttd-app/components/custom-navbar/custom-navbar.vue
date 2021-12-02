@@ -4,8 +4,11 @@
       <view class="bar1" :style="{height: statusBarHeight + 'px'}"></view>
       <view class="bar2" :style="{height: navbarHeight + 'px'}">
         <view>
-          <uni-icons v-if="showLeftIcon && hasBack" type="arrowleft" class="back" color="#FFFFFF" size="20" @click="back" />
-          <uni-icons v-if="showLeftIcon && !hasBack" type="home-filled" class="back to-home" color="#FFFFFF" size="20" @click="toHome" />
+          <!-- <uni-icons v-if="showLeftIcon && hasBack" type="arrowleft" class="back" color="#FFFFFF" size="20" @click="back" />-->
+          <!-- <uni-icons v-if="showLeftIcon && !hasBack" type="home-filled" class="back to-home" color="#FFFFFF" size="20" @click="toHome" />-->
+          <image v-if="showLeftIcon && hasBack" src="/static/mine/headerBack.svg" class="back" @click="back" />
+          <image v-if="showLeftIcon && !hasBack" src="/static/mine/headerHome.svg" class="back to-home"
+                 @click="toHome" />
         </view>
         <view class="title">{{ title }}</view>
         <view class="empty" />
@@ -94,11 +97,15 @@ export default {
   }
 
   .back {
-    padding-left: 10rpx;
+    padding-left: 25rpx;
+    width: 40rpx;
+    height: 40rpx;
   }
 
   .to-home {
     padding-left: 20rpx;
+    width: 50rpx;
+    height: 50rpx;
   }
 
   .title {

@@ -10,10 +10,8 @@
             @click="$emit('change', i.value)"
       >
 
-        <uni-icons :type="value == i.value ? 'circle-filled' : 'circle'"
-                   size="17"
-                   :color="value == i.value ? '#3340A0' : '#969799'"
-        />
+        <image v-if="value == i.value" src="/static/mine/radioSelect.svg" class="circle-filled" />
+        <image v-else src="/static/mine/radioEmpty.svg" class="circle-filled" />
 
         <text class="check-text">{{ i.text }}</text>
       </view>
@@ -69,8 +67,14 @@ export default {
       display: flex;
       align-items: center;
 
+      .circle-filled {
+        width: 36rpx;
+        height: 36rpx;
+        flex-shrink: 0;
+      }
+
       .check-text {
-        padding: 0 32rpx 0 18rpx;
+        padding: 0 32rpx 4rpx 16rpx;
         font-size: 28rpx;
         font-family: PingFang SC-Regular, PingFang SC;
         font-weight: 400;

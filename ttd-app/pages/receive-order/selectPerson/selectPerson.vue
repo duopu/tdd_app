@@ -4,7 +4,7 @@
 
     <back-container>
       <view>
-        <people-item v-for="i in 3" :key="i" :checked="i == '1'" />
+        <people-item v-for="i in 3" :key="i" :checked="i == '1'" @change="change(i)" />
       </view>
     </back-container>
 
@@ -29,8 +29,10 @@ import CornerMark from "../component/cornerMark";
 export default {
   name: "selectPerson",
   components: { CornerMark, BackContainer, PeopleItem, BigBtn, IphonexBottom },
-  data() {
-    return {};
+  methods: {
+    change(data) {
+      console.log(data);
+    }
   }
 }
 </script>

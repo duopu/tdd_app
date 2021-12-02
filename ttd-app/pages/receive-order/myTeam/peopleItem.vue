@@ -1,7 +1,7 @@
 <template>
   <view class="people-item-item">
 
-    <image :src="MDicon" class="people-item-img" />
+    <image src="/static/mine/MDicon.png" class="people-item-img" />
 
     <view class="people-item-right">
       <view class="people-item-right1">
@@ -13,26 +13,16 @@
           <text class="people-lkj-2-item" v-for="i in tagList" :key="i">{{ i }}</text>
         </view>
       </view>
-
-      <uni-icons size="22"
-                 class="people-item-right3"
-                 :type="checked ? 'circle-filled' : 'circle'"
-                 :color="checked ? '#2C3580' : '#BDBDBD'"
-      />
+      <image v-if="checked" src="/static/mine/checkBoxChecked.svg" class="people-item-right3" @click="change" />
+      <image v-else src="/static/mine/checkBoxEmpty.svg" class="people-item-right3" @click="change" />
     </view>
 
   </view>
 </template>
 <script>
-import MDicon from '../../../static/mine/MDicon.png';
 
 export default {
   name: "peopleItem",
-  data() {
-    return {
-      MDicon
-    }
-  },
   props: {
     tagList: {
       type: Array,
@@ -43,6 +33,11 @@ export default {
     checked: {
       type: Boolean,
       default: true
+    }
+  },
+  methods: {
+    change() {
+      this.$emit('change')
     }
   }
 }
@@ -120,8 +115,11 @@ export default {
     }
 
     .people-item-right3 {
+      flex-shrink: 0;
       align-self: center;
-      padding: 0 32rpx 0 16rpx;
+      width: 48rpx;
+      height: 48rpx;
+      margin: 0 32rpx 0 16rpx;
     }
   }
 }

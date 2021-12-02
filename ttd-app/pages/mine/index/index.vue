@@ -40,7 +40,6 @@
         </view>
       </view>
 
-      <!-- TODO  替换正式图片之后将 border 删掉  -->
       <image class="mm-2" :src="IDcardBack" />
 
       <view class="mm-3">
@@ -67,7 +66,7 @@
         </template>
       </view>
 
-
+      <!-- todo 此区域为临时入口 联调时可删除  begin -->
       <view class="mm-3 mm-4">
         <template v-for="(i, index) in menuList">
           <view class="mm-31" @click="toPage(i)" :key="i.url">
@@ -78,6 +77,7 @@
           <view class="mm-35" v-if="index < (menuList.length - 1)" />
         </template>
       </view>
+      <!-- todo 此区域为临时入口 联调时可删除  end -->
 
     </view>
 
@@ -237,13 +237,15 @@ export default {
         { title: '关于我们', url: '', img: MDicon1 },
       ]
     },
+
+    // todo 此区域为临时入口 联调时可删除
     menuList() {
       return [
         { title: '积分商城', url: '' },
         { title: '我的服务地址', url: '/pages/mine/addressManage/addressManage' },//
-        { title: '实名认证', url: '' },
+        { title: '实名认证', url: '/pages/mine/realNameAuth/realNameAuth' },
         { title: '我的银行卡', url: '/pages/mine/myBankCard/myBankCard' },//
-        { title: '发票信息', url: '' },
+        { title: '发票信息', url: '/pages/mine/myInvoice/myInvoice' },
         { title: '我的投诉-临时', url: '/pages/mine/myComplain/myComplain' }, //
         { title: '发票发票-临时', url: '/pages/mine/myInvoice/myInvoice' },//
         { title: '发票抬头-临时', url: '/pages/mine/chooseLookUp/chooseLookUp' },

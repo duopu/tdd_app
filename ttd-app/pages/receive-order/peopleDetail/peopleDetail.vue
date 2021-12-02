@@ -4,7 +4,7 @@
 
     <view class="pd-top">
       <view class="pd-top1">
-        <image class="pd-top1-img" :src="trophyIcon" />
+        <image class="pd-top1-img" src="/static/mine/trophy-icon.svg" />
         <text class="pd-top1-text">已实名认证</text>
       </view>
     </view>
@@ -12,18 +12,18 @@
     <view class="pd-header">
       <image :src="MDicon" class="pd-header-img" />
       <view class="pd-header-text">
-        <uni-icons size="18" type="compose" color="#323335" />
+        <image class="pd-header-edit-image" src="/static/mine/iconEditBlack.svg" />
         <text class="pd-header-edtext">编辑信息</text>
       </view>
       <view class="pd-header-name">李娉婷</view>
 
       <view class="pd-header-phone pd-header-phone1">
-        <uni-icons size="15" class="pd-header-edit-icon" type="phone" color="#828282" />
+        <image src="/static/mine/linkPhoneIcon.svg" class="pd-header-edit-icon" />
         <text class="pd-header-phonenum">手机号：186 5440 3053</text>
       </view>
 
       <view class="pd-header-phone">
-        <uni-icons size="15" class="pd-header-edit-icon" type="phone" color="#828282" />
+        <image src="/static/mine/linkPeopleIcon.svg" class="pd-header-edit-icon" />
         <text class="pd-header-phonenum">身份证：430225 19010509 3064</text>
       </view>
 
@@ -48,7 +48,6 @@
   </view>
 </template>
 <script>
-import trophyIcon from '../../../static/mine/trophy-icon.svg';
 import MDicon from '../../../static/mine/MDicon.png';
 import MemberTitle from "../myTeam/memberTitle";
 import EvaluateCard from "../myTeam/evaluateCard";
@@ -58,8 +57,7 @@ export default {
   components: { EvaluateCard, MemberTitle },
   data() {
     return {
-      trophyIcon,
-      MDicon
+      MDicon // TODO 更换图片后可删掉
     };
   }
 }
@@ -119,8 +117,13 @@ export default {
     width: 176rpx;
     height: 48rpx;
 
+    .pd-header-edit-image {
+      width: 36rpx;
+      height: 36rpx;
+    }
+
     .pd-header-edtext {
-      padding: 0 20rpx;
+      padding: 0 16rpx;
       font-size: 24rpx;
       font-family: PingFang SC-Regular, PingFang SC;
       font-weight: 400;
@@ -139,13 +142,21 @@ export default {
   }
 
   .pd-header-phone {
+    display: flex;
+    align-items: center;
+
     .pd-header-phonenum {
       padding-left: 16rpx;
       font-size: 28rpx;
       font-family: PingFang SC-Regular, PingFang SC;
       font-weight: 400;
       color: #323335;
-      line-height: 36rpx;
+    }
+
+    .pd-header-edit-icon {
+      flex-shrink: 0;
+      width: 32rpx;
+      height: 32rpx;
     }
   }
 

@@ -49,7 +49,7 @@
             </view>
 
             <view class="state1-tip" v-if="value === 6">
-              <corner-mark num="!" color="#FF3B30" />
+              <image src="/static/mine/warningTanhao.svg" class="warn-tanhao" />
               <view class="plo-im-3red plo-im-3red-mar">取消原因：工程纠纷</view>
             </view>
 
@@ -210,6 +210,11 @@ export default {
         .plo-im-3red-mar {
           margin-left: 8rpx;
         }
+      }
+
+      .warn-tanhao {
+        width: 32rpx;
+        height: 32rpx;
       }
     }
 

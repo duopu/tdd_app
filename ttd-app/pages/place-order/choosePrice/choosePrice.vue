@@ -25,8 +25,10 @@
                 <my-price scale="0.8" price="8000.00" />
               </view>
             </view>
-            <uni-icons class="chp-193" :type="i == 1 ? 'circle-filled' : 'circle'" size="20"
-                       :color="i == 1 ? '#2C3580' : '#BDBDBD'" />
+
+            <image v-if="i == 1" src="/static/mine/checkBoxChecked.svg" class="chp-193-right3" />
+            <image v-else src="/static/mine/checkBoxEmpty.svg" class="chp-193-right3" />
+
           </view>
           <view class="chp-2">
             今天一天过得不错吧？梦想是不是更远了？
@@ -148,6 +150,14 @@ export default {
 
     .chp-193 {
       align-self: center;
+    }
+
+    .chp-193-right3 {
+      flex-shrink: 0;
+      align-self: center;
+      width: 48rpx;
+      height: 48rpx;
+      margin: 0 0 0 16rpx;
     }
   }
 

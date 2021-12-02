@@ -25,7 +25,7 @@
           <add-remark label="评价内容：" :value="value" @change="change" />
 
           <view class="upload-list-obox">
-            <upload-list />
+            <upload-list upload-text="添加照片" />
           </view>
         </view>
       </view>
