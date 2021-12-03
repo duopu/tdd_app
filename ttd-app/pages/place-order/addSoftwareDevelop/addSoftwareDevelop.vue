@@ -11,7 +11,7 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">类别</view>
-          <view class="add-i-midle">请输入</view>
+          <view class="add-i-midle" @click="softwareSelect">请输入</view>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
@@ -53,6 +53,8 @@ export default {
     return {
 			requireInfo: '', // 备注
       orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
+			
+			softwareList: [],
     };
   },
   onLoad() {
@@ -63,7 +65,21 @@ export default {
   		self.uploadImage(path, 2);
     });
   },
+	mounted() {
+		uni.$on('submitSoftwareList',(softwareList)=>{
+			console.log('softwareList ',softwareList);
+			this.softwareList  = softwareList || [];
+		})
+	},
+	destroyed() {
+		uni.$off('submitSoftwareList');
+	},
   methods: {
+		softwareSelect() {
+			uni.navigateTo({
+				url:`/pages/main/apply/tree?type=userrole`
+			})
+		},
     chooseImage() {
     	uni.chooseImage({
     	    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有

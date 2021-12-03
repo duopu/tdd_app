@@ -69,7 +69,16 @@ export default {
 			self.uploadImage(path, 2);
 	  });
 	},
+	onReady() {
+		this.queryWorkList();
+	},
   methods: {
+	 queryWorkList() {
+		  this.$http.post('/b/ordermaster/queryPageList', {}, true)
+		  .then(res => {
+			  // this.orderAddress = res.dataList[0];
+		  })
+	  },
     chooseImage() {
     	uni.chooseImage({
     	    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有

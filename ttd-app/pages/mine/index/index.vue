@@ -223,7 +223,7 @@ export default {
     newList() {
       return [
         { title: '邀请好友', url: '', img: MDicon7 },
-        { title: '承接方申请', url: '', img: MDicon8 },
+        { title: '承接方申请', url: 'pages/main/apply/apply', img: MDicon8 },
         { title: '实名认证', url: '/pages/mine/realNameAuth/realNameAuth', img: MDicon2 },
         { title: '我的银行账户', url: '/pages/mine/myBankCard/myBankCard', img: MDicon3 },
         { title: '发票信息', url: '/pages/mine/myInvoice/myInvoice', img: MDicon4 },
@@ -273,6 +273,7 @@ export default {
         { title: '添加租赁工作-临时', url: '/pages/place-order/addLeaseWork/addLeaseWork' },
         { title: '添加软件开发-临时', url: '/pages/place-order/addSoftwareDevelop/addSoftwareDevelop' },
 
+        { title: '发单主页-临时', url: '/pages/place-order/placeOrder/placeOrder' },
         { title: '发单列表-临时', url: '/pages/place-order/placeOrderList/placeOrderList' },
         { title: '选价-临时', url: '/pages/place-order/choosePrice/choosePrice' },
         { title: '发单-订单详情-临时', url: '/pages/place-order/orderDetail/orderDetail' },

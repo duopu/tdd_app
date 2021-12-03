@@ -13,13 +13,13 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">服务内容</view>
-          <view class="add-i-midle">请选择</view>
+          <view class="add-i-midle" @click="skillSelect"> {{ cateName || '请选择' }}</view>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
         <view class="add-i-item">
           <view class="add-i-lable">品牌</view>
-          <view class="add-i-midle">请选择</view>
+          <view class="add-i-midle" @click="brandSelect">{{ brand || '请选择' }}</view>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
@@ -83,15 +83,49 @@ export default {
 			number: 0, // 数量
 			requireInfo: '', // 备注
 			orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
+			
+			skillList: [], // 服务类型数据源
+			brandList: [], // 品牌类型数据源
     };
   },
-	onLoad() {
+	onLoad(option) {
 		let self = this;
+		// 监听上级页面传入数据
+		const eventChannel = self.getOpenerEventChannel();
+		eventChannel.on('editWork', (work) => {
+		    console.log('editWork ', work);
+				this.$data = {
+					...this.$data,
+					...work,
+				}
+		})
+		// 监听录音时间
 		recorderManager.onStop(function (res) {
 			console.log('recorder stop' + JSON.stringify(res));
 	   const path = res.tempFilePath;
 			self.uploadImage(path, 2);
 	  });
+	},
+	onReady() {
+		this.querySkillList();
+		// this.queryBrandList();
+	},
+	mounted() {
+		uni.$on('submitSelectSkillTree',(skillList)=>{
+		  console.log('skillList',skillList);
+			this.skillList  = skillList || [];
+			this.cateId = this.skillList[0].id;
+			this.cateName = this.skillList[0].name;
+		})
+		uni.$on('submitBrandList',brandList=>{
+			console.log('brandList ',brandList);
+			this.brandList = brandList;
+			this.brand = this.brandList[0];
+		})
+	},
+	destroyed() {
+		uni.$off('submitSelectSkillTree');
+		uni.$off('submitBrandList');
 	},
   methods: {
     changeType(value) {
@@ -99,6 +133,20 @@ export default {
     },
 		modelChange(e) {
 			this.model = e.target.value;
+		},
+		skillSelect() {
+			uni.navigateTo({
+				url:`/pages/main/apply/tree?type=skill`
+			});
+		},
+		brandSelect() {
+			if(this.skillList.length == 0){
+				this.$tool.showToast('请先选择技能')
+			}else{
+				uni.navigateTo({
+					url:`/pages/main/apply/list?type=brand&skillId=${this.skillList[0].id || ''}`
+				})
+			}
 		},
 		infoChange(t) {
 			this.requireInfo = t;
@@ -144,10 +192,11 @@ export default {
 			});
 		},
 		onSubmit() {
-			const item = {
-				...this.$data,
-			}
-			console.log('item ', item);
+			const work = Object.assign({}, this.$data);
+			console.log('work ', work);
+			const eventChannel = this.getOpenerEventChannel();
+			eventChannel.emit('onEdit', work);
+			uni.navigateBack({});
 		}
   }
 }

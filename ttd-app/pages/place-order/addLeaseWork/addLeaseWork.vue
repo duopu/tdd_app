@@ -11,7 +11,7 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">设备</view>
-          <view class="add-i-midle">请输入</view>
+          <view class="add-i-midle" @click="deviceSelect">请输入</view>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
@@ -67,6 +67,8 @@ export default {
 			number: 0, // 数量
 			requireInfo: '', // 备注
       orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
+			
+			toolList: [],
     };
   },
   onLoad() {
@@ -77,7 +79,20 @@ export default {
   		self.uploadImage(path, 2);
     });
   },
+	mounted() {
+		uni.$on('submitSelectEquipmenttoolTree',(toolList)=>{
+			this.toolList  = toolList || [];
+		})
+	},
+	destroyed() {
+		uni.$off('submitSelectEquipmenttoolTree');
+	},
   methods: {
+		deviceSelect() {
+			uni.navigateTo({
+				url:`/pages/main/apply/tree?type=equipmenttool`
+			})
+		},
     chooseImage() {
     	uni.chooseImage({
     	    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有

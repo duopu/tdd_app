@@ -3,7 +3,7 @@
     <custom-navbar title="地址管理" />
     <back-container>
 	  <view>
-		<address-item v-for="(item, index) in addressList" :key="index" :address="item" @rightClick="rightClick" />
+		<address-item v-for="(item, index) in addressList" :key="index" :address="item" @onClick="itemClick" @rightClick="rightClick" />
 	  </view>
 	</back-container>
   </view>
@@ -17,14 +17,33 @@ export default {
   components: { AddressItem, BackContainer },
   data() {
 	  return {
+			isSelect: false,
 	    addressList: []
 	  };
   },
+	onLoad(option) {
+		if (option.isSelect) {
+			this.isSelect = option.isSelect == '1';
+		}
+	},
   onReady() {},
   onShow() {
-	this.queryAddressData();
+	  this.queryAddressData();
   },
   methods: {
+		itemClick(address) {
+			if (this.isSelect) {
+				
+				// 传递选择的地址
+				const eventChannel = this.getOpenerEventChannel();
+				eventChannel.emit('onSelect', address);
+				
+				uni.navigateBack({});
+				
+			} else {
+				uni.navigateTo({ url: `/pages/mine/editAddress/editAddress?id=${address.id}` });
+			}
+		},
 	  rightClick(id) {
 	    uni.navigateTo({ url: `/pages/mine/editAddress/editAddress?id=${id}` });
 	  },

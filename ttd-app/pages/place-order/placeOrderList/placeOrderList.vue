@@ -99,6 +99,11 @@ export default {
       return 10
     }
   },
+	onLoad(option) {
+		if (option.state) {
+			this.value = Number(option.state);
+		}
+	},
 	onReady() {
 		this.queryOrderList();
 	},

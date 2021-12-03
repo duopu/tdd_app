@@ -1,9 +1,9 @@
 <template>
   <view>
-    <view class="oc-card">
+    <view class="oc-card" @click="$emit('onClick')">
       <image :src="MDicon4" class="oc-card-img" />
       <view class="oc-middle">
-        <view class="oc-middle-title">实施</view>
+        <view class="oc-middle-title">{{ title }}</view>
         <view class="oc-middle-text" v-for="i in specItem" :key="i.label">
           {{ i.label }} {{ i.value }}
         </view>
@@ -44,6 +44,10 @@ export default {
       type: String,
       default: '1'
     },
+		title: {
+			type: String,
+			default: '实施',
+		},
     specItem: {
       type: Array,
       default() {

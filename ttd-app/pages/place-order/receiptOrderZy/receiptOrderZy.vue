@@ -1,27 +1,33 @@
 <template>
   <view class="receipt">
-    <custom-navbar title="发单子页" />
+    <custom-navbar title="发单" />
 
     <back-container>
       <template #headerSlot>
-        <offer-head text="添加维修和实施工作" />
+        <offer-head :title="typeArray[orderType - 1].title" :text="typeArray[orderType - 1].intro" />
       </template>
 
       <view class="receipt-addr">
         <view class="receipt-ac-item">
           <view class="receipt-ac-lable">下单模式</view>
-          <view class="receipt-ac-midle">请选择</view>
+					<picker class="receipt-ac-midle" @change="orderModeChange" :value="orderModeText" :range="modeArray" range-key="title">
+						<view >{{ orderModeText || '请选择' }}</view>
+					</picker>
+          
           <uni-icons class="receipt-ac-right" type="arrowright" size="18" color="#969799" />
         </view>
 
-        <view class="receipt-ac-item">
+        <view v-if="orderMode == 0" class="receipt-ac-item">
           <view class="receipt-ac-lable">承接人手机号</view>
-          <input class="receipt-ac-midle" :value="appointPhone" placeholder="可选输入" placeholder-class="input-placeholder" />
+          <input class="receipt-ac-midle" :value="appointPhone" @input="(e) => onInput(e, 'phone')" placeholder="可选输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="receipt-ac-item">
           <view class="receipt-ac-lable">报价周期</view>
-          <view class="receipt-ac-midle">9/23 - 11/22</view>
+					<!-- <picker mode="date" :value="date" start="2021-12-21" end="2022-12-21" @change="bindDateChange"> -->
+						<view class="receipt-ac-midle">9/23 - 11/22</view>
+					<!-- </picker> -->
+          
           <uni-icons class="receipt-ac-right" type="arrowright" size="18" color="#969799" />
         </view>
 
@@ -38,15 +44,19 @@
 
     <view class="address-box">
       <member-title title="工作地址：" :show-right="false" />
-      <view class="address-bi">
+      <view class="address-bi" @click="selectAddress">
         <image :src="MDicon" class="address-img" />
         <view class="address-right">
           <view class="address-rt">
-            <text class="address-rt1">李元霸</text>
-            <text class="address-rt2">13251441886</text>
+            <text class="address-rt1">{{ orderAddress.name || ''}}</text>
+            <text class="address-rt2">{{ orderAddress.phone || ''}}</text>
             <uni-icons type="arrowright" size="18" color="#969799" />
           </view>
-          <view class="address-rb">江苏省 南京市 雨花台区 铁心桥街道大周路32号软件谷科创城</view>
+          <view class="address-rb">
+					  {{ orderAddress.province
+						 ? `${orderAddress.province} ${orderAddress.city} ${orderAddress.district} ${orderAddress.address}`
+						 : '' }}
+					</view>
         </view>
       </view>
     </view>
@@ -54,8 +64,15 @@
     <view class="require-box">
       <member-title title="工作需求：" right-text="添加工作" @add="toAddWorkPage" />
       <view class="require-white">
-        <offer-content-card v-for="(i, index) in 5" :key="i" right-type="0"
-                            :show-last-border-bottom="index < (5 -1)" />
+        <offer-content-card 
+				v-for="(i, index) in orderItemList" 
+				:key="index" 
+				right-type="0"
+				:title="getItemTitle(i)"
+				:specItem="getSpecList(i)"
+        :show-last-border-bottom="index < (orderItemList.length -1)" 
+				@onClick="toEditWorkPage(index, i)"
+			  />
       </view>
     </view>
 
@@ -81,26 +98,156 @@ export default {
   data() {
     return {
       MDicon,
+			orderType: 1,
+			typeArray: [
+				{ orderType: 1, title: '实施与维修', intro: '电子产品的实施与维修工作', url: '/pages/place-order/addImplementation/addImplementation' },
+				{ orderType: 2, title: '勘察设计', intro: '为工程项目进行测量、勘探、试验和鉴定、评价的工作', url: '/pages/place-order/addCanBeSetWork/addCanBeSetWork' },
+				{ orderType: 3, title: '各类专业人员', intro: '各类形形式式的专业人员', url: '/pages/place-order/addPersonWork/addPersonWork' },
+				{ orderType: 4, title: '租赁工作', intro: '租赁各种大小型机动车或专业特种用车', url: '/pages/place-order/addLeaseWork/addLeaseWork' },
+				{ orderType: 5, title: '软件开发', intro: '寻找各类型程序猿、设计湿等，为改变世界而奋斗', url: '/pages/place-order/addSoftwareDevelop/addSoftwareDevelop' },
+			],
+			modeArray: [{ title: '指定承接人', id: 0 }, { title: '匹配承接人', id: 1 }],
 			orderMode: 1, // 下单模式 0指定承接人 1匹配承接人
+			orderModeText: '匹配承接人',
 			appointPhone: '', // 指定承接人手机
-			// distance: 0, // 期望接单距离
+			distance: 0, // 期望接单距离
 			invoiceType: 1, // 发票类型 1专票 2普票
-			orderAddress: {}, // 地址
+			orderAddress: {
+				name: '',
+				phone: '',
+				province: '',
+				city: '',
+				district: '',
+				address: '',
+			}, // 地址
 			orderItemList: [], // 工作列表
+			quotationEnd: '', // 报价周期结束
+			quotationStart: '', // 报价周期开始
+			workEnd: '', // 工作周期结束
+			workStart: '', // 工作周期开始
+			remark: '', // 备注
     }
   },
+	onLoad(option) {
+		if (option.orderType) {
+			this.orderType = Number(option.orderType);
+		}
+	},
+	onReady() {
+		this.queryDefaultAddress();
+	},
   methods: {
+		queryDefaultAddress() {
+			this.$http.post('/b/customeraddress/queryPageList', { defaultFlag: 1 }, true)
+			.then(res => {
+				if (res.totalCount == 1) {
+					this.orderAddress = res.dataList[0];
+				}
+			})
+		},
+		orderModeChange(e) {
+			const index = e.target.value;
+			this.orderMode = this.modeArray[index].id;
+			this.orderModeText = this.modeArray[index].title;
+		},
     change(data) {
       this.invoiceType = data
     },
+		onInput(e, type) {
+			const text = e.target.value;
+			if (type == 'phone') {
+				this.appointPhone = text;
+			}
+		},
+		selectAddress() {
+			uni.navigateTo({
+				url: `/pages/mine/addressManage/addressManage?isSelect=1`,
+				events: {
+					onSelect: (address) => {
+						this.orderAddress = address;
+					}
+				}
+			})
+		},
+		getItemTitle(work) {
+			if (this.orderType == 1) {
+				return work.type == 1 ? '实施' : '维修';
+			} else if (this.orderType == 2) {
+				return '勘测';
+			} else if (this.orderType == 3) {
+				return work.cateName;
+			} else if (this.orderType == 4) {
+				return work.cateName;
+			} else if (this.orderType == 5) {
+				return work.cateName;
+			}
+			return '';
+		},
+		getSpecList(work) {
+			if (this.orderType == 1) {
+				// 实施
+				return [
+					{ label: '技能：', value: work.cateName },
+					{ label: '品牌/型号：', value: `${work.brand}/${work.model ? work.model : '-'}` },
+					{ label: '数量：', value: work.number },
+				];
+			} else if (this.orderType == 2) {
+				// 勘测
+				return [
+					{ label: '面积：', value: work.number },
+				];
+			} else if (this.orderType == 3) {
+				// 人员岗位
+				return [
+					{ label: '数量：', value: work.number },
+				];
+			} else if (this.orderType == 4) {
+				// 设备
+				return [
+					{ label: '数量：', value: work.number },
+					{ label: '使用路程：', value: work.distance },
+				];
+			}
+			return [];
+		},
 		toAddWorkPage() {
 			uni.navigateTo({
-				url: `/pages/receive-order/addImplementation/addImplementation`
+				url: this.typeArray[this.orderType - 1].url,
+				events: {
+					onEdit: (work) => {
+						this.orderItemList.push(work);
+					}
+				}
+			})
+		},
+		toEditWorkPage(index, work) {
+			uni.navigateTo({
+				url: this.typeArray[this.orderType - 1].url,
+				events: {
+					onEdit: (work) => {
+						this.orderItemList.splice(index, 1, work);
+					}
+				},
+				success: (res) => {
+				    // 通过eventChannel向被打开页面传送数据
+				    res.eventChannel.emit('editWork', work);
+				  }
 			})
 		},
     submitOrder() {
 			const params = {
-				
+				appointPhone: this.appointPhone ? this.appointPhone : undefined,
+				distance: this.distance ? this.distance : undefined,
+				invoiceType: this.invoiceType,
+				orderAddress: this.orderAddress,
+				orderItemList: this.orderItemList,
+				orderMode: this.orderMode,
+				orderType: this.orderType,
+				quotationEnd: '2022-11-01 12:00:00',
+				quotationStart: '2021-11-01 12:00:00',
+				remark: this.remark,
+				workEnd: '2022-11-01 12:00:00',
+				workStart: '2021-11-01 12:00:00',
 			}
 			this.$http
 				.post('/b/ordermaster/add', params, true)

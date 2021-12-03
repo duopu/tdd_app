@@ -5,14 +5,14 @@
     <back-container>
       <template v-slot:headerSlot>
         <view class="place-order">
-          <view class="po-1" v-for="i in list" :key="i.title">
+          <view class="po-1" v-for="i in list" :key="i.title" @click="toOrderList(i.state)">
             <view class="po-11">{{ i.num }}</view>
             <view class="po-12">{{ i.title }}</view>
           </view>
 
           <view class="po-2" />
 
-          <view class="po-1 po-16">
+          <view class="po-1 po-16" @click="toOrderList(10)">
             <view class="po-11">
               <image class="email-filled11" src="/static/mine/teamView.svg" />
             </view>
@@ -23,7 +23,7 @@
     </back-container>
 
     <view class="place-order-img-box">
-      <image class="place-order-img" v-for="(i, index) in imageList" :key="index" :src="i.url" @click="ssss" />
+      <image class="place-order-img" v-for="(i, index) in imageList" :key="index" :src="i.url" @click="publishOrder(i.orderType)" />
     </view>
 
   </view>
@@ -37,24 +37,40 @@ export default {
   data() {
     return {
       list: [
-        { num: 0, title: '待确认' },
-        { num: 5, title: '待确认' },
-        { num: 1, title: '待确认' },
-        { num: 3, title: '待确认' },
+        { num: 0, title: '待报价', state: 10 },
+        { num: 5, title: '待确认', state: 20 },
+        { num: 1, title: '待开始', state: 30 },
+        { num: 3, title: '待完工', state: 40 },
       ],
       imageList: [
-        { url: '/static/mine/place_order__renyuan.svg' },
-        { url: '/static/mine/place_order__ruanjian.svg' },
-        { url: '/static/mine/place_order__shishi.svg' },
-        { url: '/static/mine/place_order__zulin.svg' },
-        { url: '/static/mine/place_order_kanshe.svg' },
+        { url: '/static/mine/place_order__shishi.svg', orderType: 1 },
+        { url: '/static/mine/place_order_kanshe.svg', orderType: 2 },
+        { url: '/static/mine/place_order__renyuan.svg', orderType: 3 },
+        { url: '/static/mine/place_order__zulin.svg', orderType: 4 },
+        { url: '/static/mine/place_order__ruanjian.svg', orderType: 5 },
       ]
     };
   },
+	onShow() {
+		// this.queryOrderCount();
+	},
   methods: {
-    ssss() {
-      console.log(111);
-    }
+		queryOrderCount() {
+			this.$http.post('/b/ordermaster/orderCount', {}, true)
+			.then(res => {
+				// this.orderList = res;
+			})
+		},
+		toOrderList(state) {
+			uni.navigateTo({
+				url: `/pages/place-order/placeOrderList/placeOrderList?state=${state}`,
+			})
+		},
+    publishOrder(orderType) {
+			uni.navigateTo({
+				url: `/pages/place-order/receiptOrderZy/receiptOrderZy?orderType=${orderType}`,
+			})
+    },
   }
 }
 </script>

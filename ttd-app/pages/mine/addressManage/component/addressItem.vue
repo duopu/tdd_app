@@ -1,5 +1,5 @@
 <template>
-  <view class="address-item">
+  <view class="address-item" @click="$emit('onClick', address)">
     <name-header :style="{margin: '32rpx 20rpx 32rpx 32rpx'}" :text="address.name.split(0, 1)" />
     <view class="item-right">
       <view class="item-right1">
@@ -10,7 +10,7 @@
         </view>
         <view class="item-right1-2">{{ address.province + address.city + address.district + address.address}}</view>
       </view>
-      <image class="item-right3" src="/static/mine/iconEditGray.svg" @click="$emit('rightClick', address.id)" />
+      <image class="item-right3" src="/static/mine/iconEditGray.svg" hover-stop-propagation @click="$emit('rightClick', address.id)" />
       <right-img-icon />
     </view>
   </view>

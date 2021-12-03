@@ -4,9 +4,9 @@
 
     <back-container>
       <view class="help-center">
-        <view class="help-center-item" v-for="i in 5" :key="i">
-          <view class="hc-title">海淀公园强迫闲逛人员背防疫手册？别再传了！</view>
-          <view class="hc-text">美国总统特朗普21日在密歇根州福特工厂视察时被媒体拍到仍未佩戴口罩，而此前，不管是福特公司还是该州官员都提出了希望他戴口罩的要求。</view>
+        <view class="help-center-item" v-for="(item, i) in dataList" :key="i">
+          <view class="hc-title">{{ item.title }}</view>
+          <view class="hc-text">{{ item.detail }}</view>
           <view class="hc-img-box">
             <image v-for="i in 3" class="hc-img-item" :src="IDcardBack" :key="i" />
           </view>
@@ -26,8 +26,22 @@ export default {
   data() {
     return {
       IDcardBack,
+			dataList: [],
     };
-  }
+  },
+	onReady() {
+		this.queryList();
+	},
+	methods: {
+		queryList() {
+			this.$http
+				.post('/core/supportcenter/queryPageList', { pageSize: 1000 }, true)
+				.then(res => {
+					this.dataList = res.dataList;
+				});
+				
+		},
+	}
 }
 </script>
 
