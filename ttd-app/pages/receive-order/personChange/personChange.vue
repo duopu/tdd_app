@@ -5,7 +5,7 @@
     <back-container>
       <member-title :show-right="false" title="目前成员" />
       <view class="pc-01">
-        <view class="pc-01-item" v-for="i in 4" :key="i">
+        <view class="pc-01-item" v-for="i in memberList" :key="i">
           <image class="pc-01-img" :src="MDicon" />
           <view class="pc-01-name">孙慧</view>
         </view>
@@ -13,12 +13,14 @@
     </back-container>
 
     <view class="pc-02">
-      <member-title right-text="选择人员" />
-      <team-list-item v-for="i in 6" />
+      <member-title title="变更人员" right-text="选择人员" @add="selectPerson" />
+      <team-list-item v-for="i in changeList" :key="i.userId" :member="i" />
     </view>
+		
+		<big-btn buttonText="变更记录" @click="toChangeRecord"/>
 
     <iphonex-bottom>
-      <big-btn />
+      <big-btn @click="submitChange"/>
     </iphonex-bottom>
 
   </view>
@@ -36,10 +38,53 @@ export default {
   components: { BigBtn, IphonexBottom, TeamListItem, MemberTitle, BackContainer },
   data() {
     return {
-      MDicon
+      MDicon,
+			id: 'M995083043754112',
+			memberList: [], // 当前参与人员
+			changeList: [], // 申请变更人员
     }
   },
-  methods: {}
+	onReady() {
+		this.queryMemberList();
+	},
+  methods: {
+		queryMemberList() {
+			this.$http.post('/b/ordermember/queryMemberListAndApplyInfo', { id: this.id }, true)
+			.then(res => {
+				this.memberList = res.curtOrderMemberList;
+				this.changeList = res.applyMemberList;
+			})
+		},
+		selectPerson() {
+			uni.navigateTo({
+				url: '/pages/receive-order/selectPerson/selectPerson',
+				events: {
+					onSelect: (list) => {
+						this.changeList = list;
+					}
+				},
+				success: (res) => {
+				    // 通过eventChannel向被打开页面传送数据
+				    res.eventChannel.emit('selectPerson', this.changeList);
+				  }
+			})
+		},
+		submitChange() {
+			const params = {
+				memberIdList: this.changeList.map((p) => p.userId),
+				receiveOrderId: this.id,
+			}
+			this.$http.post('/b/ordermember/apply', params, true)
+			.then(res => {
+				this.$tool.showToast('变更申请已提交');
+			})
+		},
+		toChangeRecord() {
+			uni.navigateTo({
+				url: `/pages/receive-order/changeRecord/changeRecord?id=${this.id}`,
+			})
+		},
+	}
 }
 </script>
 <style lang="scss" scoped>

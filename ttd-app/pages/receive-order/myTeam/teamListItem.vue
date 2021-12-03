@@ -1,7 +1,8 @@
 <template>
   <view class="team-list-item">
 
-    <image :src="member.headImgUrl || ''" class="team-list-img" @click="$emit('onClick')" />
+    <image v-if="member.headImgUrl" :src="member.headImgUrl" class="team-list-img" @click="$emit('onClick')" />
+		<image v-else src="/static/mine/MDicon.png" class="team-list-img" />
 
     <view class="team-list-right" @click="$emit('onClick')" >
       <view class="team-list-right1">

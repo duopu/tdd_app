@@ -95,10 +95,17 @@
 				})
 			},
 			removePerson(id) {
-				this.$http.post('/b/teammember/delete', { id }, true)
-				.then(res => {
-					uni.showToast({ title:  '删除成功' });
-					this.queryTeamMember();
+				uni.showModal({
+					content: '确定要删除该成员吗?',
+					success: (res) => {
+						if (res.confirm) {
+							this.$http.post('/b/teammember/delete', { id }, true)
+							.then(res => {
+								uni.showToast({ title:  '删除成功' });
+								this.queryTeamMember();
+							})
+						}
+					}
 				})
 			},
 			toCommentPage() {

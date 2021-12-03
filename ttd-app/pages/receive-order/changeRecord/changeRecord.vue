@@ -70,7 +70,7 @@ export default {
   },
 	onLoad(option) {
 		if (option.id) { // 编辑地址
-		  this.id = Number(option.id);
+		  this.id = option.id;
 			this.queryRecordList(this.id);
 		}
 	},

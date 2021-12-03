@@ -1,13 +1,14 @@
 <template>
   <view class="people-item-item">
 
-    <image src="/static/mine/MDicon.png" class="people-item-img" />
+    <image v-if="person.headImgUrl" :src="person.headImgUrl" class="people-item-img" />
+    <image v-else src="/static/mine/MDicon.png" class="people-item-img" />
 
     <view class="people-item-right">
       <view class="people-item-right1">
         <view class="people-lkj-1">
-          <text class="people-lkj-name">周子喧</text>
-          <text class="people-lkj-phone">18605909636</text>
+          <text class="people-lkj-name">{{ person.userName }}</text>
+          <text class="people-lkj-phone">{{ person.phone }}</text>
         </view>
         <view class="people-lkj-2">
           <text class="people-lkj-2-item" v-for="i in tagList" :key="i">{{ i }}</text>
@@ -24,6 +25,12 @@
 export default {
   name: "peopleItem",
   props: {
+		person: {
+			headImgUrl: '',
+			userName: '',
+			phone: '',
+			skills: '',
+		},
     tagList: {
       type: Array,
       default() {

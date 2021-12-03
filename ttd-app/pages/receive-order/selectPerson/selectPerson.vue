@@ -4,17 +4,17 @@
 
     <back-container>
       <view>
-        <people-item v-for="i in 3" :key="i" :checked="i == '1'" @change="change(i)" />
+        <people-item v-for="i in personList" :key="i.userId" :person='i' :checked="getIsSelect(i)" @change="change(i)" />
       </view>
     </back-container>
 
     <iphonex-bottom>
       <view class="choosed-num">
         已选定
-        <corner-mark num="2" class-name="choosed-num-mar" color="#FF9500" />
+        <corner-mark :num="selectNumber" class-name="choosed-num-mar" color="#FF9500" />
         人
       </view>
-      <big-btn />
+      <big-btn @click="comfirmSelect"/>
     </iphonex-bottom>
   </view>
 </template>
@@ -32,6 +32,8 @@ export default {
 	data() {
 		return {
 			id: '',
+			selectList: [],
+			selectNumber: 0,
 			personList: [],
 		}
 	},
@@ -39,6 +41,10 @@ export default {
 		if (option.id) { // 编辑地址
 		  this.id = option.id;
 		}
+		const eventChannel = this.getOpenerEventChannel();
+		eventChannel.on('selectPerson', (list) => {
+				this.selectList = list;
+		})
 	},
 	onReady() {
 		this.queryPersonList();
@@ -51,9 +57,24 @@ export default {
 					this.personList = res;
 				});
 		},
-    change(data) {
-      console.log(data);
-    }
+		getIsSelect(p) {
+			const index = this.selectList.findIndex((person) => person.userId == p.userId);
+			return index != -1;
+		},
+    change(p) {
+      const index = this.selectList.findIndex((person) => person.userId == p.userId);
+			if (index == -1) {
+				this.selectList.push(p);
+			} else {
+				this.selectList.splice(index, 1);
+			}
+			this.selectNumber = this.selectList.length;
+    },
+		comfirmSelect() {
+			const eventChannel = this.getOpenerEventChannel();
+			eventChannel.emit('onSelect', this.selectList);
+			uni.navigateBack({});
+		}
   }
 }
 </script>
