@@ -64,9 +64,26 @@ export default {
   components: { BackContainer },
   data() {
     return {
-      MDicon
+      MDicon,
+			recordList: [],
     };
-  }
+  },
+	onLoad(option) {
+		if (option.id) { // 编辑地址
+		  this.id = Number(option.id);
+			this.queryRecordList(this.id);
+		}
+	},
+	onReady() {},
+	onShow() {},
+	methods: {
+		queryRecordList(id) {
+			this.$http.post('/b/ordermember/queryRecordList', { id, pageSize: 1000 }, true)
+			.then(res => {
+			  this.recordList = res.dataList;
+			})
+		}
+	},
 }
 </script>
 

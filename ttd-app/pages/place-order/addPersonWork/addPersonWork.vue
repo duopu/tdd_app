@@ -28,10 +28,11 @@
       <add-remark label="要求：" required />
 
       <view class="up-list up-list1">
-        <upload-list upload-text="添加照片" />
-        <upload-list upload-text="拍照" />
-        <upload-list />
-        <upload-list upload-text="添加语音" />
+        <upload-list upload-text="添加图片" @upload="chooseImage"/>
+        <!-- <upload-list upload-icon="4" upload-text="拍照" /> -->
+        <upload-list upload-icon="2" @upload="chooseFile"/>
+        <upload-list upload-icon="3" upload-text="添加语音" @upload="startRecord"/>
+        <upload-list upload-icon="3" upload-text="添加语音" @upload="endRecord"/>
       </view>
     </back-container>
 
@@ -52,20 +53,73 @@ import UploadList from "../../receive-order/component/uploadList";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
 
+const recorderManager = uni.getRecorderManager();
+
 export default {
   name: "addPersonWork",
   components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
-      value: '1',
-      value1: undefined,
+			requireInfo: '', // 备注
+      orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
     };
   },
-  methods: {
-    change(value) {
-      this.value = value
-    }
-  }
+	onLoad() {
+		let self = this;
+		recorderManager.onStop(function (res) {
+			console.log('recorder stop' + JSON.stringify(res));
+	   const path = res.tempFilePath;
+			self.uploadImage(path, 2);
+	  });
+	},
+	methods: {
+	  chooseImage() {
+	  	uni.chooseImage({
+	  	    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+	  	    success: (res) => {
+	  					const path = res.tempFilePaths[0];
+	  					this.uploadImage(path, 1);
+	  	    }
+	  	});
+	  },
+	  chooseFile() {
+	  	wx.chooseMessageFile({
+	  	  count: 1,
+	  		success: function (res) {
+	  	    const path = res.tempFilePaths[0];
+	  	    this.uploadImage(path, 3);
+	  	  }
+	  	});
+	  },
+	  startRecord() {
+	  	console.log('开始录音');
+	  	recorderManager.start();
+	  },
+	  endRecord() {
+	    console.log('录音结束');
+	    recorderManager.stop();
+	  },
+	  uploadImage(path, type) {
+	  	const param = {
+	  		file: path,
+	  	};
+	  	this.$http.upload({ path }, true)
+	  	.then(res=>{
+	  		const a = this.orderResourceList.slice();
+	  		a.push({
+	  			url: res,
+	  			resourceType: type,
+	  		});
+	  		this.orderResourceList = a.slice();
+	  	});
+	  },
+	  onSubmit() {
+	  	const item = {
+	  		...this.$data,
+	  	}
+	  	console.log('item ', item);
+	  }
+	}
 }
 </script>
 

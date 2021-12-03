@@ -14,9 +14,9 @@
             <text class="plo-itop-name">安装</text>
             <text class="plo-itop-state"
                   :class="{
-                    'plo-state-yellow': [2, 3, 4].includes(value),
-                    'plo-state-green': [5].includes(value),
-                    'plo-state-red': [6].includes(value),
+                    'plo-state-yellow': [20, 30, 40].includes(value),
+                    'plo-state-green': [50].includes(value),
+                    'plo-state-red': [90].includes(value),
                   }"
             >待报价
             </text>
@@ -24,7 +24,7 @@
 
           <view class="plo-imiddle">
 
-            <view class="state1-tip" v-if="value === 1">
+            <view class="state1-tip" v-if="value === 10">
               <view class="plo-im-c">距离报价结束还有</view>
               <text class="plo-im-r">2</text>
               <view class="plo-im-c plo-im-c2">天</view>
@@ -35,7 +35,7 @@
               <text class="plo-im-num">12</text>
             </view>
 
-            <view class="state1-tip" v-if="value === 2">
+            <view class="state1-tip" v-if="value === 20">
               <view class="plo-im-c">已报价：</view>
               <corner-mark num="2" color="#2C3580" />
               <view class="plo-im-c plo-im-c2">人</view>
@@ -44,11 +44,11 @@
               <view class="plo-im-c">人</view>
             </view>
 
-            <view class="state1-tip" v-if="value === 3">
+            <view class="state1-tip" v-if="value === 30">
               <view class="plo-im-3red">等待承接方开始工作</view>
             </view>
 
-            <view class="state1-tip" v-if="value === 6">
+            <view class="state1-tip" v-if="value === 90">
               <image src="/static/mine/warningTanhao.svg" class="warn-tanhao" />
               <view class="plo-im-3red plo-im-3red-mar">取消原因：工程纠纷</view>
             </view>
@@ -62,17 +62,17 @@
             <view class="plo-ct">工作内容：交换机、路由器、摄像头</view>
           </view>
 
-          <view class="plo-bottom" :class="{'no-mar-bottom': [6].includes(value)}">
-            <view class="plo-btn1" v-if="[1, 2, 3, 4].includes(value)">取消订单</view>
-            <view class="plo-btn1" v-if="[1, 2].includes(value)">查看问题</view>
-            <view class="choose-change-btn" v-if="[2].includes(value)">选价</view>
-            <view class="choose-change-btn" v-if="[2].includes(value)">付款</view>
-            <view class="plo-btn1" v-if="[3, 4].includes(value)">审核人员</view>
-            <view class="plo-btn1" v-if="[3, 4, 5].includes(value)">投诉</view>
-            <view class="plo-btn1" v-if="[5].includes(value)">开必票</view>
-            <view class="plo-btn1" v-if="[5].includes(value)">去评价</view>
-            <view class="choose-change-btn" v-if="[3].includes(value)">确认开始</view>
-            <view class="choose-change-btn" v-if="[4].includes(value)">确认完工</view>
+          <view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
+            <view class="plo-btn1" v-if="[10, 20, 30, 40].includes(value)">取消订单</view>
+            <view class="plo-btn1" v-if="[10, 20].includes(value)">查看问题</view>
+            <view class="choose-change-btn" v-if="[20].includes(value)">选价</view>
+            <view class="choose-change-btn" v-if="[20].includes(value)">付款</view>
+            <view class="plo-btn1" v-if="[30, 40].includes(value)">审核人员</view>
+            <view class="plo-btn1" v-if="[30, 40, 50].includes(value)">投诉</view>
+            <view class="plo-btn1" v-if="[50].includes(value)">开必票</view>
+            <view class="plo-btn1" v-if="[50].includes(value)">去评价</view>
+            <view class="choose-change-btn" v-if="[30].includes(value)">确认开始</view>
+            <view class="choose-change-btn" v-if="[40].includes(value)">确认完工</view>
           </view>
 
         </view>
@@ -90,18 +90,31 @@ export default {
   components: { CornerMark, StateTabList, BackContainer },
   data() {
     return {
-      value: 1
+      value: 10, // state 状态 10待报价，20待确认，30待开始，40待完工，50已完成，90已取消
+			orderList: [],
     };
   },
   computed: {
     state() {
-      return 1
+      return 10
     }
   },
+	onReady() {
+		this.queryOrderList();
+	},
   methods: {
     changeVal(val) {
+			console.log('1 ', val);
       this.value = val
-    }
+    },
+		queryOrderList() {
+			this.$http.post('/b/ordermaster/queryPageList', {
+				state:  this.value
+			}, true)
+			.then(res => {
+				this.orderList = res;
+			})
+		},
   }
 }
 </script>

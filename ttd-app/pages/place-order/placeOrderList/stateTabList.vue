@@ -14,12 +14,12 @@ export default {
       type: Array,
       default() {
         return [
-          { name: '待报价', value: 1 },
-          { name: '待确认', value: 2 },
-          { name: '待开始', value: 3 },
-          { name: '待完工', value: 4 },
-          { name: '已完工', value: 5 },
-          { name: '已取消', value: 6 },
+          { name: '待报价', value: 10 },
+          { name: '待确认', value: 20 },
+          { name: '待开始', value: 30 },
+          { name: '待完工', value: 40 },
+          { name: '已完工', value: 50 },
+          { name: '已取消', value: 90 },
         ]
       }
     },

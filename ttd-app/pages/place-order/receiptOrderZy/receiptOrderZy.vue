@@ -16,7 +16,7 @@
 
         <view class="receipt-ac-item">
           <view class="receipt-ac-lable">承接人手机号</view>
-          <input class="receipt-ac-midle" placeholder="可选输入" placeholder-class="input-placeholder" />
+          <input class="receipt-ac-midle" :value="appointPhone" placeholder="可选输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="receipt-ac-item">
@@ -31,7 +31,7 @@
           <uni-icons class="receipt-ac-right" type="arrowright" size="18" color="#969799" />
         </view>
 
-        <checkd-item :value="value111" @change="change" />
+        <checkd-item :value="invoiceType" @change="change" />
 
       </view>
     </back-container>
@@ -52,7 +52,7 @@
     </view>
 
     <view class="require-box">
-      <member-title title="工作需求：" right-text="添加工作" />
+      <member-title title="工作需求：" right-text="添加工作" @add="toAddWorkPage" />
       <view class="require-white">
         <offer-content-card v-for="(i, index) in 5" :key="i" right-type="0"
                             :show-last-border-bottom="index < (5 -1)" />
@@ -60,7 +60,7 @@
     </view>
 
     <iphonex-bottom>
-      <big-btn />
+      <big-btn @click="submitOrder"/>
     </iphonex-bottom>
   </view>
 </template>
@@ -80,19 +80,38 @@ export default {
   components: { OfferContentCard, MemberTitle, CheckdItem, BigBtn, IphonexBottom, OfferHead, BackContainer },
   data() {
     return {
-      value111: 1,
       MDicon,
+			orderMode: 1, // 下单模式 0指定承接人 1匹配承接人
+			appointPhone: '', // 指定承接人手机
+			// distance: 0, // 期望接单距离
+			invoiceType: 1, // 发票类型 1专票 2普票
+			orderAddress: {}, // 地址
+			orderItemList: [], // 工作列表
     }
   },
   methods: {
     change(data) {
-      this.value111 = data
+      this.invoiceType = data
     },
-    operateSave() {
-      console.log('operateSave');
-    },
-    operateDel() {
-      console.log('operateDel');
+		toAddWorkPage() {
+			uni.navigateTo({
+				url: `/pages/receive-order/addImplementation/addImplementation`
+			})
+		},
+    submitOrder() {
+			const params = {
+				
+			}
+			this.$http
+				.post('/b/ordermaster/add', params, true)
+				.then(res => {
+					uni.showToast({
+						title: '发布成功',
+						success: () => {
+							uni.navigateBack({});
+						}
+					})
+				});
     },
   }
 }
