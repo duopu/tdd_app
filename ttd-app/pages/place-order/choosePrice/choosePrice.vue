@@ -70,9 +70,25 @@ export default {
   components: { CornerMark, IphonexBottom, UniIcons, MyPrice, MyStar, BackContainer },
   data() {
     return {
-      MDicon
+      MDicon,
+			id: '',
+			quoteList: [],
     };
-  }
+  },
+	onLoad(option) {
+		if (option.id) {
+		  this.id = option.id;
+			this.queryQuoteList();
+		}
+	},
+	methods: {
+		queryQuoteList(id) {
+			this.$http.post('/b/orderquote/queryList', { id: this.id }, true)
+			.then(res => {
+			  this.quoteList = res;
+			})
+		},
+	},
 }
 </script>
 

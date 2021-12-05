@@ -95,11 +95,10 @@ export default {
 		eventChannel.on('editWork', (work) => {
 		    console.log('editWork ', work);
 				this.$data = {
-					...this.$data,
 					...work,
 				}
 		})
-		// 监听录音时间
+		// 监听录音事件
 		recorderManager.onStop(function (res) {
 			console.log('recorder stop' + JSON.stringify(res));
 	   const path = res.tempFilePath;

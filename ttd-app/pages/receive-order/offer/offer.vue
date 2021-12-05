@@ -39,7 +39,7 @@
     <view style="height: 300rpx" />
 
     <iphonex-bottom>
-      <bottom-price-and-btn :price="122.01">
+      <bottom-price-and-btn :price="122.01" @onCancel="cancelQuote" @onConfirm="submitQuote">
         <view class="offer-8">
           <text class="offer-81">已报价</text>
           <corner-mark num="3" />
@@ -79,13 +79,43 @@ export default {
   },
   data() {
     return {
+			id: '',
       remark1: ''
     };
   },
+	onLoad(option) {
+		if (option.id) {
+		  this.id = option.id;
+			this.queryOrderInfo();
+		}
+	},
   methods: {
+		queryOrderInfo(id) {
+			this.$http.post('/b/ordermaster/query', { id: this.id }, true)
+			.then(res => {
+			  this.order = res;
+			})
+		},
     input(value) {
       this.remark1 = value;
-    }
+    },
+		cancelQuote() {
+			uni.navigateBack({});
+		},
+		submitQuote() {
+			const params = {
+				id: this.id
+			};
+			this.$http.post('/b/orderquote/createQuote', params, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '报价成功',
+					success: () => {
+						uni.navigateBack({});
+					}
+			  })
+			})
+		}
   }
 }
 </script>

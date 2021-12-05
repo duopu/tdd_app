@@ -39,7 +39,7 @@
     <view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>
 
     <iphonex-bottom>
-      <big-btn />
+      <big-btn @click="onSubmit"/>
     </iphonex-bottom>
   </view>
 </template>
@@ -68,6 +68,15 @@ export default {
   },
 	onLoad() {
 		let self = this;
+		// 监听上级页面传入数据
+		const eventChannel = self.getOpenerEventChannel();
+		eventChannel.on('editWork', (work) => {
+		    console.log('editWork ', work);
+				this.$data = {
+					...work,
+				}
+		})
+		// 监听录音事件
 		recorderManager.onStop(function (res) {
 			console.log('recorder stop' + JSON.stringify(res));
 	   const path = res.tempFilePath;
@@ -130,10 +139,11 @@ export default {
 	  	});
 	  },
 	  onSubmit() {
-	  	const item = {
-	  		...this.$data,
-	  	}
-	  	console.log('item ', item);
+	  	const work = Object.assign({}, this.$data);
+	  	console.log('work ', work);
+	  	const eventChannel = this.getOpenerEventChannel();
+	  	eventChannel.emit('onEdit', work);
+	  	uni.navigateBack({});
 	  }
 	}
 }

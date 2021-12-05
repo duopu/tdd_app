@@ -17,7 +17,9 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">工作类别</view>
-          <view class="add-i-midle">请选择</view>
+					<picker class="add-i-midle" @change="workChange" :value="workType" :range="workList">
+            <view class="add-i-midle">{{ workType || '请选择' }}</view>
+					</picker>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
@@ -36,7 +38,7 @@
     <view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>
 
     <iphonex-bottom>
-      <big-btn />
+      <big-btn @click="onSubmit"/>
     </iphonex-bottom>
   </view>
 </template>
@@ -58,11 +60,23 @@ export default {
   data() {
     return {
 			requireInfo: '', // 备注
+			workType: '',
 			orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
+			
+			workList: [], // 勘测类型数据源
     };
   },
 	onLoad() {
 		let self = this;
+		// 监听上级页面传入数据
+		const eventChannel = self.getOpenerEventChannel();
+		eventChannel.on('editWork', (work) => {
+		    console.log('editWork ', work);
+				this.$data = {
+					...work,
+				}
+		})
+		// 监听录音事件
 		recorderManager.onStop(function (res) {
 			console.log('recorder stop' + JSON.stringify(res));
 	   const path = res.tempFilePath;
@@ -74,11 +88,15 @@ export default {
 	},
   methods: {
 	 queryWorkList() {
-		  this.$http.post('/b/ordermaster/queryPageList', {}, true)
+		  this.$http.post('/b/ordermaster/settingCateList', {}, true)
 		  .then(res => {
-			  // this.orderAddress = res.dataList[0];
+			  this.workList = res;
 		  })
 	  },
+		workChange(e) {
+			const index = e.target.value;
+			this.workType = this.workList[index];
+		},
     chooseImage() {
     	uni.chooseImage({
     	    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
@@ -120,10 +138,11 @@ export default {
     	});
     },
     onSubmit() {
-    	const item = {
-    		...this.$data,
-    	}
-    	console.log('item ', item);
+    	const work = Object.assign({}, this.$data);
+    	console.log('work ', work);
+    	const eventChannel = this.getOpenerEventChannel();
+    	eventChannel.emit('onEdit', work);
+    	uni.navigateBack({});
     }
   }
 }

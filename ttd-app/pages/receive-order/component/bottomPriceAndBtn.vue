@@ -4,8 +4,8 @@
     <view class="offer-9">
       <text class="offer-91">{{ allText }}：</text>
       <my-price :price="price" />
-      <view class="offer-92">取消</view>
-      <view class="offer-92 offer-93">{{ sureText }}</view>
+      <view class="offer-92" @click="$emit('onCancel')">取消</view>
+      <view class="offer-92 offer-93" @click="$emit('onConfirm')">{{ sureText }}</view>
     </view>
   </view>
 </template>
