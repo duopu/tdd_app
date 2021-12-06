@@ -18,8 +18,10 @@
 	export default {
 		data() {
 			return {
+				// code
 				code: '',
 				name: '',
+				// 邀请信息
 				inviteInfo:{},
 			};
 		},
@@ -61,6 +63,7 @@
 			// 用户授权手机号的回调
 			bindgetphonenumber(data) {
 				const info = data.detail;
+				console.log('ad',info);
 				const param = {
 					appId: config.appId,
 					code: this.code,
@@ -76,7 +79,7 @@
 						token: res.token
 					}
 					this.$tool.login(user)
-					this.$tool.showToast('注册成功', () => {
+					this.$tool.showToast('注册成功', () => { 
 						uni.navigateBack({})
 					})
 				}).catch(err => {
