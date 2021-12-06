@@ -18,7 +18,7 @@
 
           <view class="ro-1 ro-16">
             <view class="ro-11">
-              <image class="email-filled" src="/static/mine/teamView.svg" />
+              <image class="email-filled" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/teamView.svg" />
             </view>
             <view class="ro-12 ro-13">所有订单</view>
           </view>
@@ -39,17 +39,17 @@
 
     <view class="ro-4">
       <view class="ro-41">我的团队：</view>
-      <image src="/static/mine/iconCircleAdd.svg" class="add-img" />
+      <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="add-img" />
       <text class="ro-43" @click="showCreateTeam()">创建团队</text>
     </view>
 
     <view class="ro-5">
       <view class="ro-51" v-for="(item, i) in teamList" :key="i" @click="toTeamDetail(item)">
-        <image :src="item.teamLogo || MDicon4" class="ro-52" />
+        <image :src="item.teamLogo || 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png'" class="ro-52" />
         <view class="ro-53">{{ item.teamName }}</view>
       </view>
     </view>
-		
+
 		<edit-team ref="editTeam" btnText="创建" @onSave="createTeam" />
 
   </view>
@@ -57,7 +57,6 @@
 <script>
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-icons";
-import MDicon4 from '../../../static/mine/MDicon-4.png';
 import EditTeam from "../myTeam/editTeam";
 
 export default {
@@ -85,7 +84,6 @@ export default {
         { name: '钱浩然6', header: '' },
       ],
 			teamList: [],
-      MDicon4,
     };
   },
   onReady() {

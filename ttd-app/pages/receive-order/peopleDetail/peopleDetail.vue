@@ -4,27 +4,27 @@
 
     <view class="pd-top">
       <view v-if="idCard" class="pd-top1">
-        <image class="pd-top1-img" src="/static/mine/trophy-icon.svg" />
+        <image class="pd-top1-img" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/trophy-icon.svg" />
         <text class="pd-top1-text">已实名认证</text>
       </view>
     </view>
 
     <view class="pd-header">
       <image v-if="headImgUrl" :src="headImgUrl" class="pd-header-img" />
-      <image v-else :src="MDicon" class="pd-header-img" />
+      <image v-else src="'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png'" class="pd-header-img" />
       <view class="pd-header-text">
-        <image class="pd-header-edit-image" src="/static/mine/iconEditBlack.svg" />
+        <image class="pd-header-edit-image" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconEditBlack.svg" />
         <text class="pd-header-edtext">编辑信息</text>
       </view>
       <view class="pd-header-name">{{ name }}</view>
 
       <view class="pd-header-phone pd-header-phone1">
-        <image src="/static/mine/linkPhoneIcon.svg" class="pd-header-edit-icon" />
+        <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/linkPhoneIcon.svg" class="pd-header-edit-icon" />
         <text class="pd-header-phonenum">手机号：{{ phone.slice(0, 3) }} {{ phone.slice(3, 7) }} {{ phone.slice(7, 11) }}</text>
       </view>
 
       <view class="pd-header-phone">
-        <image src="/static/mine/linkPeopleIcon.svg" class="pd-header-edit-icon" />
+        <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/linkPeopleIcon.svg" class="pd-header-edit-icon" />
         <text class="pd-header-phonenum">
 					身份证：{{ idCard ? `${ idCard.slice(0, 6) } ${ idCard.slice(6, 14) } ${ idCard.slice(14, 18) }` : '-' }}
 				</text>
@@ -51,7 +51,6 @@
   </view>
 </template>
 <script>
-import MDicon from '../../../static/mine/MDicon.png';
 import MemberTitle from "../myTeam/memberTitle";
 import EvaluateCard from "../myTeam/evaluateCard";
 
@@ -60,7 +59,6 @@ export default {
   components: { EvaluateCard, MemberTitle },
   data() {
     return {
-      MDicon, // TODO 更换图片后可删掉
 			id: '',
 			idCard: '',
 			headImgUrl: '',
@@ -97,7 +95,7 @@ export default {
 		},
 		queryComments(userId) {
 			this.$http
-				.post('/b/ordercomment/queryPageList', { 
+				.post('/b/ordercomment/queryPageList', {
 					userId,
 					userType: 1,
 				}, true)

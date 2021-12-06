@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="oc-card" @click="$emit('onClick')">
-      <image :src="MDicon4" class="oc-card-img" />
+      <image src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png' class="oc-card-img" />
       <view class="oc-middle">
         <view class="oc-middle-title">{{ title }}</view>
         <view class="oc-middle-text" v-for="i in specItem" :key="i.label">
@@ -27,7 +27,6 @@
   </view>
 </template>
 <script>
-import MDicon4 from '../../../static/mine/MDicon-4.png';
 import MyPrice from "./myPrice";
 
 export default {
@@ -59,11 +58,6 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      MDicon4
-    }
-  }
 }
 </script>
 <style scoped lang="scss">

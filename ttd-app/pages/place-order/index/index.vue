@@ -14,7 +14,7 @@
 
           <view class="po-1 po-16" @click="toOrderList(10)">
             <view class="po-11">
-              <image class="email-filled11" src="/static/mine/teamView.svg" />
+              <image class="email-filled11" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/teamView.svg" />
             </view>
             <view class="po-12 po-13">所有订单</view>
           </view>
@@ -43,11 +43,11 @@ export default {
         { num: 3, title: '待完工', state: 40 },
       ],
       imageList: [
-        { url: '/static/mine/place_order__shishi.svg', orderType: 1 },
-        { url: '/static/mine/place_order_kanshe.svg', orderType: 2 },
-        { url: '/static/mine/place_order__renyuan.svg', orderType: 3 },
-        { url: '/static/mine/place_order__zulin.svg', orderType: 4 },
-        { url: '/static/mine/place_order__ruanjian.svg', orderType: 5 },
+        { url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/place_order__shishi.svg', orderType: 1 },
+        { url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/place_order_kanshe.svg', orderType: 2 },
+        { url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/place_order__renyuan.svg', orderType: 3 },
+        { url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/place_order__zulin.svg', orderType: 4 },
+        { url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/place_order__ruanjian.svg', orderType: 5 },
       ]
     };
   },

@@ -75,8 +75,8 @@
         <image :src="i.picPath" class="bank-img-style" />
         <text class="fini-51l fini-51kl">{{ i.label }}</text>
         <text class="fini-51m" />
-        <image v-if="payWay == i.value" src="/static/mine/radioSelect.svg" class="circle-filled1" />
-        <image v-else src="/static/mine/radioEmpty.svg" class="circle-filled1" />
+        <image v-if="payWay == i.value" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioSelect.svg" class="circle-filled1" />
+        <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioEmpty.svg" class="circle-filled1" />
       </view>
 
     </view>
@@ -127,9 +127,9 @@ export default {
       remark1: '',
       value22: 1,
       payList: [
-        { label: '银行支付', leftIcon: 'chat-filled', value: 1, picPath: '/static/mine/bankCard.svg' },
-        { label: '授信支付', leftIcon: 'chat', value: 2, picPath: '/static/mine/bankPay.svg' },
-        { label: '线下支付', leftIcon: 'chatboxes', value: 3, picPath: '/static/mine/bankUnderline.svg' },
+        { label: '银行支付', leftIcon: 'chat-filled', value: 1, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankCard.svg' },
+        { label: '授信支付', leftIcon: 'chat', value: 2, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankPay.svg' },
+        { label: '线下支付', leftIcon: 'chatboxes', value: 3, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankUnderline.svg' },
       ],
       payWay: 1
     };

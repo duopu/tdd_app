@@ -28,9 +28,9 @@
 
       <view class="abwp-body">
         <view class="abwp-l">
-          <image class="abwp-lt1" src="/static/mine/applyJob1.svg" />
+          <image class="abwp-lt1" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/applyJob1.svg" />
           <view class="abwp-lt3" />
-          <image class="abwp-lt1" src="/static/mine/applyJob.svg" />
+          <image class="abwp-lt1" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/applyJob.svg" />
         </view>
         <view class="abwp-r">
           <view class="abwp-r1">
@@ -53,7 +53,7 @@
 
       <view class="abwp-bottom">
         <view class="abwp-bo-1">
-          <image src="/static/mine/iconCircleAdd.svg" class="apply-add-jia" />
+          <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
           <view class="abwp-bo-1text">添加位置</view>
         </view>
 
@@ -80,7 +80,6 @@ import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import MyPrice from "../component/myPrice";
 import QuotedIten from "../component/quotedIten";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
-import MDicon from '../../../static/mine/MDicon.png';
 import UploadList from "../component/uploadList";
 
 export default {
@@ -98,7 +97,6 @@ export default {
   data() {
     return {
       remark1: '',
-      MDicon,
     };
   },
   methods: {

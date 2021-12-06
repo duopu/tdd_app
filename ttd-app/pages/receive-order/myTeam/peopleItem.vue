@@ -2,7 +2,7 @@
   <view class="people-item-item">
 
     <image v-if="person.headImgUrl" :src="person.headImgUrl" class="people-item-img" />
-    <image v-else src="/static/mine/MDicon.png" class="people-item-img" />
+    <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png" class="people-item-img" />
 
     <view class="people-item-right">
       <view class="people-item-right1">
@@ -14,8 +14,8 @@
           <text class="people-lkj-2-item" v-for="i in tagList" :key="i">{{ i }}</text>
         </view>
       </view>
-      <image v-if="checked" src="/static/mine/checkBoxChecked.svg" class="people-item-right3" @click="change" />
-      <image v-else src="/static/mine/checkBoxEmpty.svg" class="people-item-right3" @click="change" />
+      <image v-if="checked" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxChecked.svg" class="people-item-right3" @click="change" />
+      <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxEmpty.svg" class="people-item-right3" @click="change" />
     </view>
 
   </view>

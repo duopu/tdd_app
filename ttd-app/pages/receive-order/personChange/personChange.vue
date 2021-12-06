@@ -6,7 +6,7 @@
       <member-title :show-right="false" title="目前成员" />
       <view class="pc-01">
         <view class="pc-01-item" v-for="i in memberList" :key="i">
-          <image class="pc-01-img" :src="MDicon" />
+          <image class="pc-01-img" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' />
           <view class="pc-01-name">孙慧</view>
         </view>
       </view>
@@ -16,7 +16,7 @@
       <member-title title="变更人员" right-text="选择人员" @add="selectPerson" />
       <team-list-item v-for="i in changeList" :key="i.userId" :member="i" />
     </view>
-		
+
 		<big-btn buttonText="变更记录" @click="toChangeRecord"/>
 
     <iphonex-bottom>
@@ -28,7 +28,6 @@
 <script>
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import MemberTitle from "../myTeam/memberTitle";
-import MDicon from '../../../static/mine/MDicon.png';
 import TeamListItem from "../myTeam/teamListItem";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
@@ -38,7 +37,6 @@ export default {
   components: { BigBtn, IphonexBottom, TeamListItem, MemberTitle, BackContainer },
   data() {
     return {
-      MDicon,
 			id: 'M995083043754112',
 			memberList: [], // 当前参与人员
 			changeList: [], // 申请变更人员

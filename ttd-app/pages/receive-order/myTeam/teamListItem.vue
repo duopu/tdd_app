@@ -2,7 +2,7 @@
   <view class="team-list-item">
 
     <image v-if="member.headImgUrl" :src="member.headImgUrl" class="team-list-img" @click="$emit('onClick')" />
-		<image v-else src="/static/mine/MDicon.png" class="team-list-img" />
+		<image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png" class="team-list-img" />
 
     <view class="team-list-right" @click="$emit('onClick')" >
       <view class="team-list-right1">
@@ -21,15 +21,9 @@
   </view>
 </template>
 <script>
-import MDicon from '../../../static/mine/MDicon.png';
 
 export default {
   name: "teamListItem",
-  data() {
-    return {
-      MDicon
-    }
-  },
   props: {
 		member: {
 			phone: '',

@@ -13,7 +13,7 @@
 					<picker class="receipt-ac-midle" @change="orderModeChange" :value="orderModeText" :range="modeArray" range-key="title">
 						<view >{{ orderModeText || '请选择' }}</view>
 					</picker>
-          
+
           <uni-icons class="receipt-ac-right" type="arrowright" size="18" color="#969799" />
         </view>
 
@@ -27,7 +27,7 @@
 					<!-- <picker mode="date" :value="date" start="2021-12-21" end="2022-12-21" @change="bindDateChange"> -->
 						<view class="receipt-ac-midle">9/23 - 11/22</view>
 					<!-- </picker> -->
-          
+
           <uni-icons class="receipt-ac-right" type="arrowright" size="18" color="#969799" />
         </view>
 
@@ -45,7 +45,7 @@
     <view class="address-box">
       <member-title title="工作地址：" :show-right="false" />
       <view class="address-bi" @click="selectAddress">
-        <image :src="MDicon" class="address-img" />
+        <image src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' class="address-img" />
         <view class="address-right">
           <view class="address-rt">
             <text class="address-rt1">{{ orderAddress.name || ''}}</text>
@@ -64,13 +64,13 @@
     <view class="require-box">
       <member-title title="工作需求：" right-text="添加工作" @add="toAddWorkPage" />
       <view class="require-white">
-        <offer-content-card 
-				v-for="(i, index) in orderItemList" 
-				:key="index" 
+        <offer-content-card
+				v-for="(i, index) in orderItemList"
+				:key="index"
 				right-type="0"
 				:title="getItemTitle(i)"
 				:specItem="getSpecList(i)"
-        :show-last-border-bottom="index < (orderItemList.length -1)" 
+        :show-last-border-bottom="index < (orderItemList.length -1)"
 				@onClick="toEditWorkPage(index, i)"
 			  />
       </view>
@@ -83,7 +83,6 @@
 </template>
 
 <script>
-import MDicon from '../../../static/mine/MDicon.png';
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../../receive-order/component/offerHead";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
@@ -97,7 +96,6 @@ export default {
   components: { OfferContentCard, MemberTitle, CheckdItem, BigBtn, IphonexBottom, OfferHead, BackContainer },
   data() {
     return {
-      MDicon,
 			orderType: 1,
 			typeArray: [
 				{ orderType: 1, title: '实施与维修', intro: '电子产品的实施与维修工作', url: '/pages/place-order/addImplementation/addImplementation' },

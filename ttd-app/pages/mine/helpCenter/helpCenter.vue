@@ -8,7 +8,7 @@
           <view class="hc-title">{{ item.title }}</view>
           <view class="hc-text">{{ item.detail }}</view>
           <view class="hc-img-box">
-            <image v-for="i in 3" class="hc-img-item" :src="IDcardBack" :key="i" />
+            <image v-for="i in 3" class="hc-img-item" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png" :key="i" />
           </view>
         </view>
       </view>
@@ -18,14 +18,12 @@
 
 <script>
 import BackContainer from "../addressManage/component/backContainer";
-import IDcardBack from '../../../static/mine/idcard-back.png';
 
 export default {
   name: "helpCenter",
   components: { BackContainer },
   data() {
     return {
-      IDcardBack,
 			dataList: [],
     };
   },
@@ -39,7 +37,7 @@ export default {
 				.then(res => {
 					this.dataList = res.dataList;
 				});
-				
+
 		},
 	}
 }

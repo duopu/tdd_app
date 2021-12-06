@@ -14,7 +14,7 @@
 							<image :src="faceIdcardImage" class="rn-end-img" />
 						</view>
 						<view v-else>
-							<image :src="IDcardFace" class="rn-end-img" />
+							<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-face.png" class="rn-end-img" />
 							<view class="take-photo">
 							  <image :src="takePhotoIcon" class="take-photo-img" />
 							  <view class="take-photo-text">拍照</view>
@@ -27,7 +27,7 @@
 							<image :src="backIdcardImage" class="rn-end-img" />
 						</view>
 						<view v-else>
-							<image :src="IDcardBack" class="rn-end-img" />
+							<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png" class="rn-end-img" />
 							<view class="take-photo">
 							  <image :src="takePhotoIcon" class="take-photo-img" />
 							  <view class="take-photo-text">拍照</view>
@@ -49,18 +49,13 @@
 import BackContainer from "../addressManage/component/backContainer";
 import IphonexBottom from "../addressManage/component/iphonexBottom";
 import BigBtn from "../addressManage/component/bigBtn";
-import IDcardFace from '../../../static/mine/idcard-face.png';
-import IDcardBack from '../../../static/mine/idcard-back.png';
-import takePhotoIcon from '../../../static/mine/take-photo-icon.svg';
 
 export default {
   name: "realNameAuth",
   components: { BigBtn, IphonexBottom, BackContainer },
   data() {
     return {
-      IDcardFace,
-      takePhotoIcon,
-      IDcardBack,
+      takePhotoIcon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/take-photo-icon.svg',
 			faceImage: '',
 			faceIdcardImage: '',
 			backIdcardImage: '',
@@ -130,7 +125,7 @@ export default {
 		  .then(res => {
 				uni.hideLoading();
 		    uni.showToast({
-					title: '实名认证已成功', 
+					title: '实名认证已成功',
 					success: () => {
 						uni.navigateBack({ });
 					}

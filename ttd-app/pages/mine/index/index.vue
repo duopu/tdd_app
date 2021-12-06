@@ -190,25 +190,13 @@
 </template>
 
 <script>
-import mineTopBack from '../../../static/mine/mine-top-back.png';
-import IDcardBack from '../../../static/mine/idcard-back.png';
-import MDicon7 from '../../../static/mine/MDicon-7.png';
-import MDicon8 from '../../../static/mine/MDicon-8.png';
-import MDicon2 from '../../../static/mine/MDicon-2.png';
-import MDicon3 from '../../../static/mine/MDicon-3.png';
-import MDicon4 from '../../../static/mine/MDicon-4.png';
-import MDicon5 from '../../../static/mine/MDicon-5.png';
-import MDicon6 from '../../../static/mine/MDicon-6.png';
-
-import MDicon from '../../../static/mine/MDicon.png';
-import MDicon1 from '../../../static/mine/MDicon-1.png';
 
 export default {
   data() {
     return {
       demo: true,
-      mineTopBack,
-      IDcardBack,
+      mineTopBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/mine-top-back.png',
+      IDcardBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
 			realAuth: false,
     };
   },
@@ -222,19 +210,19 @@ export default {
     },
     newList() {
       return [
-        { title: '邀请好友', url: '', img: MDicon7 },
-        { title: '承接方申请', url: 'pages/main/apply/apply', img: MDicon8 },
-        { title: '实名认证', url: '/pages/mine/realNameAuth/realNameAuth', img: MDicon2 },
-        { title: '我的银行账户', url: '/pages/mine/myBankCard/myBankCard', img: MDicon3 },
-        { title: '发票信息', url: '/pages/mine/myInvoice/myInvoice', img: MDicon4 },
-        { title: '我的投诉', url: '/pages/mine/myComplain/myComplain', img: MDicon5 },
-        { title: '我的服务地址', url: '/pages/mine/addressManage/addressManage', img: MDicon6 },
+        { title: '邀请好友', url: '', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-7.png' },
+        { title: '承接方申请', url: '/pages/main/apply/apply', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-8.png' },
+        { title: '实名认证', url: '/pages/mine/realNameAuth/realNameAuth', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png' },
+        { title: '我的银行账户', url: '/pages/mine/myBankCard/myBankCard', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-3.png' },
+        { title: '发票信息', url: '/pages/mine/myInvoice/myInvoice', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png' },
+        { title: '我的投诉', url: '/pages/mine/myComplain/myComplain', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-5.png' },
+        { title: '我的服务地址', url: '/pages/mine/addressManage/addressManage', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-6.png' },
       ]
     },
     newList1() {
       return [
-        { title: '帮助中心', url: '/pages/mine/helpCenter/helpCenter', img: MDicon },
-        { title: '关于我们', url: '', img: MDicon1 },
+        { title: '帮助中心', url: '/pages/mine/helpCenter/helpCenter', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' },
+        { title: '关于我们', url: '', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
       ]
     },
 

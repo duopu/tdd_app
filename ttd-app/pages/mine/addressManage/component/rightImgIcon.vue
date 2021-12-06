@@ -1,6 +1,6 @@
 <template>
   <view class="right-img">
-    <image class="right-img-icon" :class="className" src="/static/mine/iconRight.svg" />
+    <image class="right-img-icon" :class="className" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconRight.svg" />
   </view>
 </template>
 <script>

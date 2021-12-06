@@ -49,7 +49,7 @@
             </view>
 
             <view class="state1-tip" v-if="value === 90">
-              <image src="/static/mine/warningTanhao.svg" class="warn-tanhao" />
+              <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/warningTanhao.svg" class="warn-tanhao" />
               <view class="plo-im-3red plo-im-3red-mar">取消原因：工程纠纷</view>
             </view>
 

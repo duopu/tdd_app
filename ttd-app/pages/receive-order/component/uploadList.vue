@@ -1,22 +1,21 @@
 <template>
   <view class="upload-list">
     <view class="upload-item" v-for="(i, index) in imgList" :key="i">
-      <image :src="MDicon" class="upload-item-pic" />
+      <image src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' class="upload-item-pic" />
       <view class="delete-img" @click="deleteImage(index)">
         <uni-icons class="delete-icon" size="8" type="closeempty" color="white" />
       </view>
     </view>
     <view class="upload-item upload-item-ic" @click="upload" v-if="!hideUploadBtn">
-      <image v-if="uploadIcon == 1" src="/static/mine/uploadImageJia.svg" class="upload-icon-imgss" />
-      <image v-if="uploadIcon == 2" src="/static/mine/uploadPdf.svg" class="upload-icon-imgss" />
-      <image v-if="uploadIcon == 3" src="/static/mine/uploadYuyin.svg" class="upload-icon-imgss" />
-      <image v-if="uploadIcon == 4" src="/static/mine/uploadImageTake.svg" class="upload-icon-imgss" />
+      <image v-if="uploadIcon == 1" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadImageJia.svg" class="upload-icon-imgss" />
+      <image v-if="uploadIcon == 2" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadPdf.svg" class="upload-icon-imgss" />
+      <image v-if="uploadIcon == 3" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadYuyin.svg" class="upload-icon-imgss" />
+      <image v-if="uploadIcon == 4" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadImageTake.svg" class="upload-icon-imgss" />
       <view class="up-text">{{ uploadText }}</view>
     </view>
   </view>
 </template>
 <script>
-import MDicon from '../../../static/mine/MDicon.png';
 import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-icons";
 
 export default {
@@ -38,11 +37,6 @@ export default {
       default: '1'
     },
     hideUploadBtn: Boolean,
-  },
-  data() {
-    return {
-      MDicon
-    }
   },
   methods: {
     deleteImage(index) {

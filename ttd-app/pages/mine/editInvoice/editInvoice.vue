@@ -24,7 +24,7 @@
           <view class="edit-in-ac-lable">电话号码</view>
           <input class="edit-in-ac-midle" :value="phone" @input="(e) => onInput(e, 'phone')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
-				
+
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">开户银行</view>
           <input class="edit-in-ac-midle" :value="openingBank" @input="(e) => onInput(e, 'bank')" placeholder="请输入" placeholder-class="input-placeholder" />
@@ -42,7 +42,7 @@
 							 <image class="up-box-center-image" :src="businessLicense" />
 						</view>
             <view v-else class="up-box-center">
-              <image class="up-box-center-image" src="/static/mine/upload-image-icon.svg" />
+              <image class="up-box-center-image" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/upload-image-icon.svg" />
               <view class="up-box-center-text">添加照片</view>
             </view>
           </view>
@@ -164,9 +164,9 @@ export default {
 		},
 		// 新增/编辑发票
     operateSave() {
-			
+
 			if (!this.checkParams()) return;
-			
+
 			const params  = {
 				id: this.id,
 				name: this.name,
@@ -177,9 +177,9 @@ export default {
 				bankAccount: this.bankAccount,
 				businessLicense: this.businessLicense,
 			};
-			
-			const url = `/b/customerinvoiceinfo/${this.id ? 'update' : 'add'}`; 
-			
+
+			const url = `/b/customerinvoiceinfo/${this.id ? 'update' : 'add'}`;
+
 			this.$http
 				.post(url, params, true)
 				.then(res => {

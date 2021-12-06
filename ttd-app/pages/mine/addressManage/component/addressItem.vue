@@ -10,7 +10,7 @@
         </view>
         <view class="item-right1-2">{{ address.province + address.city + address.district + address.address}}</view>
       </view>
-      <image class="item-right3" src="/static/mine/iconEditGray.svg" hover-stop-propagation @click="$emit('rightClick', address.id)" />
+      <image class="item-right3" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconEditGray.svg" hover-stop-propagation @click="$emit('rightClick', address.id)" />
       <right-img-icon />
     </view>
   </view>

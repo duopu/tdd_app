@@ -2,7 +2,7 @@
   <view class="evaluate-card">
 
     <image v-if="comment.commenterHeadImg" :src="comment.commenterHeadImg" class="evaluate-img" />
-    <image v-else :src="MDicon" class="evaluate-img" />
+    <image v-else src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' class="evaluate-img" />
 
     <view class="eva-right">
       <view class="eva-right-1">
@@ -18,7 +18,6 @@
   </view>
 </template>
 <script>
-import MDicon from '../../../static/mine/MDicon.png';
 import MyStar from "./myStar";
 
 export default {
@@ -34,11 +33,6 @@ export default {
 			score: 0,
 		}
 	},
-  data() {
-    return {
-      MDicon
-    }
-  }
 }
 </script>
 <style scoped lang="scss">

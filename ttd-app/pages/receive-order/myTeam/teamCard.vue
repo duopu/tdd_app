@@ -4,9 +4,9 @@
     <view class="team-card-dtl">
       <view class="team-card-1">
         <text class="team-card-name">{{ team.teamName || '' }}</text>
-        <image src="/static/mine/iconEditWhite.svg" v-if="showEdit" @click="edit" class="icon-sty"  />
-        <image src="/static/mine/teamView.svg" v-if="showView" @click="$emit('onComment')" class="icon-sty"  />
-        <image src="/static/mine/iconSet.svg" v-if="showSetting" @click="$emit('onSetting')" class="icon-sty" />
+        <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconEditWhite.svg" v-if="showEdit" @click="edit" class="icon-sty"  />
+        <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/teamView.svg" v-if="showView" @click="$emit('onComment')" class="icon-sty"  />
+        <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconSet.svg" v-if="showSetting" @click="$emit('onSetting')" class="icon-sty" />
       </view>
 
       <view class="team-card-dz">队长：{{ team.leaderName || '' }}</view>
@@ -19,17 +19,11 @@
   </view>
 </template>
 <script>
-import MDicon from '../../../static/mine/MDicon.png';
 import EditTeam from "./editTeam";
 
 export default {
   name: "teamCard",
   components: { EditTeam },
-  data() {
-    return {
-      MDicon
-    }
-  },
   props: {
     showEdit: {
       type: Boolean,

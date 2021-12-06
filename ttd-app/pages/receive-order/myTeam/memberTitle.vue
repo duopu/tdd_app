@@ -3,8 +3,7 @@
     <text class="member-text">{{ title }}</text>
 
     <view class="member-right" v-if="showRight" @click="$emit('add')">
-<!--      <uni-icons size="15" class="icon-style" type="plus" color="#1059FA" />-->
-      <image src="/static/mine/iconCircleAdd.svg" class="icon-style" />
+      <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="icon-style" />
       <text class="member-right-text">{{ rightText }}</text>
     </view>
   </view>

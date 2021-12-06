@@ -2,7 +2,7 @@
   <view class="edit-team" v-if="visible">
 
 <!--    <uni-icons size="26" class="" type="close" color="#FFFFFF" />-->
-    <image src="/static/mine/iconClose.svg"  @click="hide" class="edit-team-close" />
+    <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconClose.svg"  @click="hide" class="edit-team-close" />
 
     <view class="edit-team-box">
 
@@ -10,7 +10,7 @@
 
       <view class="edit-team-add" @click="chooseImage()">
 				<image v-if="image" :src="image" class="edit-team-add-imag" />
-        <image v-else src="/static/mine/uploadAdd.svg" class="edit-team-add-imag" />
+        <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadAdd.svg" class="edit-team-add-imag" />
       </view>
 
       <view class="edit-team-name">
@@ -60,7 +60,7 @@ export default {
 				this.name = text;
 			} else if (type == 'desc') {
 				this.desc = text;
-			} 
+			}
 		},
 		chooseImage() {
 			uni.chooseImage({

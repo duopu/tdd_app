@@ -10,7 +10,7 @@
       <view class="offer-detail">
         <view class="od-it" v-for="i in 5" :key="i">
           <view class="od-1">
-            <image src="/static/mine/MDicon.png" class="od-1image" />
+            <image :src="MDicon" class="od-1image" />
             <view class="od-1right">
               <view class="od-1right-top">
                 <text class="od-1tag">标签</text>
@@ -24,7 +24,7 @@
           </view>
 
           <view class="od-1 od-2">
-            <image src="/static/mine/reply.svg" class="od-1image" />
+            <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/reply.svg" class="od-1image" />
             <view class="od-1right">
               <view class="od-1right-top">
                 <text class="od-1tag od-2tag">发单者回复</text>
@@ -43,7 +43,6 @@
   </view>
 </template>
 <script>
-import MDicon from '../../../static/mine/MDicon.png';
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../component/offerHead";
 
@@ -51,7 +50,7 @@ export default {
   name: "offerDetail",
   components: { OfferHead, BackContainer },
   data() {
-    return { MDicon };
+    return { MDicon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' };
   }
 }
 </script>

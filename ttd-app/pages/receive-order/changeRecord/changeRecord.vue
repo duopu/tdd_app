@@ -8,11 +8,11 @@
           <view class="cr-item">
             <view class="cr-item-l">
               <view class="cr-item-lpbox">
-                <image src="/static/mine/biangengRen.svg" class="cr-item-lp" />
+                <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/biangengRen.svg" class="cr-item-lp" />
               </view>
               <view class="cr-item-line" />
               <view class="cr-item-lpbox">
-                <image src="/static/mine/biangengTu.svg" class="cr-item-lp" />
+                <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/biangengTu.svg" class="cr-item-lp" />
               </view>
             </view>
 
@@ -57,14 +57,13 @@
 
 <script>
 import BackContainer from "../../mine/addressManage/component/backContainer";
-import MDicon from '../../../static/mine/MDicon.png';
 
 export default {
   name: "changeRecord",
   components: { BackContainer },
   data() {
     return {
-      MDicon,
+      MDicon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png',
 			recordList: [],
     };
   },

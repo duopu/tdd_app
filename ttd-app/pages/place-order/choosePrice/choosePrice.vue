@@ -7,7 +7,7 @@
       <view class="chp">
         <view class="chp-1" v-for="i in 4" :key="i">
           <view class="chp-11">
-            <image class="chp-13" :src="MDicon" />
+            <image class="chp-13" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' />
 
             <view class="chp-14">
               <view class="chp-15">
@@ -26,8 +26,8 @@
               </view>
             </view>
 
-            <image v-if="i == 1" src="/static/mine/checkBoxChecked.svg" class="chp-193-right3" />
-            <image v-else src="/static/mine/checkBoxEmpty.svg" class="chp-193-right3" />
+            <image v-if="i == 1" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxChecked.svg" class="chp-193-right3" />
+            <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxEmpty.svg" class="chp-193-right3" />
 
           </view>
           <view class="chp-2">
@@ -58,7 +58,6 @@
 
 <script>
 import BackContainer from "../../mine/addressManage/component/backContainer";
-import MDicon from '../../../static/mine/MDicon.png';
 import MyStar from "../../receive-order/myTeam/myStar";
 import MyPrice from "../../receive-order/component/myPrice";
 import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-icons";
@@ -70,7 +69,6 @@ export default {
   components: { CornerMark, IphonexBottom, UniIcons, MyPrice, MyStar, BackContainer },
   data() {
     return {
-      MDicon,
 			id: '',
 			quoteList: [],
     };

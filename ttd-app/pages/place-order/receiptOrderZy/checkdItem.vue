@@ -10,8 +10,8 @@
             @click="$emit('change', i.value)"
       >
 
-        <image v-if="value == i.value" src="/static/mine/radioSelect.svg" class="circle-filled" />
-        <image v-else src="/static/mine/radioEmpty.svg" class="circle-filled" />
+        <image v-if="value == i.value" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioSelect.svg" class="circle-filled" />
+        <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioEmpty.svg" class="circle-filled" />
 
         <text class="check-text">{{ i.text }}</text>
       </view>
