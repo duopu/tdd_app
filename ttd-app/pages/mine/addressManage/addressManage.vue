@@ -9,7 +9,7 @@
     </back-container>
 
     <iphonex-bottom>
-      <big-btn button-text="新增地址" />
+      <big-btn button-text="新增地址" @click="addAddress"/>
     </iphonex-bottom>
 
   </view>
@@ -56,6 +56,9 @@ export default {
     rightClick(id) {
       uni.navigateTo({ url: `/pages/mine/editAddress/editAddress?id=${id}` });
     },
+		addAddress() {
+			uni.navigateTo({ url: '/pages/mine/editAddress/editAddress' });
+		},
     queryAddressData() {
       this.$http.post('/b/customeraddress/queryPageList', { pageSize: 1000 }, true)
           .then(res => {

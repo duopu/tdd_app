@@ -177,7 +177,7 @@ export default {
 		deleleAddress() {
 			// todo: 删除地址
 			this.$http
-				.post('/b/customeraddress/query', { id: this.id }, true)
+				.post('/b/customeraddress/delete', { id: this.id }, true)
 				.then(res => {
 					uni.showToast({
 						title: '删除成功',
