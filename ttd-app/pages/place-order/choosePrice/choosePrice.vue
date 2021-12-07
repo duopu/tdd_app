@@ -81,7 +81,7 @@ export default {
 	},
 	methods: {
 		queryQuoteList(id) {
-			this.$http.post('/b/orderquote/queryList', { id: this.id }, true)
+			this.$http.post('/b/orderquote/choosePriceList', { id: this.id }, true)
 			.then(res => {
 			  this.quoteList = res;
 			})
