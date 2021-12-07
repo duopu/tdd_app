@@ -17,21 +17,21 @@
           <view class="ind-11">待完成</view>
         </view>
 
-        <quoted-iten />
+        <quoted-iten :order="order"/>
 
-        <add-remark @input="input" :value="remark1" />
       </view>
 
     </back-container>
 
     <view class="ind-5">
-      <view class="ind-51">工作人员</view>
+      <view class="ind-51">工作成员</view>
       <view class="ind-52">
         <offer-content-card
-            v-for="(i, index) in 5"
-            :key="i"
-            :right-type="i"
+            v-for="(item, index) in 5"
+            :key="index"
+            :right-type="index > 3 ? 1 : 3"
             :show-last-border-bottom="index < (5 -1)"
+						@onChange="changePrice(item)"
         />
       </view>
     </view>
@@ -39,14 +39,14 @@
     <view style="height: 300rpx" />
 
     <iphonex-bottom>
-      <bottom-price-and-btn all-text="已分配" sure-text="确认分配" :price="122.01">
+      <bottom-price-and-btn all-text="已分配" sure-text="确认分配" :price="getQuoteCount(3)" @onCancel="cancelDistribute" @onConfirm="submitDistribute">
         <view class="ind-8">
           <text class="ind-81">已分配</text>
-          <corner-mark num="3" />
+          <corner-mark :num="getQuoteCount(1)" />
           <text class="ind-81">未分配</text>
-          <corner-mark num="4" color="#828282" />
+          <corner-mark :num="getQuoteCount(2)" color="#828282" />
           <text class="ind-81">未分配金额:</text>
-          <my-price price="3129.21" :scale="0.8" />
+          <my-price :price="getQuoteCount(4)" :scale="0.8" />
         </view>
       </bottom-price-and-btn>
     </iphonex-bottom>
@@ -81,13 +81,83 @@ export default {
   },
   data() {
     return {
-      remark1: ''
+			id: '',
+			order: {},
+			memberList: [],
     };
   },
+	onLoad(option) {
+		if (option.id) {
+			this.id = option.id;
+			this.queryOrderInfo();
+			this.queryMemberList();
+		}
+	},
   methods: {
-    input(value) {
-      this.remark1 = value;
-    }
+		queryOrderInfo() {
+			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
+			.then(res => {
+			  this.order = res;
+			})
+		},
+		queryMemberList() {
+			this.$http.post('/b/ordermember/queryMemberListAndApplyInfo', { id: this.id }, true)
+			.then(res => {
+				this.memberList = res.curtOrderMemberList;
+			})
+		},
+		changePrice(person) {
+			uni.showModal({
+				title: '分配金额',
+				editable: true,
+				placeholderText: '请输入分配金额',
+				success: (res) => {
+					if (res.confirm) {
+						person.amount = res.content;
+					}
+				}
+			})
+		},
+		getQuoteCount(type) {
+			const distributeList = this.memberList.filter((w) => w.amount);
+			let amount = 0;
+			distributeList.forEach((q) => {
+				amount = amount + Number(q.amount);
+			})
+			if (type == 1) {
+				// 已分配
+				return distributeList.length;
+			} else if (type == 2) {
+				// 未分配
+				return this.memberList.length - distributeList.length;
+			} else if (type == 3) {
+				// 已分配金额
+				return amount;
+			} else {
+				// 未分配金额
+				return 10000 - amount;
+			}
+		},
+		cancelDistribute() {
+			uni.navigateBack({});
+		},
+		submitDistribute() {
+			const params = {
+				receiveOrderId: this.id,
+				distributorInfoList: this.memberList.map((p) => {
+					return { distributorAmount: p.amount, customerId: p.userId }
+				}),
+			};
+			this.$http.post('/b/ordersettlement/teamOrderAmountDistributor', params, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '报价成功',
+					success: () => {
+						uni.navigateBack({});
+					}
+			  })
+			})
+		}
   }
 }
 </script>
