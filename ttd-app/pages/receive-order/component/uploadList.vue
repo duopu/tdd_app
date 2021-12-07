@@ -1,7 +1,8 @@
 <template>
   <view class="upload-list">
-    <view class="upload-item" v-for="(i, index) in imgList" :key="i">
-      <image src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' class="upload-item-pic" />
+    <view class="upload-item" v-for="(i, index) in imgList" :key="index">
+      <image v-if="i" :src='i' class="upload-item-pic" />
+      <image v-else src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' class="upload-item-pic" />
       <view class="delete-img" @click="deleteImage(index)">
         <uni-icons class="delete-icon" size="8" type="closeempty" color="white" />
       </view>
