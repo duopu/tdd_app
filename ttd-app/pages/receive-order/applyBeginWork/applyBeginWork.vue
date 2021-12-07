@@ -16,9 +16,8 @@
           <view class="abw-11">待完成</view>
         </view>
 
-        <quoted-iten />
+        <quoted-iten :order="order"/>
 
-        <add-remark @input="input" :value="remark1" />
       </view>
 
     </back-container>
@@ -37,9 +36,11 @@
             <text class="abwp-r1l">开始工作</text>
             <text class="abwp-r1r">重新定位</text>
           </view>
-          <map class="abwp-rmap"></map>
+          <map class="abwp-rmap" :latitude="address.latitude" :longitude="address.longitude" />
 
-          <view class="abwp-rmap-text">南京市玄武区新街口街道长江路社区中山路18号南京市玄武区新街口街道长江路社区中山路18号</view>
+          <view class="abwp-rmap-text">
+					  {{ address.province || '' }} {{ address.city || '' }} {{ address.district || '' }} {{ address.address || '' }}
+					</view>
 
           <view class="abwp-rtime">2021-07-12 13:37</view>
 
@@ -54,12 +55,12 @@
       <view class="abwp-bottom">
         <view class="abwp-bo-1">
           <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
-          <view class="abwp-bo-1text">添加位置</view>
+          <view class="abwp-bo-1text" @click="getLocation">添加位置</view>
         </view>
 
-        <upload-list upload-text="添加照片" />
+        <upload-list upload-text="添加照片" :img-list="imageList" @upload="chooseImage"/>
 
-        <upload-list upload-icon="2" />
+        <upload-list upload-icon="2" @upload="chooseFile"/>
 
       </view>
     </view>
@@ -67,7 +68,8 @@
     <view style="height: 300rpx" />
 
     <iphonex-bottom>
-      <big-btn button-text="提交申请" />
+      <big-btn v-if="isPlaceOrder" button-text="确认开始" @click="approveBeginWork"/>
+      <big-btn v-else button-text="提交申请" @click="applyBeginWork"/>
     </iphonex-bottom>
 
   </view>
@@ -92,17 +94,121 @@ export default {
     IphonexBottom,
     AddRemark,
     OfferHead,
-    BackContainer
+    BackContainer,
   },
   data() {
     return {
-      remark1: '',
+			id: '',
+			isPlaceOrder: false,
+			order: {},
+			address: {
+				address: '大周路',
+				city: '南京市',
+				cityId: 0,
+				district: '雨花台区',
+				districtId: 0,
+				latitude: 39.983171,
+				longitude: 116.308479,
+				province: '江苏省',
+				provinceId: 32,
+			},
+			fileList: [],
+			imageList: [],
     };
   },
+	onLoad(option) {
+		if (option.isPlaceOrder) {
+			this.isPlaceOrder = option.isPlaceOrder ==  '1';
+		}
+		if (option.id) {
+			this.id = option.id;
+			this.queryOrderInfo();
+		}
+	},
+	onReady() {
+		this.getLocation();
+	},
   methods: {
-    input(value) {
-      this.remark1 = value;
-    }
+		queryOrderInfo() {
+			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
+			.then(res => {
+			  this.order = res;
+			})
+		},
+		getLocation() {
+			uni.getLocation({
+			    type: 'wgs84',
+					geocode: true,
+			    success: (res) => {
+			        console.log('当前位置的经度：' + res.longitude);
+			        console.log('当前位置的纬度：' + res.latitude);
+							// todo: 需处理逆地理地址信息
+							this.address.latitude = res.latitude;
+							this.address.longitude = res.longitude;
+			    }
+			});
+		},
+		chooseImage() {
+			uni.chooseImage({
+			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			    success: (res) => {
+							const path = res.tempFilePaths[0];
+							this.uploadImage(path, 1);
+			    }
+			});
+		},
+		chooseFile() {
+			wx.chooseMessageFile({
+			  count: 1,
+				success: function (res) {
+			    const path = res.tempFilePaths[0];
+			    this.uploadImage(path, 2);
+			  }
+			});
+		},
+		uploadImage(path, type) {
+			const param = {
+				file: path,
+			};
+			this.$http.upload({ path }, true)
+			.then(res=>{
+				if (type == 1) {
+					this.imageList.push(res);
+				} else {
+					this.fileList.push(res);
+				}
+			});
+		},
+		approveBeginWork() {
+			const url = `/b/orderreceive/confirm${this.order.subState == 1 ? 'Start' : 'Complete'}`
+			this.$http.post(url, { id: this.id }, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '确认成功',
+					success: () => {
+						uni.navigateBack({});
+					}
+			  })
+			})
+		},
+		applyBeginWork() {
+			const url = `/b/orderreceive/apply${this.order.subState == 1 ? 'Start' : 'Complete'}`
+			const params = {
+				receiveOrderId: this.id,
+				fileList: this.fileList,
+				picList: this.imageList,
+				orderAddress: this.address,
+			};
+			this.$http.post(url, params, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '申请提交成功',
+			  	success: () => {
+			  		uni.navigateBack({});
+			  	}
+			  })
+			})
+		},
   }
 }
 </script>
