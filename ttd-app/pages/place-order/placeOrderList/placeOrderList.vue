@@ -9,9 +9,9 @@
       </template>
 
       <view class="plo-list">
-        <view class="plo-item" v-for="i in 2" :key="i">
+        <view class="plo-item" v-for="(item, index) in orderList" :key="index">
           <view class="plo-itop">
-            <text class="plo-itop-name">安装</text>
+            <text class="plo-itop-name">{{ showOrderType(item.orderType) }}</text>
             <text class="plo-itop-state"
                   :class="{
                     'plo-state-yellow': [20, 30, 40].includes(value),
@@ -26,13 +26,13 @@
 
             <view class="state1-tip" v-if="value === 10">
               <view class="plo-im-c">距离报价结束还有</view>
-              <text class="plo-im-r">2</text>
+              <text class="plo-im-r">{{ getCountDownDay(item.quotationEnd, 'day') }}</text>
               <view class="plo-im-c plo-im-c2">天</view>
-              <text class="plo-im-num">12</text>
+              <text class="plo-im-num">{{ getCountDownDay(item.quotationEnd, 'hour') }}</text>
               <text class="plo-im-mao">:</text>
-              <text class="plo-im-num">12</text>
+              <text class="plo-im-num">{{ getCountDownDay(item.quotationEnd, 'minute') }}</text>
               <text class="plo-im-mao">:</text>
-              <text class="plo-im-num">12</text>
+              <text class="plo-im-num">{{ getCountDownDay(item.quotationEnd, 'second') }}</text>
             </view>
 
             <view class="state1-tip" v-if="value === 20">
@@ -56,9 +56,11 @@
           </view>
 
           <view class="plo-content">
-            <view class="plo-ct">报价周期：2021-09-09 至 2021-10-09</view>
-            <view class="plo-ct">工作周期：2021-12-01 至 2021-12-09</view>
-            <view class="plo-ct">工作地址： 江苏省 南京市 雨花台区 新兴路 12号</view>
+            <view class="plo-ct">报价周期：{{ item.quotationStart.slice(0, 10) }} 至 {{ item.quotationEnd.slice(0, 10) }}</view>
+            <view class="plo-ct">工作周期：{{ item.workStart.slice(0, 10) }} 至 {{ item.workEnd.slice(0, 10) }}</view>
+            <view class="plo-ct">
+							工作地址：{{ item.orderAddress.province }} {{ item.orderAddress.city }} {{ item.orderAddress.district }} {{ item.orderAddress.address }}
+						</view>
             <view class="plo-ct">工作内容：交换机、路由器、摄像头</view>
           </view>
 
@@ -117,9 +119,69 @@ export default {
 				state:  this.value
 			}, true)
 			.then(res => {
-				this.orderList = res;
+				this.orderList = res.dataList;
 			})
 		},
+		showOrderType(type) {
+			switch (type) {
+				case 1:
+				  return '实施/维修';
+				  break;
+				case 2:
+				  return '勘测';
+				  break;
+				case 1:
+				  return '人员';
+				  break;
+				case 1:
+				  return '租赁';
+				  break;
+				case 1:
+				  return '软件';
+				  break;
+				default: 
+				  return '';
+			}
+		},
+		getCountDownDay(time, type) {
+			const now = new Date().getTime();
+			const end = new Date(time).getTime();
+			// 时间差
+			const leftTime = end - now;
+			if (leftTime <= 0) return '-';
+			
+			if (type == 'day') {
+				return Math.floor(leftTime/1000/60/60/24);
+			} else if (type == 'hour') {
+				return Math.floor(leftTime/1000/60/60%24);
+			} else if (type == 'minute') {
+				return Math.floor(leftTime/1000/60%60);
+			} else if (type == 'second') {
+				return Math.floor(leftTime/1000%60);
+			}
+			return '';
+		},
+		
+		
+		
+		// 取消订单
+		cancelOrderTip(id) {
+			uni.showModal({
+				title: '确认取消该订单?',
+				success: (res) => {
+					if (res.confirm) {
+						this.cancelOrder(id);
+					}
+				}
+			})
+		},
+		cancelOrder(id) {
+			this.$http.post('/b/ordermaster/queryPageList', { id }, true)
+			.then(res => {
+				this.$tool.showToast('取消成功');
+				this.queryOrderList();
+			})
+		}
   }
 }
 </script>

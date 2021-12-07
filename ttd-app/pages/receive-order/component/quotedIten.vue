@@ -1,15 +1,34 @@
 <template>
   <view class="offer-2">
-    <view class="offer-21">联系人：展示干 18911755085</view>
-    <view class="offer-21">报价周期：2021-09-09 至 2021-10-09</view>
-    <view class="offer-21">工作周期：2021-12-01 至 2021-12-09</view>
-    <view class="offer-21">工作地址： 江苏省 南京市 雨花台区 新兴路 12号</view>
-    <view class="offer-21">工作内容：交换机、路由器、摄像头</view>
+    <view class="offer-21">联系人：{{ order.orderAddress.name }} {{ order.orderAddress.phone }}</view>
+    <view class="offer-21">报价周期：{{ order.quotationStart.slice(0, 10) }} 至 {{ order.quotationEnd.slice(0, 10) }}</view>
+    <view class="offer-21">工作周期：{{ order.workStart.slice(0, 10) }} 至 {{ order.workEnd.slice(0, 10) }}</view>
+    <view class="offer-21">工作地址：{{ order.orderAddress.province }} {{ order.orderAddress.city }} {{ order.orderAddress.district }} {{ order.orderAddress.address }}</view>
+    <view class="offer-21">工作内容：{{ order.detail }}</view>
+    <view v-if="order.remark" class="offer-21">备注：{{ order.remark }}</view>
   </view>
 </template>
 <script>
 export default {
-  name: "quotedIten"
+  name: "quotedIten",
+	props: {
+	  order: {
+			orderAddress: {
+				address: '',
+				city: '',
+				district: '',
+				province: '',
+				name: '',
+				phone: '',
+			},
+			detail: '',
+			quotationStart: '',
+			quotationEnd: '',
+			workStart: '',
+			workEnd: '',
+			remark: '',
+		},
+	},
 }
 </script>
 <style scoped lang="scss">
