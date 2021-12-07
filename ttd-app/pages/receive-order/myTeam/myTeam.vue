@@ -54,7 +54,6 @@
 			}
 		},
 		onReady() {
-			this.id = 'T993383817580672';
 			this.queryTeamInfo();
 			this.queryTeamMember();
 		},
