@@ -9,14 +9,14 @@
 
       <template v-slot:headerSlot>
         <view class="receive-order">
-          <view class="ro-1" v-for="i in list" :key="i.title">
+          <view class="ro-1" v-for="i in list" :key="i.title" @click="toOrderList(i.state)">
             <view class="ro-11">{{ i.num }}</view>
             <view class="ro-12">{{ i.title }}</view>
           </view>
 
           <view class="ro-2" />
 
-          <view class="ro-1 ro-16">
+          <view class="ro-1 ro-16" @click="toOrderList">
             <view class="ro-11">
               <image class="email-filled" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/teamView.svg" />
             </view>
@@ -64,10 +64,10 @@ export default {
   data() {
     return {
       list: [
-        { num: 0, title: '待报价' },
-        { num: 5, title: '待确认' },
-        { num: 1, title: '待开始' },
-        { num: 3, title: '待完工' },
+        { num: 0, title: '待报价', state: 10 },
+        { num: 5, title: '待确认', state: 20 },
+        { num: 1, title: '待开始', state: 30 },
+        { num: 3, title: '待完工', state: 40 },
       ],
       earningList: [
         { num: 232331, title: '完成订单' },
@@ -95,6 +95,11 @@ export default {
 			this.$http.post('/b/teaminfo/teamList', {}, true)
 			.then(res => {
 				this.teamList = res;
+			})
+		},
+		toOrderList(state) {
+			uni.navigateTo({
+				url: `/pages/place-order/placeOrderList/placeOrderList?isPlaceOrder=0&state=${state}`,
 			})
 		},
 		showCreateTeam() {
