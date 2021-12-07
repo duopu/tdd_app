@@ -45,12 +45,16 @@
             </view>
 
             <view class="state1-tip" v-if="value === 30">
-              <view class="plo-im-3red">等待承接方开始工作</view>
+              <view class="plo-im-3red">等待承接方开始工作、、、承接方开始工作,等待您的确认、、、</view>
             </view>
+						
+						<view class="state1-tip" v-if="value === 40">
+						  <view class="plo-im-3red">等待承接方完成工作、、、承接方完成工作,等待您的确认</view>
+						</view>
 
             <view class="state1-tip" v-if="value === 90">
               <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/warningTanhao.svg" class="warn-tanhao" />
-              <view class="plo-im-3red plo-im-3red-mar">取消原因：工程纠纷</view>
+              <view class="plo-im-3red plo-im-3red-mar">取消原因：{{ item.publishCancelReason || item.receiveCancelReason }}</view>
             </view>
 
           </view>
@@ -64,18 +68,45 @@
             <view class="plo-ct">工作内容：交换机、路由器、摄像头</view>
           </view>
 
-          <view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
-            <view class="plo-btn1" v-if="[10, 20, 30, 40].includes(value)">取消订单</view>
-            <view class="plo-btn1" v-if="[10, 20].includes(value)">查看问题</view>
-            <view class="choose-change-btn" v-if="[20].includes(value)">选价</view>
-            <view class="choose-change-btn" v-if="[20].includes(value)">付款</view>
-            <view class="plo-btn1" v-if="[30, 40].includes(value)">审核人员</view>
-            <view class="plo-btn1" v-if="[30, 40, 50].includes(value)">投诉</view>
-            <view class="plo-btn1" v-if="[50].includes(value)">开必票</view>
-            <view class="plo-btn1" v-if="[50].includes(value)">去评价</view>
-            <view class="choose-change-btn" v-if="[30].includes(value)">确认开始</view>
-            <view class="choose-change-btn" v-if="[40].includes(value)">确认完工</view>
+          <!-- 发单方 -->
+          <view v-if="isPlaceOrder">
+          	<view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
+							<view class="plo-btn1" v-if="[10, 20, 30, 40].includes(value)" @click="cancelOrderTip(item.id)">取消订单</view>
+							<!-- 待报价 待确认 -->
+							<view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuestionPage(item)">查看问题</view>
+							<!-- 待确认 -->
+							<view class="choose-change-btn" v-if="[20].includes(value)" @click="toChoosePrice(item)">选价</view>
+							<view class="choose-change-btn" v-if="[20].includes(value)" @click="toPayOrder(item)">付款</view>
+							<!-- 待开始 -->
+							<view class="plo-btn1" v-if="[30, 40].includes(value)" @click="toReviewTeam(item)">审核人员</view>
+							<view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
+							<view class="choose-change-btn" v-if="[30].includes(value)" @click="toOrderWork(item)">确认开始</view>
+							<!-- 待完工 -->
+							<view class="choose-change-btn" v-if="[40].includes(value)" @click="toOrderWork(item)">确认完工</view>
+							<!-- 已完工 -->
+							<view class="plo-btn1" v-if="[50].includes(value)" @click="toOrderInvoice(item)">开发票</view>
+							<view class="plo-btn1" v-if="[50].includes(value)" @click="toOrderComment(item)">去评价</view>
+							
+          	</view>
           </view>
+					<!-- 接单方 -->
+					<view v-else>
+						<view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
+						<view class="plo-btn1" v-if="[10, 20, 30, 40].includes(value)" @click="cancelOrderTip(item.id)">取消订单</view>
+						<!-- 待报价 待确认 -->
+						<view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuestionPage(item)">咨询</view>
+						<view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuoteOrder(item)">去报价</view>
+						<!-- 待确认 -->
+						<view class="plo-btn1" v-if="[20].includes(value)" @click="toQuoteOrder(item)">修改报价</view>
+						<!-- 待开始 -->
+						<view class="plo-btn1" v-if="[30, 40].includes(value)" @click="toReviewTeam(item)">变更人员</view>
+						<view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
+						<view class="choose-change-btn" v-if="[30].includes(value)" @click="toOrderWork(item)">申请开始</view>
+						<!-- 待完工 -->
+						<view class="choose-change-btn" v-if="[40].includes(value)" @click="toDistributionIncome(item)">收益分配</view>
+						<view class="choose-change-btn" v-if="[40].includes(value)" @click="toOrderWork(item)">申请完工</view>
+						</view>
+					</view>
 
         </view>
       </view>
@@ -92,6 +123,7 @@ export default {
   components: { CornerMark, StateTabList, BackContainer },
   data() {
     return {
+			isPlaceOrder: true,
       value: 10, // state 状态 10待报价，20待确认，30待开始，40待完工，50已完成，90已取消
 			orderList: [],
     };
@@ -102,6 +134,9 @@ export default {
     }
   },
 	onLoad(option) {
+		if (option.isPlaceOrder) {
+			this.isPlaceOrder = option.isPlaceOrder ==  '1';
+		}
 		if (option.state) {
 			this.value = Number(option.state);
 		}
@@ -112,10 +147,12 @@ export default {
   methods: {
     changeVal(val) {
 			console.log('1 ', val);
-      this.value = val
+      this.value = val;
+			// this.queryOrderList();
     },
 		queryOrderList() {
-			this.$http.post('/b/ordermaster/queryPageList', {
+			const url = this.isPlaceOrder ? '/b/ordermaster/queryPageList' : '/b/orderreceive/queryPageList';
+			this.$http.post(url, {
 				state:  this.value
 			}, true)
 			.then(res => {
@@ -180,6 +217,72 @@ export default {
 			.then(res => {
 				this.$tool.showToast('取消成功');
 				this.queryOrderList();
+			})
+		},
+		// 查看问题/咨询
+		toQuestionPage(item) {
+			uni.navigateTo({
+				url: `/pages/receive-order/offerDetail/offerDetail?id=${item.id}`,
+			})
+		},
+		// 变更/审核人员
+		toReviewTeam(item) {
+			uni.navigateTo({
+				url: `/pages/receive-order/personChange/personChange?isPlaceOrder=${this.isPlaceOrder ? 1 : 0}&id=${item.id}`,
+			})
+		},
+		// 投诉
+		toComplainPage(item) {
+			uni.navigateTo({
+				url: `/pages/receive-order/complaint/complaint?id=${item.id}`,
+			})
+		},
+		// 开始/结束工作
+		toOrderWork(item) {
+			uni.navigateTo({
+				url: `/pages/receive-order/applyBeginWork/applyBeginWork?isPlaceOrder=${this.isPlaceOrder ? 1 : 0}&id=${item.id}`,
+			})
+		},
+		/* 
+		  *  发单方 
+		 */
+		// 选价
+		toChoosePrice(item) {
+			uni.navigateTo({
+				url: `/pages/place-order/choosePrice/choosePrice?id=${item.id}`,
+			})
+		},
+		// 付款
+		toPayOrder(item) {
+			uni.navigateTo({
+				url: `/pages/place-order/orderDetailFinish/orderDetailFinish?id=${item.id}`,
+			})
+		},
+		// 开发票
+		toOrderInvoice(item) {
+			uni.navigateTo({
+				url: `/pages/mine/chooseLookUp/chooseLookUp`,
+			})
+		},
+		// 评价订单
+		toOrderComment(item) {
+			uni.navigateTo({
+				url: `/pages/place-order/evaluationOrder/evaluationOrder?id=${item.id}`,
+			})
+		},
+		/*
+		  *  接单方
+		 */
+		// 去报价
+		toQuoteOrder(item) {
+			uni.navigateTo({
+				url: `/pages/receive-order/offer/offer?id=${item.id}`,
+			})
+		},
+		// 分配收益
+		toDistributionIncome(item) {
+			uni.navigateTo({
+				url: `/pages/receive-order/incomeDistribute/incomeDistribute?id=${item.id}`,
 			})
 		}
   }
