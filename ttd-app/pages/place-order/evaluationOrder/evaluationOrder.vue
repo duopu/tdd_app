@@ -17,15 +17,15 @@
 
           <view class="eva-ostar-box">
             <view class="eva-ostar">
-              <uni-rate :value="4" size="32" :margin="5" allow-half />
+              <uni-rate :value="4" size="32" :margin="5" allow-half @change="(e) => starChange(e, i)"/>
             </view>
             <view class="eva-ostart-text">2.5分 一般般，需要再努力</view>
           </view>
 
-          <add-remark label="评价内容：" :value="value" @change="change" />
+          <add-remark label="评价内容：" :value="i.content" @change="(text) => contentChange(text, i)" />
 
           <view class="upload-list-obox">
-            <upload-list upload-text="添加照片" />
+            <upload-list upload-text="添加照片" :img-list="i.imgUrlList" @upload="chooseImage(i)" />
           </view>
         </view>
       </view>
@@ -34,7 +34,7 @@
     <view class="eva-oline-line" />
 
     <iphonex-bottom>
-      <big-btn />
+      <big-btn @click="commitComment"/>
     </iphonex-bottom>
 
   </view>
@@ -53,13 +53,70 @@ export default {
   components: { BigBtn, IphonexBottom, UploadList, MyStar, AddRemark, BackContainer },
   data() {
     return {
-      value: ''
+			id: '',
+			memberList: [],
     };
   },
+	onLoad(option) {
+		if (option.id) {
+			this.id = option.id;
+			this.queryMemberList();
+		}
+	},
   methods: {
-    change(val) {
-      this.value = val
-    }
+		queryMemberList() {
+			this.$http.post('/b/ordermaster/queryPageList', { id: this.id }, true)
+			.then(res => {
+				this.memberList = res.dataList.map((p) => {
+					return {
+						content: '',
+						imgUrlList: [],
+						score: 0,
+						userId: p.userId,
+						userType: p.userType,
+					}
+				})
+			})
+		},
+		starChange(e, person) {
+			person.score = e.value;
+		},
+    contentChange(text, person) {
+      person.content = text;
+    },
+		chooseImage(person) {
+			uni.chooseImage({
+			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			    success: (res) => {
+							const path = res.tempFilePaths[0];
+							this.uploadImage(path, person);
+			    }
+			});
+		},
+		uploadImage(path, person) {
+			const param = {
+				file: path,
+			};
+			this.$http.upload({ path }, true)
+			.then(res=>{
+				person.imgUrlList.push(res);
+			});
+		},
+		commitComment() {
+			const params = {
+				orderCommentList: this.memberList,
+				receiveOrderId: this.id,
+			};
+			this.$http.post('/b/ordercomment/add', params, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '评价已提交',
+					success: () => {
+					uni.navigateBack({});
+					},
+			  });
+			})
+		}
   }
 }
 </script>

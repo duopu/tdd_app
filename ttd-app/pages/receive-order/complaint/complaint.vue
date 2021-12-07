@@ -18,7 +18,7 @@
     </back-container>
 
     <iphonex-bottom>
-      <big-btn  @click="commitComplaint()"/>
+      <big-btn @click="commitComplaint"/>
     </iphonex-bottom>
 
 	</view>
