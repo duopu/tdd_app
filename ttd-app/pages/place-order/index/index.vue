@@ -64,7 +64,7 @@ export default {
 		},
 		toOrderList(state) {
 			uni.navigateTo({
-				url: `/pages/place-order/placeOrderList/placeOrderList?state=${state}`,
+				url: `/pages/place-order/placeOrderList/placeOrderList?isPlaceOrder=1&state=${state}`,
 			})
 		},
     publishOrder(orderType) {
