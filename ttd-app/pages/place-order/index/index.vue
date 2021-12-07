@@ -52,6 +52,7 @@ export default {
     };
   },
 	onShow() {
+		this.$tool.actionForLogin();
 		// this.queryOrderCount();
 	},
   methods: {
