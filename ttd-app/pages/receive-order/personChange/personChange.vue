@@ -13,14 +13,20 @@
     </back-container>
 
     <view class="pc-02">
-      <member-title title="变更人员" right-text="选择人员" @add="selectPerson" />
+      <member-title title="变更人员" :showRight="!isPlaceOrder" right-text="选择人员" @add="selectPerson" />
       <team-list-item v-for="i in changeList" :key="i.userId" :member="i" />
     </view>
 
 		<big-btn buttonText="变更记录" @click="toChangeRecord"/>
 
     <iphonex-bottom>
-      <big-btn @click="submitChange"/>
+			<view v-if="isPlaceOrder">
+        <big-btn buttonText="确认变更" @click="approveChange(1)"/>
+        <big-btn buttonText="拒绝变更" @click="approveChange(2)"/>
+			</view>
+			<view v-else>
+				<big-btn buttonText="提交申请" @click="submitChange"/>
+			</view>
     </iphonex-bottom>
 
   </view>
@@ -37,11 +43,21 @@ export default {
   components: { BigBtn, IphonexBottom, TeamListItem, MemberTitle, BackContainer },
   data() {
     return {
-			id: 'M995083043754112',
+			id: '',
+			isPlaceOrder: false, // 是否是发单方
 			memberList: [], // 当前参与人员
 			changeList: [], // 申请变更人员
     }
   },
+	onLoad(option) {
+		if (option.isPlaceOrder) {
+			this.isPlaceOrder = option.isPlaceOrder ==  '1';
+		}
+		if (option.id) {
+			this.id = option.id;
+			this.queryMemberList();
+		}
+	},
 	onReady() {
 		this.queryMemberList();
 	},
@@ -67,6 +83,21 @@ export default {
 				  }
 			})
 		},
+		approveChange(state) {
+			const params = {
+				id: this.id,
+				approveState: state,
+			}
+			this.$http.post('/b/ordermember/approve', params, true)
+			.then(res => {
+				uni.showToast({
+					title: `变更申请已${state == 1 ? '通过' : '拒绝'}`,
+					success: () => {
+						uni.navigateBack({});
+					}
+				})
+			})
+		},
 		submitChange() {
 			const params = {
 				memberIdList: this.changeList.map((p) => p.userId),
@@ -74,7 +105,12 @@ export default {
 			}
 			this.$http.post('/b/ordermember/apply', params, true)
 			.then(res => {
-				this.$tool.showToast('变更申请已提交');
+				uni.showToast({
+					title: '变更申请已提交',
+					success: () => {
+						uni.navigateBack({});
+					}
+				})
 			})
 		},
 		toChangeRecord() {
