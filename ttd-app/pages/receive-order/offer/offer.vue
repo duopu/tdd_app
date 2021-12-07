@@ -210,7 +210,8 @@ export default {
 				receiveOrderId: this.id,
 				orderQuoteList: this.workList.map((w) => {
 					return { price: w.quoteAmount, workId: w.id }
-				})
+				}),
+				remark: this.remark,
 			};
 			this.$http.post('/b/orderquote/createQuote', params, true)
 			.then(res => {
