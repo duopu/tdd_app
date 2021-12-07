@@ -50,8 +50,26 @@ export default {
   name: "offerDetail",
   components: { OfferHead, BackContainer },
   data() {
-    return { MDicon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' };
-  }
+    return { 
+			MDicon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png',
+			id: '',
+			questionList: [],
+		};
+  },
+	onLoad(option) {
+		if (option.id) {
+			this.id = option.id;
+			this.queryQuestionList();
+		}
+	},
+	methods: {
+	  queryQuestionList() {
+	  	this.$http.post('/b/orderquestionanswer/queryList', { id: this.id }, true)
+	  	.then(res => {
+	  		this.questionList = res.dataList;
+	  	})
+	  },
+	},
 }
 </script>
 <style lang="scss">
