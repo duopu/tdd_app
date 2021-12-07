@@ -201,7 +201,7 @@ export default {
     };
   },
   onReady() {
-    // this.$tool.actionForLogin();
+    this.$tool.actionForLogin();
 		this.queryAuthInfo();
   },
   computed: {
