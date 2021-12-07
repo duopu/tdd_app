@@ -17,9 +17,8 @@
           <view class="order-fini-11">已完成</view>
         </view>
 
-        <quoted-iten />
-
-        <add-remark @input="input" :value="remark1" />
+        <quoted-iten :order="order"/>
+				
       </view>
     </back-container>
 
@@ -47,15 +46,14 @@
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view>
 
-      <view class="fini-51">
-        <text class="fini-51l">订单金额</text>
+      <view class="fini-51" @click="toSelectInvoice">
+        <text class="fini-51l">发票抬头</text>
         <text class="fini-51m">请选择</text>
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view>
 
 
       <view class="fini-51">
-        <text class="fini-51l">订单金额</text>
         <view class="fini-51m">
           <checkd-item label="发票类型" :value="value22" @change="change" />
         </view>
@@ -88,13 +86,14 @@
       <view class="order-fini-btn-box">
         <text class="order-fini-total-fee">总金额：</text>
         <my-price price="8000.00" />
-        <view class="order-fini-calcel">取消</view>
-        <view class="order-fini-sure">确定选价</view>
+        <!-- <view class="order-fini-calcel">取消</view> -->
+        <view class="order-fini-sure" @click="createOrder">支付</view>
       </view>
     </iphonex-bottom>
   </view>
 </template>
 <script>
+import config from '../../../utils/config.js';
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../../receive-order/component/offerHead";
 import MyPrice from "../../receive-order/component/myPrice";
@@ -124,7 +123,8 @@ export default {
   },
   data() {
     return {
-      remark1: '',
+			id: '',
+			order: {},
       value22: 1,
       payList: [
         { label: '银行支付', leftIcon: 'chat-filled', value: 1, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankCard.svg' },
@@ -134,16 +134,64 @@ export default {
       payWay: 1
     };
   },
+	onLoad(option) {
+		if (option.id) {
+			this.id = option.id;
+			this.queryOrderInfo();
+		}
+	},
   methods: {
-    input(value) {
-      this.remark1 = value;
-    },
+		queryOrderInfo() {
+			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
+			.then(res => {
+			  this.order = res;
+			})
+		},
     change(data) {
       this.value22 = data
     },
     changePayWay(way) {
       this.payWay = way
-    }
+    },
+		toSelectInvoice() {
+			uni.navigateTo({
+				url: `/pages/mine/chooseLookUp/chooseLookUp`,
+			})
+		},
+		
+		createOrder() {
+			const params = {
+				couponId: 0,
+				customerInvoiceId: 0,
+				invoiceType: 0,
+				recivierOrderId: this.id,
+				useIntegral: 0,
+				wayId: 0
+			}
+			this.$http.post('/b/order/createOrder', params, true)
+			.then(res => {
+			  this.payOrder(res.id);
+			  // this.payOrder(res.bizNo);
+			})
+		},
+		payOrder(orderId) {
+			const user = this.$store.state.user;
+			const params = {
+				appId: config.appId,
+				openId: user.openId,
+				orderId: orderId,
+				wayId: 0,
+			}
+			this.$http.post('/core/pay/build4MasterOrder', params, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '订单支付完成',
+					success: () => {
+						uni.navigateBack({});
+					}
+			  })
+			})
+		}
   }
 }
 </script>
