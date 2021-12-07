@@ -29,7 +29,7 @@
         <view class="ro-31" v-for="(i, index) in earningList" :key="i.num">
           <view class="ro-32">
             <text class="ro-33" :class="index == 1 ? 'ro-33-active' : ''">{{ i.num }}</text>
-            <text class="ro-34">k</text>
+            <text v-if="index != 0" class="ro-34">k</text>
           </view>
           <view class="ro-35">{{ i.title }}</view>
         </view>
@@ -65,14 +65,14 @@ export default {
     return {
       list: [
         { num: 0, title: '待报价', state: 10 },
-        { num: 5, title: '待确认', state: 20 },
-        { num: 1, title: '待开始', state: 30 },
-        { num: 3, title: '待完工', state: 40 },
+        { num: 0, title: '待确认', state: 20 },
+        { num: 0, title: '待开始', state: 30 },
+        { num: 0, title: '待完工', state: 40 },
       ],
       earningList: [
-        { num: 232331, title: '完成订单' },
-        { num: 240, title: '完成订单' },
-        { num: 232331, title: '完成订单' },
+        { num: 0, title: '完成订单' },
+        { num: 0, title: '总收益' },
+        { num: 0, title: '月平均收益' },
       ],
       peopleList: [
         { name: '钱浩然', header: '' },
@@ -89,8 +89,27 @@ export default {
   onReady() {
     this.$tool.actionForLogin()
 		this.queryMyTeamList();
+		this.queryOrderCount();
+		this.queryProfitStatistics();
   },
 	methods: {
+		queryOrderCount() {
+			this.$http.post('/b/orderreceive/orderNumStatistics', {}, true)
+			.then(res => {
+				this.list[0].num = res.unQuoteNum;
+				this.list[1].num = res.unConfirmNum;
+				this.list[2].num = res.unStartNum;
+				this.list[3].num = res.unCompleteNum;
+			})
+		},
+		queryProfitStatistics() {
+			this.$http.post('/b/orderreceive/profitStatistics', {}, true)
+			.then(res => {
+				this.earningList[0].num = res.completeNum;
+				this.earningList[1].num = res.totalProfit / 1000;
+				this.earningList[2].num = res.monthAvgProfit / 1000;
+			})
+		},
 		queryMyTeamList() {
 			this.$http.post('/b/teaminfo/teamList', {}, true)
 			.then(res => {

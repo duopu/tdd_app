@@ -38,9 +38,9 @@ export default {
     return {
       list: [
         { num: 0, title: '待报价', state: 10 },
-        { num: 5, title: '待确认', state: 20 },
-        { num: 1, title: '待开始', state: 30 },
-        { num: 3, title: '待完工', state: 40 },
+        { num: 0, title: '待确认', state: 20 },
+        { num: 0, title: '待开始', state: 30 },
+        { num: 0, title: '待完工', state: 40 },
       ],
       imageList: [
         { url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/place_order__shishi.svg', orderType: 1 },
@@ -53,13 +53,16 @@ export default {
   },
 	onShow() {
 		this.$tool.actionForLogin();
-		// this.queryOrderCount();
+		this.queryOrderCount();
 	},
   methods: {
 		queryOrderCount() {
-			this.$http.post('/b/ordermaster/orderCount', {}, true)
+			this.$http.post('/b/ordermaster/orderNumStatistics', {}, true)
 			.then(res => {
-				// this.orderList = res;
+				this.list[0].num = res.unQuoteNum;
+				this.list[1].num = res.unConfirmNum;
+				this.list[2].num = res.unStartNum;
+				this.list[3].num = res.unCompleteNum;
 			})
 		},
 		toOrderList(state) {
