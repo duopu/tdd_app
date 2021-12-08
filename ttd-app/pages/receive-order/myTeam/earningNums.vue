@@ -3,15 +3,15 @@
 
     <view class="e-nums-i">
       <view class="e-nums-iw">
-        <text class="e-nums-inum">232331</text>
-        <text class="e-nums-iunit">k</text>
+        <text class="e-nums-inum">{{ order }}</text>
+        <!-- <text class="e-nums-iunit">k</text> -->
       </view>
       <view class="e-nums-text">完成订单</view>
     </view>
 
     <view class="e-nums-i">
       <view class="e-nums-iw">
-        <text class="e-nums-inum e-nums-inum-ac">240</text>
+        <text class="e-nums-inum e-nums-inum-ac">{{ avg }}</text>
         <text class="e-nums-iunit">k</text>
       </view>
       <view class="e-nums-text">月平均收益</view>
@@ -19,7 +19,7 @@
 
     <view class="e-nums-i">
       <view class="e-nums-iw">
-        <text class="e-nums-inum">232331</text>
+        <text class="e-nums-inum">{{ total }}</text>
         <text class="e-nums-iunit">k</text>
       </view>
       <view class="e-nums-text">总收益</view>
@@ -29,7 +29,21 @@
 </template>
 <script>
 export default {
-  name: "earningNums"
+  name: "earningNums",
+	props: {
+		order: {
+      type: Number,
+      default: 0,
+    },
+		total: {
+		  type: Number,
+		  default: 0,
+		},
+		avg: {
+		  type: Number,
+		  default: 0,
+		},
+	}
 }
 </script>
 <style scoped lang="scss">

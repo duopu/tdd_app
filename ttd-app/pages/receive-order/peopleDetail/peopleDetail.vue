@@ -13,8 +13,8 @@
       <image v-if="headImgUrl" :src="headImgUrl" class="pd-header-img" />
       <image v-else src="'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png'" class="pd-header-img" />
       <view class="pd-header-text">
-        <image class="pd-header-edit-image" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconEditBlack.svg" />
-        <text class="pd-header-edtext">编辑信息</text>
+        <!-- <image class="pd-header-edit-image" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconEditBlack.svg" /> -->
+        <!-- <text class="pd-header-edtext">编辑信息</text> -->
       </view>
       <view class="pd-header-name">{{ name }}</view>
 
@@ -30,15 +30,18 @@
 				</text>
       </view>
 
-      <view class="pd-header-info">意大利民事保护部门24日发布的数据显示，意大利当天新增新冠死亡病例420例，是3月18日以来最低日增幅，累计死亡病例25969例。</view>
+      <view v-if="intro" class="pd-header-info">{{ intro }}</view>
     </view>
 
-    <view class="pd-skill" v-for="i in ['技能', '岗位', '项目', '工具']" :key="i">
-      <member-title :show-right="false" :title="i" />
-      <view class="pd-skill-item" v-for="i in 3" :key="i">
-        <view class="pd-skill-it1">金鱼{{ i }}</view>
+    <view class="pd-skill" v-for="(item, index) in allList" :key="index">
+      <member-title :show-right="false" :title="item.title" />
+      <view class="pd-skill-item" v-for="(s, i) in item.data" :key="i">
+        <view class="pd-skill-it1">{{ index == 2 ? s.projectName : s.nodeLink }}</view>
         <view class="pd-skill-it2">
-          <text class="pd-skill-it3" v-for="i in ['技能', '技能1', '技能2']" :key="i">{{ i }}</text>
+          <text v-if="index == 0" class="pd-skill-it3" v-for="b in s.brandList" :key="b">{{ b }}</text>
+          <text v-if="index == 1" class="pd-skill-it3" v-for="b in s.softwareList" :key="b">{{ b }}</text>
+          <text v-if="index == 2" class="pd-skill-it3">{{ s.resume }}</text>
+          <text v-if="index == 3" class="pd-skill-it3">{{ s.leaseFlag == 1 ? '租赁' : '' }}</text>
         </view>
       </view>
     </view>
@@ -64,10 +67,13 @@ export default {
 			headImgUrl: '',
 			name: '',
 			phone: '',
-			projectSet: [], // 项目列表
-			skillSet: [], // 技能
-			toolSet: [], // 工具
-			userRoleSet: [], // 岗位
+			intro: '',
+			allList: [
+				{ title: '技能', data: [] }, // 技能 
+				{ title: '岗位', data: [] }, // 岗位
+				{ title: '项目', data: [] }, // 项目列表
+				{ title: '工具', data: [] }, // 工具
+			],
 			commentList: [], // 评论列表
     };
   },
@@ -87,10 +93,11 @@ export default {
 					this.headImgUrl = res.headImgUrl;
 					this.name = res.name;
 					this.phone = res.phone;
-					this.projectSet = res.projectSet;
-					this.skillSet = res.skillSet;
-					this.toolSet = res.toolSet;
-					this.userRoleSet = res.userRoleSet;
+					this.intro = res.intro || '';
+					this.allList[0].data = res.skillSet;
+					this.allList[1].data = res.userRoleSet;
+					this.allList[2].data = res.projectSet;
+					this.allList[3].data = res.toolSet;
 				});
 		},
 		queryComments(userId) {

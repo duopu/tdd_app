@@ -14,7 +14,7 @@
 				/>
       </template>
 
-      <earning-nums />
+      <earning-nums :order="orderNum" :total="totalProfits" :avg="avgProfits"/>
 
     </back-container>
 
@@ -44,19 +44,21 @@
 					teamIntroduce: '',
 					leaderFlag: false,
 				},
+				orderNum: 0,
+				totalProfits: 0,
+				avgProfits: 0,
 				memberList: [],
 			}
 		},
 		onLoad(option) {
-			if (option.id) { // 编辑地址
+			if (option.id) {
 			  this.id = option.id;
 				this.queryTeamInfo();
+				this.queryTeamMember();
+				this.queryTeamProfits();
 			}
 		},
-		onReady() {
-			this.queryTeamInfo();
-			this.queryTeamMember();
-		},
+		onReady() {},
 		methods: {
 			queryTeamInfo() {
 				this.$http
@@ -70,6 +72,15 @@
 					.post('/b/teammember/queryList', { id: this.id }, true)
 					.then(res => {
 						this.memberList = res;
+					});
+			},
+			queryTeamProfits() {
+				this.$http
+					.post('/b/teaminfo/teamProjectStatistics', { id: this.id }, true)
+					.then(res => {
+						this.orderNum = res.completeOrderCount;
+						this.totalProfits = res.allOrderQuotaAmount / 1000;
+						this.avgProfits = res.quotaAmountAvgMonth / 1000;
 					});
 			},
 			updateTeam(teamLogo, teamName, teamIntroduce) {
