@@ -3,10 +3,15 @@
     <custom-navbar title="银行账户" />
     <back-container>
       <view class="bank-addr">
+				<view class="bank-ac-item">
+				  <view class="bank-ac-lable">卡号</view>
+				  <input class="bank-ac-midle" :value="bankCardNo" @input="(e) => onInput(e, 'number')" placeholder="请输入卡号" placeholder-class="input-placeholder" />
+				</view>
+				
         <view class="bank-ac-item">
           <view class="bank-ac-lable">开户行</view>
-          <view class="bank-ac-midle">请选择</view>
-          <uni-icons class="bank-ac-right" type="arrowright" size="18" color="#969799" />
+          <view class="bank-ac-midle">{{ bankName || '请输入卡号' }}</view>
+          <!-- <uni-icons class="bank-ac-right" type="arrowright" size="18" color="#969799" /> -->
         </view>
 
         <view class="bank-ac-item">
@@ -17,11 +22,6 @@
         <view class="bank-ac-item">
           <view class="bank-ac-lable">户名</view>
           <input class="bank-ac-midle" :value="householderName" @input="(e) => onInput(e, 'name')" placeholder="请输入" placeholder-class="input-placeholder" />
-        </view>
-
-        <view class="bank-ac-item">
-          <view class="bank-ac-lable">卡号</view>
-          <input class="bank-ac-midle" :value="bankCardNo" @input="(e) => onInput(e, 'number')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
       </view>
@@ -76,11 +76,24 @@ export default {
 					this.householderName = res.householderName;
 				})
 		},
+		queryBankCardInfo(cardNumber) {
+			this.$http
+				.post('/core/bankCard/getBankCardInfo', { cardNumber }, false)
+				.then(res => {
+					this.bankName = res.bankName;
+				}).catch((e) => {
+					console.log('识别失败 ', e);
+				});
+		},
 		onInput(event, type) {
+			const text = event.target.value;
 			if (type == 'name') {
-				this.householderName = event.target.value;		
+				this.householderName = text;		
 			} else if (type == 'number') {
-				this.bankCardNo = event.target.value;	
+				this.bankCardNo = text;	
+				if (text.length >= 16) {
+					this.queryBankCardInfo(text);
+				}
 			}
 		},
 		checkParams() {

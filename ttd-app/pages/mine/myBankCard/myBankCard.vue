@@ -4,7 +4,7 @@
 
     <back-container>
       <view class="bc-center">
-        <view class="bc-item" v-for="(item, i) in cardList" :key="i" @click="toAccount">
+        <view class="bc-item" v-for="(item, i) in cardList" :key="i" @click="editCard(item)">
           <image src="http://jycrm.bm001.com/favicon.png" class="bc-left"></image>
           <view class="bc-midle">
             <view class="bc-midle-name">{{ item.householderName }}</view>
@@ -17,15 +17,21 @@
         </view>
       </view>
     </back-container>
-
+		
+		<iphonex-bottom>
+		  <big-btn button-text="新增银行卡" @click="addCard"/>
+		</iphonex-bottom>
+		
   </view>
 </template>
 <script>
 import BackContainer from "../addressManage/component/backContainer";
+import IphonexBottom from "../addressManage/component/iphonexBottom";
+import BigBtn from "../addressManage/component/bigBtn";
 
 export default {
   name: 'myBankCard',
-  components: { BackContainer },
+  components: { BackContainer, BigBtn, IphonexBottom },
 	data() {
 		return {
 			cardList: [],
@@ -36,15 +42,18 @@ export default {
 		this.queryCardList();
 	},
   methods: {
-    toAccount() {
-      uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount` })
-    },
 		queryCardList() {
 			this.$http.post('/b/customerbank/queryPageList', { pageSize: 1000 }, true)
 			.then(res => {
 			  this.cardList = res.dataList;
 			})
 		},
+		editCard(card) {
+		  uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount?id=${card.id}` })
+		},
+		addCard() {
+			uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount` })
+		}
   }
 }
 </script>
