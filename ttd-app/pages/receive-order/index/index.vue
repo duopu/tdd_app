@@ -40,7 +40,7 @@
     <view class="ro-4">
       <view class="ro-41">我的团队：</view>
       <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="add-img" />
-      <text class="ro-43" @click="showCreateTeam()">创建团队</text>
+      <text v-if="showCreateBtn" class="ro-43" @click="showCreateTeam()">创建团队</text>
     </view>
 
     <view class="ro-5">
@@ -74,16 +74,8 @@ export default {
         { num: 0, title: '总收益' },
         { num: 0, title: '月平均收益' },
       ],
-      peopleList: [
-        { name: '钱浩然', header: '' },
-        { name: '钱浩然1', header: '' },
-        { name: '钱浩然2', header: '' },
-        { name: '钱浩然3', header: '' },
-        { name: '钱浩然4', header: '' },
-        { name: '钱浩然5', header: '' },
-        { name: '钱浩然6', header: '' },
-      ],
 			teamList: [],
+			showCreateBtn: false,
     };
   },
   onReady() {
@@ -113,7 +105,14 @@ export default {
 		queryMyTeamList() {
 			this.$http.post('/b/teaminfo/teamList', {}, true)
 			.then(res => {
-				this.teamList = res;
+				this.teamList = res || [];
+				let hasTeam = false;
+				(res || []).forEach((t) => {
+					if (t.leaderFlag) {
+						hasTeam = true
+					}
+				});
+				this.showCreateBtn = !hasTeam;
 			})
 		},
 		toOrderList(state) {
