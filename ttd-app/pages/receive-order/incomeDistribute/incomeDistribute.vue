@@ -113,7 +113,7 @@ export default {
 				placeholderText: '请输入分配金额',
 				success: (res) => {
 					if (res.confirm) {
-						person.amount = res.content;
+						person.amount = Number(res.content) * 100;
 					}
 				}
 			})
@@ -132,10 +132,10 @@ export default {
 				return this.memberList.length - distributeList.length;
 			} else if (type == 3) {
 				// 已分配金额
-				return amount;
+				return amount / 100;
 			} else {
 				// 未分配金额
-				return 10000 - amount;
+				return (10000 - amount) / 100;
 			}
 		},
 		cancelDistribute() {
