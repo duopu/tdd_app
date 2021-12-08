@@ -5,15 +5,15 @@
       <view class="edit-addr">
         <map
             style="width: 686rpx;height: 344rpx;margin: 0 32rpx 16rpx 0;"
-            :latitude="latitude"
-            :longitude="longitude"
-            :markers="covers"
+            :latitude="oLatitude"
+            :longitude="oLongitude"
+						@regionchange="onRegionchange"
         />
 
         <view class="edit-item">
           <view class="edit-lable">所在地区</view>
-          <view class="edit-midle">请选择</view>
-          <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" />
+          <view class="edit-midle">{{ address ? `${province} ${city} ${district}` : '定位中...'}}</view>
+          <!-- <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" /> -->
         </view>
 
         <view class="edit-item">
@@ -66,18 +66,18 @@ export default {
 			phone: '',
 			province: '',
 			provinceId: 0,
-      latitude: 39.909,
-      longitude: 116.39742,
-      covers: [{
-        latitude: 39.909,
-        longitude: 116.39742,
-      }]
+      latitude: 0,
+      longitude: 0,
+			oLatitude: 0,
+			oLongitude: 0,
     }
   },
 	onLoad(option) {
 		if (option.id) { // 编辑地址
 		  this.id = Number(option.id);
 			this.queryAddressInfo(this.id);
+		} else {
+			this.getLocation();
 		}
 	},
   methods: {
@@ -97,11 +97,53 @@ export default {
 					this.phone = res.phone;
 					this.province = res.province;
 					this.provinceId = res.provinceId;
-					this.covers = [{
-						latitude: res.latitude,
-						longitude: res.longitude,
-					}];
+					// 用于地图显示
+					this.oLatitude = res.latitude;
+					this.oLongitude = res.longitude;
 				})
+		},
+		getLocation() {
+			console.log('getLocation');
+			uni.getLocation({
+			    type: 'wgs84',
+					geocode: true,
+			    success: (res) => {
+			        console.log('当前位置的经度：' + res.longitude);
+			        console.log('当前位置的纬度：' + res.latitude);
+							this.latitude = res.latitude;
+							this.longitude = res.longitude;
+							// 用于地图显示
+							this.oLatitude = res.latitude;
+							this.oLongitude = res.longitude;
+							// 处理地理地址信息
+							this.queryGeoAddressInfo(res.latitude, res.longitude)
+			    }
+			});
+		},
+		queryGeoAddressInfo(latitude, longitude) {
+			const params = {
+				latitude,
+				longitude
+			}
+			this.$http.post('/core/geo/queryRegionByLocation', params, true)
+			.then(res => {
+				this.address = res.street + res.streetNum;
+				this.city = res.city;
+				this.cityId = res.cityId;
+				this.district = res.district;
+				this.districtId = res.districtId;
+				this.province = res.province;
+				this.provinceId = res.provinceId;
+			})
+		},
+		onRegionchange(event) {
+			console.log('onRegionchange event ', event);
+			if (event.type == 'end') {
+				this.latitude = event.target.centerLocation.latitude;
+				this.longitude = event.target.centerLocation.longitude;
+				// 处理地理地址信息
+				this.queryGeoAddressInfo(this.latitude, this.longitude);
+			}
 		},
 		onAddressInput(event) {
 			this.address = event.target.value;
