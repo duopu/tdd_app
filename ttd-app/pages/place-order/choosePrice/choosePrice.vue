@@ -15,7 +15,7 @@
                 <text class="chp-16">{{ item.receiverName }}</text>
                 <text class="chp-17">团队</text>
               </view>
-              <my-star />
+              <my-star :num="item.score"/>
               <view class="chp-18">
                 <text class="chp-181">已报项：{{ item.quoteNum }}</text>
                 <text class="chp-181">未报项：{{ item.unQuoteNum }}</text>
