@@ -29,14 +29,19 @@
         <view class="abwp-l">
           <image class="abwp-lt1" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/applyJob1.svg" />
           <view class="abwp-lt3" />
-          <image class="abwp-lt1" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/applyJob.svg" />
+          <image v-if="order.subState == 6 || order.subState == 7" class="abwp-lt1" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/applyJob.svg" />
         </view>
         <view class="abwp-r">
           <view class="abwp-r1">
             <text class="abwp-r1l">开始工作</text>
-            <text class="abwp-r1r">重新定位</text>
+            <text v-if="address.latitude && order.subState == 4" class="abwp-r1r">重新定位</text>
           </view>
-          <map class="abwp-rmap" :latitude="address.latitude" :longitude="address.longitude" />
+					
+					<map v-if="address.latitude" class="abwp-rmap" :latitude="address.latitude" :longitude="address.longitude" />
+					<view v-else class="abwp-bo-1" @click="getLocation">
+					  <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
+					  <view class="abwp-bo-1text">添加位置</view>
+					</view>
 
           <view class="abwp-rmap-text">
 					  {{ address.province || '' }} {{ address.city || '' }} {{ address.district || '' }} {{ address.address || '' }}
@@ -44,23 +49,23 @@
 
           <view class="abwp-rtime">2021-07-12 13:37</view>
 
-          <upload-list upload-icon="2" :img-list="[1, 3, 4, 5]" />
+          <upload-list :hideUploadBtn="order.subState != 4" upload-text="添加照片" :img-list="imageList" @upload="chooseImage"/>
 
           <view class="iamaline" />
 
-          <view class="abwp-rend-text">结束工作</view>
+          <view v-if="order.subState == 6 || order.subState == 7" class="abwp-rend-text">结束工作</view>
         </view>
       </view>
 
-      <view class="abwp-bottom">
-        <view class="abwp-bo-1">
+      <view v-if="order.subState == 6 || order.subState == 7" class="abwp-bottom">
+        <view class="abwp-bo-1" @click="getLocation">
           <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
-          <view class="abwp-bo-1text" @click="getLocation">添加位置</view>
+          <view class="abwp-bo-1text">添加位置</view>
         </view>
 
-        <upload-list upload-text="添加照片" :img-list="imageList" @upload="chooseImage"/>
+        <upload-list :hideUploadBtn="order.subState != 6" upload-text="添加照片" :img-list="imageList" @upload="chooseImage"/>
 
-        <upload-list upload-icon="2" @upload="chooseFile"/>
+        <upload-list :hideUploadBtn="order.subState != 6" upload-icon="2" @upload="chooseFile"/>
 
       </view>
     </view>
@@ -68,7 +73,7 @@
     <view style="height: 300rpx" />
 
     <iphonex-bottom>
-      <big-btn v-if="isPlaceOrder" button-text="确认开始" @click="approveBeginWork"/>
+      <big-btn v-if="isPlaceOrder" :button-text="order.subState == 5 ? '确认开始' : '确认完工'" @click="approveBeginWork"/>
       <big-btn v-else button-text="提交申请" @click="applyBeginWork"/>
     </iphonex-bottom>
 
@@ -102,15 +107,15 @@ export default {
 			isPlaceOrder: false,
 			order: {},
 			address: {
-				address: '大周路',
-				city: '南京市',
+				address: '',
+				city: '',
 				cityId: 0,
-				district: '雨花台区',
+				district: '',
 				districtId: 0,
-				latitude: 39.983171,
-				longitude: 116.308479,
-				province: '江苏省',
-				provinceId: 32,
+				latitude: 0,
+				longitude: 0,
+				province: '',
+				provinceId: 0,
 			},
 			fileList: [],
 			imageList: [],
@@ -123,14 +128,19 @@ export default {
 		if (option.id) {
 			this.id = option.id;
 			this.queryOrderInfo();
+			this.queryWorkInfo();
 		}
 	},
-	onReady() {
-		this.getLocation();
-	},
+	onReady() {},
   methods: {
 		queryOrderInfo() {
 			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
+			.then(res => {
+			  this.order = res;
+			})
+		},
+		queryWorkInfo() {
+			this.$http.post('/b/orderreceive/queryApplyDetail', { id: this.id }, true)
 			.then(res => {
 			  this.order = res;
 			})
@@ -142,11 +152,28 @@ export default {
 			    success: (res) => {
 			        console.log('当前位置的经度：' + res.longitude);
 			        console.log('当前位置的纬度：' + res.latitude);
-							// todo: 需处理逆地理地址信息
 							this.address.latitude = res.latitude;
 							this.address.longitude = res.longitude;
+							// 处理地理地址信息
+							this.queryGeoAddressInfo(res.latitude, res.longitude)
 			    }
 			});
+		},
+		queryGeoAddressInfo(latitude, longitude) {
+			const params = {
+				latitude,
+				longitude
+			}
+			this.$http.post('/core/geo/queryRegionByLocation', params, true)
+			.then(res => {
+				this.address.address = res.street + res.streetNum;
+				this.address.city = res.city;
+				this.address.cityId = res.cityId;
+				this.address.district = res.district;
+				this.address.districtId = res.districtId;
+				this.address.province = res.province;
+				this.address.provinceId = res.provinceId;
+			})
 		},
 		chooseImage() {
 			uni.chooseImage({
@@ -180,7 +207,7 @@ export default {
 			});
 		},
 		approveBeginWork() {
-			const url = `/b/orderreceive/confirm${this.order.subState == 1 ? 'Start' : 'Complete'}`
+			const url = `/b/orderreceive/confirm${this.order.subState == 5 ? 'Start' : 'Complete'}`
 			this.$http.post(url, { id: this.id }, true)
 			.then(res => {
 			  uni.showToast({
@@ -192,7 +219,7 @@ export default {
 			})
 		},
 		applyBeginWork() {
-			const url = `/b/orderreceive/apply${this.order.subState == 1 ? 'Start' : 'Complete'}`
+			const url = `/b/orderreceive/apply${this.order.subState == 4 ? 'Start' : 'Complete'}`
 			const params = {
 				receiveOrderId: this.id,
 				fileList: this.fileList,
@@ -309,6 +336,29 @@ export default {
           line-height: 32rpx;
         }
       }
+			
+			.abwp-bo-1 {
+			  @include flexCenter;
+			  flex-direction: column;
+			  width: 622rpx;
+			  height: 200rpx;
+			  background: #F3F4F5;
+			  margin-bottom: 32rpx;
+			
+			  .apply-add-jia {
+			    width: 48rpx;
+			    height: 48rpx;
+			  }
+			
+			  .abwp-bo-1text {
+			    font-size: 28rpx;
+			    font-family: PingFang SC-Regular, PingFang SC;
+			    font-weight: 400;
+			    line-height: 36rpx;
+			    margin-top: 8rpx;
+			    color: #3340A0;
+			  }
+			}
 
       .abwp-rmap {
         height: 200rpx;
