@@ -5,34 +5,34 @@
     <back-container>
 
       <view class="chp">
-        <view class="chp-1" v-for="i in 4" :key="i">
+        <view class="chp-1" v-for="(item, index) in quoteList" :key="index" @click="onChange(item)">
           <view class="chp-11">
-            <image class="chp-13" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' />
+            <image v-if="item.logo" class="chp-13" :src="item.logo" />
+            <image v-else class="chp-13" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' />
 
             <view class="chp-14">
               <view class="chp-15">
-                <text class="chp-16">黑涩会</text>
+                <text class="chp-16">{{ item.receiverName }}</text>
                 <text class="chp-17">团队</text>
               </view>
               <my-star />
               <view class="chp-18">
-                <text class="chp-181">已报项：3</text>
-                <text class="chp-181">未报项：2</text>
+                <text class="chp-181">已报项：{{ item.quoteNum }}</text>
+                <text class="chp-181">未报项：{{ item.unQuoteNum }}</text>
               </view>
 
               <view class="chp-19">
-                <text class="chp-191">已报项：3</text>
-                <my-price scale="0.8" price="8000.00" />
+                <text class="chp-191">报价金额: </text>
+                <my-price scale="0.8" :price="item.totalAmount / 100" />
               </view>
             </view>
 
-            <image v-if="i == 1" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxChecked.svg" class="chp-193-right3" />
+            <image v-if="showSelect(item)" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxChecked.svg" class="chp-193-right3" />
             <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxEmpty.svg" class="chp-193-right3" />
 
           </view>
-          <view class="chp-2">
-            今天一天过得不错吧？梦想是不是更远了？
-          </view>
+					
+          <view v-if="item.remark" class="chp-2">{{ item.remark }}</view>
 
           <view class="cps-aline" />
         </view>
@@ -43,13 +43,13 @@
       <view class="chp-b1">
         <view class="chp-b2">
           <text class="chp-b21">已选报价</text>
-          <corner-mark class-name="mark-marr" num="3" color="#2C3580" />
-          <text class="chp-b21">份（已报 10 项，未报 1 项，重复 4 项）</text>
+          <corner-mark class-name="mark-marr" :num="selectCount" color="#2C3580" />
+          <text class="chp-b21">份（已报 {{ showCount(1) }} 项，未报 {{ showCount(2) }} 项，重复 {{ showCount(3) }} 项）</text>
         </view>
         <view class="chp-b3">
           <text class="chp-b31">总金额：</text>
-          <my-price price="8000.01" scale="0.9" />
-          <view class="chp-b32">确认选价</view>
+          <my-price :price="showCount(4)" scale="0.9" />
+          <view class="chp-b32" @click="confirmPrice">确认选价</view>
         </view>
       </view>
     </iphonex-bottom>
@@ -70,7 +70,11 @@ export default {
   data() {
     return {
 			id: '',
+			orderId: '',
+			itemCount: 0,
 			quoteList: [],
+			selectCount: 0,
+			selectList: [],
     };
   },
 	onLoad(option) {
@@ -78,12 +82,74 @@ export default {
 		  this.id = option.id;
 			this.queryQuoteList();
 		}
+		if (option.orderId) {
+		  this.orderId = option.orderId;
+		}
+		if (option.itemCount) {
+		  this.itemCount = Number(option.itemCount);
+		}
 	},
 	methods: {
 		queryQuoteList(id) {
 			this.$http.post('/b/orderquote/choosePriceList', { id: this.id }, true)
 			.then(res => {
 			  this.quoteList = res;
+			})
+		},
+		showSelect(quote) {
+			const index = this.selectList.findIndex((q) => q.id == quote.id);
+			return index != -1;
+		},
+		onChange(quote) {
+			const index = this.selectList.findIndex((q) => q.id == quote.id);
+			if (index == -1) {
+				this.selectList.push(quote);
+			} else {
+				this.selectList.splice(index, 1);
+			}
+			this.selectCount = this.selectList.length;
+		},
+		showCount(type) {
+			let count = 0;
+			let amount = 0;
+			let arr = [];
+			this.selectList.forEach((q) => {
+				amount  = amount + q.totalAmount;
+				count  = count + q.quoteNum;
+				arr = arr.concat(q.itemIdList);
+			})
+			const set = new Set(arr);
+			
+			if (type == 1) {
+				return count;
+			} else if (type == 2) {
+				return this.itemCount - set.size;
+			} else if (type == 3) {
+				return arr.length - set.size;
+				// const repeat = arr.reduce((prev, next) => {
+				// 	prev[next] = (prev[next] + 1) || 1;
+				// 	return prev;
+				// }, {});
+				// console.log('repeat ', repeat);
+				// let repeatCount = 0;
+				// Object.values(repeat)..forEach((num) => {
+				// 	repeatCount = repeatCount + (num - 1);
+				// })
+				// return repeatCount;
+			}
+			return amount / 100;
+		},
+		confirmPrice() {
+			const params = {
+				orderMasterId: this.id,
+				quoteIdList: this.selectList.map((q) => q.id),
+			}
+			this.$http.post('/b/orderquote/confirmQuote', params, true)
+			.then(res => {
+			  // 跳转支付订单
+				uni.navigateTo({
+					url: `/pages/place-order/orderDetailFinish/orderDetailFinish?id=${this.orderId}`,
+				})
 			})
 		},
 	},
