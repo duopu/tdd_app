@@ -37,19 +37,21 @@
 
             <view class="state1-tip" v-if="value === 20">
               <view class="plo-im-c">已报价：</view>
-              <corner-mark num="2" color="#2C3580" />
+              <corner-mark :num="item.quoteNum" color="#2C3580" />
               <view class="plo-im-c plo-im-c2">人</view>
               <view class="plo-im-c">未报价：</view>
-              <corner-mark num="3" color="#2C3580" />
+              <corner-mark :num="item.unQuoteNum" color="#2C3580" />
               <view class="plo-im-c">人</view>
             </view>
 
-            <view class="state1-tip" v-if="value === 30">
-              <view class="plo-im-3red">等待承接方开始工作、、、承接方开始工作,等待您的确认、、、</view>
+            <view class="state1-tip" v-if="item.subState == 5 || (item.subState == 4 && isPlaceOrder)">
+              <view v-if="isPlaceOrder" class="plo-im-3red">{{ item.subState == 4 ? '等待承接方开始工作' : '承接方开始工作,等待您的确认' }}</view>
+							<view v-else class="plo-im-3red">{{ item.subState == 4 ? '' : '等待用户确认开始' }}</view>
             </view>
 						
-						<view class="state1-tip" v-if="value === 40">
-						  <view class="plo-im-3red">等待承接方完成工作、、、承接方完成工作,等待您的确认</view>
+						<view class="state1-tip" v-if="item.subState == 7 || (item.subState == 6 && isPlaceOrder)">
+						  <view v-if="isPlaceOrder" class="plo-im-3red">{{ item.subState == 6 ? '等待承接方完成工作' : '承接方完成工作,等待您的确认' }}</view>
+						  <view v-else class="plo-im-3red">{{ item.subState == 6 ? '' : '等待用户确认完工' }}</view>
 						</view>
 
             <view class="state1-tip" v-if="value === 90">
@@ -65,7 +67,7 @@
             <view class="plo-ct">
 							工作地址：{{ item.orderAddress.province }} {{ item.orderAddress.city }} {{ item.orderAddress.district }} {{ item.orderAddress.address }}
 						</view>
-            <view class="plo-ct">工作内容：交换机、路由器、摄像头</view>
+            <view class="plo-ct">工作内容：{{ item.detail }}</view>
           </view>
 
           <!-- 发单方 -->
@@ -73,14 +75,14 @@
           	<view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
 							<view class="plo-btn1" v-if="[10, 20, 30, 40].includes(value)" @click="cancelOrderTip(item.id)">取消订单</view>
 							<!-- 待报价 待确认 -->
-							<view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuestionPage(item)">查看问题</view>
+							<view class="plo-btn1" v-if="[10, 20].includes(value) || (item.state == 30 && item.subState == 4)" @click="toQuestionPage(item)">查看问题</view>
 							<!-- 待确认 -->
-							<view class="choose-change-btn" v-if="[20].includes(value)" @click="toChoosePrice(item)">选价</view>
-							<view class="choose-change-btn" v-if="[20].includes(value)" @click="toPayOrder(item)">付款</view>
+							<view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @click="toChoosePrice(item)">选价</view>
+							<view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @click="toPayOrder(item)">付款</view>
 							<!-- 待开始 -->
 							<view class="plo-btn1" v-if="[30, 40].includes(value)" @click="toReviewTeam(item)">审核人员</view>
 							<view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
-							<view class="choose-change-btn" v-if="[30].includes(value)" @click="toOrderWork(item)">确认开始</view>
+							<view class="choose-change-btn" v-if="item.state == 30 && item.subState == 5" @click="toOrderWork(item)">确认开始</view>
 							<!-- 待完工 -->
 							<view class="choose-change-btn" v-if="[40].includes(value)" @click="toOrderWork(item)">确认完工</view>
 							<!-- 已完工 -->
@@ -92,19 +94,19 @@
 					<!-- 接单方 -->
 					<view v-else>
 						<view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
-						<view class="plo-btn1" v-if="[10, 20, 30, 40].includes(value)" @click="cancelOrderTip(item.id)">取消订单</view>
+						<view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @click="cancelOrderTip(item.id)">取消订单</view>
 						<!-- 待报价 待确认 -->
 						<view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuestionPage(item)">咨询</view>
 						<view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuoteOrder(item)">去报价</view>
 						<!-- 待确认 -->
 						<view class="plo-btn1" v-if="[20].includes(value)" @click="toQuoteOrder(item)">修改报价</view>
 						<!-- 待开始 -->
-						<view class="plo-btn1" v-if="[30, 40].includes(value)" @click="toReviewTeam(item)">变更人员</view>
+						<view class="plo-btn1" v-if="[30, 40].includes(value) && item.subState != 7" @click="toReviewTeam(item)">变更人员</view>
 						<view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
-						<view class="choose-change-btn" v-if="[30].includes(value)" @click="toOrderWork(item)">申请开始</view>
+						<view class="choose-change-btn" v-if="[30].includes(value) && item.subState == 4" @click="toOrderWork(item)">申请开始</view>
 						<!-- 待完工 -->
-						<view class="choose-change-btn" v-if="[40].includes(value)" @click="toDistributionIncome(item)">收益分配</view>
-						<view class="choose-change-btn" v-if="[40].includes(value)" @click="toOrderWork(item)">申请完工</view>
+						<view class="choose-change-btn" v-if="[40].includes(value) && item.subState != 7" @click="toDistributionIncome(item)">收益分配</view>
+						<view class="choose-change-btn" v-if="[40].includes(value) && item.subState == 6" @click="toOrderWork(item)">申请完工</view>
 						</view>
 					</view>
 
@@ -146,9 +148,8 @@ export default {
 	},
   methods: {
     changeVal(val) {
-			console.log('1 ', val);
       this.value = val;
-			// this.queryOrderList();
+			this.queryOrderList();
     },
 		queryOrderList() {
 			const url = this.isPlaceOrder ? '/b/ordermaster/queryPageList' : '/b/orderreceive/queryPageList';
@@ -204,7 +205,8 @@ export default {
 		// 取消订单
 		cancelOrderTip(id) {
 			uni.showModal({
-				title: '确认取消该订单?',
+				title: '提示',
+				content: '确认取消该订单?',
 				success: (res) => {
 					if (res.confirm) {
 						this.cancelOrder(id);
@@ -213,7 +215,8 @@ export default {
 			})
 		},
 		cancelOrder(id) {
-			this.$http.post('/b/ordermaster/queryPageList', { id }, true)
+			const url = this.isPlaceOrder ? '/b/ordermaster/publishCancel' : '/b/orderreceive/receiveCancel';
+			this.$http.post(url, { id }, true)
 			.then(res => {
 				this.$tool.showToast('取消成功');
 				this.queryOrderList();
@@ -249,7 +252,7 @@ export default {
 		// 选价
 		toChoosePrice(item) {
 			uni.navigateTo({
-				url: `/pages/place-order/choosePrice/choosePrice?id=${item.id}`,
+				url: `/pages/place-order/choosePrice/choosePrice?id=${item.orderMasterId}&orderId=${item.id}&itemCount=${item.itemIdList.length}`,
 			})
 		},
 		// 付款
