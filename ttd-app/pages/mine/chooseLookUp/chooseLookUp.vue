@@ -30,7 +30,7 @@ import BigBtn from "../addressManage/component/bigBtn";
 
 export default {
   name: "chooseLookUp",
-  components: { InvoiceInfoCard, BackContainer, BigBtn, IphonexBottom, },
+  components: { InvoiceInfoCard, BackContainer, BigBtn, IphonexBottom },
   data() {
     return {
 			invoiceList: [],
