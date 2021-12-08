@@ -6,25 +6,56 @@
       <view class="choose-look-up">
 
         <invoice-info-card
-            v-for="i in 10"
-            :key="i"
-            :item="{ iconType: i }"
+            v-for="(item, index) in invoiceList"
+            :key="index"
+            :item="{ iconType: 0 }"
+						:invoice="item"
+						@onClick="onInvoiceClick"
         />
       </view>
     </back-container>
+		
+		<iphonex-bottom>
+		  <big-btn button-text="新增发票抬头" @click="addInvoice"/>
+		</iphonex-bottom>
+		
   </view>
 </template>
 
 <script>
 import BackContainer from "../addressManage/component/backContainer";
 import InvoiceInfoCard from "../myInvoice/card/invoiceInfoCard";
+import IphonexBottom from "../addressManage/component/iphonexBottom";
+import BigBtn from "../addressManage/component/bigBtn";
 
 export default {
   name: "chooseLookUp",
-  components: { InvoiceInfoCard, BackContainer },
+  components: { InvoiceInfoCard, BackContainer, BigBtn, IphonexBottom, },
   data() {
-    return {};
-  }
+    return {
+			invoiceList: [],
+		};
+  },
+	onShow() {
+		this.queryInvoiceList();
+	},
+	methods: {
+		queryInvoiceList() {
+			this.$http.post('/b/customerinvoiceinfo/queryPageList', { }, true)
+			.then(res => {
+			  this.invoiceList = res.dataList;
+			})
+		},
+		onInvoiceClick(invoice) {
+			const eventChannel = this.getOpenerEventChannel();
+			eventChannel.emit('onSelect', invoice);
+			
+			uni.navigateBack({});
+		},
+		addInvoice() {
+			uni.navigateTo({ url: '/pages/mine/editInvoice/editInvoice' });
+		},
+	},
 }
 </script>
 <style lang="scss" scoped>
