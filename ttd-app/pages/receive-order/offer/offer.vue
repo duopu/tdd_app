@@ -29,7 +29,7 @@
 				:right-type="item.quoteAmount ? '1' : '2'"
 				:title="getItemTitle(item)"
 				:specItem="getSpecList(item)"
-				:price="item.quoteAmount"
+				:price="item.quoteAmount / 100"
         :show-last-border-bottom="index < (showWorkList.length - 1)"
 				@onChange="changeQuote(item)"
 				/>
@@ -60,6 +60,7 @@
   </view>
 </template>
 <script>
+import config from '../../../utils/config.js';
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../component/offerHead";
 import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-icons";
@@ -138,7 +139,7 @@ export default {
 				placeholderText: '请输入报价',
 				success: (res) => {
 					if (res.confirm) {
-						work.quoteAmount = res.content;
+						work.quoteAmount = Number(res.content) * 100;
 						console.log('res ', res.content, work);
 					}
 				}
@@ -199,13 +200,24 @@ export default {
 				quoteList.forEach((q) => {
 					amount = amount + Number(q.quoteAmount);
 				})
-				return amount;
+				return amount / 100;
 			}
 		},
 		cancelQuote() {
 			uni.navigateBack({});
 		},
 		submitQuote() {
+			uni.showModal({
+				title: '提示',
+				content: '参与报价需要缴纳报价金额的5%作为保证金,正常开工或者流标之后保证金退回',
+				success: (res) => {
+					if (res.confirm) {
+						this.createQuote();
+					}
+				}
+			})
+		},
+		createQuote() {
 			const params = {
 				receiveOrderId: this.id,
 				orderQuoteList: this.workList.map((w) => {
@@ -215,13 +227,63 @@ export default {
 			};
 			this.$http.post('/b/orderquote/createQuote', params, true)
 			.then(res => {
-			  uni.showToast({
-			  	title: '报价成功',
+			  // 如果支付金额是0,则不需要缴纳, 大于0,需要缴纳保证金
+				if (res.payCash > 0) {
+					this.payOrder(res.id);
+				} else {
+					uni.showToast({
+						title: '报价完成',
+						success: () => {
+							uni.navigateBack({});
+						}
+					})
+				}
+			})
+		},
+		// 支付保证金
+		payOrder(orderId) {
+			const user = this.$store.state.user;
+			const params = {
+				appId: config.appId,
+				openId: user.openId,
+				orderId: orderId,
+				wayId: 12, // 12、宁波银行微信小程序支付
+			}
+			this.$http.post('/core/pay/build4ReceiveOrder', params, true)
+			.then(res => {
+				// todo:吊起微信支付
+				// this.wxPay(res.payResult);
+				
+				uni.showToast({
+					title: '订单支付完成',
 					success: () => {
 						uni.navigateBack({});
 					}
-			  })
+				})
 			})
+		},
+		wxPay(res) {
+			uni.requestPayment({
+				provider: 'wxpay',
+				timeStamp: String(Date.now()),
+				nonceStr: 'A1B2C3D4E5',
+				package: 'prepay_id=wx20180101abcdefg',
+				signType: 'MD5',
+				paySign: '',
+				success: (res) => {
+				    console.log('success:' + JSON.stringify(res));
+						uni.showToast({
+							title: '订单支付完成',
+							success: () => {
+								uni.navigateBack({});
+							}
+						})
+				},
+				fail: function (err) {
+				    console.log('fail:' + JSON.stringify(err));
+						uni.showToast({ title: '订单支付完成', });
+				},
+			});
 		}
   }
 }
