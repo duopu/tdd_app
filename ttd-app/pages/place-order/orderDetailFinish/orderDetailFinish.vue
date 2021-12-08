@@ -48,14 +48,14 @@
 
       <view class="fini-51" @click="toSelectInvoice">
         <text class="fini-51l">发票抬头</text>
-        <text class="fini-51m">请选择</text>
+        <text class="fini-51m">{{ this.invoice.name || '请选择' }}</text>
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view>
 
 
       <view class="fini-51">
         <view class="fini-51m">
-          <checkd-item label="发票类型" :value="value22" @change="change" />
+          <checkd-item label="发票类型" :value="invoiceType" @change="change" />
         </view>
       </view>
 
@@ -69,11 +69,11 @@
         <text class="fini-51l">支付方式</text>
       </view>
 
-      <view class="fini-51" v-for="i in payList" :key="i.value" @click="changePayWay(i.value)">
+      <view class="fini-51" v-for="i in payList" :key="i.wayId" @click="changePayWay(i.wayId)">
         <image :src="i.picPath" class="bank-img-style" />
         <text class="fini-51l fini-51kl">{{ i.label }}</text>
         <text class="fini-51m" />
-        <image v-if="payWay == i.value" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioSelect.svg" class="circle-filled1" />
+        <image v-if="payWay == i.wayId" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioSelect.svg" class="circle-filled1" />
         <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioEmpty.svg" class="circle-filled1" />
       </view>
 
@@ -86,7 +86,7 @@
       <view class="order-fini-btn-box">
         <text class="order-fini-total-fee">总金额：</text>
         <my-price price="8000.00" />
-        <!-- <view class="order-fini-calcel">取消</view> -->
+        <view class="order-fini-calcel">取消</view>
         <view class="order-fini-sure" @click="createOrder">支付</view>
       </view>
     </iphonex-bottom>
@@ -125,13 +125,14 @@ export default {
     return {
 			id: '',
 			order: {},
-      value22: 1,
+      invoiceType: 1, // 发票类型 1专票 2普票
+			invoice: {},
       payList: [
-        { label: '银行支付', leftIcon: 'chat-filled', value: 1, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankCard.svg' },
-        { label: '授信支付', leftIcon: 'chat', value: 2, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankPay.svg' },
-        { label: '线下支付', leftIcon: 'chatboxes', value: 3, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankUnderline.svg' },
+        { label: '银行支付', leftIcon: 'chat-filled', wayId: 9, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankCard.svg' },
+        { label: '授信支付', leftIcon: 'chat', wayId: 10, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankPay.svg' },
+        { label: '线上支付', leftIcon: 'chatboxes', wayId: 12, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankUnderline.svg' },
       ],
-      payWay: 1
+      payWay: 12,
     };
   },
 	onLoad(option) {
@@ -148,7 +149,7 @@ export default {
 			})
 		},
     change(data) {
-      this.value22 = data
+      this.invoiceType = data;
     },
     changePayWay(way) {
       this.payWay = way
@@ -156,17 +157,22 @@ export default {
 		toSelectInvoice() {
 			uni.navigateTo({
 				url: `/pages/mine/chooseLookUp/chooseLookUp`,
+				events: {
+					onSelect: (invoice) => {
+						this.invoice = invoice;
+					}
+				}
 			})
 		},
 		
 		createOrder() {
 			const params = {
-				couponId: 0,
-				customerInvoiceId: 0,
-				invoiceType: 0,
+				// couponId: 0,
+				customerInvoiceId: this.invoice.id,
+				invoiceType: this.invoiceType,
 				recivierOrderId: this.id,
 				useIntegral: 0,
-				wayId: 0
+				wayId: this.payWay,
 			}
 			this.$http.post('/b/order/createOrder', params, true)
 			.then(res => {
@@ -180,7 +186,7 @@ export default {
 				appId: config.appId,
 				openId: user.openId,
 				orderId: orderId,
-				wayId: 0,
+				wayId: this.payWay,
 			}
 			this.$http.post('/core/pay/build4MasterOrder', params, true)
 			.then(res => {
