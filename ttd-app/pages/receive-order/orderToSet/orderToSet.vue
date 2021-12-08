@@ -8,9 +8,9 @@
         <view class="order-set1">
           <view class="order-set11">
             <view class="order-set11-title">接单位置</view>
-            <view class="order-set11-addr">上海市黄浦区西藏中路268号来福士广场35层1-8、36层5-8</view>
+            <view class="order-set11-addr">{{ setting.province }} {{ setting.city }} {{ setting.district }} {{ setting.address }}</view>
           </view>
-          <text class="order-set12">修改</text>
+          <text class="order-set12" @click="changeAddress">修改</text>
           <uni-icons size="20" type="arrowright" color="#969799" />
         </view>
       </view>
@@ -21,7 +21,7 @@
 
       <view class="order-set21">
         <view class="order-set21-title">接单范围</view>
-        <input placeholder="请输入" class="input-so" :value="setting.receivingDistance" @input="(e) => onInput(e, 'distance')" placeholder-class="placeholder-class" />
+        <input placeholder="请输入" class="input-so" :value="setting.receivingDistance" @input="onInput" placeholder-class="placeholder-class" />
         <text class="order-set2-unit">公里</text>
       </view>
     </view>
@@ -47,7 +47,7 @@ export default {
 				address: '',
 				city: '',
 				cityId: 0,
-				customerType: 0, // 客户类型 1：团队，2：个人
+				customerType: 1, // 客户类型 1：团队，2：个人
 				district: '',
 				districtId: 0,
 				latitude: 0,
@@ -71,7 +71,10 @@ export default {
 			this.$http
 				.post('/b/systemconfig/queryReceivingConf', { id }, true)
 				.then(res => {
-					this.setting = res;
+					this.setting = {
+						...res,
+						customerType: 1,
+					};
 				});
 		},
 		changeSwitch(isLimit) {
@@ -81,21 +84,21 @@ export default {
 				this.setting.onOffReceivingFlag = this.setting.onOffReceivingFlag == 0 ? 1 : 0;
 			}
 		},
+		changeAddress() {
+			uni.navigateTo({
+				url: `/pages/mine/addressManage/addressManage?isSelect=1`,
+				events: {
+					onSelect: (address) => {
+						this.setting = {
+							...this.setting,
+							...address,
+						};
+					}
+				}
+			})
+		},
 		onInput(e, type) {
-			const text = e.target.value;
-			if (type == 'name') {
-				this.name = text;
-			} else if (type == 'duty') {
-				this.dutyNo = text;
-			} else if (type == 'address') {
-				this.address = text;
-			} else if (type == 'phone') {
-				this.phone = text;
-			} else if (type == 'bank') {
-				this.openingBank = text;
-			} else if (type == 'distance') {
-				this.setting.receivingDistance = text;
-			}
+			this.setting.receivingDistance = e.target.value;
 		},
 		updateSetting() {
 			this.$http
