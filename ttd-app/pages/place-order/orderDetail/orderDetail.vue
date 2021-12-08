@@ -17,32 +17,40 @@
           <view class="order-dtl-11">待完成</view>
         </view>
 
-        <quoted-iten />
+        <quoted-iten :order="order"/>
 
-        <add-remark @input="input" :value="remark1" />
       </view>
     </back-container>
 
     <view class="order-dtl-5">
       <view class="order-dtl-51">工作内容</view>
       <view class="order-dtl-52">
-        <offer-content-card :right-type="4" show-last-border-bottom />
 
-        <offer-content-card :right-type="5" show-last-border-bottom />
+				<offer-content-card
+				  v-for="(item, index) in showWorkList"
+				  :key="index"
+				  :right-type="item.quoteAmount ? 5 : 4"
+				  :title="getItemTitle(item)"
+				  :specItem="getSpecList(item)"
+				  :price="item.quoteAmount / 100"
+				  :show-last-border-bottom="index < (showWorkList.length - 1)"
+				  @onChange="changeQuote(item)"
+				/>
+				
       </view>
-      <view class="order-dtl-53">
-        <text class="order-dtl-531">展开更多</text>
-        <uni-icons class="oc-arrow" type="arrowright" size="18" color="#969799" />
-      </view>
+			<view v-if="workList.length > 5" class="order-dtl-53" @click="showWork">
+			  <text class="order-dtl-531">{{ showWorkMore ? '收起' : '展开更多' }}</text>
+			  <uni-icons class="oc-arrow" type="arrowright" size="20" color="#BDBDBD" />
+			</view>
     </view>
 
-    <view class="order-dtl-6">
+    <view class="order-dtl-6" @click="toQuestionPage">
       <text class="order-dtl-6t">咨询</text>
-      <text class="order-dtl-6tmid">3 个问题 4个回答</text>
+      <text class="order-dtl-6tmid">{{ questionNum }} 个问题 {{ answerNum }}个回答</text>
       <uni-icons color="#969799" size="18" type="arrowright" />
     </view>
 
-    <view class="order-dtl-6">
+    <view class="order-dtl-6" @click="toTeamChangeList">
       <text class="order-dtl-6t">人员变更</text>
       <text class="order-dtl-6tmid">3 次人员变更</text>
       <uni-icons color="#969799" size="18" type="arrowright" />
@@ -83,13 +91,123 @@ export default {
   components: { IphonexBottom, EvaluateCard, MemberTitle, UniIcons, OfferContentCard, AddRemark, QuotedIten, MyPrice, OfferHead, BackContainer },
   data() {
     return {
-      remark1: ''
+			id: '',
+			isPlaceOrder: true,
+			order: {},
+			workList: [],
+			showWorkList: [],
+			showWorkMore: false,
+			questionNum: 0, // 问题数
+			answerNum: 0, // 回答数
+			commentList: [], // 评价
     };
   },
+	onLoad(option) {
+		if (option.id) {
+		  this.id = option.id;
+			this.queryOrderInfo();
+			this.queryWorkList();
+			this.queryCommentList();
+			this.queryQuestionCount();
+		}
+		if (option.isPlaceOrder) {
+			this.isPlaceOrder = option.isPlaceOrder ==  '1';
+		}
+	},
   methods: {
-    input(value) {
-      this.remark1 = value;
-    }
+    queryOrderInfo() {
+			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
+			.then(res => {
+			  this.order = res;
+			})
+		},
+		queryWorkList() {
+			this.$http.post('/b/orderquote/receiveQuoteDetail', { id: this.id })
+			.then(res => {
+			  this.workList = res.orderItemList;
+				this.showWorkList = this.workList.slice(0, 5);
+				console.log('showWorkList ', this.showWorkList);
+			})
+		},
+		queryCommentList() {
+			this.$http
+				.post('/b/ordercomment/queryByReceiverOrderId', { id: this.id })
+				.then(res => {
+					this.commentList = res;
+				});
+		},
+		queryQuestionCount() {
+			this.$http
+				.post('/b/orderquestionanswer/queryCount', { id: this.id })
+				.then(res => {
+					this.questionNum = res[0].questionNum;
+					this.answerNum = res[0].answerNum;
+				});
+		},
+		getOrderIdText() {
+			return `订单编号：${ this.id }`
+		},
+		showWork() {
+			this.showWorkMore = !this.showWorkMore;
+			if (this.showWorkMore) {
+				this.showWorkList = this.workList;
+			} else {
+				this.showWorkList = this.workList.slice(0, 5);
+			}
+		},
+		getItemTitle(work) {
+			if (work.itemType == 1) {
+				return work.type == 1 ? '实施' : '维修';
+			} else if (work.itemType == 2) {
+				return '勘测';
+			} else if (work.itemType == 3) {
+				return work.cateName;
+			} else if (work.itemType == 4) {
+				return work.cateName;
+			} else if (work.itemType == 5) {
+				return work.cateName;
+			}
+			return '';
+		},
+		getSpecList(work) {
+			if (work.itemType == 1) {
+				// 实施
+				return [
+					{ label: '技能：', value: work.cateName },
+					{ label: '品牌/型号：', value: `${work.brand}/${work.model ? work.model : '-'}` },
+					{ label: '数量：', value: work.number },
+				];
+			} else if (work.itemType == 2) {
+				// 勘测
+				return [
+					{ label: '面积：', value: work.number },
+				];
+			} else if (work.itemType == 3) {
+				// 人员岗位
+				return [
+					{ label: '数量：', value: work.number },
+				];
+			} else if (work.itemType == 4) {
+				// 设备
+				return [
+					{ label: '数量：', value: work.number },
+					{ label: '使用路程：', value: work.distance },
+				];
+			}
+			return [];
+		},
+		// 查看问题/咨询
+		toQuestionPage() {
+			uni.navigateTo({
+				url: `/pages/receive-order/offerDetail/offerDetail?id=${this.id}`,
+			})
+		},
+		// 人员变更记录
+		toTeamChangeList() {
+			uni.navigateTo({
+				url: `/pages/receive-order/changeRecord/changeRecord?id=${this.id}`,
+			})
+		},
   }
 }
 </script>

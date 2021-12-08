@@ -61,7 +61,7 @@
 
           </view>
 
-          <view class="plo-content">
+          <view class="plo-content" @click="toOrderDetail(item)">
             <view class="plo-ct">报价周期：{{ item.quotationStart.slice(0, 10) }} 至 {{ item.quotationEnd.slice(0, 10) }}</view>
             <view class="plo-ct">工作周期：{{ item.workStart.slice(0, 10) }} 至 {{ item.workEnd.slice(0, 10) }}</view>
             <view class="plo-ct">
@@ -200,8 +200,6 @@ export default {
 			return '';
 		},
 		
-		
-		
 		// 取消订单
 		cancelOrderTip(id) {
 			uni.showModal({
@@ -220,6 +218,12 @@ export default {
 			.then(res => {
 				this.$tool.showToast('取消成功');
 				this.queryOrderList();
+			})
+		},
+		// 订单详情
+		toOrderDetail(item) {
+			uni.navigateTo({
+				url: `/pages/place-order/orderDetail/orderDetail?id=${item.id}&isPlaceOrder=${this.isPlaceOrder ? 1 : 0}`,
 			})
 		},
 		// 查看问题/咨询

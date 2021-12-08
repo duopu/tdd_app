@@ -64,7 +64,7 @@ export default {
 	},
 	methods: {
 	  queryQuestionList() {
-	  	this.$http.post('/b/orderquestionanswer/queryList', { id: this.id }, true)
+	  	this.$http.post('/b/orderquestionanswer/queryList', { receiveOrderId: this.id }, true)
 	  	.then(res => {
 	  		this.questionList = res.dataList;
 	  	})
