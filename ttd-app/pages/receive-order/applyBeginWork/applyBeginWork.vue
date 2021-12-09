@@ -34,38 +34,46 @@
         <view class="abwp-r">
           <view class="abwp-r1">
             <text class="abwp-r1l">开始工作</text>
-            <text v-if="address.latitude && order.subState == 4" class="abwp-r1r">重新定位</text>
+            <text v-if="startApplyInfo.address.latitude && order.subState == 4" class="abwp-r1r" @click="getLocation(1)">重新定位</text>
           </view>
 					
-					<map v-if="address.latitude" class="abwp-rmap" :latitude="address.latitude" :longitude="address.longitude" />
-					<view v-else class="abwp-bo-1" @click="getLocation">
+					<map v-if="startApplyInfo.address.latitude" class="abwp-rmap" :latitude="startApplyInfo.address.latitude" :longitude="startApplyInfo.address.longitude" />
+					<view v-else class="abwp-bo-1" @click="getLocation(1)">
 					  <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
 					  <view class="abwp-bo-1text">添加位置</view>
 					</view>
 
           <view class="abwp-rmap-text">
-					  {{ address.province || '' }} {{ address.city || '' }} {{ address.district || '' }} {{ address.address || '' }}
+					  {{ startApplyInfo.address.province || '' }} {{ startApplyInfo.address.city || '' }} {{ startApplyInfo.address.district || '' }} {{ startApplyInfo.address.address || '' }}
 					</view>
 
-          <view class="abwp-rtime">2021-07-12 13:37</view>
+          <view v-if="isPlaceOrder" class="abwp-rtime">{{ startApplyInfo.applyTime }}</view>
 
-          <upload-list :hideUploadBtn="order.subState != 4" upload-text="添加照片" :img-list="imageList" @upload="chooseImage"/>
+          <upload-list :hideUploadBtn="order.subState != 4" upload-text="添加照片" :img-list="startApplyInfo.picList" @upload="chooseImage(1)"/>
 
-          <view class="iamaline" />
+          <view v-if="order.subState == 6 || order.subState == 7" class="iamaline" />
 
           <view v-if="order.subState == 6 || order.subState == 7" class="abwp-rend-text">结束工作</view>
+					<text v-if="completeApplyInfo.address.latitude && order.subState == 6" class="abwp-rend-text" @click="getLocation(2)">重新定位</text>
         </view>
       </view>
 
       <view v-if="order.subState == 6 || order.subState == 7" class="abwp-bottom">
-        <view class="abwp-bo-1" @click="getLocation">
+        <map v-if="completeApplyInfo.address.latitude" class="abwp-bo-1" :latitude="completeApplyInfo.address.latitude" :longitude="completeApplyInfo.address.longitude" />
+        <view v-else class="abwp-bo-1" @click="getLocation(2)">
           <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
           <view class="abwp-bo-1text">添加位置</view>
         </view>
+				
+				<view class="abwp-rmap-text">
+				  {{ completeApplyInfo.address.province || '' }} {{ completeApplyInfo.address.city || '' }} {{ completeApplyInfo.address.district || '' }} {{ completeApplyInfo.address.address || '' }}
+				</view>
+				
+				<view v-if="isPlaceOrder" class="abwp-rtime">{{ completeApplyInfo.applyTime }}</view>
 
-        <upload-list :hideUploadBtn="order.subState != 6" upload-text="添加照片" :img-list="imageList" @upload="chooseImage"/>
+        <upload-list :hideUploadBtn="order.subState != 6" upload-text="添加照片" :img-list="completeApplyInfo.picList" @upload="chooseImage(2)"/>
 
-        <upload-list :hideUploadBtn="order.subState != 6" upload-icon="2" @upload="chooseFile"/>
+        <upload-list :hideUploadBtn="order.subState != 6" upload-icon="2" @upload="chooseFile(2)"/>
 
       </view>
     </view>
@@ -106,19 +114,38 @@ export default {
 			id: '',
 			isPlaceOrder: false,
 			order: {},
-			address: {
-				address: '',
-				city: '',
-				cityId: 0,
-				district: '',
-				districtId: 0,
-				latitude: 0,
-				longitude: 0,
-				province: '',
-				provinceId: 0,
+			startApplyInfo: {
+				address: {
+					address: '',
+					city: '',
+					cityId: 0,
+					district: '',
+					districtId: 0,
+					latitude: 0,
+					longitude: 0,
+					province: '',
+					provinceId: 0,
+				},
+				fileList: [],
+				picList: [],
+				applyTime: '',
 			},
-			fileList: [],
-			imageList: [],
+			completeApplyInfo: {
+				address: {
+					address: '',
+					city: '',
+					cityId: 0,
+					district: '',
+					districtId: 0,
+					latitude: 0,
+					longitude: 0,
+					province: '',
+					provinceId: 0,
+				},
+				fileList: [],
+				picList: [],
+				applyTime: '',
+			},
     };
   },
 	onLoad(option) {
@@ -128,7 +155,7 @@ export default {
 		if (option.id) {
 			this.id = option.id;
 			this.queryOrderInfo();
-			this.queryWorkInfo();
+			this.queryApplyInfo();
 		}
 	},
 	onReady() {},
@@ -139,48 +166,69 @@ export default {
 			  this.order = res;
 			})
 		},
-		queryWorkInfo() {
+		queryApplyInfo() {
 			this.$http.post('/b/orderreceive/queryApplyDetail', { id: this.id }, true)
 			.then(res => {
-			  this.order = res;
+				if (res.startApplyInfo.address) {
+			    this.startApplyInfo = res.startApplyInfo;
+				}
+				if (res.completeApplyInfo.address) {
+			    this.completeApplyInfo = res.completeApplyInfo;
+				}
 			})
 		},
-		getLocation() {
+		getLocation(type) {
 			uni.getLocation({
 			    type: 'wgs84',
 					geocode: true,
 			    success: (res) => {
 			        console.log('当前位置的经度：' + res.longitude);
 			        console.log('当前位置的纬度：' + res.latitude);
-							this.address.latitude = res.latitude;
-							this.address.longitude = res.longitude;
+							if (type == 1) {
+								this.startApplyInfo.address.latitude = res.latitude;
+								this.startApplyInfo.address.longitude = res.longitude;
+							} else {
+								this.completeApplyInfo.address.latitude = res.latitude;
+								this.completeApplyInfo.address.longitude = res.longitude;
+							}
+							
 							// 处理地理地址信息
-							this.queryGeoAddressInfo(res.latitude, res.longitude)
+							this.queryGeoAddressInfo(res.latitude, res.longitude, type)
 			    }
 			});
 		},
-		queryGeoAddressInfo(latitude, longitude) {
+		queryGeoAddressInfo(latitude, longitude, type) {
 			const params = {
 				latitude,
 				longitude
 			}
 			this.$http.post('/core/geo/queryRegionByLocation', params, true)
 			.then(res => {
-				this.address.address = res.street + res.streetNum;
-				this.address.city = res.city;
-				this.address.cityId = res.cityId;
-				this.address.district = res.district;
-				this.address.districtId = res.districtId;
-				this.address.province = res.province;
-				this.address.provinceId = res.provinceId;
+				if (type == 1) {
+					this.startApplyInfo.address.address = res.street + res.streetNum;
+					this.startApplyInfo.address.city = res.city;
+					this.startApplyInfo.address.cityId = res.cityId;
+					this.startApplyInfo.address.district = res.district;
+					this.startApplyInfo.address.districtId = res.districtId;
+					this.startApplyInfo.address.province = res.province;
+					this.startApplyInfo.address.provinceId = res.provinceId;
+				} else {
+					this.completeApplyInfo.address.address = res.street + res.streetNum;
+					this.completeApplyInfo.address.city = res.city;
+					this.completeApplyInfo.address.cityId = res.cityId;
+					this.completeApplyInfo.address.district = res.district;
+					this.completeApplyInfo.address.districtId = res.districtId;
+					this.completeApplyInfo.address.province = res.province;
+					this.completeApplyInfo.address.provinceId = res.provinceId;
+				}
 			})
 		},
-		chooseImage() {
+		chooseImage(type) {
 			uni.chooseImage({
 			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 			    success: (res) => {
 							const path = res.tempFilePaths[0];
-							this.uploadImage(path, 1);
+							this.uploadImage(path, 1, type);
 			    }
 			});
 		},
@@ -189,20 +237,24 @@ export default {
 			  count: 1,
 				success: function (res) {
 			    const path = res.tempFilePaths[0];
-			    this.uploadImage(path, 2);
+			    this.uploadImage(path, 2, type);
 			  }
 			});
 		},
-		uploadImage(path, type) {
+		uploadImage(path, type1, type2) {
 			const param = {
 				file: path,
 			};
 			this.$http.upload({ path }, true)
 			.then(res=>{
-				if (type == 1) {
-					this.imageList.push(res);
-				} else {
-					this.fileList.push(res);
+				if (type1 == 1 && type2 == 1) {
+					this.startApplyInfo.picList.push(res);
+				} else if (type1 == 1 && type2 == 2) {
+					this.completeApplyInfo.picList.push(res);
+				} else if (type1 == 2 && type2 == 1) {
+					this.startApplyInfo.fileList.push(res);
+				} else if (type1 == 2 && type2 == 2) {
+					this.completeApplyInfo.fileList.push(res);
 				}
 			});
 		},
@@ -222,9 +274,9 @@ export default {
 			const url = `/b/orderreceive/apply${this.order.subState == 4 ? 'Start' : 'Complete'}`
 			const params = {
 				receiveOrderId: this.id,
-				fileList: this.fileList,
-				picList: this.imageList,
-				orderAddress: this.address,
+				fileList: this.order.subState == 4 ? this.startApplyInfo.fileList : this.completeApplyInfo.fileList,
+				picList: this.order.subState == 4 ? this.startApplyInfo.picList : this.completeApplyInfo.picList,
+				orderAddress: this.order.subState == 4 ? this.startApplyInfo.address : this.completeApplyInfo.address,
 			};
 			this.$http.post(url, params, true)
 			.then(res => {
@@ -426,6 +478,24 @@ export default {
         color: #3340A0;
       }
     }
+		
+		.abwp-rmap-text {
+		  font-size: 28rpx;
+		  font-family: PingFang SC-Regular, PingFang SC;
+		  font-weight: 400;
+		  color: #969799;
+		  line-height: 36rpx;
+		  margin: 16rpx 0;
+		}
+		
+		.abwp-rtime {
+		  font-size: 28rpx;
+		  font-family: PingFang SC-Regular, PingFang SC;
+		  font-weight: 400;
+		  color: #969799;
+		  line-height: 36rpx;
+		  margin-bottom: 32rpx;
+		}
   }
 }
 
