@@ -11,33 +11,34 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">设备</view>
-          <view class="add-i-midle" @click="deviceSelect">请输入</view>
+          <view class="add-i-midle" @click="deviceSelect">{{ cateName || '请选择' }}</view>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
         <view class="add-i-item">
           <view class="add-i-lable">使用路径距离</view>
-          <input class="add-i-midle" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="add-i-midle" :value="distance" @input="inputChange" placeholder="请输入" placeholder-class="input-placeholder" />
           <text class="add-i-unit">公里</text>
         </view>
 
         <view class="add-i-item">
           <view class="add-i-lable">数量</view>
           <view class="add-i-midle">
-            <uni-number-box v-model="value1" />
+            <uni-number-box v-model="number" />
           </view>
         </view>
 
       </view>
       <view class="add-i-aline" />
 
-      <add-remark label="要求：" required />
+      <add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 
       <view class="up-list up-list1">
-        <upload-list upload-text="添加照片" />
-        <upload-list upload-text="拍照" />
-        <upload-list />
-        <upload-list upload-text="添加语音" />
+        <upload-list upload-text="添加图片" @upload="chooseImage"/>
+        <!-- <upload-list upload-icon="4" upload-text="拍照" /> -->
+        <upload-list upload-icon="2" @upload="chooseFile"/>
+        <upload-list upload-icon="3" upload-text="添加语音" @upload="startRecord"/>
+        <upload-list upload-icon="3" upload-text="添加语音" @upload="endRecord"/>
       </view>
     </back-container>
 
@@ -65,10 +66,10 @@ export default {
     return {
 			distance: 0, // 距离
 			number: 0, // 数量
+			cateId: '', // 设备类型id
+			cateName: '', // 设备类型
 			requireInfo: '', // 备注
       orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
-			
-			toolList: [],
     };
   },
   onLoad() {
@@ -90,7 +91,8 @@ export default {
   },
 	mounted() {
 		uni.$on('submitSelectEquipmenttoolTree',(toolList)=>{
-			this.toolList  = toolList || [];
+			this.cateId = toolList[0].id || '';
+			this.cateName = toolList[0].name || '';
 		})
 	},
 	destroyed() {
@@ -142,6 +144,12 @@ export default {
     		this.orderResourceList = a.slice();
     	});
     },
+		inputChange(e) {
+			this.distance = e.target.value;
+		},
+		infoChange(t) {
+			this.requireInfo = t;
+		},
     onSubmit() {
     	const work = Object.assign({}, this.$data);
     	console.log('work ', work);

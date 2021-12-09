@@ -83,6 +83,7 @@
 </template>
 
 <script>
+	
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../../receive-order/component/offerHead";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
@@ -261,6 +262,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .receipt {
   .receipt-addr {

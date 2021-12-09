@@ -11,7 +11,9 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">类别</view>
-          <view class="add-i-midle" @click="softwareSelect">请输入</view>
+					<picker class="add-i-midle" @change="softwareSelect" :value="cateName" :range="softwareList" range-key="name">
+					  <view class="add-i-midle">{{ cateName || '请选择' }}</view>
+					</picker>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
@@ -19,13 +21,14 @@
       </view>
       <view class="add-i-aline" />
 
-      <add-remark label="要求：" required />
+      <add-remark label="要求：" required :value="requireInfo" @input="infoChange"  />
 
       <view class="up-list up-list1">
-        <upload-list upload-text="添加照片" />
-        <upload-list upload-text="拍照" />
-        <upload-list />
-        <upload-list upload-text="添加语音" />
+        <upload-list upload-text="添加图片" @upload="chooseImage"/>
+        <!-- <upload-list upload-icon="4" upload-text="拍照" /> -->
+        <upload-list upload-icon="2" @upload="chooseFile"/>
+        <upload-list upload-icon="3" upload-text="添加语音" @upload="startRecord"/>
+        <upload-list upload-icon="3" upload-text="添加语音" @upload="endRecord"/>
       </view>
     </back-container>
 
@@ -51,6 +54,8 @@ export default {
   components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
+			cateId: '', // 软件类型id
+			cateName: '', // 软件类型
 			requireInfo: '', // 备注
       orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
 			
@@ -74,20 +79,20 @@ export default {
   		self.uploadImage(path, 2);
     });
   },
-	mounted() {
-		uni.$on('submitSoftwareList',(softwareList)=>{
-			console.log('softwareList ',softwareList);
-			this.softwareList  = softwareList || [];
-		})
-	},
-	destroyed() {
-		uni.$off('submitSoftwareList');
+	onReady() {
+		this.querySoftwareList();
 	},
   methods: {
-		softwareSelect() {
-			uni.navigateTo({
-				url:`/pages/main/apply/tree?type=userrole`
+		querySoftwareList() {
+			this.$http.post('/b/softwareconf/queryList', {}, true)
+			.then(res => {
+			  this.softwareList = res;
 			})
+		},
+		softwareSelect(e) {
+			const index = e.target.value;
+			this.cateId = this.softwareList[index].id;
+			this.cateName = this.softwareList[index].name;
 		},
     chooseImage() {
     	uni.chooseImage({
@@ -129,6 +134,9 @@ export default {
     		this.orderResourceList = a.slice();
     	});
     },
+		infoChange(t) {
+			this.requireInfo = t;
+		},
     onSubmit() {
     	const work = Object.assign({}, this.$data);
     	console.log('work ', work);

@@ -11,20 +11,22 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">面积</view>
-          <input class="add-i-midle" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="add-i-midle" :value="number" placeholder="请输入" placeholder-class="input-placeholder" />
           <text class="add-i-unit">平方</text>
         </view>
 
         <view class="add-i-item">
           <view class="add-i-lable">工作类别</view>
-					<picker class="add-i-midle" @change="workChange" :value="workType" :range="workList">
-            <view class="add-i-midle">{{ workType || '请选择' }}</view>
+					<picker class="add-i-midle" @change="workChange" :value="cateName" :range="workList">
+            <view class="add-i-midle">{{ cateName || '请选择' }}</view>
 					</picker>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
       </view>
       <view class="add-i-aline" />
+			
+			<add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 
       <view class="up-list up-list1">
         <upload-list upload-text="添加图片" @upload="chooseImage"/>
@@ -59,8 +61,10 @@ export default {
   components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
+			cateId: '', // 勘测类型id
+			cateName: '', // 勘测类型
+			number: 0, // 数量
 			requireInfo: '', // 备注
-			workType: '',
 			orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
 			
 			workList: [], // 勘测类型数据源
@@ -95,7 +99,7 @@ export default {
 	  },
 		workChange(e) {
 			const index = e.target.value;
-			this.workType = this.workList[index];
+			this.cateName = this.workList[index];
 		},
     chooseImage() {
     	uni.chooseImage({
@@ -137,6 +141,9 @@ export default {
     		this.orderResourceList = a.slice();
     	});
     },
+		infoChange(t) {
+			this.requireInfo = t;
+		},
     onSubmit() {
     	const work = Object.assign({}, this.$data);
     	console.log('work ', work);

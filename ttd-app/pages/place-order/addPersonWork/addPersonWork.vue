@@ -11,21 +11,21 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">人员岗位</view>
-          <view class="add-i-midle" @click="roleSelect">请输入</view>
+          <view class="add-i-midle" @click="roleSelect">{{ cateName ||  '请选择' }}</view>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
         <view class="add-i-item">
           <view class="add-i-lable">人员数量</view>
           <view class="add-i-midle">
-            <uni-number-box v-model="value1" />
+            <uni-number-box v-model="number" />
           </view>
         </view>
 
       </view>
       <view class="add-i-aline" />
 
-      <add-remark label="要求：" required />
+      <add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 
       <view class="up-list up-list1">
         <upload-list upload-text="添加图片" @upload="chooseImage"/>
@@ -60,10 +60,11 @@ export default {
   components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
+			cateId: '', // 人员类型id
+			cateName: '', // 人员类型
+			number: 0, // 面积
 			requireInfo: '', // 备注
       orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
-			
-			userroleList: [],
     };
   },
 	onLoad() {
@@ -86,7 +87,8 @@ export default {
 	mounted() {
 		uni.$on('submitSelectUserroleTree',(userroleList)=>{
 			console.log('userroleList',userroleList);
-			this.userroleList  = userroleList || [];
+			this.cateId = userroleList[0].id || '';
+			this.cateName = userroleList[0].name || '';
 		})
 	},
 	destroyed() {
@@ -138,6 +140,9 @@ export default {
 	  		this.orderResourceList = a.slice();
 	  	});
 	  },
+		infoChange(t) {
+			this.requireInfo = t;
+		},
 	  onSubmit() {
 	  	const work = Object.assign({}, this.$data);
 	  	console.log('work ', work);
