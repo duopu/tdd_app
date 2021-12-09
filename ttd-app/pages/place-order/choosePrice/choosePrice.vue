@@ -13,7 +13,8 @@
             <view class="chp-14">
               <view class="chp-15">
                 <text class="chp-16">{{ item.receiverName }}</text>
-                <text class="chp-17">团队</text>
+                <text v-if="item.receiverType == 2" class="chp-17">团队</text>
+                <text v-else class="chp-171">个人</text>
               </view>
               <my-star :num="item.score"/>
               <view class="chp-18">
@@ -192,12 +193,24 @@ export default {
           height: 40rpx;
           border-radius: 4rpx;
           border: 2rpx solid #2C3580;
+					color: #2C3580;
           font-size: 24 rrpx;
           font-family: PingFang SC-Regular, PingFang SC;
           font-weight: 400;
           @include flexCenter;
           padding: 0 8rpx;
         }
+				.chp-171 {
+					height: 40rpx;
+					border-radius: 4rpx;
+					border: 2rpx solid #FF9500;
+					color: #FF9500;
+					font-size: 24 rrpx;
+					font-family: PingFang SC-Regular, PingFang SC;
+					font-weight: 400;
+					@include flexCenter;
+					padding: 0 8rpx;
+				}
       }
 
       .chp-18 {
