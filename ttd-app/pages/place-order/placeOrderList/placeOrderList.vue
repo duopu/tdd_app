@@ -216,7 +216,7 @@ export default {
 			const url = this.isPlaceOrder ? '/b/ordermaster/publishCancel' : '/b/orderreceive/receiveCancel';
 			this.$http.post(url, { id }, true)
 			.then(res => {
-				this.$tool.showToast('取消成功');
+				uni.showToast({ title: '订单已取消' });
 				this.queryOrderList();
 			})
 		},
