@@ -21,7 +21,7 @@
         <textarea class="edit-team-intro-dt" :value="intro" @input="(e) => onInput(e, 'intro')" placeholder="请输入团队介绍" />
       </view>
 
-      <view class="edit-team-btn" @click="hide">{{ btnText }}</view>
+      <view class="edit-team-btn" @click="confirm">{{ btnText }}</view>
 
     </view>
   </view>
@@ -58,8 +58,11 @@ export default {
     },
     hide() {
       this.visible = false;
-			this.$emit('onSave', this.logo, this.title, this.intro);
     },
+		confirm() {
+			this.visible = false;
+			this.$emit('onSave', this.logo, this.title, this.intro);
+		},
 		onInput(e, type) {
 			const text = e.target.value;
 			if (type == 'title') {
