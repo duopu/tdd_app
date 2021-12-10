@@ -11,14 +11,14 @@
       <view class="plo-list">
         <view class="plo-item" v-for="(item, index) in orderList" :key="index">
           <view class="plo-itop">
-            <text class="plo-itop-name">{{ showOrderType(item.orderType) }}</text>
+            <text class="plo-itop-name">{{ showOrderType(item.orderType) }} {{ item.teamName || '' }}</text>
             <text class="plo-itop-state"
                   :class="{
                     'plo-state-yellow': [20, 30, 40].includes(value),
                     'plo-state-green': [50].includes(value),
                     'plo-state-red': [90].includes(value),
                   }"
-            >待报价
+            >{{ showOrderState(item.state) }}
             </text>
           </view>
 
@@ -35,7 +35,7 @@
               <text class="plo-im-num">{{ getCountDownDay(item.quotationEnd, 'second') }}</text>
             </view>
 
-            <view class="state1-tip" v-if="value === 20">
+            <view class="state1-tip" v-if="value === 20 && isPlaceOrder">
               <view class="plo-im-c">已报价：</view>
               <corner-mark :num="item.quoteNum" color="#2C3580" />
               <view class="plo-im-c plo-im-c2">人</view>
@@ -78,7 +78,7 @@
 							<view class="plo-btn1" v-if="[10, 20].includes(value) || (item.state == 30 && item.subState == 4)" @click="toQuestionPage(item)">查看问题</view>
 							<!-- 待确认 -->
 							<view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @click="toChoosePrice(item)">选价</view>
-							<view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @click="toPayOrder(item)">付款</view>
+							<!-- <view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @click="toPayOrder(item)">付款</view> -->
 							<!-- 待开始 -->
 							<view class="plo-btn1" v-if="[30, 40].includes(value)" @click="toReviewTeam(item)">审核人员</view>
 							<view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
@@ -181,6 +181,30 @@ export default {
 				  return '';
 			}
 		},
+		showOrderState(state) {
+			switch (state) {
+				case 10:
+				  return '待报价';
+				  break;
+				case 20:
+				  return '待确认';
+				  break;
+				case 30:
+				  return '待开始';
+				  break;
+				case 40:
+				  return '待完工';
+				  break;
+				case 50:
+				  return '已完工';
+				  break;
+				case 90:
+				  return '已取消';
+				  break;
+				default: 
+				  return '';
+			}
+		},
 		getCountDownDay(time, type) {
 			const now = new Date().getTime();
 			const end = new Date(time).getTime();
@@ -265,16 +289,37 @@ export default {
 				url: `/pages/place-order/orderDetailFinish/orderDetailFinish?id=${item.id}`,
 			})
 		},
-		// 开发票
-		toOrderInvoice(item) {
-			uni.navigateTo({
-				url: `/pages/mine/chooseLookUp/chooseLookUp`,
-			})
-		},
 		// 评价订单
 		toOrderComment(item) {
 			uni.navigateTo({
 				url: `/pages/place-order/evaluationOrder/evaluationOrder?id=${item.id}`,
+			})
+		},
+		// 开发票   1: 选择发票抬头
+		toOrderInvoice(item) {
+			uni.navigateTo({
+				url: `/pages/mine/chooseLookUp/chooseLookUp`,
+				events: {
+					onSelect: (invoice) => {
+						this.applyInvoice(item, invoice);
+					}
+				}
+			})
+		},
+		// 2: 开发票
+		applyInvoice(item, invoice) {
+			const params = {
+				invoiceId: invoice.id,
+				receiveOrderId: item.id,
+			}
+			this.$http.get('/b/orderinvoice/applyInvoice', params, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '开票成功',
+					success: () => {
+						this.queryOrderList();
+					}
+			  })
 			})
 		},
 		/*

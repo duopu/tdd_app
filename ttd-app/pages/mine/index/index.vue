@@ -6,11 +6,11 @@
 
     <view class="mine-top">
       <view class="mt-1">
-        <image :src="IDcardBack" class="mt-11" />
+        <image :src="userHeaderImg" class="mt-11" />
         <view class="mt-12">
-          <text class="mt-14">晚上好，坡先生</text>
+          <text class="mt-14">{{ showWelcome() }}</text>
           <view class="mt-15" @click="toPage({url: '/pages/mine/myIntegral/myIntegral'})">
-            <text class="mt-16">我的积分：2890</text>
+            <text class="mt-16">我的积分：{{ integral }}</text>
             <uni-icons type="arrowright" class="mt-17" color="rgba(256, 256, 256, 0.2)" size="14" />
           </view>
         </view>
@@ -28,7 +28,7 @@
           <view class="mm-13">签到</view>
         </view>
         <view class="mm-11" @click="toPage({url: '/pages/mine/myCoupons/myCoupons'})">
-          <view class="mm-12">3</view>
+          <view class="mm-12">{{ couponCount }}</view>
           <view class="mm-13">我的优惠券</view>
         </view>
         <view class="mm-11" @click="toPage({url: '/pages/mine/myWallet/myWallet'})">
@@ -197,17 +197,24 @@ export default {
       demo: true,
       mineTopBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/mine-top-back.png',
       IDcardBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
+			integral: 0,
 			realAuth: false,
+			couponCount: 0,
     };
   },
   onReady() {
     this.$tool.actionForLogin();
 		this.queryAuthInfo();
+		this.queryIntegralInfo();
+		this.queryCouponInfo();
   },
   computed: {
     userName() {
       return this.$store.state.user.name
     },
+		userHeaderImg() {
+			return (this.$store.state.user.headImgUrl || this.IDcardBack);
+		},
     newList() {
       return [
         { title: '邀请好友', url: '', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-7.png' },
@@ -222,7 +229,7 @@ export default {
     newList1() {
       return [
         { title: '帮助中心', url: '/pages/mine/helpCenter/helpCenter', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' },
-        { title: '关于我们', url: '', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
+        { title: '关于我们', url: '/pages/mine/aboutUs/aboutUs', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
       ]
     },
 
@@ -271,6 +278,37 @@ export default {
     }
   },
   methods: {
+		showWelcome() {
+			const now = new Date().getHours();
+			let welcome = '';
+			if (now < 5 || now >= 18) {
+				welcome = '晚上好, '
+			} else if (now >= 5 && now < 9) {
+				welcome = '早上好, '
+			} else if (now >= 9 && now < 12) {
+				welcome = '上午好, '
+			} else if (now >= 12 && now < 14) {
+				welcome = '中午好, '
+			} else if (now >= 14 && now < 18) {
+				welcome = '下午好, '
+			}
+			const user = this.$store.state.user;
+			console.log('user ', user);
+			welcome = welcome + user.name;
+			return welcome;
+		},
+		queryIntegralInfo() {
+			this.$http.get('/b/integral/query', { }, true)
+			.then(res => {
+			  this.integralBalance = res.balance;
+			})
+		},
+		queryCouponInfo() {
+			this.$http.post('/b/coupon/queryPageList', { state: 0, pageSize: 1 }, true)
+			.then(res => {
+			  this.couponCount = res.totalCount;
+			})
+		},
     navInvite() {
       uni.navigateTo({
         url: '/pages/mine/invite/invite'

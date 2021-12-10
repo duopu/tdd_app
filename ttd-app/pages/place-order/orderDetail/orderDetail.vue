@@ -46,19 +46,19 @@
 
     <view class="order-dtl-6" @click="toQuestionPage">
       <text class="order-dtl-6t">咨询</text>
-      <text class="order-dtl-6tmid">{{ questionNum }} 个问题 {{ answerNum }}个回答</text>
+      <text class="order-dtl-6tmid">{{ order.questionNum }} 个问题 {{ order.answerNum }}个回答</text>
       <uni-icons color="#969799" size="18" type="arrowright" />
     </view>
 
     <view class="order-dtl-6" @click="toTeamChangeList">
       <text class="order-dtl-6t">人员变更</text>
-      <text class="order-dtl-6tmid">3 次人员变更</text>
+      <text class="order-dtl-6tmid">{{ order.memberChangeNum }} 次人员变更</text>
       <uni-icons color="#969799" size="18" type="arrowright" />
     </view>
 
     <view class="order-dtl-team">
       <member-title :show-right="false" title="评价" />
-      <evaluate-card v-for="i in 2" :key="i" />
+      <evaluate-card v-for="i in commentList" :key="i" />
     </view>
 
     <view class="order-dtl-botb" />
@@ -97,8 +97,6 @@ export default {
 			workList: [],
 			showWorkList: [],
 			showWorkMore: false,
-			questionNum: 0, // 问题数
-			answerNum: 0, // 回答数
 			commentList: [], // 评价
     };
   },
@@ -108,7 +106,6 @@ export default {
 			this.queryOrderInfo();
 			this.queryWorkList();
 			this.queryCommentList();
-			this.queryQuestionCount();
 		}
 		if (option.isPlaceOrder) {
 			this.isPlaceOrder = option.isPlaceOrder ==  '1';
@@ -134,14 +131,6 @@ export default {
 				.post('/b/ordercomment/queryByReceiverOrderId', { id: this.id })
 				.then(res => {
 					this.commentList = res;
-				});
-		},
-		queryQuestionCount() {
-			this.$http
-				.post('/b/orderquestionanswer/queryCount', { id: this.id })
-				.then(res => {
-					this.questionNum = res[0].questionNum;
-					this.answerNum = res[0].answerNum;
 				});
 		},
 		getOrderIdText() {
