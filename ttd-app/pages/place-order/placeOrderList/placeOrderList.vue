@@ -168,13 +168,13 @@ export default {
 				case 2:
 				  return '勘测';
 				  break;
-				case 1:
+				case 3:
 				  return '人员';
 				  break;
-				case 1:
+				case 4:
 				  return '租赁';
 				  break;
-				case 1:
+				case 5:
 				  return '软件';
 				  break;
 				default: 

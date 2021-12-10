@@ -79,11 +79,13 @@ export default {
     };
   },
   onReady() {
-    this.$tool.actionForLogin()
+    this.$tool.actionForLogin();
+  },
+	onShow() {
 		this.queryMyTeamList();
 		this.queryOrderCount();
 		this.queryProfitStatistics();
-  },
+	},
 	methods: {
 		queryOrderCount() {
 			this.$http.post('/b/orderreceive/orderNumStatistics', {}, true)
