@@ -3,9 +3,10 @@
     <custom-navbar title="我的优惠券" />
 
     <back-container>
-      <template v-slot:headerSlot>
-        <blue-tab :active-key="activeKey" :list="tabList" @change="change" />
-      </template>
+			<template v-slot:headerSlot>
+			  <blue-tab :active-key="activeKey" :list="tabList" @change="change" />
+			</template>
+			
       <view class="my-coupon">
         <view class="my-coupon-item" v-for="(item, i) in couponsList" :key="i">
           <coupon-card :minus-type="i" :coupon="item" @useCoupon="useCoupon" />
@@ -32,24 +33,58 @@ export default {
         { text: '已过期', key: '3' },
       ],
 			couponsList: [],
+			isSelect: false,
+			minUsePrice: 0,
+			orderType: 0,
+			state: 0,
     };
   },
-	onReady() {
+	onLoad(option) {
+		if (option.isSelect) {
+			this.isSelect = option.isSelect == '1';
+		}
+		if (option.minUsePrice) {
+			this.minUsePrice = Number(option.minUsePrice);
+		}
+		if (option.orderType) {
+			this.orderType = Number(option.orderType);
+		}
+		if (option.state) {
+			this.state = Number(option.state);
+		}
 		this.queryCouponsList();
 	},
+	onReady() {},
   methods: {
     change(data) {
       this.activeKey = data;
 			this.queryCouponsList();
     },
 		queryCouponsList() {
-			this.$http.post('/b/coupon/queryPageList', { state: this.activeKey }, true)
+			let params = { state: this.activeKey };
+			if (this.isSelect) {
+				params = {
+					minUsePrice: this.minUsePrice,
+					orderType: this.orderType,
+					state: this.state,
+				};
+			}
+			this.$http.post('/b/coupon/queryPageList', params, true)
 			.then(res => {
 			  this.couponsList = res.dataList;
 			})
 		},
 		useCoupon(coupon) {
-			// todo: 跳转页面
+			if (this.isSelect) {
+				const eventChannel = this.getOpenerEventChannel();
+				eventChannel.emit('onSelect', coupon);
+				
+				uni.navigateBack({});
+			} else {
+				uni.switchTab({
+				    url: '/pages/place-order/index/index'
+				});
+			}
 		}
   }
 }
