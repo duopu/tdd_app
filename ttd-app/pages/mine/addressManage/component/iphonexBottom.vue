@@ -17,7 +17,7 @@ export default {
     },
     // 按钮高度 默认998  可自行传入改变高度
     zIndex: {
-      type: Number,
+      type: [Number, String],
       default: 998
     }
   },
