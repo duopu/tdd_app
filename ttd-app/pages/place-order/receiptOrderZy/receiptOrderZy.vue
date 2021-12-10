@@ -22,20 +22,9 @@
           <input class="receipt-ac-midle" :value="appointPhone" @input="(e) => onInput(e, 'phone')" placeholder="可选输入" placeholder-class="input-placeholder" />
         </view>
 
-        <view class="receipt-ac-item">
-          <view class="receipt-ac-lable">报价周期</view>
-					<!-- <picker mode="date" :value="date" start="2021-12-21" end="2022-12-21" @change="bindDateChange"> -->
-						<view class="receipt-ac-midle">9/23 - 11/22</view>
-					<!-- </picker> -->
+        <my-choose-time v-model="time111" title="报价周期" />
 
-          <uni-icons class="receipt-ac-right" type="arrowright" size="18" color="#969799" />
-        </view>
-
-        <view class="receipt-ac-item">
-          <view class="receipt-ac-lable">工作周期</view>
-          <view class="receipt-ac-midle">9请选择</view>
-          <uni-icons class="receipt-ac-right" type="arrowright" size="18" color="#969799" />
-        </view>
+        <my-choose-time v-model="time112" title="工作周期" />
 
         <checkd-item :value="invoiceType" @change="change" />
 
@@ -76,7 +65,7 @@
       </view>
     </view>
 
-    <iphonex-bottom>
+    <iphonex-bottom :z-index="99">
       <big-btn @click="submitOrder"/>
     </iphonex-bottom>
   </view>
@@ -90,12 +79,15 @@ import BigBtn from "../../mine/addressManage/component/bigBtn";
 import CheckdItem from "./checkdItem";
 import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import OfferContentCard from "../../receive-order/component/offerContentCard";
+import MyChooseTime from "./myChooseTime";
 
 export default {
   name: 'receiptOrderZy',
-  components: { OfferContentCard, MemberTitle, CheckdItem, BigBtn, IphonexBottom, OfferHead, BackContainer },
+  components: { MyChooseTime, OfferContentCard, MemberTitle, CheckdItem, BigBtn, IphonexBottom, OfferHead, BackContainer },
   data() {
     return {
+      time111: [],
+      time112: [],
 			orderType: 1,
 			typeArray: [
 				{ orderType: 1, title: '实施与维修', intro: '电子产品的实施与维修工作', url: '/pages/place-order/addImplementation/addImplementation' },

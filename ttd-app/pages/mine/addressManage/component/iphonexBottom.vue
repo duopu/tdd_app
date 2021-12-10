@@ -1,5 +1,5 @@
 <template>
-  <view class="iphonex-bottom">
+  <view class="iphonex-bottom" :style="{ zIndex: zIndex }">
     <view class="common-bottom" v-if="showCommonArea">
       <slot></slot>
     </view>
@@ -14,6 +14,11 @@ export default {
     showCommonArea: {
       type: Boolean,
       default: true
+    },
+    // 按钮高度 默认998  可自行传入改变高度
+    zIndex: {
+      type: Number,
+      default: 998
     }
   },
   data() {
