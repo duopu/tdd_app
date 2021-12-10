@@ -26,29 +26,29 @@
       <view class="fini-51">
         <text class="fini-51l">订单金额</text>
         <view class="fini-51r">
-          <my-price show-yang price="2332.22" scale="1" />
+          <my-price show-yang :price="order.payAmount / 100" scale="1" />
         </view>
       </view>
 
-      <view class="fini-51">
+      <view class="fini-51" @click="toSelectCoupon">
         <text class="fini-51l">优惠券</text>
-        <text class="fini-51m">请选择</text>
+        <text class="fini-51m">{{ couponName || '请选择' }}</text>
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view>
 
       <view class="fini-51">
         <text class="fini-51l">
           积分（
-          <text class="fini-51l-red">5000</text>
+          <text class="fini-51l-red">{{ integralBalance }}</text>
           ）
         </text>
-        <text class="fini-51m">请选择</text>
+        <text class="fini-51m">{{ integral || '请选择' }}</text>
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view>
 
       <view class="fini-51" @click="toSelectInvoice">
         <text class="fini-51l">发票抬头</text>
-        <text class="fini-51m">{{ this.invoice.name || '请选择' }}</text>
+        <text class="fini-51m">{{ invoice.name || '请选择' }}</text>
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view>
 
@@ -85,7 +85,7 @@
     <iphonex-bottom>
       <view class="order-fini-btn-box">
         <text class="order-fini-total-fee">总金额：</text>
-        <my-price price="8000.00" />
+        <my-price :price="showPayAmount()" />
         <view class="order-fini-calcel">取消</view>
         <view class="order-fini-sure" @click="createOrder">支付</view>
       </view>
@@ -125,6 +125,10 @@ export default {
     return {
 			id: '',
 			order: {},
+			coupon: {},
+			couponName: '',
+			integral: 0,
+			integralBalance: 0,
       invoiceType: 1, // 发票类型 1专票 2普票
 			invoice: {},
       payList: [
@@ -141,11 +145,20 @@ export default {
 			this.queryOrderInfo();
 		}
 	},
+	onReady() {
+		this.queryIntegralInfo();
+	},
   methods: {
 		queryOrderInfo() {
 			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
 			.then(res => {
 			  this.order = res;
+			})
+		},
+		queryIntegralInfo() {
+			this.$http.get('/b/integral/query', { }, true)
+			.then(res => {
+			  this.integralBalance = res.balance;
 			})
 		},
     change(data) {
@@ -154,6 +167,38 @@ export default {
     changePayWay(way) {
       this.payWay = way
     },
+		showPayAmount() {
+			const orderAmount = this.order.payAmount || 0;
+			let couponAmount = 0;
+			if (this.coupon.couponNature == 3) {
+				const discountAmount = orderAmount * this.coupon.discount / 100;
+				couponAmount = discountAmount > this.coupon.useMaxPrice ? this.coupon.useMaxPrice : discountAmount;
+			} else {
+				couponAmount = this.coupon.parvalue || 0;
+			}
+			// todo: 积分
+			const integralAmount = 0;
+			
+			const totalAmount = (orderAmount - couponAmount - integralAmount) / 100;
+			return totalAmount;
+		},
+		toSelectCoupon() {
+			uni.navigateTo({
+				url: `/pages/mine/myCoupons/myCoupons?isSelect=1&orderType=${this.order.orderType}&minUsePrice=${this.order.payAmount}&state=0`,
+				events: {
+					onSelect: (coupon) => {
+						this.coupon = coupon;
+						if (coupon.couponNature == 3) {
+							const discountAmount = (this.order.payAmount || 0) * this.coupon.discount / 100;
+							const couponAmount = discountAmount > this.coupon.useMaxPrice ? this.coupon.useMaxPrice : discountAmount;
+							this.couponName = `-${couponAmount / 100}`
+						} else {
+							this.couponName = `-${coupon.parvalue / 100}`;
+						}
+					}
+				}
+			})
+		},
 		toSelectInvoice() {
 			uni.navigateTo({
 				url: `/pages/mine/chooseLookUp/chooseLookUp`,
@@ -164,20 +209,24 @@ export default {
 				}
 			})
 		},
-		
 		createOrder() {
+			
+			if (!this.invoice.id) {
+				uni.showToast({ title:  '请选择发票', icon:  'none' });
+				return;
+			}
+			
 			const params = {
-				// couponId: 0,
+				couponId: this.coupon.id ? this.coupon.id : undefined,
 				customerInvoiceId: this.invoice.id,
 				invoiceType: this.invoiceType,
 				recivierOrderId: this.id,
-				useIntegral: 0,
+				useIntegral: this.integral,
 				wayId: this.payWay,
 			}
 			this.$http.post('/b/order/createOrder', params, true)
 			.then(res => {
 			  this.payOrder(res.id);
-			  // this.payOrder(res.bizNo);
 			})
 		},
 		payOrder(orderId) {
