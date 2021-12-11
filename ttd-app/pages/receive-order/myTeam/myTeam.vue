@@ -19,7 +19,7 @@
     </back-container>
 
     <view class="my-team">
-      <member-title :showRight="team.leaderFlag" @add="toSelectPersonPage"/>
+      <member-title :showRight="team.leaderFlag" @add="invitePerson"/>
 
       <team-list-item v-for="(item, i) in memberList" :member="item" @onClick="toPersonDetail(item)" @onDelete="removePerson(item.id)"/>
     </view>
@@ -116,6 +116,16 @@
 							})
 						}
 					}
+				})
+			},
+			searchPerson(phone) {
+				this.$http.post('/b/customer/queryList', { phone: '18898775851' }, true)
+				.then(res => {
+				})
+			},
+			invitePerson(id) {
+				this.$http.post('/b/teammember/invitationMember', { inviteeId: 'C1000837506814080' }, true)
+				.then(res => {
 				})
 			},
 			toCommentPage() {
