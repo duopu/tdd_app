@@ -69,12 +69,14 @@
         <text class="fini-51l">支付方式</text>
       </view>
 
-      <view class="fini-51" v-for="i in payList" :key="i.wayId" @click="changePayWay(i.wayId)">
-        <image :src="i.picPath" class="bank-img-style" />
-        <text class="fini-51l fini-51kl">{{ i.label }}</text>
-        <text class="fini-51m" />
-        <image v-if="payWay == i.wayId" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioSelect.svg" class="circle-filled1" />
-        <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioEmpty.svg" class="circle-filled1" />
+      <view  v-for="i in payList" :key="i.wayId" @click="changePayWay(i.wayId)">
+				<view v-if="i.show" class="fini-51">
+					<image :src="i.picPath" class="bank-img-style" />
+					<text class="fini-51l fini-51kl">{{ i.label }}</text>
+					<text class="fini-51m" />
+					<image v-if="payWay == i.wayId" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioSelect.svg" class="circle-filled1" />
+					<image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/radioEmpty.svg" class="circle-filled1" />
+				</view>
       </view>
 
     </view>
@@ -132,9 +134,9 @@ export default {
       invoiceType: 1, // 发票类型 1专票 2普票
 			invoice: {},
       payList: [
-        { label: '银行支付', leftIcon: 'chat-filled', wayId: 9, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankCard.svg' },
-        { label: '授信支付', leftIcon: 'chat', wayId: 10, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankPay.svg' },
-        { label: '线上支付', leftIcon: 'chatboxes', wayId: 12, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankUnderline.svg' },
+        { label: '银行支付', leftIcon: 'chat-filled', wayId: 9, show: true, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankCard.svg' },
+        { label: '授信支付', leftIcon: 'chat', wayId: 10, show: false, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankPay.svg' },
+        { label: '线上支付', leftIcon: 'chatboxes', wayId: 12, show: true, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankUnderline.svg' },
       ],
       payWay: 12,
     };
@@ -153,6 +155,9 @@ export default {
 			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
 			.then(res => {
 			  this.order = res;
+				if ((res.payAmount || 0) > 2000000) {
+					this.payList[1].show = true;
+				}
 			})
 		},
 		queryIntegralInfo() {

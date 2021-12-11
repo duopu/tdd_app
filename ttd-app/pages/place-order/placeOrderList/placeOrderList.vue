@@ -11,7 +11,9 @@
       <view class="plo-list">
         <view class="plo-item" v-for="(item, index) in orderList" :key="index">
           <view class="plo-itop">
-            <text class="plo-itop-name">{{ showOrderType(item.orderType) }} {{ item.teamName || '' }}</text>
+            <text class="plo-itop-name">
+						{{ showOrderType(item.orderType) }} {{ item.teamName ? `(${item.teamName})` : '' }}
+						</text>
             <text class="plo-itop-state"
                   :class="{
                     'plo-state-yellow': [20, 30, 40].includes(value),
