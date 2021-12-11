@@ -89,12 +89,15 @@
 				};
 				this.$http.post('/b/ordercomplain/add', params, true)
 				.then(res => {
-				  uni.showToast({
-				  	title: '投诉已提交',
+				  uni.showModal({
+				  	title: '提示',
+						content: '您的投诉已经上报,等待服务人员与您联系',
+						showCancel: false,
+						confirmText: '我知道了',
 						success: () => {
-						uni.navigateBack({});
+						  uni.navigateBack({});
 						},
-				  });
+				  })
 				})
 			}
 		}
