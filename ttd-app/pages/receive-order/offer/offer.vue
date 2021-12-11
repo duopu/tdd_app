@@ -20,6 +20,11 @@
 
     </back-container>
 
+    <view class="offer-8900">
+      <member-title title="参与人员" show-right right-text="选择人员" />
+      <team-list-item v-for="i in changeList" :key="i.userId" :member="i" />
+    </view>
+
     <view class="offer-5">
       <view class="offer-51">工作内容</view>
       <view class="offer-52">
@@ -71,10 +76,14 @@ import CornerMark from "../component/cornerMark";
 import MyPrice from "../component/myPrice";
 import QuotedIten from "../component/quotedIten";
 import BottomPriceAndBtn from "../component/bottomPriceAndBtn";
+import MemberTitle from "../myTeam/memberTitle";
+import TeamListItem from "../myTeam/teamListItem";
 
 export default {
   name: "offer",
   components: {
+    TeamListItem,
+    MemberTitle,
     BottomPriceAndBtn,
     QuotedIten,
     MyPrice,
@@ -91,6 +100,7 @@ export default {
 			id: '',
 			order: {},
 			workList: [],
+      changeList: [],
 			showWorkList: [],
 			showWorkMore: false,
       remark: ''
@@ -253,7 +263,7 @@ export default {
 			.then(res => {
 				// todo:吊起微信支付
 				// this.wxPay(res.payResult);
-				
+
 				uni.showToast({
 					title: '订单支付完成',
 					success: () => {
@@ -361,6 +371,11 @@ export default {
   .offer-81 {
     margin: 0 12rpx 0 32rpx;
   }
+}
+
+.offer-8900 {
+  background-color: white;
+  margin: 32rpx 0;
 }
 
 </style>
