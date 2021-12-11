@@ -140,6 +140,22 @@ export default {
 			}
 			return amount / 100;
 		},
+		onConfirm() {
+			const unQuote = showCount(2);
+			if (unQuote > 0) {
+				// todo: 弹窗
+			} else {
+				uni.showModal({
+					title: '提示',
+					content: '您确定提交选价吗?',
+					success: (res) => {
+						if (res.confirm) {
+							this.confirmPrice();
+						}
+					}
+				})
+			}
+		},
 		confirmPrice() {
 			const params = {
 				orderMasterId: this.id,
