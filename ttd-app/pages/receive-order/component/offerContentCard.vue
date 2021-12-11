@@ -43,6 +43,10 @@ export default {
       type: String,
       default: '1'
     },
+		image: {
+			type: String,
+			default: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png',
+		},
 		title: {
 			type: String,
 			default: '实施',
