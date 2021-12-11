@@ -20,9 +20,9 @@
 
     </back-container>
 
-    <view class="offer-8900">
-      <member-title title="参与人员" show-right right-text="选择人员" />
-      <team-list-item v-for="i in changeList" :key="i.userId" :member="i" />
+    <view class="offer-8900" v-if="order.receiverType == 2">
+      <member-title title="参与人员" show-right right-text="选择人员" @add="toSelectPerson"/>
+      <team-list-item v-for="i in memberList" :key="i.userId" :member="i" @onDelete="removePerson(i)"/>
     </view>
 
     <view class="offer-5">
@@ -100,7 +100,7 @@ export default {
 			id: '',
 			order: {},
 			workList: [],
-      changeList: [],
+      memberList: [],
 			showWorkList: [],
 			showWorkMore: false,
       remark: ''
@@ -213,6 +213,20 @@ export default {
 				return amount / 100;
 			}
 		},
+		toSelectPerson() {
+			uni.navigateTo({
+				url: `/pages/receive-order/selectPerson/selectPerson`,
+				events: {
+					onSelect: (members) => {
+						this.memberList = members;
+					}
+				}
+			})
+		},
+		removePerson(person) {
+			const index = this.memberList.findIndex((p) => p.userId == person.userId);
+			this.memberList.splice(index, 1);
+		},
 		cancelQuote() {
 			uni.navigateBack({});
 		},
@@ -233,6 +247,7 @@ export default {
 				orderQuoteList: this.workList.map((w) => {
 					return { price: w.quoteAmount, workId: w.id }
 				}),
+				memberIdList: this.memberList.map(p=> p.userId),
 				remark: this.remark,
 			};
 			this.$http.post('/b/orderquote/createQuote', params, true)
