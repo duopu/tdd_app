@@ -5,11 +5,11 @@
     <back-container>
 
       <view class="eva-o">
-        <view class="eva-oi" v-for="i in 3" :key="i">
+        <view class="eva-oi" v-for="(member, index) in memberList" :key="index">
           <view class="eva-oit">
             <text class="eva-oit-text">
               给
-              <text class="eva-oit-name" :class="i === 1 ? 'eva-oit-name-orange' : ''">黑涩会</text>
+              <text class="eva-oit-name" :class="member.userType === 1 ? 'eva-oit-name-orange' : ''">{{ member.userName }}</text>
               打分
             </text>
             <uni-icons type="arrowup" size="18" color="#969799" />
@@ -17,15 +17,15 @@
 
           <view class="eva-ostar-box">
             <view class="eva-ostar">
-              <uni-rate :value="4" size="32" :margin="5" allow-half @change="(e) => starChange(e, i)"/>
+              <uni-rate :value="member.score" size="32" :margin="5" allow-half @change="(e) => starChange(e, index)"/>
             </view>
-            <view class="eva-ostart-text">2.5分 一般般，需要再努力</view>
+            <!-- <view class="eva-ostart-text">{{ member.score }}分 一般般，需要再努力</view> -->
           </view>
 
-          <add-remark label="评价内容：" :value="i.content" @change="(text) => contentChange(text, i)" />
+          <add-remark label="评价内容：" :value="member.content" @input="(text) => contentChange(text, index)" />
 
           <view class="upload-list-obox">
-            <upload-list upload-text="添加照片" :img-list="i.imgUrlList" @upload="chooseImage(i)" />
+            <upload-list upload-text="添加照片" :img-list="member.imgUrlList" @upload="chooseImage(index)" />
           </view>
         </view>
       </view>
@@ -54,58 +54,79 @@ export default {
   data() {
     return {
 			id: '',
+			order: {},
 			memberList: [],
     };
   },
 	onLoad(option) {
 		if (option.id) {
 			this.id = option.id;
+			this.queryOrderInfo();
 			this.queryMemberList();
 		}
 	},
   methods: {
-		queryMemberList() {
-			this.$http.post('/b/ordermaster/queryPageList', { id: this.id }, true)
+		queryOrderInfo() {
+			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
 			.then(res => {
-				this.memberList = res.dataList.map((p) => {
+			  this.order = res;
+				const receiver = {
+					content: '',
+					imgUrlList: [],
+					score: 0,
+					userId: res.receiverId,
+					userName: res.receiverUserName,
+					userType: res.receiverType,
+				};
+				this.memberList.splice(0, 0, receiver);
+			})
+		},
+		queryMemberList() {
+			this.$http.post('/b/ordermember/queryMemberListAndApplyInfo', { id: this.id }, true)
+			.then(res => {
+				this.memberList = res.curtOrderMemberList.map((p) => {
 					return {
 						content: '',
 						imgUrlList: [],
 						score: 0,
 						userId: p.userId,
+						userName: p.name,
 						userType: p.userType,
 					}
 				})
 			})
 		},
-		starChange(e, person) {
-			person.score = e.value;
+		starChange(e, index) {
+			const member = this.memberList[index];
+			member.score = e.value;
 		},
-    contentChange(text, person) {
-      person.content = text;
+    contentChange(text, index) {
+			const member = this.memberList[index];
+      member.content = text;
     },
-		chooseImage(person) {
+		chooseImage(index) {
 			uni.chooseImage({
 			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 			    success: (res) => {
 							const path = res.tempFilePaths[0];
-							this.uploadImage(path, person);
+							this.uploadImage(path, index);
 			    }
 			});
 		},
-		uploadImage(path, person) {
+		uploadImage(path, index) {
 			const param = {
 				file: path,
 			};
 			this.$http.upload({ path }, true)
 			.then(res=>{
-				person.imgUrlList.push(res);
+				const member = this.memberList[index];
+				member.imgUrlList.push(res);
 			});
 		},
 		commitComment() {
 			const params = {
 				orderCommentList: this.memberList,
-				receiveOrderId: this.id,
+				receiverOrderId: this.id,
 			};
 			this.$http.post('/b/ordercomment/add', params, true)
 			.then(res => {
