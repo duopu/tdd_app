@@ -76,9 +76,11 @@ export default {
 		const eventChannel = self.getOpenerEventChannel();
 		eventChannel.on('editWork', (work) => {
 		    console.log('editWork ', work);
-				this.$data = {
-					...work,
-				}
+				this.cateId = work.cateId;
+				this.cateName = work.cateName;
+				this.number = work.number;
+				this.requireInfo = work.requireInfo;
+				this.orderResourceList = work.orderResourceList;
 		})
 		// 监听录音事件
 		recorderManager.onStop(function (res) {
