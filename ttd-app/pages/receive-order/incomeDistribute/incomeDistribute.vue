@@ -27,10 +27,14 @@
       <view class="ind-51">工作成员</view>
       <view class="ind-52">
         <offer-content-card
-            v-for="(item, index) in 5"
+            v-for="(item, index) in memberList"
             :key="index"
-            :right-type="index > 3 ? 1 : 3"
-            :show-last-border-bottom="index < (5 -1)"
+						:title="item.name"
+						:image="item.headImgUrl"
+						:specItem="[{label: '手机号：', value: item.phone}]"
+            :right-type="item.amount ? 1 : 3"
+						:price="item.amount / 100"
+            :show-last-border-bottom="index < (memberList.length -1)"
 						@onChange="changePrice(item)"
         />
       </view>
@@ -39,7 +43,7 @@
     <view style="height: 300rpx" />
 
     <iphonex-bottom>
-      <bottom-price-and-btn all-text="已分配" sure-text="确认分配" :price="getQuoteCount(3)" @onCancel="cancelDistribute" @onConfirm="submitDistribute">
+      <bottom-price-and-btn v-if="order.leaderFlag == 1" all-text="已分配" sure-text="确认分配" :price="getQuoteCount(3)" @onCancel="cancelDistribute" @onConfirm="submitDistribute">
         <view class="ind-8">
           <text class="ind-81">已分配</text>
           <corner-mark :num="getQuoteCount(1)" />
@@ -49,6 +53,10 @@
           <my-price :price="getQuoteCount(4)" :scale="0.8" />
         </view>
       </bottom-price-and-btn>
+			<view v-else-if="showConfirm">
+			  <big-btn buttonText="确认分配" @click="confirmDistribute"/>
+			  <big-btn buttonText="拒绝分配" @click="refuseDistribute"/>
+			</view>
     </iphonex-bottom>
 
   </view>
@@ -64,10 +72,12 @@ import CornerMark from "../component/cornerMark";
 import MyPrice from "../component/myPrice";
 import QuotedIten from "../component/quotedIten";
 import BottomPriceAndBtn from "../component/bottomPriceAndBtn";
+import BigBtn from "../../mine/addressManage/component/bigBtn";
 
 export default {
   name: "incomeDistribute",
   components: {
+		BigBtn,
     BottomPriceAndBtn,
     QuotedIten,
     MyPrice,
@@ -77,12 +87,14 @@ export default {
     OfferContentCard,
     UniIcons,
     OfferHead,
-    BackContainer
+    BackContainer,
   },
   data() {
     return {
 			id: '',
+			showConfirm: false,
 			order: {},
+			totalAmount: 0,
 			memberList: [],
     };
   },
@@ -90,7 +102,8 @@ export default {
 		if (option.id) {
 			this.id = option.id;
 			this.queryOrderInfo();
-			this.queryMemberList();
+			this.queryTotalAmount();
+			this.queryAlreadyDistribute();
 		}
 	},
   methods: {
@@ -98,12 +111,22 @@ export default {
 			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
 			.then(res => {
 			  this.order = res;
+				this.leaderFlag = res.leaderFlag == 1;
 			})
 		},
-		queryMemberList() {
-			this.$http.post('/b/ordermember/queryMemberListAndApplyInfo', { id: this.id }, true)
+		queryTotalAmount() {
+			this.$http.post('/b/ordersettlement/queryCanSettlementAmount', { id: this.id }, true)
 			.then(res => {
-				this.memberList = res.curtOrderMemberList;
+				this.totalAmount = res;
+			})
+		},
+		queryAlreadyDistribute() {
+			this.$http.post('/b/ordersettlement/queryTeamMemberDistributorAmountList', { id: this.id }, true)
+			.then(res => {
+				this.memberList = res;
+				const user = this.$store.state.user;
+				let mySelf = (res || []).filter((m) => m.id == user.id);
+				this.showConfirm = mySelf[0].confirmState != 1 && mySelf[0].confirmState != 2;
 			})
 		},
 		changePrice(person) {
@@ -135,29 +158,54 @@ export default {
 				return amount / 100;
 			} else {
 				// 未分配金额
-				return (10000 - amount) / 100;
+				return (this.totalAmount - amount) / 100;
 			}
 		},
 		cancelDistribute() {
 			uni.navigateBack({});
 		},
+		// 队长分配收益
 		submitDistribute() {
 			const params = {
-				receiveOrderId: this.id,
-				distributorInfoList: this.memberList.map((p) => {
-					return { distributorAmount: p.amount, customerId: p.userId }
+				receiverOrderId: this.id,
+				distributorInfoList: this.memberList.map((m) => {
+					return { distributorAmount: m.amount, customerId: m.id }
 				}),
 			};
 			this.$http.post('/b/ordersettlement/teamOrderAmountDistributor', params, true)
 			.then(res => {
 			  uni.showToast({
-			  	title: '报价成功',
+			  	title: '分配收益成功',
 					success: () => {
 						uni.navigateBack({});
 					}
 			  })
 			})
-		}
+		},
+		// 队员确认分配收益
+		confirmDistribute() {
+			this.$http.post('/b/ordersettlement/confirme', { id: this.id }, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '确认分配收益成功',
+					success: () => {
+						uni.navigateBack({});
+					}
+			  })
+			})
+		},
+		// 队员拒绝分配收益
+		refuseDistribute() {
+			this.$http.post('/b/ordersettlement/refuse', { id: this.id }, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '拒绝分配收益成功',
+					success: () => {
+						uni.navigateBack({});
+					}
+			  })
+			})
+		},
   }
 }
 </script>
