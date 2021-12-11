@@ -256,7 +256,7 @@ export default {
 		// 查看问题/咨询
 		toQuestionPage(item) {
 			uni.navigateTo({
-				url: `/pages/receive-order/offerDetail/offerDetail?id=${item.id}`,
+				url: `/pages/receive-order/questionAnswer/questionAnswer?isPlaceOrder=${this.isPlaceOrder ? 1 : 0}&id=${item.id}&orderType=${item.orderType}`,
 			})
 		},
 		// 变更/审核人员

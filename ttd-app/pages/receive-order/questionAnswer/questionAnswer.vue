@@ -34,7 +34,7 @@
                 <view class="qus-1img-empty" v-else >
                   <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/anser-icon.svg" class="qus-1img-empty-img" />
                   <view class="qus-1img-empty-text">目前没有回答</view>
-                  <view class="qus-1img-empty-btn">回答</view>
+                  <view class="qus-1img-empty-btn" @click="answerQuestion()">回答</view>
                 </view>
               </view>
             </view>
@@ -47,7 +47,15 @@
       <big-btn button-text="我要提问" @click="$refs.askQuestionsModel.show()" />
     </iphonex-bottom>
 
-    <ask-questions-model ref="askQuestionsModel" />
+    <ask-questions-model 
+		  ref="askQuestionsModel"
+			:showType="!isPlaceOrder"
+			:orderType="orderType"
+			:typeList="typeList"
+			:questionJob="questionJob"
+			@onSelect="selectType"
+			@onConfirm="confirmQuestion"
+		/>
 
   </view>
 </template>
@@ -65,9 +73,95 @@ export default {
     return {
       MDicon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png',
       id: '',
+			isPlaceOrder: false,
+			questionId: '',
+			orderType: 1,
+			questionJob: '',
+			typeList: [],
       questionList: [],
     };
   },
+	onLoad(option) {
+		if (option.isPlaceOrder) {
+			this.isPlaceOrder = option.isPlaceOrder ==  '1';
+		}
+		if (option.id) {
+			this.id = option.id;
+			this.queryQuestionList();
+		}
+		if (option.orderType) {
+			this.orderType = Number(option.orderType);
+			if (this.orderType == 2 || this.orderType == 5) {
+				this.queryTypeList();
+			}
+		}
+	},
+	mounted() {
+		uni.$on('submitSelectSkillTree',(skillList)=>{
+		  console.log('skillList ', skillList);
+			this.questionJob = skillList[0].name;
+		})
+		uni.$on('submitSelectUserroleTree',(userroleList)=>{
+			console.log('userroleList ', userroleList);
+			this.questionJob = userroleList[0].name || '';
+		})
+		uni.$on('submitSelectEquipmenttoolTree',(toolList)=>{
+			console.log('toolList ', toolList);
+			this.questionJob = toolList[0].name || '';
+		})
+	},
+	destroyed() {
+		uni.$off('submitSelectSkillTree');
+		uni.$off('submitSelectUserroleTree');
+		uni.$off('submitSelectEquipmenttoolTree');
+	},
+	onReady() {},
+	methods: {
+		queryQuestionList() {
+			this.$http.post('/b/orderquestionanswer/queryList', { receiveOrderId: this.id }, true)
+			.then(res => {
+				this.questionList = res;
+			})
+		},
+		queryTypeList() {
+			const url = this.orderType == 2 ? '/b/ordermaster/settingCateList' : '/b/softwareconf/queryList'
+			this.$http.post(url, {}, true)
+			.then(res => {
+				if (this.orderType == 2) {
+					this.typeList = res;
+				} else {
+					this.typeList = res.map((s) => s.name);
+				}
+			})
+		},
+		selectType() {
+			const type = this.orderType == 1 ? 'skill' : this.orderType == 3 ? 'userrole' : 'equipmenttool';
+			uni.navigateTo({
+				url:`/pages/main/apply/tree?type=${type}`
+			});
+		},
+		answerQuestion(q) {
+			this.questionId = q.id;
+			this.$refs.askQuestionsModel.show();
+		},
+		confirmQuestion(p) {
+			let url = `/b/orderquestionanswer/${this.isPlaceOrder ? 'answer' : 'put'}Question`;
+			const params = {
+				...p,
+				questionId: this.questionId,
+				receiveOrderId: this.id,
+			};
+			this.$http.post('/b/orderquestionanswer/putQuestion', params, true)
+			.then(res => {
+				uni.showToast({
+					title: `${this.isPlaceOrder ? '回复' : '咨询'}已提交`,
+					success: () => {
+						this.queryQuestionList();
+					}
+				});
+			})
+		},
+	}
 }
 </script>
 <style lang="scss">

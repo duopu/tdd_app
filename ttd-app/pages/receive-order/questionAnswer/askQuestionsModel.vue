@@ -1,17 +1,26 @@
 <template>
-  <model-slot v-if="visible" ref="modelSlot" @sure="hide" @hide="hide" title="提问">
+  <model-slot v-if="visible" ref="modelSlot" @sure="confirm" @hide="hide" title="提问">
 
     <template #slot1>
-      <view class="qus-model-input">
-        <view class="qus-model-input-title">相关工作</view>
-        <view class="qus-model-inputs">交互机</view>
-        <uni-icons size="18" color="#BDBDBD" type="right" />
-      </view>
+      <view v-if="showType">
+				<view v-if="orderType == 2 || orderType == 5" class="qus-model-input">
+				  <view class="qus-model-input-title">相关工作</view>
+					<picker class="qus-model-inputs" @change="pickerChange" :range="typeList">
+				    <view class="qus-model-inputs">{{ questionJob || type || '请选择' }}</view>
+					</picker>
+				  <uni-icons size="18" color="#BDBDBD" type="right" />
+				</view>
+				<view v-else class="qus-model-input" @click="$emit('onSelect')">
+					<view class="qus-model-input-title">相关工作</view>
+					<view class="qus-model-inputs">{{ questionJob || '请选择' }}</view>
+					<uni-icons size="18" color="#BDBDBD" type="right" />
+				</view>
+			</view>
 
-      <add-remark label="内容：" :value="value" placeholder="可以的话，多少写点！方便工作人员快速排队故障。" />
+      <add-remark label="内容：" :value="content" @input="contentChange" placeholder="可以的话，多少写点！方便工作人员快速排队故障。" />
 
       <view class="qus-model-img-box">
-        <upload-list upload-text="添加图片" @upload="chooseImage" />
+        <upload-list upload-text="添加图片" :imgList="pictureList" @upload="chooseImage" />
       </view>
 
     </template>
@@ -27,10 +36,30 @@ import UploadList from "../component/uploadList";
 export default {
   name: "askQuestionsModel",
   components: { UploadList, UniIcons, ModelSlot, AddRemark },
+	props: {
+		showType: {
+			type: Boolean,
+			default: false,
+		},
+		orderType: {
+			type: Number,
+			default: 1,
+		},
+		typeList: {
+			type: Array,
+			default: [],
+		},
+		questionJob: {
+			type: String,
+			default: '',
+		}
+	},
   data() {
     return {
       visible: true,
-      value: '',
+			type: '',
+      content: '',
+			pictureList: [],
     }
   },
   methods: {
@@ -40,9 +69,38 @@ export default {
     hide() {
       this.visible = false;
     },
+		confirm() {
+			this.$emit('onConfirm', { 
+				questionJob: this.questionJob || this.type,
+				content: this.content,
+				pictureList: this.pictureList,
+			})
+		},
+		pickerChange(e) {
+			const index = e.target.value;
+			this.type = this.typeList[index];
+		},
+		contentChange(value) {
+			this.content = value;
+		},
     chooseImage() {
-
-    }
+    	uni.chooseImage({
+    	    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+    	    success: (res) => {
+    					const path = res.tempFilePaths[0];
+    					this.uploadImage(path);
+    	    }
+    	});
+    },
+    uploadImage(path) {
+    	const param = {
+    		file: path,
+    	};
+    	this.$http.upload({ path }, true)
+    	.then(res=>{
+    		this.pictureList.push(res);
+    	});
+    },
   }
 }
 </script>
