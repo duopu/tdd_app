@@ -4,7 +4,7 @@
 
     <back-container>
       <view class="root-box">
-        <view class="cr-item-box" v-for="i in 3" :key="i">
+        <view class="cr-item-box" v-for="i in recordList" :key="i.id">
           <view class="cr-item">
             <view class="cr-item-l">
               <view class="cr-item-lpbox">
@@ -21,17 +21,18 @@
                 <view class="cr-item-r11">变更后人员</view>
                 <view
                     class="cr-item-r12"
-                    :class="{'cr-item-orange': i == 2, 'cr-item-red': i == 1}"
+                    :class="{'cr-item-orange': i.approveState == 3, 'cr-item-red': i.approveState == 2}"
                 >已通过
                 </view>
               </view>
 
-              <view class="cr-item-r2">2021-10-06 18:46</view>
+              <view class="cr-item-r2">{{ i.addTime }}</view>
 
               <view class="cr-item-r3">
-                <view class="cr-item-r31" v-for="i in 4" :key="i">
-                  <image :src="MDicon" class="cr-item-r32" />
-                  <view class="cr-item-r33">孙慧</view>
+                <view class="cr-item-r31" v-for="m in i.afterMemberList" :key="m.id">
+                  <image v-if="m.headImgUrl" :src="m.headImgUrl" class="cr-item-r32" />
+                  <image v-else :src="MDicon" class="cr-item-r32" />
+                  <view class="cr-item-r33">{{ m.name }}</view>
                 </view>
               </view>
 
@@ -42,9 +43,10 @@
           </view>
 
           <view class="cr-item-r3 cr-item-r8">
-            <view class="cr-item-r31" v-for="i in 4" :key="i">
-              <image :src="MDicon" class="cr-item-r32" />
-              <view class="cr-item-r33">孙慧</view>
+            <view class="cr-item-r31" v-for="m in i.beforeMemberList" :key="m.id">
+              <image v-if="m.headImgUrl" :src="m.headImgUrl" class="cr-item-r32" />
+              <image v-else :src="MDicon" class="cr-item-r32" />
+              <view class="cr-item-r33">{{ m.name }}</view>
             </view>
           </view>
 
@@ -79,7 +81,7 @@ export default {
 		queryRecordList(id) {
 			this.$http.post('/b/ordermember/queryRecordList', { id, pageSize: 1000 }, true)
 			.then(res => {
-			  this.recordList = res.dataList;
+			  this.recordList = res;
 			})
 		}
 	},
