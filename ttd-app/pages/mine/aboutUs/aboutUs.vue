@@ -7,11 +7,7 @@
       <view class="about-us">
         <image class="about-us-img"
                src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png" />
-        <view class="about-us-text">
-          空间布局是体系化视觉设计的起点，和传统的平面设计的不同之处在于，UI 界面的布局空间要基于「动态、体系化」的角度出发
-          展开。我们受到建筑界大师柯布西耶的模度思想的启发，基于「秩序之美」的原则，探索 UI 设计中的动态空间秩序，形
-          成了 Ant Design 的界面布局方式，为设计者构筑具备理性之美的布局空间创造了条件。
-        </view>
+        <view class="about-us-text">{{ remark }}</view>
 
         <view class="list-box">
           <view class="list-item-cc" v-for="i in list" :key="i.title">
@@ -26,7 +22,7 @@
       </view>
     </back-container>
 
-    <consulting-model ref="consultingModel" />
+    <consulting-model ref="consultingModel" @confirm="submitQuestion"/>
 
     <iphonex-bottom z-index="99">
       <big-btn button-text="我要咨询" @click="$refs.consultingModel.show()" />
@@ -45,6 +41,7 @@ export default {
   components: { ConsultingModel, BigBtn, IphonexBottom, BackContainer },
   data() {
     return {
+			remark: '空间布局是体系化视觉设计的起点，和传统的平面设计的不同之处在于，UI 界面的布局空间要基于「动态、体系化」的角度出发展开。我们受到建筑界大师柯布西耶的模度思想的启发，基于「秩序之美」的原则，探索 UI 设计中的动态空间秩序，形成了 Ant Design 的界面布局方式，为设计者构筑具备理性之美的布局空间创造了条件。',
       list: [
         {
           url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png',
@@ -63,7 +60,29 @@ export default {
         },
       ]
     };
-  }
+  },
+	onReady() {
+		this.queryAboutUs()
+	},
+	methods: {
+		queryAboutUs() {
+			this.$http
+				.post('/core/aboutus/query', { }, true)
+				.then(res => {
+					this.remark = res.remark;
+					this.list[0].text = res.wechat;
+					this.list[1].text = res.qq;
+					this.list[2].text = res.email;
+				});
+		},
+		submitQuestion(params) {
+			this.$http
+				.post('/core/aboutus/query', params, true)
+				.then(res => {
+					uni.showToast({ title: '您的咨询已提交!' });
+				});
+		},
+	}
 }
 </script>
 
