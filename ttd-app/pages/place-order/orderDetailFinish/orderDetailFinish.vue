@@ -130,7 +130,8 @@ export default {
 			coupon: {},
 			couponName: '',
 			integral: 0,
-			integralBalance: 0,
+			integralUseMax: 0, // 最多使用积分额度  (百分比)
+			integralBalance: 0, // 积分余额
       invoiceType: 1, // 发票类型 1专票 2普票
 			invoice: {},
       payList: [
@@ -149,6 +150,7 @@ export default {
 	},
 	onReady() {
 		this.queryIntegralInfo();
+		this.queryIntegralConfig();
 	},
   methods: {
 		queryOrderInfo() {
@@ -164,6 +166,12 @@ export default {
 			this.$http.get('/b/integral/query', { }, true)
 			.then(res => {
 			  this.integralBalance = res.balance;
+			})
+		},
+		queryIntegralConfig() {
+			this.$http.post('/b/systemconfig/queryPlatformIntegralConf', { }, true)
+			.then(res => {
+			  this.integralUseMax = res.consumerDeductPercent;
 			})
 		},
     change(data) {
@@ -244,14 +252,35 @@ export default {
 			}
 			this.$http.post('/core/pay/build4MasterOrder', params, true)
 			.then(res => {
-			  uni.showToast({
-			  	title: '订单支付完成',
-					success: () => {
-						uni.navigateBack({});
-					}
-			  })
+				console.log('build success ', res);
+				if (this.payWay == 9) {
+					this.queryBankCardInfo();
+				} else if (this.payWay == 10) {
+					uni.showModal({
+						title: '提示',
+						content: '订单已提交，等待客服人员联系',
+						showCancel: false,
+						success: () => {
+							uni.navigateBack({});
+						}
+					})
+				} else {
+					uni.showToast({
+						title: '订单支付完成',
+						success: () => {
+							uni.navigateBack({});
+						}
+					})
+				}
 			})
-		}
+		},
+		queryBankCardInfo() {
+			this.$http.get('/core/softconf/bankcard', {}, true)
+			.then(res => {
+				const card = res.card;
+				// todo: 弹出银行卡弹窗
+			});
+		},
   }
 }
 </script>
