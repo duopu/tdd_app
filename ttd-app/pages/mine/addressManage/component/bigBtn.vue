@@ -1,5 +1,5 @@
 <template>
-  <view class="button-box">
+  <view class="button-box" :class="outClass">
     <view class="big-btn" @click="$emit('click')">{{ buttonText }}</view>
   </view>
 </template>
@@ -9,6 +9,10 @@ export default {
     buttonText: {
       type: String,
       default: '确定'
+    },
+    outClass: {
+      type: String,
+      default: ''
     }
   }
 }

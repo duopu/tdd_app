@@ -1,23 +1,28 @@
 <template>
-  <view class="cons-model" v-if="visible">
-    <view class="cons-model-back" @click="hide" />
-    <view class="cons-model-bottom">
-      <view class="cmb-title">
-        <view class="cmb-title-left"></view>
-        <view class="cmb-title-middle"></view>
-        <view class="cmb-title-right"></view>
+  <model-slot v-if="visible" ref="modelSlot" @sure="hide" @hide="hide">
+
+    <template #slot1>
+      <view class="cmb-input">
+        <view class="cmb-input-title">电话号码</view>
+        <input type="text" class="cmb-inputs" placeholder="请输入" />
       </view>
 
-      view.
-    </view>
-  </view>
+      <add-remark label="咨询内容：" :value="value" placeholder="可以的话，多少写点！方便工作人员快速排队故障。" />
+    </template>
+
+  </model-slot>
 </template>
 <script>
+import ModelSlot from "./modelSlot";
+import AddRemark from "../../receive-order/component/addRemark";
+
 export default {
   name: "consultingModel",
+  components: { AddRemark, ModelSlot },
   data() {
     return {
       visible: false,
+      value: '',
     }
   },
   methods: {
@@ -31,21 +36,24 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.cons-model {
-  width: 750rpx;
-  height: 100vh;
-  position: fixed;
-  z-index: 102;
-  left: 0;
-  top: 0;
+.cmb-input {
+  height: 88rpx;
   display: flex;
-  flex-flow: column wrap;
+  align-items: center;
+  margin-left: 32rpx;
+  padding-right: 32rpx;
+  border-bottom: 1rpx solid #EAECEF;
 
-  .cons-model-back {
-    flex: 1;
+  .cmb-input-title {
+    font-size: 28rpx;
+    font-family: PingFang SC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #323335;
   }
-  .cons-model-bottom {
 
+  .cmb-inputs {
+    flex: 1;
+    text-align: right;
   }
 }
 </style>
