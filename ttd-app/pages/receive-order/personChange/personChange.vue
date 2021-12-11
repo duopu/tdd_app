@@ -17,8 +17,6 @@
       <team-list-item v-for="i in changeList" :key="i.userId" :member="i" />
     </view>
 
-		<big-btn buttonText="变更记录" @click="toChangeRecord"/>
-
     <iphonex-bottom>
 			<view v-if="isPlaceOrder">
         <big-btn buttonText="确认变更" @click="approveChange(1)"/>
@@ -111,11 +109,6 @@ export default {
 						uni.navigateBack({});
 					}
 				})
-			})
-		},
-		toChangeRecord() {
-			uni.navigateTo({
-				url: `/pages/receive-order/changeRecord/changeRecord?id=${this.id}`,
 			})
 		},
 	}
