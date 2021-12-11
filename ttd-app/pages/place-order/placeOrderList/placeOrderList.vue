@@ -145,7 +145,8 @@ export default {
 			this.value = Number(option.state);
 		}
 	},
-	onReady() {
+	onReady() {},
+	onShow() {
 		this.queryOrderList();
 	},
   methods: {
