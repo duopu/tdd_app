@@ -5,9 +5,10 @@
     <back-container>
       <member-title :show-right="false" title="目前成员" />
       <view class="pc-01">
-        <view class="pc-01-item" v-for="i in memberList" :key="i">
-          <image class="pc-01-img" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' />
-          <view class="pc-01-name">孙慧</view>
+        <view class="pc-01-item" v-for="i in memberList" :key="i.id">
+          <image v-if="i.headImgUrl" class="pc-01-img" :src="i.headImgUrl" />
+          <image v-else class="pc-01-img" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' />
+          <view class="pc-01-name">{{ i.name }}</view>
         </view>
       </view>
     </back-container>
@@ -42,6 +43,7 @@ export default {
   data() {
     return {
 			id: '',
+			applyId: 0, // 申请变更的ID
 			isPlaceOrder: false, // 是否是发单方
 			memberList: [], // 当前参与人员
 			changeList: [], // 申请变更人员
@@ -63,8 +65,17 @@ export default {
 		queryMemberList() {
 			this.$http.post('/b/ordermember/queryMemberListAndApplyInfo', { id: this.id }, true)
 			.then(res => {
+				this.applyId = res.applyId;
 				this.memberList = res.curtOrderMemberList;
-				this.changeList = res.applyMemberList;
+				this.changeList = (res.applyMemberList || []).map((m) => {
+					return {
+						headImgUrl: m.headImgUrl,
+						userName: m.name,
+						phone: m.phone,
+						skills: m.skills,
+						userId: m.id,
+					}
+				});
 			})
 		},
 		selectPerson() {
@@ -83,7 +94,7 @@ export default {
 		},
 		approveChange(state) {
 			const params = {
-				id: this.id,
+				id: this.applyId,
 				approveState: state,
 			}
 			this.$http.post('/b/ordermember/approve', params, true)
