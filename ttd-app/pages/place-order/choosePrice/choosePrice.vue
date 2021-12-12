@@ -161,6 +161,7 @@ export default {
 			const params = {
 				orderMasterId: this.id,
 				quoteIdList: this.selectList.map((q) => q.id),
+				remainItemSetting: undefined, // 确认报价后剩余工作项设置 1 关闭 2 单独发包
 			}
 			this.$http.post('/b/orderquote/confirmQuote', params, true)
 			.then(res => {
