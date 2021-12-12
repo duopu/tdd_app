@@ -75,7 +75,7 @@
           <!-- 发单方 -->
           <view v-if="isPlaceOrder">
           	<view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
-							<view class="plo-btn1" v-if="[10, 20, 30, 40].includes(value)" @click="cancelOrderTip(item.id)">取消订单</view>
+							<view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @click="cancelOrderTip(item.id)">取消订单</view>
 							<!-- 待报价 待确认 -->
 							<view class="plo-btn1" v-if="[10, 20].includes(value) || (item.state == 30 && item.subState == 4)" @click="toQuestionPage(item)">查看问题</view>
 							<!-- 待确认 -->
@@ -86,9 +86,10 @@
 							<view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
 							<view class="choose-change-btn" v-if="item.state == 30 && item.subState == 5" @click="toOrderWork(item)">确认开始</view>
 							<!-- 待完工 -->
-							<view class="choose-change-btn" v-if="[40].includes(value)" @click="toOrderWork(item)">确认完工</view>
+							<view class="choose-change-btn" v-if="item.state == 40 && item.subState == 6" @click="toPayPartMoney(item)">部分付款</view>
+							<view class="choose-change-btn" v-if="item.state == 40 && item.subState == 7" @click="toOrderWork(item)">确认完工</view>
 							<!-- 已完工 -->
-							<view class="plo-btn1" v-if="[50].includes(value)" @click="toOrderInvoice(item)">开发票</view>
+							<!-- <view class="plo-btn1" v-if="[50].includes(value)" @click="toOrderInvoice(item)">开发票</view> -->
 							<view class="plo-btn1" v-if="[50].includes(value)" @click="toOrderComment(item)">去评价</view>
 							
           	</view>
@@ -107,7 +108,7 @@
 						<view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
 						<view class="choose-change-btn" v-if="[30].includes(value) && item.subState == 4" @click="toOrderWork(item)">申请开始</view>
 						<!-- 待完工 -->
-						<view class="choose-change-btn" v-if="[40].includes(value) && item.subState != 7" @click="toDistributionIncome(item)">收益分配</view>
+						<view class="choose-change-btn" v-if="item.receiverType == 2 && (item.settleState == 1 || item.settleState == 2)" @click="toDistributionIncome(item)">收益分配</view>
 						<view class="choose-change-btn" v-if="[40].includes(value) && item.subState == 6" @click="toOrderWork(item)">申请完工</view>
 						</view>
 					</view>
@@ -292,6 +293,35 @@ export default {
 				url: `/pages/place-order/orderDetailFinish/orderDetailFinish?id=${item.id}`,
 			})
 		},
+		// 部分付款
+		toPayPartMoney(item) {
+			uni.showModal({
+				title: '部分付款',
+				editable: true,
+				placeholderText: '请输入金额',
+				success: (res) => {
+					if (res.confirm) {
+						const amount = Number(res.content) * 100;
+						this.payMoney(item.id, amount, item.quoteAmount);
+					}
+				}
+			})
+		},
+		payMoney(id, amount, totalMount) {
+			if (amount > totalMount) {
+				uni.showToast({ title: '部分付款金额不能大于报价金额', icon: 'none'})
+				return;
+			}
+			const params = {
+				amount,
+				receiverOrderId: id,
+			}
+			this.$http.post('/b/ordersettlement/partialSettlement', params, true)
+			.then(res => {
+				uni.showToast({ title: '部分付款成功' });
+				this.queryOrderList();
+			})
+		},
 		// 评价订单
 		toOrderComment(item) {
 			uni.navigateTo({
@@ -315,7 +345,7 @@ export default {
 				invoiceId: invoice.id,
 				receiveOrderId: item.id,
 			}
-			this.$http.get('/b/orderinvoice/applyInvoice', params, true)
+			this.$http.post('/b/orderinvoice/applyInvoice', params, true)
 			.then(res => {
 			  uni.showToast({
 			  	title: '开票成功',
