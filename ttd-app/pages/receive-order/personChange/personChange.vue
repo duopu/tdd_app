@@ -20,8 +20,11 @@
 
     <iphonex-bottom>
 			<view v-if="isPlaceOrder">
+        <!--
         <big-btn buttonText="确认变更" @click="approveChange(1)"/>
         <big-btn buttonText="拒绝变更" @click="approveChange(2)"/>
+        -->
+        <bottom-operate sure-text="确认变更" cancel-text="拒绝变更" @operateSave="approveChange(1)" @operateDel="approveChange(2)" />
 			</view>
 			<view v-else>
 				<big-btn buttonText="提交申请" @click="submitChange"/>
@@ -36,10 +39,11 @@ import MemberTitle from "../myTeam/memberTitle";
 import TeamListItem from "../myTeam/teamListItem";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
+import BottomOperate from "../../mine/addressManage/component/bottomOperate";
 
 export default {
   name: "personChange",
-  components: { BigBtn, IphonexBottom, TeamListItem, MemberTitle, BackContainer },
+  components: { BottomOperate, BigBtn, IphonexBottom, TeamListItem, MemberTitle, BackContainer },
   data() {
     return {
 			id: '',

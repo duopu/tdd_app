@@ -65,6 +65,18 @@
       </view>
     </view>
 
+    <view class="require-bbl">
+      <add-remark />
+
+      <view class="top-aline111" />
+
+      <view class="require-order-set21">
+        <view class="require-order-set21-title">接单范围</view>
+        <input placeholder="请输入" class="require-input-so" value="123" placeholder-class="placeholder-class" />
+        <text class="require-order-set2-unit">公里</text>
+      </view>
+    </view>
+
     <iphonex-bottom :z-index="99">
       <big-btn @click="submitOrder"/>
     </iphonex-bottom>
@@ -72,7 +84,7 @@
 </template>
 
 <script>
-	
+
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../../receive-order/component/offerHead";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
@@ -81,10 +93,11 @@ import CheckdItem from "./checkdItem";
 import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import OfferContentCard from "../../receive-order/component/offerContentCard";
 import MyChooseTime from "./myChooseTime";
+import AddRemark from "../../receive-order/component/addRemark";
 
 export default {
   name: 'receiptOrderZy',
-  components: { MyChooseTime, OfferContentCard, MemberTitle, CheckdItem, BigBtn, IphonexBottom, OfferHead, BackContainer },
+  components: { AddRemark, MyChooseTime, OfferContentCard, MemberTitle, CheckdItem, BigBtn, IphonexBottom, OfferHead, BackContainer },
   data() {
     return {
       time111: [],
@@ -358,11 +371,53 @@ export default {
   }
 
   .require-box {
-    margin: 16rpx 0 200rpx 0;
+    margin: 16rpx 0 32rpx 0;
 
     .require-white {
       background-color: white;
       padding-left: 32rpx;
+    }
+  }
+
+  .require-bbl {
+    margin: 0 0 200rpx 0;
+    background-color: white;
+
+    .top-aline111 {
+      margin: 30rpx 0 0 32rpx;
+      height: 1rpx;
+      background-color: #EAECEF;
+    }
+
+    .require-order-set21 {
+      height: 88rpx;
+      @include flexBetween;
+      padding: 0 32rpx;
+
+      .require-order-set21-title {
+        font-size: 28rpx;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #323335;
+        line-height: 36rpx;
+      }
+
+      .require-input-so {
+        flex: 1;
+        text-align: right;
+        font-size: 28rpx;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #BDBDBD;
+      }
+
+      .require-order-set2-unit {
+        padding-left: 8rpx;
+        font-size: 28rpx;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #828282;
+      }
     }
   }
 }

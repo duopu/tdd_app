@@ -413,6 +413,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/mine/signIn/signIn",
+      "style": {
+        "navigationBarTitleText": "我的签到",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/undertakePartyApply/undertakePartyApply",
+      "style": {
+        "navigationBarTitleText": "承接方申请",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {

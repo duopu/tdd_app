@@ -56,7 +56,7 @@ export default {
 	},
   data() {
     return {
-      visible: true,
+      visible: false,
 			type: '',
       content: '',
 			pictureList: [],
@@ -70,7 +70,7 @@ export default {
       this.visible = false;
     },
 		confirm() {
-			this.$emit('onConfirm', { 
+			this.$emit('onConfirm', {
 				questionJob: this.questionJob || this.type,
 				content: this.content,
 				pictureList: this.pictureList,

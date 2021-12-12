@@ -1,12 +1,22 @@
 <template>
   <view class="bottom-operate">
-    <view class="bottom-operate-btn bottom-operate-del" @click="$emit('operateDel')">删除</view>
-    <view class="bottom-operate-btn bottom-operate-save" @click="$emit('operateSave')">保存</view>
+    <view class="bottom-operate-btn bottom-operate-del" @click="$emit('operateDel')">{{ cancelText }}</view>
+    <view class="bottom-operate-btn bottom-operate-save" @click="$emit('operateSave')">{{ sureText }}</view>
   </view>
 </template>
 <script>
 export default {
-  name: "bottomOperate"
+  name: "bottomOperate",
+  props: {
+    sureText: {
+      type: String,
+      default: '保存'
+    },
+    cancelText: {
+      type: String,
+      default: '删除'
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

@@ -32,7 +32,7 @@
                   <image :src="MDicon" class="qus-1img-item" v-for="i in 7" :key="i" />
                 </template>
                 <view class="qus-1img-empty" v-else >
-                  <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/anser-icon.svg" class="qus-1img-empty-img" />
+                  <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/empty-icon-11.svg" class="qus-1img-empty-img" />
                   <view class="qus-1img-empty-text">目前没有回答</view>
                   <view class="qus-1img-empty-btn" @click="answerQuestion()">回答</view>
                 </view>
@@ -47,7 +47,7 @@
       <big-btn button-text="我要提问" @click="$refs.askQuestionsModel.show()" />
     </iphonex-bottom>
 
-    <ask-questions-model 
+    <ask-questions-model
 		  ref="askQuestionsModel"
 			:showType="!isPlaceOrder"
 			:orderType="orderType"

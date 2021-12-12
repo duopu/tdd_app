@@ -6,7 +6,7 @@
 
       <view class="about-us">
         <image class="about-us-img"
-               src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png" />
+               src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/logo-image1.png" />
         <view class="about-us-text">{{ remark }}</view>
 
         <view class="list-box">
@@ -44,17 +44,17 @@ export default {
 			remark: '空间布局是体系化视觉设计的起点，和传统的平面设计的不同之处在于，UI 界面的布局空间要基于「动态、体系化」的角度出发展开。我们受到建筑界大师柯布西耶的模度思想的启发，基于「秩序之美」的原则，探索 UI 设计中的动态空间秩序，形成了 Ant Design 的界面布局方式，为设计者构筑具备理性之美的布局空间创造了条件。',
       list: [
         {
-          url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png',
+          url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/weixin-icon1.svg',
           title: '官方微信：',
           text: 'WX29384'
         },
         {
-          url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png',
+          url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/qq-icon1.svg',
           title: '官方 QQ：',
           text: '234234u234'
         },
         {
-          url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png',
+          url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/sms-icon1.svg',
           title: '电子邮箱：',
           text: 'ikoksdf@oks.com'
         },
