@@ -2,21 +2,24 @@
   <view class="invoice-card">
     <view class="invoice-card-left">
       <view class="invoice-card-left-top">
-        <view class="cil-top1">普票</view>
-        <view class="cil-top2">上海家化联合股份有限公司(保定路)</view>
+        <view class="cil-top1">{{ invoice.invoiceType == 1 ? '专票' : '普票' }}</view>
+        <view class="cil-top2">{{ invoice.principalName }}</view>
       </view>
-      <view class="invoice-card-left-middle">申请时间：2021-10-09 03:58</view>
+      <view class="invoice-card-left-middle">申请时间：{{ invoice.addTime }}</view>
       <view class="invoice-card-left-end">
         <view class="cil-end1">付款方：</view>
-        <text>上海金发科技发展有限公司上海金发科技发展有限公司</text>
+        <text>{{ invoice.payerName }}</text>
       </view>
     </view>
-    <view class="invoice-card-right">8000</view>
+    <view class="invoice-card-right">{{ invoice.payCash / 100 }}</view>
   </view>
 </template>
 <script>
 export default {
-  name: "invoiceCard"
+  name: "invoiceCard",
+	props: {
+		invoice: {},
+	}
 }
 </script>
 <style scoped lang="scss">

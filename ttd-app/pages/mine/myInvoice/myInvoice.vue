@@ -8,12 +8,12 @@
 
       <view class="invoice-list">
         <!-- 已开票  开票中-->
-        <invoice-card v-if="['1', '2'].includes(activeKey)" v-for="i in 10" :key="i" />
+        <invoice-card v-if="['1', '2'].includes(activeKey)" v-for="(i, index) in invoiceList" :key="index" :invoice="i"/>
 
         <!-- 发票 信息  -->
         <invoice-info-card
             v-if="['3'].includes(activeKey)"
-            v-for="(item, i) in invoiceList"
+            v-for="(item, i) in myInvoiceList"
             :key="i"
 						:invoice="item"
             :item="{ iconType: i }"
@@ -34,13 +34,14 @@ export default {
   components: { InvoiceInfoCard, InvoiceCard, BlueTab, BackContainer },
   data() {
     return {
-      activeKey: '1',
+      activeKey: '2',
       tabList: [
-        { text: '已开票', key: '1' },
-        { text: '开票中', key: '2' },
+        { text: '已开票', key: '2' },
+        { text: '开票中', key: '1' },
         { text: '发票信息', key: '3' },
       ],
 			invoiceList: [],
+			myInvoiceList: [],
     };
   },
 	onReady() {
@@ -50,6 +51,7 @@ export default {
   methods: {
     change(data) {
       this.activeKey = data;
+			this.queryInvoiceList();
     },
 		queryInvoiceList() {
 			this.$http.post('/b/orderinvoice/queryPageList', { invoiceState: this.activeKey }, true)
@@ -60,7 +62,7 @@ export default {
 		queryMyInvoiceInfo() {
 			this.$http.post('/b/customerinvoiceinfo/queryPageList', { }, true)
 			.then(res => {
-			  this.invoiceList = res.dataList;
+			  this.myInvoiceList = res.dataList;
 			})
 		},
 		toMyInvoice(invoice) {
