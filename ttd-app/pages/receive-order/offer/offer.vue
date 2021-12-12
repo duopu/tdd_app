@@ -9,9 +9,11 @@
 
       <view class="offer">
 
-        <view class="offer-1">
+<!--        <view class="offer-1">
           <view class="offer-11">待报价</view>
-        </view>
+        </view>-->
+
+        <order-title-sd :show-price="false" label="待报价" :show-state="false" />
 
         <quoted-iten :order="order"/>
 
@@ -78,10 +80,12 @@ import QuotedIten from "../component/quotedIten";
 import BottomPriceAndBtn from "../component/bottomPriceAndBtn";
 import MemberTitle from "../myTeam/memberTitle";
 import TeamListItem from "../myTeam/teamListItem";
+import OrderTitleSd from "../applyBeginWork/orderTitleSd";
 
 export default {
   name: "offer",
   components: {
+    OrderTitleSd,
     TeamListItem,
     MemberTitle,
     BottomPriceAndBtn,

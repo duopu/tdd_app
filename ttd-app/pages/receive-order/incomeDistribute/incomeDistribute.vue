@@ -9,13 +9,15 @@
 
       <view class="offer">
 
-        <view class="ind-1">
+<!--        <view class="ind-1">
           <view class="ind-12">
             <text>订单金额：</text>
             <my-price :scale="0.9" price="8000.00" />
           </view>
           <view class="ind-11">待完成</view>
-        </view>
+        </view>-->
+
+        <order-title-sd order-state="待完成" price="10" />
 
         <quoted-iten :order="order"/>
 
@@ -73,10 +75,12 @@ import MyPrice from "../component/myPrice";
 import QuotedIten from "../component/quotedIten";
 import BottomPriceAndBtn from "../component/bottomPriceAndBtn";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
+import OrderTitleSd from "../applyBeginWork/orderTitleSd";
 
 export default {
   name: "incomeDistribute",
   components: {
+    OrderTitleSd,
 		BigBtn,
     BottomPriceAndBtn,
     QuotedIten,

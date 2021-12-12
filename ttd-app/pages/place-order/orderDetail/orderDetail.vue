@@ -9,13 +9,15 @@
       </template>
 
       <view class="order-dtl">
-        <view class="order-dtl-1">
+<!--        <view class="order-dtl-1">
           <view class="order-dtl-12">
             <text>订单金额：</text>
             <my-price :scale="0.9" price="8000.00" />
           </view>
           <view class="order-dtl-11">待完成</view>
-        </view>
+        </view>-->
+
+        <order-title-sd label="订单金额：" order-state="待完成" show-price show-state />
 
         <quoted-iten :order="order"/>
 
@@ -36,7 +38,7 @@
 				  :show-last-border-bottom="index < (showWorkList.length - 1)"
 				  @onChange="changeQuote(item)"
 				/>
-				
+
       </view>
 			<view v-if="workList.length > 5" class="order-dtl-53" @click="showWork">
 			  <text class="order-dtl-531">{{ showWorkMore ? '收起' : '展开更多' }}</text>
@@ -85,10 +87,11 @@ import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-ic
 import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import EvaluateCard from "../../receive-order/myTeam/evaluateCard";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
+import OrderTitleSd from "../../receive-order/applyBeginWork/orderTitleSd";
 
 export default {
   name: 'orderDetail',
-  components: { IphonexBottom, EvaluateCard, MemberTitle, UniIcons, OfferContentCard, AddRemark, QuotedIten, MyPrice, OfferHead, BackContainer },
+  components: { OrderTitleSd, IphonexBottom, EvaluateCard, MemberTitle, UniIcons, OfferContentCard, AddRemark, QuotedIten, MyPrice, OfferHead, BackContainer },
   data() {
     return {
 			id: '',
@@ -205,36 +208,6 @@ export default {
 
 .order-dtl {
   padding-bottom: 32rpx;
-
-  .order-dtl-1 {
-    @include flexBetween;
-    height: 96rpx;
-    background-color: white;
-    padding: 24rpx 32rpx;
-    box-sizing: border-box;
-
-    .order-dtl-12 {
-      display: flex;
-      align-items: center;
-      font-size: 28rpx;
-      font-family: PingFang SC-Regular, PingFang SC;
-      font-weight: 400;
-      color: #969799;
-      line-height: 36rpx;
-    }
-
-    .order-dtl-11 {
-      width: 116rpx;
-      height: 48rpx;
-      background: #34C759;
-      border-radius: 8rpx;
-      font-size: 28rpx;
-      font-family: PingFang SC-Regular, PingFang SC;
-      font-weight: 400;
-      color: #FFFFFF;
-      @include flexCenter;
-    }
-  }
 }
 
 

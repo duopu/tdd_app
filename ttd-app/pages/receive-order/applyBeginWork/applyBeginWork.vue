@@ -8,13 +8,15 @@
       </template>
 
       <view class="abw">
-        <view class="abw-1">
+<!--        <view class="abw-1">
           <view class="abw-12">
             <text>订单金额：</text>
             <my-price :scale="0.8" price="8000.00" />
           </view>
           <view class="abw-11">待完成</view>
-        </view>
+        </view>-->
+
+        <order-title-sd label="订单金额：" order-state="待完成" price="10" />
 
         <quoted-iten :order="order"/>
 
@@ -36,7 +38,7 @@
             <text class="abwp-r1l">开始工作</text>
             <text v-if="startApplyInfo.address.latitude && order.subState == 4" class="abwp-r1r" @click="getLocation(1)">重新定位</text>
           </view>
-					
+
 					<map v-if="startApplyInfo.address.latitude" class="abwp-rmap" :latitude="startApplyInfo.address.latitude" :longitude="startApplyInfo.address.longitude" />
 					<view v-else class="abwp-bo-1" @click="getLocation(1)">
 					  <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
@@ -64,11 +66,11 @@
           <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
           <view class="abwp-bo-1text">添加位置</view>
         </view>
-				
+
 				<view class="abwp-rmap-text">
 				  {{ completeApplyInfo.address.province || '' }} {{ completeApplyInfo.address.city || '' }} {{ completeApplyInfo.address.district || '' }} {{ completeApplyInfo.address.address || '' }}
 				</view>
-				
+
 				<view v-if="isPlaceOrder" class="abwp-rtime">{{ completeApplyInfo.applyTime }}</view>
 
         <upload-list :hideUploadBtn="order.subState != 6" upload-text="添加照片" :img-list="completeApplyInfo.picList" @upload="chooseImage(2)"/>
@@ -96,10 +98,12 @@ import MyPrice from "../component/myPrice";
 import QuotedIten from "../component/quotedIten";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
 import UploadList from "../component/uploadList";
+import OrderTitleSd from "./orderTitleSd";
 
 export default {
   name: "applyBeginWork",
   components: {
+    OrderTitleSd,
     UploadList,
     BigBtn,
     QuotedIten,
@@ -191,7 +195,7 @@ export default {
 								this.completeApplyInfo.address.latitude = res.latitude;
 								this.completeApplyInfo.address.longitude = res.longitude;
 							}
-							
+
 							// 处理地理地址信息
 							this.queryGeoAddressInfo(res.latitude, res.longitude, type)
 			    }
@@ -388,7 +392,7 @@ export default {
           line-height: 32rpx;
         }
       }
-			
+
 			.abwp-bo-1 {
 			  @include flexCenter;
 			  flex-direction: column;
@@ -396,12 +400,12 @@ export default {
 			  height: 200rpx;
 			  background: #F3F4F5;
 			  margin-bottom: 32rpx;
-			
+
 			  .apply-add-jia {
 			    width: 48rpx;
 			    height: 48rpx;
 			  }
-			
+
 			  .abwp-bo-1text {
 			    font-size: 28rpx;
 			    font-family: PingFang SC-Regular, PingFang SC;
@@ -478,7 +482,7 @@ export default {
         color: #3340A0;
       }
     }
-		
+
 		.abwp-rmap-text {
 		  font-size: 28rpx;
 		  font-family: PingFang SC-Regular, PingFang SC;
@@ -487,7 +491,7 @@ export default {
 		  line-height: 36rpx;
 		  margin: 16rpx 0;
 		}
-		
+
 		.abwp-rtime {
 		  font-size: 28rpx;
 		  font-family: PingFang SC-Regular, PingFang SC;

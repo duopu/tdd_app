@@ -9,16 +9,18 @@
       </template>
 
       <view class="order-fini">
-        <view class="order-fini-1">
+<!--        <view class="order-fini-1">
           <view class="order-fini-12">
             <text>订单金额：</text>
             <my-price :scale="0.9" price="8000.00" />
           </view>
           <view class="order-fini-11">已完成</view>
-        </view>
+        </view>-->
+
+        <order-title-sd label="订单金额：" price="10" order-state="待完成" />
 
         <quoted-iten :order="order"/>
-				
+
       </view>
     </back-container>
 
@@ -107,10 +109,12 @@ import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import EvaluateCard from "../../receive-order/myTeam/evaluateCard";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import CheckdItem from "../receiptOrderZy/checkdItem";
+import OrderTitleSd from "../../receive-order/applyBeginWork/orderTitleSd";
 
 export default {
   name: 'orderDetailFinish',
   components: {
+    OrderTitleSd,
     CheckdItem,
     IphonexBottom,
     EvaluateCard,
@@ -191,7 +195,7 @@ export default {
 			}
 			// todo: 积分
 			const integralAmount = 0;
-			
+
 			const totalAmount = (orderAmount - couponAmount - integralAmount) / 100;
 			return totalAmount;
 		},
@@ -223,12 +227,12 @@ export default {
 			})
 		},
 		createOrder() {
-			
+
 			if (!this.invoice.id) {
 				uni.showToast({ title:  '请选择发票', icon:  'none' });
 				return;
 			}
-			
+
 			const params = {
 				couponId: this.coupon.id ? this.coupon.id : undefined,
 				customerInvoiceId: this.invoice.id,
