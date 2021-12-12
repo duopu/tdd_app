@@ -32,7 +32,7 @@
             <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxEmpty.svg" class="chp-193-right3" />
 
           </view>
-					
+
           <view v-if="item.remark" class="chp-2">{{ item.remark }}</view>
 
           <view class="cps-aline" />
@@ -50,6 +50,7 @@
         <view class="chp-b3">
           <text class="chp-b31">总金额：</text>
           <my-price :price="showCount(4)" scale="0.9" />
+          <view class="chp-b32 chp-b321">取消选价</view>
           <view class="chp-b32" @click="confirmPrice">确认选价</view>
         </view>
       </view>
@@ -120,7 +121,7 @@ export default {
 				arr = arr.concat(q.itemIdList);
 			})
 			const set = new Set(arr);
-			
+
 			if (type == 1) {
 				return count;
 			} else if (type == 2) {
@@ -335,8 +336,15 @@ export default {
       font-family: PingFang SC-Regular, PingFang SC;
       font-weight: 400;
       color: #FFFFFF;
-      margin-left: auto;
+      margin-left: 20rpx;
       @include flexCenter;
+    }
+
+    .chp-b321 {
+      background: white;
+      border: 2rpx solid #cccccc;
+      color: #999999;
+      margin-left: auto;
     }
   }
 }
