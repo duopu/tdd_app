@@ -96,7 +96,7 @@ export default {
   data() {
     return {
 			id: '',
-			showConfirm: false,
+			showConfirm: true,
 			order: {},
 			totalAmount: 0,
 			memberList: [],
@@ -130,7 +130,7 @@ export default {
 				this.memberList = res;
 				const user = this.$store.state.user;
 				let mySelf = (res || []).filter((m) => m.id == user.id);
-				this.showConfirm = mySelf[0].confirmState != 1 && mySelf[0].confirmState != 2;
+				// this.showConfirm = mySelf[0].confirmState != 1 && mySelf[0].confirmState != 2;
 			})
 		},
 		changePrice(person) {
@@ -188,7 +188,7 @@ export default {
 		},
 		// 队员确认分配收益
 		confirmDistribute() {
-			this.$http.post('/b/ordersettlement/confirme', { id: this.id }, true)
+			this.$http.post('/b/ordersettlement/confirm', { id: this.id }, true)
 			.then(res => {
 			  uni.showToast({
 			  	title: '确认分配收益成功',
