@@ -9,8 +9,7 @@
       </template>
 
       <view class="complain-list">
-        <complain-card v-if="activeKey == 1" v-for="i in 4" :key="i" card-type="1" />
-        <complain-card v-if="activeKey == 2" v-for="i in 4" :key="i" card-type="2" />
+        <complain-card v-for="i in complainList" :key="i.id" :complain="i" :card-type="activeKey" />
       </view>
     </back-container>
   </view>

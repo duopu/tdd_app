@@ -2,27 +2,26 @@
   <view class="complain-card">
     <view class="cl-item">
       <view class="cl-item1">
-        <view class="cl-item1-left">订单：1343243254354354</view>
+        <view class="cl-item1-left">订单：{{ complain.receiveOrderId }}</view>
         <view class="cl-item1-right" :class="cardType == '1' ? 'cl-item1-right-ac' : ''">待处理</view>
       </view>
       <view class="cl-item2">投诉内容：</view>
-      <view class="cl-item3">
-        可以的话，多少写点！
-        方便工作人员快速排队故障。
-      </view>
-      <view class="cl-item4">{{ cardType == '2' ? '投诉时间：' : '' }}2021-01-15 07:23:23</view>
+      <view class="cl-item3">{{ complain.detail }}</view>
+      <view class="cl-item4">{{ cardType == '2' ? '投诉时间：' : '' }}{{ complain.addTime }}</view>
     </view>
 
     <view class="cl-item-bottm" v-if="cardType == '2'">
-      <view class="cl-item-bottm1">处理结果：已处理了相关人与事</view>
-      <view class="cl-item-bottm2">处理时间：2021-01-15 07:23:23</view>
+      <view class="cl-item-bottm1">处理结果：{{ complain.processContent }}</view>
+      <view class="cl-item-bottm2">处理时间：{{ complain.processTime }}</view>
     </view>
+		<!-- 投诉的图片列表   complain.picList -->
   </view>
 </template>
 <script>
 export default {
   name: "complainCard",
   props: {
+		complain: {},
     cardType: {
       type: Number,
       default: undefined
