@@ -22,9 +22,9 @@
           <input class="receipt-ac-midle" :value="appointPhone" @input="(e) => onInput(e, 'phone')" placeholder="可选输入" placeholder-class="input-placeholder" />
         </view>
 
-        <my-choose-time v-model="time111" title="报价周期" />
+        <my-choose-time v-model="quoteTime" title="报价周期" @change="(time) => onTimeChange(time, 1)" />
 
-        <my-choose-time v-model="time112" title="工作周期" />
+        <my-choose-time v-model="workTime" title="工作周期" @change="(time) => onTimeChange(time, 2)" />
 
         <checkd-item :value="invoiceType" @change="change" />
 
@@ -66,13 +66,13 @@
     </view>
 
     <view class="require-bbl">
-      <add-remark />
+      <add-remark :value="remark" @input="remarkChange" />
 
       <view class="top-aline111" />
 
       <view class="require-order-set21">
         <view class="require-order-set21-title">接单范围</view>
-        <input placeholder="请输入" class="require-input-so" value="123" placeholder-class="placeholder-class" />
+        <input placeholder="请输入" class="require-input-so" :value="distance" @input="(e) => onInput(e, 'distance')" placeholder-class="placeholder-class" />
         <text class="require-order-set2-unit">公里</text>
       </view>
     </view>
@@ -100,8 +100,6 @@ export default {
   components: { AddRemark, MyChooseTime, OfferContentCard, MemberTitle, CheckdItem, BigBtn, IphonexBottom, OfferHead, BackContainer },
   data() {
     return {
-      time111: [],
-      time112: [],
 			orderType: 1,
 			typeArray: [
 				{ orderType: 1, title: '实施与维修', intro: '电子产品的实施与维修工作', url: '/pages/place-order/addImplementation/addImplementation' },
@@ -125,10 +123,8 @@ export default {
 				address: '',
 			}, // 地址
 			orderItemList: [], // 工作列表
-			quotationEnd: '', // 报价周期结束
-			quotationStart: '', // 报价周期开始
-			workEnd: '', // 工作周期结束
-			workStart: '', // 工作周期开始
+			quoteTime: [], // 报价周期
+			workTime: [], // 工作周期
 			remark: '', // 备注
     }
   },
@@ -161,7 +157,15 @@ export default {
 			const text = e.target.value;
 			if (type == 'phone') {
 				this.appointPhone = text;
+			} else if (type == 'distance') {
+				this.distance = text;
 			}
+		},
+		onTimeChange(time, id) {
+			console.log('time ', time, id);
+		},
+		remarkChange(value) {
+			this.remark = value;
 		},
 		selectAddress() {
 			uni.navigateTo({
@@ -247,11 +251,11 @@ export default {
 				orderItemList: this.orderItemList,
 				orderMode: this.orderMode,
 				orderType: this.orderType,
-				quotationEnd: '2022-11-01 12:00:00',
-				quotationStart: '2021-11-01 12:00:00',
+				quotationEnd: this.quoteTime[1],
+				quotationStart: this.quoteTime[0],
 				remark: this.remark,
-				workEnd: '2022-11-01 12:00:00',
-				workStart: '2021-11-01 12:00:00',
+				workEnd: this.workTime[1],
+				workStart: this.workTime[0],
 			}
 			this.$http
 				.post('/b/ordermaster/add', params, true)
