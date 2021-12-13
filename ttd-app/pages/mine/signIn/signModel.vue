@@ -10,10 +10,10 @@
              class="sign-model-add-imag" />
 
       <view class="success-text">签到成功</view>
-      <view class="success-text1">已经连续签到 2 次</view>
-      <view class="success-text2">+&nbsp;&nbsp;<text class="success-text3"> 2</text>&nbsp;&nbsp;分</view>
+      <!-- <view class="success-text1">已经连续签到 2 次</view> -->
+      <!-- <view class="success-text2">+&nbsp;&nbsp;<text class="success-text3"> 2</text>&nbsp;&nbsp;分</view> -->
 
-      <view class="sign-model-btn" @click="hide">保存</view>
+      <view class="sign-model-btn" @click="hide">确定</view>
     </view>
   </view>
 </template>

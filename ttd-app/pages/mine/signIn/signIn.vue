@@ -14,15 +14,14 @@
       </template>
 
       <view class="sign-in-body">
-        <view class="sign-in-b-center" :class="signed ? 'signed-center' :''" @click="toSign">
-          {{ signed ? '已' : '' }}签到
+        <view class="sign-in-b-center" :class="signInToday ? 'signed-center' :''" @click="toSign">
+          {{ signInToday ? '已' : '' }}签到
         </view>
       </view>
     </back-container>
 
     <view class="sign-in-end">
-      规则：初始签到一次获得5积分，连续签到每次比上次多获
-      得1积分，最高一次签到获得12积分。
+      规则：初始签到一次获得{{ startIntegral }}积分，连续签到每次比上次多获得{{ continueIncrIntegral }}积分，最高一次签到获得{{ maxIntegral }}积分。
     </view>
 
     <sign-model ref="signModel" />
@@ -40,15 +39,42 @@ export default {
       list: [
         { num: 1, label: '累计签到次数' },
         { num: 2, label: '累计获得积分' },
-        { num: 13, label: '本身获得积分' },
+        { num: 13, label: '本月获得积分' },
       ],
-      signed: false,
+      signInToday: false,
+			continueIncrIntegral: 0, // 连续签到递增
+			maxIntegral: 0, // 签到单次积分上限
+			startIntegral: 0, // 签到起始积分
     };
   },
+	onReady() {
+		this.querySignInfo();
+		this.querySignConfig();
+	},
   methods: {
+		querySignInfo() {
+			this.$http.post('/b/signin/queryByUser', { }, true)
+			.then(res => {
+				this.list[0].num = res.signAccount;
+				this.list[1].num = res.signScore;
+				this.list[2].num = res.monthScore;
+				this.signInToday = res.signInToday;
+			})
+		},
+		querySignConfig() {
+			this.$http.post('/b/signin/getSignConfig', { }, true)
+			.then(res => {
+				this.continueIncrIntegral = res.continueIncrIntegral;
+				this.maxIntegral = res.maxIntegral;
+				this.startIntegral = res.startIntegral;
+			})
+		},
     toSign() {
-      this.$refs.signModel.show();
-      this.signed = !this.signed
+			this.$http.post('/b/signin/signIn', { }, true)
+			.then(res => {
+				this.$refs.signModel.show();
+				this.signInToday = !this.signInToday;
+			})
     }
   }
 }
