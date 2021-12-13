@@ -3,46 +3,46 @@
     <custom-navbar title="承接方申请" />
 
     <view class="upa-list">
-      <view class="upa-item" v-for="j in 2" :key="j">
-        <view class="upa-item-2">胡一刀</view>
+      <view class="upa-item" v-for="(apply, index) in applyList" :key="index">
+        <view class="upa-item-2">{{ apply.name }}</view>
 
         <view class="upa-item-1">
           <view class="upa-item-31">
             <view class="upa-item-3">
               <view class="upa-item-4">介绍：</view>
-              <view class="upa-item-5">上海金发科技发展有限公司上海金发科技发展有限公司</view>
+              <view class="upa-item-5">{{ apply.remark }}</view>
             </view>
             <view class="upa-item-3">
               <view class="upa-item-4">技能：</view>
               <view class="upa-item-9">
-                <view class="upa-item-10" v-for="i in 3" :key="i">技能</view>
+                <view class="upa-item-10" v-for="s in apply.skillApplyList" :key="s.skillId">{{ s.nodeLink }}</view>
               </view>
             </view>
             <view class="upa-item-3">
               <view class="upa-item-4">岗位：</view>
-              <view class="upa-item-5">2021-10-09 03:58</view>
+              <view class="upa-item-5">{{ (apply.userRoleApplyList || []).map(u => u.nodeLink).join('、') }}</view>
             </view>
             <view class="upa-item-3">
               <view class="upa-item-4">项目：</view>
-              <view class="upa-item-5">描述信息</view>
+              <view class="upa-item-5">{{ (apply.projectApplyList || []).map(p => p.projectName).join('、') }}</view>
             </view>
             <view class="upa-item-3">
               <view class="upa-item-4">设备：</view>
-              <view class="upa-item-5">描述信息</view>
+              <view class="upa-item-5">{{ (apply.toolApplyList || []).map(t => t.nodeLink).join('、') }}</view>
             </view>
           </view>
 
           <image class="upa-item-7"
-                 :src="`https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/${j == 1 ? 'refused-icon' : 'pass-icon11'}.svg`" />
+                 :src="`https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/${apply.approveState == 2 ? 'refused-icon' : 'pass-icon11'}.svg`" />
         </view>
 
-        <view class="upa-item-8" v-if="j == 1">原因：已处理了相关人与事</view>
+        <view class="upa-item-8" v-if="apply.approveState == 2">原因：{{ apply.refusalReason }}</view>
 
       </view>
     </view>
 
     <iphonex-bottom>
-      <big-btn button-text="提交申请" />
+      <big-btn button-text="提交申请" @click="toApply"/>
     </iphonex-bottom>
   </view>
 </template>
@@ -53,8 +53,26 @@ export default {
   name: "undertakePartyApply",
   components: { BigBtn, IphonexBottom },
   data() {
-    return {};
-  }
+    return {
+			applyList: [],
+		};
+  },
+	onReady() {
+		this.queryApplyList();
+	},
+	methods: {
+		queryApplyList() {
+			this.$http.post('/b/applyundertaker/queryPageList', { }, true)
+			.then(res => {
+				this.applyList = res.dataList;
+			})
+		},
+		toApply() {
+			uni.navigateTo({
+				url: '/pages/main/apply/apply'
+			})
+		}
+	},
 }
 </script>
 <style lang="scss" scoped>
