@@ -50,7 +50,7 @@
         <view class="chp-b3">
           <text class="chp-b31">总金额：</text>
           <my-price :price="showCount(4)" scale="0.9" />
-          <view class="chp-b32 chp-b321">取消选价</view>
+          <view class="chp-b32 chp-b321" @click="cancelChoose">取消选价</view>
           <view class="chp-b32" @click="confirmPrice">确认选价</view>
         </view>
       </view>
@@ -140,6 +140,9 @@ export default {
 				// return repeatCount;
 			}
 			return amount / 100;
+		},
+		cancelChoose() {
+			uni.navigateBack({});
 		},
 		onConfirm() {
 			const unQuote = showCount(2);
