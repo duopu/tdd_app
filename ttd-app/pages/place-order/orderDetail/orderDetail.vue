@@ -1,23 +1,14 @@
 <template>
   <view>
 
-    <custom-navbar title="发单" />
+    <custom-navbar title="订单详情" />
 
     <back-container>
       <template #headerSlot>
-        <offer-head title="维修" text="订单编号：924795438953234324" />
+        <offer-head :title="$tool.orderType(order.orderType)" :text="`订单编号：${order.id}`" />
       </template>
 
       <view class="order-dtl">
-<!--        <view class="order-dtl-1">
-          <view class="order-dtl-12">
-            <text>订单金额：</text>
-            <my-price :scale="0.9" price="8000.00" />
-          </view>
-          <view class="order-dtl-11">待完成</view>
-        </view>-->
-
-        <order-title-sd label="订单金额：" order-state="待完成" show-price show-state />
 
         <quoted-iten :order="order"/>
 
@@ -66,12 +57,41 @@
     <view class="order-dtl-botb" />
 
     <iphonex-bottom>
-      <view class="order-dtl-btn-box">
-        <view class="order-dtl-btn1">取消订单</view>
-        <view class="order-dtl-btn1">审核人员</view>
-        <view class="order-dtl-btn1">投诉</view>
-        <view class="order-dtl-btn1 order-dtl-btn2">确认开始</view>
-      </view>
+			<!-- 发单方 -->
+			<view v-if="isPlaceOrder" class="order-dtl-btn-box">
+				<view class="order-dtl-btn1" v-if="[10, 20, 30].includes(order.state)" @click="cancelOrderTip">取消订单</view>
+				<!-- 待报价 待确认 -->
+				<view class="order-dtl-btn1" v-if="[10, 20].includes(order.state) || (order.state == 30 && order.subState == 4)" @click="toQuestionPage">查看问题</view>
+				<!-- 待确认 -->
+				<view class="order-dtl-btn1 order-dtl-btn2" v-if="order.state == 20 && order.subState == 3" @click="toChoosePrice">选价</view>
+				<!-- <view class="order-dtl-btn1 order-dtl-btn2" v-if="order.state == 20 && order.subState == 3" @click="toPayOrder">付款</view> -->
+				<!-- 待开始 -->
+				<view class="order-dtl-btn1" v-if="[30, 40].includes(order.state)" @click="toReviewTeam">审核人员</view>
+				<view class="order-dtl-btn1" v-if="[30, 40, 50].includes(order.state)" @click="toComplainPage">投诉</view>
+				<view class="order-dtl-btn1 order-dtl-btn2" v-if="order.state == 30 && order.subState == 5" @click="toOrderWork">确认开始</view>
+				<!-- 待完工 -->
+				<view class="order-dtl-btn1 order-dtl-btn2" v-if="order.state == 40 && order.subState == 6" @click="toPayPartMoney">部分付款</view>
+				<view class="order-dtl-btn1 order-dtl-btn2" v-if="order.state == 40 && order.subState == 7" @click="toOrderWork">确认完工</view>
+				<!-- 已完工 -->
+				<!-- <view class="order-dtl-btn1" v-if="[50].includes(order.state)" @click="toOrderInvoice">开发票</view> -->
+				<view class="order-dtl-btn1" v-if="[50].includes(order.state)" @click="toOrderComment">去评价</view>
+			</view>
+			<!-- 接单方 -->
+			<view v-else class="order-dtl-btn-box">
+				<view class="order-dtl-btn1" v-if="[10, 20, 30].includes(order.state)" @click="cancelOrderTip">取消订单</view>
+				<!-- 待报价 待确认 -->
+				<view class="order-dtl-btn1" v-if="[10, 20].includes(order.state)" @click="toQuestionPage">咨询</view>
+				<view class="order-dtl-btn1" v-if="[10, 20].includes(order.state)" @click="toQuoteOrder">去报价</view>
+				<!-- 待确认 -->
+				<view class="order-dtl-btn1" v-if="[20].includes(order.state)" @click="toQuoteOrde">修改报价</view>
+				<!-- 待开始 -->
+				<view class="order-dtl-btn1" v-if="[30, 40].includes(order.state) && order.subState != 7" @click="toReviewTeam">变更人员</view>
+				<view class="order-dtl-btn1" v-if="[30, 40, 50].includes(order.state)" @click="toComplainPage">投诉</view>
+				<view class="order-dtl-btn1 order-dtl-btn2" v-if="[30].includes(order.state) && order.subState == 4" @click="toOrderWork">申请开始</view>
+				<!-- 待完工 -->
+				<view class="order-dtl-btn1 order-dtl-btn2" v-if="order.receiverType == 2 && (order.settleState == 1 || order.settleState == 2)" @click="toDistributionIncome">收益分配</view>
+				<view class="order-dtl-btn1 order-dtl-btn2" v-if="[40].includes(order.state) && order.subState == 6" @click="toOrderWork">申请完工</view>
+			</view>
     </iphonex-bottom>
   </view>
 </template>
@@ -87,11 +107,10 @@ import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-ic
 import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import EvaluateCard from "../../receive-order/myTeam/evaluateCard";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
-import OrderTitleSd from "../../receive-order/applyBeginWork/orderTitleSd";
 
 export default {
   name: 'orderDetail',
-  components: { OrderTitleSd, IphonexBottom, EvaluateCard, MemberTitle, UniIcons, OfferContentCard, AddRemark, QuotedIten, MyPrice, OfferHead, BackContainer },
+  components: { IphonexBottom, EvaluateCard, MemberTitle, UniIcons, OfferContentCard, AddRemark, QuotedIten, MyPrice, OfferHead, BackContainer },
   data() {
     return {
 			id: '',
@@ -188,18 +207,150 @@ export default {
 			}
 			return [];
 		},
-		// 查看问题/咨询
-		toQuestionPage() {
-			uni.navigateTo({
-				url: `/pages/receive-order/offerDetail/offerDetail?id=${this.id}`,
-			})
-		},
+		
 		// 人员变更记录
 		toTeamChangeList() {
 			uni.navigateTo({
 				url: `/pages/receive-order/changeRecord/changeRecord?id=${this.id}`,
 			})
 		},
+		
+		// 取消订单
+		cancelOrderTip() {
+			uni.showModal({
+				title: '提示',
+				content: '确认取消该订单?',
+				success: (res) => {
+					if (res.confirm) {
+						this.cancelOrder();
+					}
+				}
+			})
+		},
+		cancelOrder() {
+			const url = this.isPlaceOrder ? '/b/ordermaster/publishCancel' : '/b/orderreceive/receiveCancel';
+			this.$http.post(url, { id: this.id }, true)
+			.then(res => {
+				uni.showToast({ title: '订单已取消' });
+				this.queryOrderList();
+			})
+		},
+		// 查看问题/咨询
+		toQuestionPage() {
+			uni.navigateTo({
+				url: `/pages/receive-order/questionAnswer/questionAnswer?isPlaceOrder=${this.isPlaceOrder ? 1 : 0}&id=${this.id}&orderType=${this.order.orderType}`,
+			})
+		},
+		// 变更/审核人员
+		toReviewTeam() {
+			uni.navigateTo({
+				url: `/pages/receive-order/personChange/personChange?isPlaceOrder=${this.isPlaceOrder ? 1 : 0}&id=${this.id}`,
+			})
+		},
+		// 投诉
+		toComplainPage() {
+			uni.navigateTo({
+				url: `/pages/receive-order/complaint/complaint?id=${this.id}`,
+			})
+		},
+		// 开始/结束工作
+		toOrderWork() {
+			uni.navigateTo({
+				url: `/pages/receive-order/applyBeginWork/applyBeginWork?isPlaceOrder=${this.isPlaceOrder ? 1 : 0}&id=${this.id}`,
+			})
+		},
+		/* 
+		  *  发单方 
+		 */
+		// 选价
+		toChoosePrice() {
+			uni.navigateTo({
+				url: `/pages/place-order/choosePrice/choosePrice?id=${this.order.orderMasterId}&orderId=${this.id}&itemCount=${this.order.itemIdList.length}`,
+			})
+		},
+		// 付款
+		toPayOrder() {
+			uni.navigateTo({
+				url: `/pages/place-order/orderDetailFinish/orderDetailFinish?id=${this.id}`,
+			})
+		},
+		// 部分付款
+		toPayPartMoney() {
+			uni.showModal({
+				title: '部分付款',
+				editable: true,
+				placeholderText: '请输入金额',
+				success: (res) => {
+					if (res.confirm) {
+						const amount = Number(res.content) * 100;
+						this.payMoney(this.id, amount, this.order.quoteAmount);
+					}
+				}
+			})
+		},
+		payMoney(id, amount, totalMount) {
+			if (amount > totalMount) {
+				uni.showToast({ title: '部分付款金额不能大于报价金额', icon: 'none'})
+				return;
+			}
+			const params = {
+				amount,
+				receiverOrderId: id,
+			}
+			this.$http.post('/b/ordersettlement/partialSettlement', params, true)
+			.then(res => {
+				uni.showToast({ title: '部分付款成功' });
+				this.queryOrderList();
+			})
+		},
+		// 评价订单
+		toOrderComment() {
+			uni.navigateTo({
+				url: `/pages/place-order/evaluationOrder/evaluationOrder?id=${this.id}`,
+			})
+		},
+		// 开发票   1: 选择发票抬头
+		toOrderInvoice() {
+			uni.navigateTo({
+				url: `/pages/mine/chooseLookUp/chooseLookUp`,
+				events: {
+					onSelect: (invoice) => {
+						this.applyInvoice(invoice);
+					}
+				}
+			})
+		},
+		// 2: 开发票
+		applyInvoice(invoice) {
+			const params = {
+				invoiceId: invoice.id,
+				receiveOrderId: this.id,
+			}
+			this.$http.post('/b/orderinvoice/applyInvoice', params, true)
+			.then(res => {
+			  uni.showToast({
+			  	title: '开票成功',
+					success: () => {
+						this.queryOrderList();
+					}
+			  })
+			})
+		},
+		/*
+		  *  接单方
+		 */
+		// 去报价
+		toQuoteOrder() {
+			uni.navigateTo({
+				url: `/pages/receive-order/offer/offer?id=${this.id}`,
+			})
+		},
+		// 分配收益
+		toDistributionIncome() {
+			uni.navigateTo({
+				url: `/pages/receive-order/incomeDistribute/incomeDistribute?id=${this.id}`,
+			})
+		}
   }
 }
 </script>
