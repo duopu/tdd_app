@@ -33,8 +33,8 @@
         </view>
         <view class="mm-11" @click="toPage({url: '/pages/mine/myWallet/myWallet'})">
           <view class="mm-12 mm-14">
-            <text>12</text>
-            <text class="mm-15">00</text>
+            <text>{{ moneyZheng() }}</text>
+            <text class="mm-15">{{ moneyFen() }}</text>
           </view>
           <view class="mm-13 mm-131">我的钱包</view>
         </view>
@@ -198,6 +198,7 @@ export default {
       mineTopBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/mine-top-back.png',
       IDcardBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
 			integral: 0,
+			money: 0,
 			realAuth: false,
 			couponCount: 0,
     };
@@ -303,7 +304,7 @@ export default {
 		queryIntegralInfo() {
 			this.$http.get('/b/integral/query', { }, true)
 			.then(res => {
-			  this.integralBalance = res.balance;
+			  this.integral = res.balance;
 			})
 		},
 		queryCouponInfo() {
@@ -311,6 +312,18 @@ export default {
 			.then(res => {
 			  this.couponCount = res.totalCount;
 			})
+		},
+		queryMoneyInfo() {
+			this.$http.post('/b/account/queryBalance', { }, true)
+			.then(res => {
+			  this.money = res.balance || 0;
+			})
+		},
+		moneyZheng() {
+		  return this.money.toString()?.split('.')?.[0] || '0'
+		},
+		moneyFen() {
+		  return `${this.money.toString()?.split('.')?.[1] || '0' }00`.slice(0, 2)
 		},
     navInvite() {
       uni.navigateTo({
