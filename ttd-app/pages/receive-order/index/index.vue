@@ -16,7 +16,7 @@
 
           <view class="ro-2" />
 
-          <view class="ro-1 ro-16" @click="toOrderList">
+          <view class="ro-1 ro-16" @click="toOrderList(10)">
             <view class="ro-11">
               <image class="email-filled" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/teamView.svg" />
             </view>
