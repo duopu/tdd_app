@@ -12,7 +12,7 @@
         <view class="plo-item" v-for="(item, index) in orderList" :key="index">
           <view class="plo-itop">
             <text class="plo-itop-name">
-						{{ showOrderType(item.orderType) }} {{ item.teamName ? `(${item.teamName})` : '' }}
+						{{ $tool.orderType(item.orderType) }} {{ item.teamName ? `(${item.teamName})` : '' }}
 						</text>
             <text class="plo-itop-state"
                   :class="{
@@ -20,7 +20,7 @@
                     'plo-state-green': [50].includes(value),
                     'plo-state-red': [90].includes(value),
                   }"
-            >{{ showOrderState(item.state) }}
+            >{{ $tool.orderState(item.state) }}
             </text>
           </view>
 
@@ -163,51 +163,6 @@ export default {
 			.then(res => {
 				this.orderList = res.dataList;
 			})
-		},
-		showOrderType(type) {
-			switch (type) {
-				case 1:
-				  return '实施/维修';
-				  break;
-				case 2:
-				  return '勘测';
-				  break;
-				case 3:
-				  return '人员';
-				  break;
-				case 4:
-				  return '租赁';
-				  break;
-				case 5:
-				  return '软件';
-				  break;
-				default: 
-				  return '';
-			}
-		},
-		showOrderState(state) {
-			switch (state) {
-				case 10:
-				  return '待报价';
-				  break;
-				case 20:
-				  return '待确认';
-				  break;
-				case 30:
-				  return '待开始';
-				  break;
-				case 40:
-				  return '待完工';
-				  break;
-				case 50:
-				  return '已完工';
-				  break;
-				case 90:
-				  return '已取消';
-				  break;
-				default: 
-				  return '';
-			}
 		},
 		getCountDownDay(time, type) {
 			const now = new Date().getTime();
