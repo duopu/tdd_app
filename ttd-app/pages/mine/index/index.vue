@@ -23,7 +23,7 @@
 
     <view class="mine-middle">
       <view class="mm-1">
-        <view class="mm-11">
+        <view class="mm-11" @click="toPage({url: '/pages/mine/signIn/signIn'})">
           <view class="mm-12">0</view>
           <view class="mm-13">签到</view>
         </view>
@@ -218,7 +218,7 @@ export default {
     newList() {
       return [
         { title: '邀请好友', url: '', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-7.png' },
-        { title: '承接方申请', url: '/pages/main/apply/apply', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-8.png' },
+        { title: '承接方申请', url: '/pages/mine/undertakePartyApply/undertakePartyApply', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-8.png' },
         { title: '实名认证', url: '/pages/mine/realNameAuth/realNameAuth', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png' },
         { title: '我的银行账户', url: '/pages/mine/myBankCard/myBankCard', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-3.png' },
         { title: '发票信息', url: '/pages/mine/myInvoice/myInvoice', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png' },
