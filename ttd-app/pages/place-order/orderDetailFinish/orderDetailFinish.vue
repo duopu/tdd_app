@@ -5,19 +5,10 @@
 
     <back-container>
       <template #headerSlot>
-        <offer-head title="维修" text="订单编号：924795438953234324" />
+        <offer-head :title="$tool.orderType(order.orderType)" :text="`订单编号：${order.id}`" />
       </template>
 
       <view class="order-fini">
-<!--        <view class="order-fini-1">
-          <view class="order-fini-12">
-            <text>订单金额：</text>
-            <my-price :scale="0.9" price="8000.00" />
-          </view>
-          <view class="order-fini-11">已完成</view>
-        </view>-->
-
-        <order-title-sd label="订单金额：" price="10" order-state="待完成" />
 
         <quoted-iten :order="order"/>
 
@@ -103,24 +94,20 @@ import OfferHead from "../../receive-order/component/offerHead";
 import MyPrice from "../../receive-order/component/myPrice";
 import QuotedIten from "../../receive-order/component/quotedIten";
 import AddRemark from "../../receive-order/component/addRemark";
-import OfferContentCard from "../../receive-order/component/offerContentCard";
 import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-icons";
 import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import EvaluateCard from "../../receive-order/myTeam/evaluateCard";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import CheckdItem from "../receiptOrderZy/checkdItem";
-import OrderTitleSd from "../../receive-order/applyBeginWork/orderTitleSd";
 
 export default {
   name: 'orderDetailFinish',
   components: {
-    OrderTitleSd,
     CheckdItem,
     IphonexBottom,
     EvaluateCard,
     MemberTitle,
     UniIcons,
-    OfferContentCard,
     AddRemark,
     QuotedIten,
     MyPrice,
