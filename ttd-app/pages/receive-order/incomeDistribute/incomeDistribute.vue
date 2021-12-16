@@ -4,20 +4,10 @@
 
     <back-container>
       <template #headerSlot>
-        <offer-head />
+        <offer-head :title="$tool.orderType(order.orderType)" :text="`订单编号：${order.id}`" />
       </template>
 
       <view class="offer">
-
-<!--        <view class="ind-1">
-          <view class="ind-12">
-            <text>订单金额：</text>
-            <my-price :scale="0.9" price="8000.00" />
-          </view>
-          <view class="ind-11">待完成</view>
-        </view>-->
-
-        <order-title-sd order-state="待完成" price="10" />
 
         <quoted-iten :order="order"/>
 
@@ -34,8 +24,9 @@
 						:title="item.name"
 						:image="item.headImgUrl"
 						:specItem="[{label: '手机号：', value: item.phone}]"
-            :right-type="item.amount ? 1 : 3"
+            :right-type="order.leaderFlag != 1 && showConfirm ? 6 : (item.amount ? 1 : 3)"
 						:price="item.amount / 100"
+						:state="item.confirmState"
             :show-last-border-bottom="index < (memberList.length -1)"
 						@onChange="changePrice(item)"
         />
@@ -75,12 +66,10 @@ import MyPrice from "../component/myPrice";
 import QuotedIten from "../component/quotedIten";
 import BottomPriceAndBtn from "../component/bottomPriceAndBtn";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
-import OrderTitleSd from "../applyBeginWork/orderTitleSd";
 
 export default {
   name: "incomeDistribute",
   components: {
-    OrderTitleSd,
 		BigBtn,
     BottomPriceAndBtn,
     QuotedIten,
@@ -130,7 +119,7 @@ export default {
 				this.memberList = res;
 				const user = this.$store.state.user;
 				let mySelf = (res || []).filter((m) => m.id == user.id);
-				// this.showConfirm = mySelf[0].confirmState != 1 && mySelf[0].confirmState != 2;
+				this.showConfirm = mySelf[0].confirmState != 1 && mySelf[0].confirmState != 2;
 			})
 		},
 		changePrice(person) {
