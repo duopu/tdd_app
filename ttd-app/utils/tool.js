@@ -74,6 +74,55 @@ const actionForLogin = (action) => {
 	}
 }
 
+// 订单
+// 订单类型
+const orderType = (type) => {
+	switch (type) {
+		case 1:
+		  return '实施/维修';
+		  break;
+		case 2:
+		  return '勘测';
+		  break;
+		case 3:
+		  return '人员';
+		  break;
+		case 4:
+		  return '租赁';
+		  break;
+		case 5:
+		  return '软件';
+		  break;
+		default: 
+		  return '';
+	}
+}
+
+// 订单状态
+const orderState = (state) => {
+	switch (state) {
+		case 10:
+		  return '待报价';
+		  break;
+		case 20:
+		  return '待确认';
+		  break;
+		case 30:
+		  return '待开始';
+		  break;
+		case 40:
+		  return '待完工';
+		  break;
+		case 50:
+		  return '已完工';
+		  break;
+		case 90:
+		  return '已取消';
+		  break;
+		default: 
+		  return '';
+	}
+}
 
 
 export default {
@@ -83,4 +132,6 @@ export default {
 	logout,
 	login,
 	actionForLogin,
+	orderType,
+	orderState,
 }
