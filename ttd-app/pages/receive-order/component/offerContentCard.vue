@@ -9,19 +9,34 @@
         </view>
       </view>
 
-      <view class="oc-right-set" v-if="rightType == '2'" @click="$emit('onChange')">设置报价</view>
+      <view class="oc-right-set" v-if="rightType == 2" @click="$emit('onChange')">设置报价</view>
 
-      <view class="oc-right-set" v-if="rightType == '3'" @click="$emit('onChange')">分配金额</view>
+      <view class="oc-right-set" v-if="rightType == 3" @click="$emit('onChange')">分配金额</view>
 
-      <view class="oc-right" v-if="rightType == '1'">
+      <view class="oc-right" v-if="rightType == 1">
         <my-price :price="price" />
         <view class="oc-right-btn" @click="$emit('onChange')">修改</view>
       </view>
 
-      <view v-if="rightType == '4'" class="oc-right4">未选价</view>
-      <view v-if="rightType == '5'" class="oc-right4 oc-right5">已选价</view>
+      <view v-if="rightType == 4" class="oc-right4">未报价</view>
+      <!-- <view v-if="rightType == '5'" class="oc-right4 oc-right5">已选价</view> -->
+			<view class="oc-right" v-if="rightType == 5">
+			  <my-price :price="price" />
+			</view>
+			
+			
+			<view class="oc-right" v-if="rightType == 6">
+			  <my-price :price="price" />
+				<view 
+				  class="oc-right-text"
+					:class="{
+						'right-text-green': state == 1,
+						'right-text-red': state == 2,
+					}"
+				>{{ state == 0 ? '未确认' : state == 1 ? '已确认' : '已拒绝' }}</view>
+			</view>
 
-      <uni-icons class="oc-arrow" type="arrowright" size="20" color="#BDBDBD" />
+      <uni-icons v-if="rightType == 0" class="oc-arrow" type="arrowright" size="20" color="#BDBDBD" />
     </view>
     <view v-if="showLastBorderBottom" class="oc-bottom" />
   </view>
@@ -40,8 +55,8 @@ export default {
     },
     // 右边区域类型 0 不显示按钮区域 1 修改按钮+价格   2 设置报价  3 分配金额  4 未选价  5 已选价
     rightType: {
-      type: String,
-      default: '1'
+      type: Number,
+      default: 1
     },
 		image: {
 			type: String,
@@ -65,6 +80,10 @@ export default {
       type: String,
       default: ''
     },
+		state: {
+			type: Number,
+			default: 0,
+		}
   },
 }
 </script>
@@ -122,6 +141,19 @@ export default {
       font-weight: 400;
       color: #4F4F4F;
     }
+		
+		.oc-right-text {
+		  font-size: 24rpx;
+		  font-family: PingFang SC-Regular, PingFang SC;
+		  font-weight: 400;
+		  color: #5AC8FA;
+		}
+		.right-text-green {
+			color: #34C759;
+		}
+		.right-text-red {
+			color: #FF3B30;
+		}
   }
 
   .oc-right-set {
