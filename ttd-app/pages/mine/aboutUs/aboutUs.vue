@@ -24,9 +24,9 @@
 
     <consulting-model ref="consultingModel" @confirm="submitQuestion"/>
 
-    <iphonex-bottom z-index="99">
+   <!-- <iphonex-bottom z-index="99">
       <big-btn button-text="我要咨询" @click="$refs.consultingModel.show()" />
-    </iphonex-bottom>
+    </iphonex-bottom> -->
   </view>
 </template>
 
@@ -77,7 +77,7 @@ export default {
 		},
 		submitQuestion(params) {
 			this.$http
-				.post('/core/aboutus/query', params, true)
+				.post('/b/customerquestion/add', params, true)
 				.then(res => {
 					uni.showToast({ title: '您的咨询已提交!' });
 				});
