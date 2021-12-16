@@ -4,20 +4,13 @@
 
     <back-container>
       <template #headerSlot>
-        <offer-head :title="getItemTitle(1)" :text="getOrderIdText()"/>
+        <offer-head :title="$tool.orderType(order.orderType)" :text="`订单编号：${order.id}`" />
       </template>
 
       <view class="offer">
 
-<!--        <view class="offer-1">
-          <view class="offer-11">待报价</view>
-        </view>-->
-
-        <order-title-sd :show-price="false" label="待报价" :show-state="false" />
-
         <quoted-iten :order="order"/>
-
-        <!-- <add-remark @input="input" :value="remark1" /> -->
+		
       </view>
 
     </back-container>
@@ -33,7 +26,7 @@
         <offer-content-card
 				 v-for="(item, index) in showWorkList"
 				:key="index"
-				:right-type="item.quoteAmount ? '1' : '2'"
+				:right-type="isPlaceOrder ? 5 : item.quoteAmount ? 1 : 2"
 				:title="getItemTitle(item)"
 				:specItem="getSpecList(item)"
 				:price="item.quoteAmount / 100"
@@ -53,7 +46,7 @@
 
     <view style="height: 300rpx" />
 
-    <iphonex-bottom>
+    <iphonex-bottom v-if="!isPlaceOrder">
       <bottom-price-and-btn :price="getQuoteCount(3)" @onCancel="cancelQuote" @onConfirm="submitQuote">
         <view class="offer-8">
           <text class="offer-81">已报价</text>
@@ -80,12 +73,10 @@ import QuotedIten from "../component/quotedIten";
 import BottomPriceAndBtn from "../component/bottomPriceAndBtn";
 import MemberTitle from "../myTeam/memberTitle";
 import TeamListItem from "../myTeam/teamListItem";
-import OrderTitleSd from "../applyBeginWork/orderTitleSd";
 
 export default {
   name: "offer",
   components: {
-    OrderTitleSd,
     TeamListItem,
     MemberTitle,
     BottomPriceAndBtn,
@@ -102,6 +93,7 @@ export default {
   data() {
     return {
 			id: '',
+			isPlaceOrder: false,
 			order: {},
 			workList: [],
       memberList: [],
@@ -111,6 +103,9 @@ export default {
     };
   },
 	onLoad(option) {
+		if (option.isPlaceOrder) {
+			this.isPlaceOrder = option.isPlaceOrder ==  '1';
+		}
 		if (option.id) {
 		  this.id = option.id;
 			this.queryOrderInfo();
@@ -122,6 +117,7 @@ export default {
 			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
 			.then(res => {
 			  this.order = res;
+				this.remark = res.remark || '';
 			})
 		},
 		queryWorkList() {
@@ -131,9 +127,6 @@ export default {
 				this.showWorkList = this.workList.slice(0, 5);
 				console.log('showWorkList ', this.showWorkList);
 			})
-		},
-		getOrderIdText() {
-			return `订单编号：${ this.id }`
 		},
     inputChange(value) {
       this.remark = value;
