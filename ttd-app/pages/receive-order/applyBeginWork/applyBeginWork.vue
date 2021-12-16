@@ -4,19 +4,10 @@
 
     <back-container>
       <template #headerSlot>
-        <offer-head />
+        <offer-head :title="$tool.orderType(order.orderType)" :text="`订单编号：${order.id}`" />
       </template>
 
       <view class="abw">
-<!--        <view class="abw-1">
-          <view class="abw-12">
-            <text>订单金额：</text>
-            <my-price :scale="0.8" price="8000.00" />
-          </view>
-          <view class="abw-11">待完成</view>
-        </view>-->
-
-        <order-title-sd label="订单金额：" order-state="待完成" price="10" />
 
         <quoted-iten :order="order"/>
 
@@ -98,12 +89,10 @@ import MyPrice from "../component/myPrice";
 import QuotedIten from "../component/quotedIten";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
 import UploadList from "../component/uploadList";
-import OrderTitleSd from "./orderTitleSd";
 
 export default {
   name: "applyBeginWork",
   components: {
-    OrderTitleSd,
     UploadList,
     BigBtn,
     QuotedIten,
