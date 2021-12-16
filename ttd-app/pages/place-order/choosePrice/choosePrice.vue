@@ -141,6 +141,11 @@ export default {
 			}
 			return amount / 100;
 		},
+		toQuoteDetail(item) {
+			uni.navigateTo({
+				url: `/pages/receive-order/offer/offer?isPlaceOrder=1&id=${item.receiveOrderId}`,
+			})
+		},
 		cancelChoose() {
 			uni.navigateBack({});
 		},
