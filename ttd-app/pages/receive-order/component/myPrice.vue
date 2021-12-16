@@ -28,7 +28,7 @@ export default {
       return this.price ? (this.price?.toString()?.split('.')?.[0] || '0') : '0'
     },
     fen() {
-      return this.price ? (this.price?.toString()?.split('.')?.[1] || '00') : '00'
+      return this.price ? (`${this.price?.toString()?.split('.')?.[1] || '0' }00`.slice(0, 2)) : '00'
     }
   }
 }
