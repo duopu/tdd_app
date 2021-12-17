@@ -192,13 +192,19 @@
 								navUrl = '/pages/main/apply/apply';
 								break;
 						}
-						this.$tool.showModal('提示', tipText, () => {
-							if (navUrl) {
-								uni.navigateTo({
-									url: navUrl
-								});
-							}
-						});
+						if (approveState != 1) {
+							this.$tool.showModal('提示', tipText, () => {
+								if (navUrl) {
+									uni.navigateTo({
+										url: navUrl
+									});
+								}
+							});
+						} else {
+							uni.navigateTo({
+								url: `/pages/place-order/placeOrder/placeOrder?orderType=${item.module}`,
+							})
+						}
 					}
 					console.log('eee');
 				});
