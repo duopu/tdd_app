@@ -218,7 +218,7 @@ export default {
 		},
     newList() {
       return [
-        { title: '邀请好友', url: '', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-7.png' },
+        { title: '邀请好友', url: '/pages/mine/invite/invite', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-7.png' },
         { title: '承接方申请', url: '/pages/mine/undertakePartyApply/undertakePartyApply', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-8.png' },
         { title: '实名认证', url: '/pages/mine/realNameAuth/realNameAuth', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png' },
         { title: '我的银行账户', url: '/pages/mine/myBankCard/myBankCard', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-3.png' },
