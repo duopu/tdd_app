@@ -19,7 +19,7 @@
     <view class="order-set2">
       <title-with-switch show-switch :switch-value="setting.onOffLimitFlag" title="开启无范围限制接单" @changeSwitch="changeSwitch(true)" />
 
-      <view class="order-set21">
+      <view class="order-set21" v-if="!setting.onOffLimitFlag">
         <view class="order-set21-title">接单范围</view>
         <input placeholder="请输入" class="input-so" :value="setting.receivingDistance" @input="onInput" placeholder-class="placeholder-class" />
         <text class="order-set2-unit">公里</text>
