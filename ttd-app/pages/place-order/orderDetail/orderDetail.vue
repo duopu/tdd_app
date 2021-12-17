@@ -66,7 +66,7 @@
 				<view class="order-dtl-btn1 order-dtl-btn2" v-if="order.state == 20 && order.subState == 3" @click="toChoosePrice">选价</view>
 				<!-- <view class="order-dtl-btn1 order-dtl-btn2" v-if="order.state == 20 && order.subState == 3" @click="toPayOrder">付款</view> -->
 				<!-- 待开始 -->
-				<view class="order-dtl-btn1" v-if="[30, 40].includes(order.state)" @click="toReviewTeam">审核人员</view>
+				<view class="order-dtl-btn1" v-if="order.applyOrderMemberFlag" @click="toReviewTeam">审核人员</view>
 				<view class="order-dtl-btn1" v-if="[30, 40, 50].includes(order.state)" @click="toComplainPage">投诉</view>
 				<view class="order-dtl-btn1 order-dtl-btn2" v-if="order.state == 30 && order.subState == 5" @click="toOrderWork">确认开始</view>
 				<!-- 待完工 -->
@@ -85,7 +85,7 @@
 				<!-- 待确认 -->
 				<view class="order-dtl-btn1" v-if="[20].includes(order.state)" @click="toQuoteOrde">修改报价</view>
 				<!-- 待开始 -->
-				<view class="order-dtl-btn1" v-if="[30, 40].includes(order.state) && order.subState != 7" @click="toReviewTeam">变更人员</view>
+				<view class="order-dtl-btn1" v-if="[30, 40].includes(order.state) && order.subState != 7 && order.receiverType == 2" @click="toReviewTeam">变更人员</view>
 				<view class="order-dtl-btn1" v-if="[30, 40, 50].includes(order.state)" @click="toComplainPage">投诉</view>
 				<view class="order-dtl-btn1 order-dtl-btn2" v-if="[30].includes(order.state) && order.subState == 4" @click="toOrderWork">申请开始</view>
 				<!-- 待完工 -->

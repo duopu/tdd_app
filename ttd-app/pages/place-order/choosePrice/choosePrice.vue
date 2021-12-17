@@ -174,7 +174,7 @@ export default {
 			this.$http.post('/b/orderquote/confirmQuote', params, true)
 			.then(res => {
 			  // 跳转支付订单
-				uni.navigateTo({
+				uni.redirectTo({
 					url: `/pages/place-order/orderPay/orderPay?id=${this.orderId}`,
 				})
 			})

@@ -1,6 +1,6 @@
 <template>
   <view>
-    <custom-navbar title="发单列表" />
+    <custom-navbar title="订单列表" />
 
     <back-container>
       <template #headerSlot>
@@ -82,7 +82,7 @@
 							<view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @click="toChoosePrice(item)">选价</view>
 							<!-- <view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @click="toPayOrder(item)">付款</view> -->
 							<!-- 待开始 -->
-							<view class="plo-btn1" v-if="[30, 40].includes(value)" @click="toReviewTeam(item)">审核人员</view>
+							<view class="plo-btn1" v-if="item.applyOrderMemberFlag" @click="toReviewTeam(item)">审核人员</view>
 							<view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
 							<view class="choose-change-btn" v-if="item.state == 30 && item.subState == 5" @click="toOrderWork(item)">确认开始</view>
 							<!-- 待完工 -->
@@ -104,7 +104,7 @@
 						<!-- 待确认 -->
 						<view class="plo-btn1" v-if="[20].includes(value)" @click="toQuoteOrder(item)">修改报价</view>
 						<!-- 待开始 -->
-						<view class="plo-btn1" v-if="[30, 40].includes(value) && item.subState != 7" @click="toReviewTeam(item)">变更人员</view>
+						<view class="plo-btn1" v-if="[30, 40].includes(value) && item.subState != 7 && item.receiverType == 2" @click="toReviewTeam(item)">变更人员</view>
 						<view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
 						<view class="choose-change-btn" v-if="[30].includes(value) && item.subState == 4" @click="toOrderWork(item)">申请开始</view>
 						<!-- 待完工 -->

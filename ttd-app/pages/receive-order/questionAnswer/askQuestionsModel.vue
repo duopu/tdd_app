@@ -2,19 +2,12 @@
   <model-slot v-if="visible" ref="modelSlot" @sure="confirm" @hide="hide" title="提问">
 
     <template #slot1>
-      <view v-if="showType">
-				<view v-if="orderType == 2 || orderType == 5" class="qus-model-input">
-				  <view class="qus-model-input-title">相关工作</view>
-					<picker class="qus-model-inputs" @change="pickerChange" :range="typeList">
-				    <view class="qus-model-inputs">{{ questionJob || type || '请选择' }}</view>
-					</picker>
-				  <uni-icons size="18" color="#BDBDBD" type="right" />
-				</view>
-				<view v-else class="qus-model-input" @click="$emit('onSelect')">
-					<view class="qus-model-input-title">相关工作</view>
-					<view class="qus-model-inputs">{{ questionJob || '请选择' }}</view>
-					<uni-icons size="18" color="#BDBDBD" type="right" />
-				</view>
+			<view v-if="showType" class="qus-model-input">
+			  <view class="qus-model-input-title">相关工作</view>
+				<picker class="qus-model-inputs" @change="pickerChange" :range="cateList">
+			    <view class="qus-model-inputs">{{ type || '请选择' }}</view>
+				</picker>
+			  <uni-icons size="18" color="#BDBDBD" type="right" />
 			</view>
 
       <add-remark label="内容：" :value="content" @input="contentChange" placeholder="可以的话，多少写点！方便工作人员快速排队故障。" />
@@ -41,18 +34,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		orderType: {
-			type: Number,
-			default: 1,
-		},
-		typeList: {
+		cateList: {
 			type: Array,
 			default: [],
 		},
-		questionJob: {
-			type: String,
-			default: '',
-		}
 	},
   data() {
     return {
@@ -71,14 +56,14 @@ export default {
     },
 		confirm() {
 			this.$emit('onConfirm', {
-				questionJob: this.questionJob || this.type,
+				questionJob: this.type,
 				content: this.content,
 				pictureList: this.pictureList,
 			})
 		},
 		pickerChange(e) {
 			const index = e.target.value;
-			this.type = this.typeList[index];
+			this.type = this.cateList[index];
 		},
 		contentChange(value) {
 			this.content = value;

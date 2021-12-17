@@ -4,7 +4,7 @@
 
     <back-container>
       <view class="qus-detail">
-        <view class="qus-it" v-for="question in questionList" :key="question.id.toString()">
+        <view class="qus-it" v-for="(question, index) in questionList" :key="index">
           <view class="qus-1">
             <image :src="MDicon" class="qus-1image" />
             <view class="qus-1right">
@@ -28,13 +28,13 @@
               </view>
               <view v-if="question.answerList.length > 0" class="qus-2text">{{ question.answerList[0].content || '' }}</view>
               <view class="qus-1img-list">
-                <template v-if="question.answerList.length > 0 && question.answerList[0].pictureList.length > 0">
+								<template v-if="question.answerList.length > 0 && question.answerList[0].pictureList.length > 0">
                   <image :src="p" class="qus-1img-item" v-for="p in question.answerList[0].pictureList" :key="p" />
-                </template>
+								</template>
                 <view class="qus-1img-empty" v-if="question.answerList.length == 0" >
                   <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/empty-icon-11.svg" class="qus-1img-empty-img" />
                   <view class="qus-1img-empty-text">目前没有回答</view>
-									<view class="qus-1img-empty-btn" @click="answerQuestion(question)">回答</view>
+									<view class="qus-1img-empty-btn" @click="answerQuestion(question.id)">回答</view>
                 </view>
               </view>
             </view>
@@ -50,10 +50,7 @@
     <ask-questions-model
 		  ref="askQuestionsModel"
 			:showType="!isPlaceOrder"
-			:orderType="orderType"
-			:typeList="typeList"
-			:questionJob="questionJob"
-			@onSelect="selectType"
+			:cateList="cateList"
 			@onConfirm="confirmQuestion"
 		/>
 
@@ -75,10 +72,8 @@ export default {
       id: '',
 			isPlaceOrder: false,
 			questionId: '',
-			orderType: 1,
-			questionJob: '',
-			typeList: [],
       questionList: [],
+			cateList: [],
     };
   },
 	onLoad(option) {
@@ -88,32 +83,8 @@ export default {
 		if (option.id) {
 			this.id = option.id;
 			this.queryQuestionList();
+			this.queryWorkList();
 		}
-		if (option.orderType) {
-			this.orderType = Number(option.orderType);
-			if (this.orderType == 2 || this.orderType == 5) {
-				this.queryTypeList();
-			}
-		}
-	},
-	mounted() {
-		uni.$on('submitSelectSkillTree',(skillList)=>{
-		  console.log('skillList ', skillList);
-			this.questionJob = skillList[0].name;
-		})
-		uni.$on('submitSelectUserroleTree',(userroleList)=>{
-			console.log('userroleList ', userroleList);
-			this.questionJob = userroleList[0].name || '';
-		})
-		uni.$on('submitSelectEquipmenttoolTree',(toolList)=>{
-			console.log('toolList ', toolList);
-			this.questionJob = toolList[0].name || '';
-		})
-	},
-	destroyed() {
-		uni.$off('submitSelectSkillTree');
-		uni.$off('submitSelectUserroleTree');
-		uni.$off('submitSelectEquipmenttoolTree');
 	},
 	onReady() {},
 	methods: {
@@ -123,25 +94,13 @@ export default {
 				this.questionList = res;
 			})
 		},
-		queryTypeList() {
-			const url = this.orderType == 2 ? '/b/ordermaster/settingCateList' : '/b/softwareconf/queryList'
-			this.$http.post(url, {}, true)
+		queryWorkList() {
+			this.$http.post('/b/orderquote/receiveQuoteDetail', { id: this.id }, true)
 			.then(res => {
-				if (this.orderType == 2) {
-					this.typeList = res;
-				} else {
-					this.typeList = res.map((s) => s.name);
-				}
+			  this.cateList = (res.orderItemList || []).map((item) => item.cateName);
 			})
 		},
-		selectType() {
-			const type = this.orderType == 1 ? 'skill' : this.orderType == 3 ? 'userrole' : 'equipmenttool';
-			uni.navigateTo({
-				url:`/pages/main/apply/tree?type=${type}`
-			});
-		},
 		answerQuestion(id) {
-			console.log('question id ', id);
 			this.questionId = id;
 			this.$refs.askQuestionsModel.show();
 		},
@@ -149,8 +108,7 @@ export default {
 			let url = `/b/orderquestionanswer/${this.isPlaceOrder ? 'answer' : 'put'}Question`;
 			const params = {
 				...p,
-				// questionId: this.questionId,
-				questionId: 1006758008557696,
+				questionId: this.questionId,
 				receiveOrderId: this.id,
 			};
 			this.$http.post(url, params, true)
