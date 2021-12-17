@@ -271,7 +271,7 @@ export default {
 		// 付款
 		toPayOrder() {
 			uni.navigateTo({
-				url: `/pages/place-order/orderDetailFinish/orderDetailFinish?id=${this.id}`,
+				url: `/pages/place-order/orderPay/orderPay?id=${this.id}`,
 			})
 		},
 		// 部分付款

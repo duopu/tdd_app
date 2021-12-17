@@ -48,7 +48,7 @@
 <script>
 import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../../receive-order/component/offerHead";
-import CheckdItem from "../receiptOrderZy/checkdItem";
+import CheckdItem from "../placeOrder/checkdItem";
 import AddRemark from "../../receive-order/component/addRemark";
 import UploadList from "../../receive-order/component/uploadList";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";

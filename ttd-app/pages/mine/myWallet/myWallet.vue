@@ -57,16 +57,25 @@ export default {
 			showBalance: true,
 	  };
 	},
-	onReady() {
-		this.queryBalanceInfo();
-		this.queryBalanceList();
+	onReady() {},
+	onShow() {
+		this.refresh();
 	},
-	onShow() {},
+	onPullDownRefresh() {
+		this.refresh();
+	},
 	methods: {
+		refresh() {
+			this.queryBalanceInfo();
+			this.queryBalanceList();
+		},
 	  queryBalanceInfo() {
 			this.$http.post('/b/account/queryBalance', { }, true)
 			.then(res => {
+				uni.stopPullDownRefresh();
 			  this.balance = (res.balance || 0) / 100;
+			}).catch((e) => {
+				uni.stopPullDownRefresh();
 			})
 	  },
 		queryBalanceList() {

@@ -27,7 +27,7 @@ export default {
 			dataList: [],
     };
   },
-	onReady() {
+	onShow() {
 		this.queryList();
 	},
 	methods: {

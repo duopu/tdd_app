@@ -150,6 +150,9 @@ export default {
 	onShow() {
 		this.queryOrderList();
 	},
+	onPullDownRefresh() {
+		this.queryOrderList();
+	},
   methods: {
     changeVal(val) {
       this.value = val;
@@ -161,7 +164,10 @@ export default {
 				state:  this.value
 			}, true)
 			.then(res => {
+				uni.stopPullDownRefresh();
 				this.orderList = res.dataList;
+			}).catch((e) => {
+				uni.stopPullDownRefresh();
 			})
 		},
 		getCountDownDay(time, type) {
@@ -245,7 +251,7 @@ export default {
 		// 付款
 		toPayOrder(item) {
 			uni.navigateTo({
-				url: `/pages/place-order/orderDetailFinish/orderDetailFinish?id=${item.id}`,
+				url: `/pages/place-order/orderPay/orderPay?id=${item.id}`,
 			})
 		},
 		// 部分付款

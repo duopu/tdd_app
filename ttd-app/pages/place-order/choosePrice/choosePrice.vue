@@ -175,7 +175,7 @@ export default {
 			.then(res => {
 			  // 跳转支付订单
 				uni.navigateTo({
-					url: `/pages/place-order/orderDetailFinish/orderDetailFinish?id=${this.orderId}`,
+					url: `/pages/place-order/orderPay/orderPay?id=${this.orderId}`,
 				})
 			})
 		},

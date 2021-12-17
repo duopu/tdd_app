@@ -53,19 +53,28 @@
 		onLoad(option) {
 			if (option.id) {
 			  this.id = option.id;
-				this.queryTeamInfo();
-				this.queryTeamMember();
-				this.queryTeamProfits();
+				this.refresh()
 			}
 		},
 		onReady() {},
+		onPullDownRefresh() {
+			this.refresh();
+		},
 		methods: {
+			refresh() {
+				this.queryTeamInfo();
+				this.queryTeamMember();
+				this.queryTeamProfits();
+			},
 			queryTeamInfo() {
 				this.$http
 					.post('/b/teaminfo/query', { id: this.id }, true)
 					.then(res => {
+						uni.stopPullDownRefresh();
 						this.team = res;
-					});
+					}).catch((e) => {
+				    uni.stopPullDownRefresh();
+			    })
 			},
 			queryTeamMember() {
 				this.$http

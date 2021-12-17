@@ -56,16 +56,25 @@ export default {
 			integralList: [],
 	  };
 	},
-	onReady() {
-		this.queryIntegralInfo();
-		this.queryIntegralList();
+	onReady() {},
+	onShow() {
+		this.refresh();
 	},
-	onShow() {},
+	onPullDownRefresh() {
+		this.refresh();
+	},
 	methods: {
+		refresh() {
+			this.queryIntegralInfo();
+			this.queryIntegralList();
+		},
 	  queryIntegralInfo() {
 			this.$http.get('/b/integral/query', { }, true)
 			.then(res => {
+				uni.stopPullDownRefresh();
 			  this.balance = res.balance;
+			}).catch((e) => {
+				uni.stopPullDownRefresh();
 			})
 	  },
 		queryIntegralList() {

@@ -93,14 +93,19 @@
 				this.queryContentmapping(contentMapId)
 			}
 		},
-		onReady() {
-			this.queryHomeItemData();
-			this.queryBannerData();
-		},
+		onReady() {},
 		onShow() {
-			this.$store.dispatch('queryApproveDetail');
+			this.refresh();
+		},
+		onPullDownRefresh() {
+			this.refresh();
 		},
 		methods: {
+			refresh() {
+				this.queryHomeItemData();
+				this.queryBannerData();
+				this.$store.dispatch('queryApproveDetail');
+			},
 			// 查找映射数据
 			queryContentmapping(contentMapId){
 				this.$http.post('/core/contentmapping/query', {
@@ -119,7 +124,8 @@
 					pageNum: 0,
 					pageSize: 1000
 				};
-				this.$http.post('/b/homepageconf/queryList', param).then(res => {
+				this.$http.post('/b/homepageconf/queryList', param, true).then(res => {
+					uni.stopPullDownRefresh();
 					const dataList = res.dataList;
 					const itemListList = [];
 					itemListList.push(dataList.filter(m => m.module == 1));
@@ -129,7 +135,9 @@
 					itemListList.push(dataList.filter(m => m.module == 5));
 					itemListList.push(dataList.filter(m => m.module == 6));
 					this.itemListList = itemListList;
-				});
+				}).catch((e) => {
+				  uni.stopPullDownRefresh();
+			  })
 			},
 			// 查询首页banner数据
 			queryBannerData() {

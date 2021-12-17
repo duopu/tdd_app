@@ -52,9 +52,11 @@ export default {
 		if (option.state) {
 			this.state = Number(option.state);
 		}
-		this.queryCouponsList();
 	},
 	onReady() {},
+	onShow() {
+		this.queryCouponsList();
+	},
   methods: {
     change(data) {
       this.activeKey = data;

@@ -55,24 +55,30 @@ export default {
 		this.$tool.actionForLogin();
 		this.queryOrderCount();
 	},
+	onPullDownRefresh() {
+		this.queryOrderCount();
+	},
   methods: {
 		queryOrderCount() {
 			this.$http.post('/b/ordermaster/orderNumStatistics', {}, true)
 			.then(res => {
+				uni.stopPullDownRefresh();
 				this.list[0].num = res.unQuoteNum;
 				this.list[1].num = res.unConfirmNum;
 				this.list[2].num = res.unStartNum;
 				this.list[3].num = res.unCompleteNum;
+			}).catch((e) => {
+				uni.stopPullDownRefresh();
 			})
 		},
 		toOrderList(state) {
 			uni.navigateTo({
-				url: `/pages/place-order/placeOrderList/placeOrderList?isPlaceOrder=1&state=${state}`,
+				url: `/pages/place-order/orderList/orderList?isPlaceOrder=1&state=${state}`,
 			})
 		},
     publishOrder(orderType) {
 			uni.navigateTo({
-				url: `/pages/place-order/receiptOrderZy/receiptOrderZy?orderType=${orderType}`,
+				url: `/pages/place-order/placeOrder/placeOrder?orderType=${orderType}`,
 			})
     },
   }

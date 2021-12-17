@@ -44,7 +44,7 @@ export default {
 			myInvoiceList: [],
     };
   },
-	onReady() {
+	onShow() {
 		this.queryInvoiceList();
 		this.queryMyInvoiceInfo();
 	},

@@ -34,9 +34,10 @@ export default {
   methods: {
     change(data) {
       this.activeKey = data;
+			this.queryComplainList();
     },
 		queryComplainList() {
-			this.$http.post('/b/ordercomplain/queryPageList', { state: 0 }, true)
+			this.$http.post('/b/ordercomplain/queryPageList', { state: this.activeKey }, true)
 			.then(res => {
 			  this.complainList = res.dataList;
 			})

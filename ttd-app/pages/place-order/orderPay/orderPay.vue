@@ -98,7 +98,7 @@ import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-ic
 import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import EvaluateCard from "../../receive-order/myTeam/evaluateCard";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
-import CheckdItem from "../receiptOrderZy/checkdItem";
+import CheckdItem from "../placeOrder/checkdItem";
 
 export default {
   name: 'orderDetailFinish',

@@ -5,7 +5,7 @@
       "path": "pages/home/index/index",
       "style": {
         "navigationStyle": "custom",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -19,7 +19,7 @@
       "path": "pages/mine/index/index",
       "style": {
         "navigationStyle": "custom",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -27,7 +27,7 @@
       "style": {
         "navigationBarTitleText": "发单",
         "navigationStyle": "custom",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -35,7 +35,7 @@
       "style": {
         "navigationBarTitleText": "接单",
         "navigationStyle": "custom",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -80,15 +80,6 @@
       }
     },
     {
-      "path": "pages/place-order/list/list",
-      "style": {
-        "navigationBarTitleText": "发单列表",
-        "navigationBarBackgroundColor": "#1059FA",
-        "navigationBarTextStyle": "white",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
       "path": "pages/mine/distribute-users/distribute-users",
       "style": {
         "navigationBarTitleText": "分享详情",
@@ -96,6 +87,14 @@
       }
     },
     /*我的 - begin */
+		{
+		  "path": "pages/mine/signIn/signIn",
+		  "style": {
+		    "navigationBarTitleText": "我的签到",
+		    "navigationStyle": "custom",
+		    "enablePullDownRefresh": false
+		  }
+		},
     {
       "path": "pages/mine/addressManage/addressManage",
       "style": {
@@ -117,7 +116,7 @@
       "style": {
         "navigationBarTitleText": "我的积分",
         "navigationStyle": "custom",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -125,7 +124,7 @@
       "style": {
         "navigationBarTitleText": "我的钱包",
         "navigationStyle": "custom",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -171,7 +170,7 @@
     {
       "path": "pages/mine/editInvoice/editInvoice",
       "style": {
-        "navigationBarTitleText": "发票信息添加",
+        "navigationBarTitleText": "发票信息",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
@@ -192,6 +191,14 @@
         "enablePullDownRefresh": false
       }
     },
+		{
+		  "path": "pages/mine/undertakePartyApply/undertakePartyApply",
+		  "style": {
+		    "navigationBarTitleText": "承接方申请",
+		    "navigationStyle": "custom",
+		    "enablePullDownRefresh": false
+		  }
+		},
     {
       "path": "pages/mine/helpCenter/helpCenter",
       "style": {
@@ -200,6 +207,14 @@
         "enablePullDownRefresh": false
       }
     },
+		{
+		  "path": "pages/mine/aboutUs/aboutUs",
+		  "style": {
+		    "navigationBarTitleText": "关于我们",
+		    "navigationStyle": "custom",
+		    "enablePullDownRefresh": false
+		  }
+		},
     /*我的 - end */
 
     // 接单 begin
@@ -215,14 +230,6 @@
       "path": "pages/receive-order/incomeDistribute/incomeDistribute",
       "style": {
         "navigationBarTitleText": "收益分配",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/offerDetail/offerDetail",
-      "style": {
-        "navigationBarTitleText": "报价详情",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
@@ -248,15 +255,7 @@
       "style": {
         "navigationBarTitleText": "我的团队",
         "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/viewMyTeam/viewMyTeam",
-      "style": {
-        "navigationBarTitleText": "查看我的团队",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -311,9 +310,9 @@
 
     // 发单 begin
     {
-      "path": "pages/place-order/receiptOrderZy/receiptOrderZy",
+      "path": "pages/place-order/placeOrder/placeOrder",
       "style": {
-        "navigationBarTitleText": "发单子页",
+        "navigationBarTitleText": "发单",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
@@ -359,11 +358,11 @@
       }
     },
     {
-      "path": "pages/place-order/placeOrderList/placeOrderList",
+      "path": "pages/place-order/orderList/orderList",
       "style": {
-        "navigationBarTitleText": "发单列表",
+        "navigationBarTitleText": "订单列表",
         "navigationStyle": "custom",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     },
     {
@@ -377,15 +376,15 @@
     {
       "path": "pages/place-order/orderDetail/orderDetail",
       "style": {
-        "navigationBarTitleText": "发单-订单详情",
+        "navigationBarTitleText": "订单详情",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
     },
     {
-      "path": "pages/place-order/orderDetailFinish/orderDetailFinish",
+      "path": "pages/place-order/orderPay/orderPay",
       "style": {
-        "navigationBarTitleText": "发单-订单详情(完成订单)",
+        "navigationBarTitleText": "订单支付",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
@@ -399,33 +398,9 @@
       }
     },
     {
-      "path": "pages/mine/aboutUs/aboutUs",
-      "style": {
-        "navigationBarTitleText": "关于我们",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
       "path": "pages/receive-order/questionAnswer/questionAnswer",
       "style": {
         "navigationBarTitleText": "问答",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/signIn/signIn",
-      "style": {
-        "navigationBarTitleText": "我的签到",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/undertakePartyApply/undertakePartyApply",
-      "style": {
-        "navigationBarTitleText": "承接方申请",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }

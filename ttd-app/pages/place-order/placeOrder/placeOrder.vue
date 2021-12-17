@@ -96,7 +96,7 @@ import MyChooseTime from "./myChooseTime";
 import AddRemark from "../../receive-order/component/addRemark";
 
 export default {
-  name: 'receiptOrderZy',
+  name: 'placeOrder',
   components: { AddRemark, MyChooseTime, OfferContentCard, MemberTitle, CheckdItem, BigBtn, IphonexBottom, OfferHead, BackContainer },
   data() {
     return {
