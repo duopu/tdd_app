@@ -7,7 +7,7 @@
           <view class="integral-top-num">积分</view>
           <view class="integral-top-ac">
             <view class="integral-top-number">{{ balance }}</view>
-            <view class="integral-top-btn">积分商城</view>
+            <view class="integral-top-btn" @click="toMall">积分商城</view>
           </view>
         </view>
       </template>
@@ -15,8 +15,8 @@
       <view class="integral-center">
         <view class="integral-item" @click="toIntegralListPage()">
           <view class="edit-lable">收支明细</view>
-          <view class="edit-midle">查看更多</view>
-          <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" />
+          <!-- <view class="edit-midle">查看更多</view> -->
+          <!-- <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" /> -->
         </view>
 
         <view class="detail-item" v-for="(item, index) in integralList" :key="index">
@@ -32,12 +32,12 @@
     <iphonex-bottom>
       <view class="reservate-item">
         <view class="reservate-item-left">完成订单奖励积分</view>
-        <view class="reservate-item-right">去下单</view>
+        <view class="reservate-item-right" @click="toOrder">去下单</view>
       </view>
 
       <view class="reservate-item">
         <view class="reservate-item-left">邀请新用户奖励积分</view>
-        <view class="reservate-item-right">去下单</view>
+        <view class="reservate-item-right" @click="toInvite">去邀请</view>
       </view>
     </iphonex-bottom>
   </view>
@@ -88,6 +88,23 @@ export default {
 		},
 		toIntegralListPage() {
 			uni.navigateTo({ url: '/pages/mine/addressManage/addressManage' })
+		},
+		toMall() {
+			uni.showModal({
+				title: '',
+				content: '敬请期待哦',
+				showCancel: false,
+			})
+		},
+		toOrder() {
+			uni.switchTab({
+			    url: '/pages/home/index/index'
+			});
+		},
+		toInvite() {
+			uni.navigateTo({
+			    url: '/pages/mine/invite/invite'
+			});
 		},
 	},
 }
