@@ -4,7 +4,7 @@
     <back-container>
       <template v-slot:headerSlot>
         <view class="wallet-top">
-          <view class="wallet-rule">查看提现规则</view>
+          <view class="wallet-rule" @click="showRule">查看提现规则</view>
           <view class="wallet-top-num">
             我的余额
             <uni-icons type="eye-slash-filled" class="eye-slash-filled" size="16" color="#ffffff" @click="changeShowBalanceType()"/>
@@ -19,15 +19,15 @@
       <view class="wallet-center">
         <view class="wallet-item">
           <view class="edit-lable">收支明细</view>
-          <view class="edit-midle">查看更多</view>
-          <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" />
+          <!-- <view class="edit-midle">查看更多</view> -->
+          <!-- <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" /> -->
         </view>
 
         <view class="wallet-detail-item" v-for="(item, index) in balanceList" :key="index">
           <view class="wallet-detail-item-left">
             <view class="wallet-item-left1">{{ item.title }}</view>
             <view class="wallet-item-left2">
-						{{ `${item.inOutType == 1 ? '+': '-'} ${item.inOutType == 1 ? item.inMoney : item.payMoney }`}}
+						{{ `${item.inOutType == 1 ? '+': '-'} ${item.inOutType == 1 ? (item.inMoney / 100) : (item.payMoney / 100) }`}}
 						</view>
           </view>
           <view class="wallet-detail-item-right">
@@ -66,7 +66,7 @@ export default {
 	  queryBalanceInfo() {
 			this.$http.post('/b/account/queryBalance', { }, true)
 			.then(res => {
-			  this.balance = res.balance;
+			  this.balance = (res.balance || 0) / 100;
 			})
 	  },
 		queryBalanceList() {
@@ -77,6 +77,13 @@ export default {
 		},
 		changeShowBalanceType() {
 			this.showBalance = !this.showBalance;
+		},
+		showRule() {
+			uni.showModal({
+				title: '提现规则',
+				content: 'ABCDEFG',
+				showCancel: false,
+			})
 		},
 		// 提现申请
 		withdrawMoney() {
