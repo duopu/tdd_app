@@ -55,6 +55,10 @@
               <view v-if="isPlaceOrder" class="plo-im-3red">{{ item.subState == 6 ? '等待承接方完成工作' : '承接方完成工作,等待您的确认' }}</view>
               <view v-else class="plo-im-3red">{{ item.subState == 6 ? '' : '等待用户确认完工' }}</view>
             </view>
+						
+						<view class="state1-tip" v-if="!isPlaceOrder && item.settleState == 1">
+						  <view class="plo-im-3red">已支付{{ item.settleAmount / 100 }}元</view>
+						</view>
 
             <view class="state1-tip" v-if="value === 90">
               <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/warningTanhao.svg" class="warn-tanhao" />
