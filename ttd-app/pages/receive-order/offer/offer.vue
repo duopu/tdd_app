@@ -117,7 +117,7 @@ export default {
 			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
 			.then(res => {
 			  this.order = res;
-				this.remark = res.remark || '';
+				this.remark = res.receiveRemark || '';
 			})
 		},
 		queryWorkList() {

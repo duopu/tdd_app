@@ -11,7 +11,7 @@
         <text>{{ invoice.payerName }}</text>
       </view>
     </view>
-    <view class="invoice-card-right">{{ invoice.payCash / 100 }}</view>
+    <view class="invoice-card-right">{{ invoice.allTotalAmount / 100 }}</view>
   </view>
 </template>
 <script>

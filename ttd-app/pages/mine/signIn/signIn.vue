@@ -70,6 +70,7 @@ export default {
 			})
 		},
     toSign() {
+			if (this.signInToday) return;
 			this.$http.post('/b/signin/signIn', { }, true)
 			.then(res => {
 				this.$refs.signModel.show();
