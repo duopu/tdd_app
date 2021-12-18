@@ -1,23 +1,23 @@
 <template>
-  <modal-box title="邀请成员" ref="modelBox">
+  <modal-box title="邀请成员" ref="modelBox" @confirm="confirm">
     <template #slot1>
       <view class="invite-mem">
         <view class="invite-member">
           <view class="invite-member1">手机号：</view>
           <view class="invite-member2">
-            <input class="invite-member4" placeholder-class="input-placeholder" />
+            <input class="invite-member4" :value="phone" @input="onInput" placeholder-class="input-placeholder" />
           </view>
-          <view class="invite-member3">查找</view>
+          <view class="invite-member3" @click="search">查找</view>
         </view>
 
         <view class="i-member-list" v-if="list">
-          <view class="i-member-item" v-for="i in list" :key="i">
+          <view class="i-member-item" v-for="(p, index) in list" :key="index">
             <image class="i-member-item1"
                    src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png" />
             <view class="i-member-item2">
               <view class="i-member-item3">
-                <text class="i-member-item4">赵璇海</text>
-                <text class="i-member-item5">18654403053</text>
+                <text class="i-member-item4">{{ p.name }}</text>
+                <text class="i-member-item5">{{ p.phone }}</text>
               </view>
               <view class="i-member-item6">
                 <view class="i-member-item7" v-for="i in 3" :key="i">技能{{ i }}</view>
@@ -35,9 +35,12 @@ import ModalBox from "../../place-order/choosePrice/modalBox";
 export default {
   name: "inviteMemberModel",
   components: { ModalBox },
+	props: {
+		list: [],
+	},
   data() {
     return {
-      list: 1
+			phone: '',
     }
   },
   methods: {
@@ -46,7 +49,17 @@ export default {
     },
     hide() {
       this.$refs.modelBox.hide();
-    }
+    },
+		onInput(e) {
+			this.phone = e.target.value;
+		},
+		search() {
+			this.$emit('onSearch', this.phone);
+		},
+		confirm() {
+			const p = this.list[0];
+			this.$emit('onConfirm', p ? p.id : '');
+		},
   }
 }
 </script>

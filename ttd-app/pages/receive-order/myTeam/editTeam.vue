@@ -9,16 +9,16 @@
       <view class="edit-team-title">团队信息</view>
 
       <view class="edit-team-add" @click="chooseImage">
-				<image v-if="logo" :src="logo" class="edit-team-add-imag" />
+				<image v-if="newLogo" :src="newLogo" class="edit-team-add-imag" />
         <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadAdd.svg" class="edit-team-add-imag" />
       </view>
 
       <view class="edit-team-name">
-        <input class="edit-team-input" :value="title" @input="(e) => onInput(e, 'title')" placeholder="请输入团队名称" placeholder-class="input-placeholder" />
+        <input class="edit-team-input" :value="newTitle" @input="(e) => onInput(e, 'title')" placeholder="请输入团队名称" placeholder-class="input-placeholder" />
       </view>
 
       <view class="edit-team-intro">
-        <textarea class="edit-team-intro-dt" :value="intro" @input="(e) => onInput(e, 'intro')" placeholder="请输入团队介绍" />
+        <textarea class="edit-team-intro-dt" :value="newIntro" @input="(e) => onInput(e, 'intro')" placeholder="请输入团队介绍" />
       </view>
 
       <view class="edit-team-btn" @click="confirm">{{ btnText }}</view>
@@ -50,8 +50,22 @@ export default {
   data() {
     return {
       visible: false,
+			newLogo: this.logo,
+			newTitle: this.title,
+			newIntro: this.intro,
     }
   },
+	watch: {
+		logo(newVal) {
+			this.newLogo = newVal;
+		},
+		title(newVal) {
+			this.newTitle = newVal;
+		},
+		intro(newVal) {
+			this.newIntro = newVal;
+		},
+	},
   methods: {
     show() {
       this.visible = true;
@@ -61,14 +75,14 @@ export default {
     },
 		confirm() {
 			this.visible = false;
-			this.$emit('onSave', this.logo, this.title, this.intro);
+			this.$emit('onSave', this.newLogo, this.newTitle, this.newIntro);
 		},
 		onInput(e, type) {
 			const text = e.target.value;
 			if (type == 'title') {
-				this.title = text;
+				this.newTitle = text;
 			} else if (type == 'intro') {
-				this.intro = text;
+				this.newIntro = text;
 			}
 		},
 		chooseImage() {
@@ -86,7 +100,7 @@ export default {
 			};
 			this.$http.upload({ path }, true)
 			.then(res=>{
-				this.logo = res;
+				this.newLogo = res;
 			});
 		},
   }

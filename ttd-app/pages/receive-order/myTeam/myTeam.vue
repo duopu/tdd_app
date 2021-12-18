@@ -19,12 +19,12 @@
     </back-container>
 
     <view class="my-team">
-      <member-title :showRight="team.leaderFlag" @add="invitePerson"/>
+      <member-title :showRight="team.leaderFlag" @add="showInvite"/>
 
       <team-list-item v-for="(item, i) in memberList" :member="item" @onClick="toPersonDetail(item)" @onDelete="removePerson(item.id)"/>
     </view>
 
-    <invite-member-model ref="inviteMemberModel" />
+    <invite-member-model ref="inviteMemberModel" :list="searchList" @onSearch="searchPerson" @onConfirm="invitePerson"/>
 
 	</view>
 </template>
@@ -51,10 +51,10 @@
 				totalProfits: 0,
 				avgProfits: 0,
 				memberList: [],
+				searchList: [],
 			}
 		},
 		onLoad(option) {
-      this.$refs.inviteMemberModel.show(); // todo 邀请成员弹窗 调完可删
 			if (option.id) {
 			  this.id = option.id;
 				this.refresh()
@@ -131,16 +131,28 @@
 					}
 				})
 			},
+			showInvite() {
+				this.$refs.inviteMemberModel.show();
+			},
 			searchPerson(phone) {
-				this.$http.post('/b/customer/queryList', { phone: '18898775851' }, true)
+				if (!phone) {
+					uni.showToast({ title: '请输入手机号', icon: 'none' });
+					return;
+				}
+				this.$http.post('/b/customer/queryList', { phone }, true)
 				.then(res => {
+					this.searchList = res;
 				})
 			},
-			invitePerson(id) {
-			  this.$refs.inviteMemberModel.show(); // todo 邀请成员弹窗 调完可删
-			  return
-				this.$http.post('/b/teammember/invitationMember', { inviteeId: 'C1000837506814080' }, true)
+			invitePerson(inviteeId) {
+				if (!inviteeId) {
+					uni.showToast({ title: '请先查找被邀请人', icon: 'none' });
+					return;
+				}
+				this.$http.post('/b/teammember/invitationMember', { inviteeId }, true)
 				.then(res => {
+					uni.showToast({ title: '邀请成功' })
+					this.$refs.inviteMemberModel.hide();
 				})
 			},
 			toCommentPage() {

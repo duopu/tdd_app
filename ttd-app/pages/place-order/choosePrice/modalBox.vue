@@ -12,7 +12,7 @@
 
       <view class="modal-box3">
         <view class="modal-box6 modal-box4" @click="hide">{{ cancelText }}</view>
-        <view class="modal-box6 modal-box5" @click="show">{{ okText }}</view>
+        <view class="modal-box6 modal-box5" @click="confirm">{{ okText }}</view>
       </view>
     </view>
   </view>
@@ -54,13 +54,15 @@ export default {
   },
   methods: {
     show() {
-      this.$emit('show')
       this.visible = true
     },
     hide() {
       this.$emit('hide')
       this.visible = false
-    }
+    },
+		confirm() {
+			this.$emit('confirm');
+		}
   }
 }
 </script>
