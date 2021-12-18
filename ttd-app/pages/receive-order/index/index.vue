@@ -39,7 +39,7 @@
 
     <view class="ro-4">
       <view class="ro-41">我的团队：</view>
-      <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="add-img" />
+      <image v-if="showCreateBtn" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="add-img" />
       <text v-if="showCreateBtn" class="ro-43" @click="showCreateTeam()">创建团队</text>
     </view>
 

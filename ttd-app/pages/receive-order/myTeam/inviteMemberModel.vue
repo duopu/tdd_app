@@ -21,7 +21,7 @@
                 <text class="i-member-item5">{{ p.phone }}</text>
               </view>
               <view class="i-member-item6">
-                <view class="i-member-item7" v-for="i in p.skills.split('、')" :key="i">{{ i }}</view>
+                <view class="i-member-item7" v-for="i in p.skills.split('、').slice(0, 3)" :key="i">{{ i }}</view>
               </view>
             </view>
           </view>
