@@ -12,7 +12,8 @@
 
         <view class="i-member-list" v-if="list">
           <view class="i-member-item" v-for="(p, index) in list" :key="index">
-            <image class="i-member-item1"
+            <image v-if="p.headImgUrl" class="i-member-item1" :src="p.headImgUrl" />
+					  <image v-else class="i-member-item1"
                    src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png" />
             <view class="i-member-item2">
               <view class="i-member-item3">
@@ -20,7 +21,7 @@
                 <text class="i-member-item5">{{ p.phone }}</text>
               </view>
               <view class="i-member-item6">
-                <view class="i-member-item7" v-for="i in 3" :key="i">技能{{ i }}</view>
+                <view class="i-member-item7" v-for="i in p.skills.split('、')" :key="i">{{ i }}</view>
               </view>
             </view>
           </view>

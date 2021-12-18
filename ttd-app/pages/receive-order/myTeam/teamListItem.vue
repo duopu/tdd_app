@@ -36,13 +36,17 @@ export default {
     tagList: {
       type: Array,
       default() {
-        return ['技能1', '技能2', '技能3']
+        return ['', '', '']
       }
     },
   },
 	computed: {
 	  skillList() {
-	    return (this.member.skills || []).slice(0, 3);
+			if (typeof this.member.skills == 'string') {
+				return (this.member.skills || '').split('、').slice(0, 3);
+			} else {
+				return (this.member.skills || []).slice(0, 3);
+			}
 	  },
 	},
 }
