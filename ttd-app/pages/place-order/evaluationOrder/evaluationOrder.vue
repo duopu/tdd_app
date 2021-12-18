@@ -75,7 +75,7 @@ export default {
 					imgUrlList: [],
 					score: 0,
 					userId: res.receiverId,
-					userName: res.receiverUserName,
+					userName: res.receiverUserName || res.teamName,
 					userType: res.receiverType,
 				};
 				this.memberList.splice(0, 0, receiver);
@@ -89,9 +89,9 @@ export default {
 						content: '',
 						imgUrlList: [],
 						score: 0,
-						userId: p.userId,
+						userId: p.id,
 						userName: p.name,
-						userType: p.userType,
+						userType: 1,
 					}
 				})
 			})
