@@ -1,18 +1,18 @@
 <template>
-  <modal-box title="银行打款" ref="modelBox" z-index="1000">
+  <modal-box title="银行打款" ref="modelBox" z-index="1000" @confirm="hide">
     <template #slot1>
       <view class="kuan-model">
         <view class="kuan-model1">
           <view class="kuan-model3">银行卡号：</view>
           <view class="kuan-model4">
-            <view class="kuan-model5">2382 2324 2344 2344</view>
-            <view class="kuan-model6">复制</view>
+            <view class="kuan-model5">{{ bankCard }}</view>
+            <view class="kuan-model6" @click="copy(1)">复制</view>
           </view>
 
           <view class="kuan-model3">订单号：</view>
           <view class="kuan-model4">
-            <view class="kuan-model5">TTD2923482349</view>
-            <view class="kuan-model6">复制</view>
+            <view class="kuan-model5">{{ orderNo }}</view>
+            <view class="kuan-model6" @click="copy(2)">复制</view>
           </view>
         </view>
         <view class="kuan-model2">请打款到指定银行卡号，并且在备注中输入订单号，方便管理员处理你的订单。</view>
@@ -26,13 +26,25 @@ import ModalBox from "../choosePrice/modalBox";
 export default {
   name: "dakuanModel",
   components: { ModalBox },
+	props: {
+		orderNo: '',
+		bankCard: '',
+	},
   methods: {
     show() {
       this.$refs.modelBox.show();
     },
     hide() {
       this.$refs.modelBox.hide();
-    }
+    },
+		copy(id) {
+			uni.setClipboardData({
+			    data: id == 1 ? this.bankCard : this.orderNo,
+			    success: () => {
+			      uni.showToast({ title: '复制成功' })
+			    }
+			});
+		}
   }
 }
 </script>

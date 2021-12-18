@@ -1,21 +1,21 @@
 <template>
-  <modal-box title="使用积分数量" ref="modelBox">
+  <modal-box title="使用积分数量" ref="modelBox" @confirm="onConfirm">
     <template #slot1>
       <view class="use-integral">
         <view class="use-in">
           <view class="use-in1">现有积分</view>
-          <view class="use-in2">2382</view>
+          <view class="use-in2">{{ balance }}</view>
         </view>
 
         <view class="use-in3">
           <text>使用</text>
           <view class="use-in5">
-            <input class="use-in6" />
+            <input class="use-in6" type="number" :value="integral ? integral : ''" @input="onInput" />
           </view>
-          <text>积分，抵扣 <text class="use-in4">27</text>元</text>
+          <text>积分，抵扣 <text class="use-in4">{{ integral / 100 }}</text>元</text>
         </view>
 
-        <view class="use-in7">兑换规则为 1 积分兑 0.01 元</view>
+        <view class="use-in7">规则：1 积分兑 0.01 元，当前订单最多可使用{{ maxIntegral }}积分</view>
       </view>
     </template>
   </modal-box>
@@ -26,13 +26,37 @@ import ModalBox from "../choosePrice/modalBox";
 export default {
   name: "useIntegral",
   components: { ModalBox },
+	props: {
+		balance: 0,
+		maxIntegral: 0,
+	},
+	data() {
+		return {
+			integral: 0,
+		}
+	},
   methods: {
     show() {
       this.$refs.modelBox.show();
     },
     hide() {
       this.$refs.modelBox.hide();
-    }
+    },
+		onInput(e) {
+			this.integral = Number(e.target.value);
+		},
+		onConfirm() {
+			if (this.integral > this.balance) {
+				uni.showToast({ title: '输入积分超过现有积分', icon: 'none' })
+				return;
+			}
+			if (this.integral > this.maxIntegral) {
+				uni.showToast({ title: '输入积分超过最大可用积分', icon: 'none' })
+				return;
+			}
+			this.$emit('onConfirm', this.integral);
+			this.$refs.modelBox.hide();
+		},
   }
 }
 </script>

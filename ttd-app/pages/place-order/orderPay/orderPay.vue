@@ -15,8 +15,6 @@
       </view>
     </back-container>
 
-    <view style="height: 100rpx;border: 1rpx solid red;" @click="$refs.daLuanModel.show()">点击显示银行打款弹窗  用完自己删除啊</view>
-
     <view class="order-fini-5">
       <view class="fini-51">
         <text class="fini-51l">订单金额</text>
@@ -34,10 +32,10 @@
       <view class="fini-51" @click="$refs.useIntegral.show()">
         <text class="fini-51l">
           积分（
-          <text class="fini-51l-red">{{ integralBalance }}</text>
+          <text class="fini-51l-red">{{ integral }}</text>
           ）
         </text>
-        <text class="fini-51m">{{ integral || '请选择' }}</text>
+        <text class="fini-51m">{{ integral ? `-${integral / 100}`  : '请选择' }}</text>
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view>
 
@@ -88,9 +86,9 @@
       </view>
     </iphonex-bottom>
 
-    <dakuan-model ref="daLuanModel" />
+    <dakuan-model ref="daLuanModel" :bankCard="bankCard" :orderNo="order.id" />
 
-    <use-integral ref="useIntegral"/>
+    <use-integral ref="useIntegral" :integral="integral" :balance="integralBalance" :maxIntegral="integralUseMax"  @onConfirm="integralChange"/>
 
   </view>
 </template>
@@ -142,12 +140,10 @@ export default {
         { label: '线上支付', leftIcon: 'chatboxes', wayId: 12, show: true, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankUnderline.svg' },
       ],
       payWay: 12,
+			bankCard: '2382 2324 2344 2344',
     };
   },
 	onLoad(option) {
-    this.$refs.useIntegral.show(); // TODO 调完自行删除
-    this.$refs.daLuanModel.show(); // TODO 调完自行删除
-
 		if (option.id) {
 			this.id = option.id;
 			this.queryOrderInfo();
@@ -185,6 +181,9 @@ export default {
     changePayWay(way) {
       this.payWay = way
     },
+		integralChange(integral) {
+			this.integral = integral;
+		},
 		showPayAmount() {
 			const orderAmount = this.order.payAmount || 0;
 			let couponAmount = 0;
@@ -194,8 +193,7 @@ export default {
 			} else {
 				couponAmount = this.coupon.parvalue || 0;
 			}
-			// todo: 积分
-			const integralAmount = 0;
+			const integralAmount = this.integral;
 
 			const totalAmount = (orderAmount - couponAmount - integralAmount) / 100;
 			return totalAmount;
@@ -270,10 +268,19 @@ export default {
 						}
 					})
 				} else {
-					uni.showToast({
-						title: '订单支付完成',
-						success: () => {
-							uni.navigateBack({});
+					uni.showModal({
+						title: '提示',
+						content: '恭喜您，订单支付成功',
+						cancelText: '返回首页',
+						confirmText: '查看订单',
+						success: (res) => {
+							if (res.confirm) {
+								uni.navigateTo({
+								  url: `/pages/place-order/orderDetail/orderDetail?id=${this.id}&isPlaceOrder=1`,
+								})
+							} else {
+								uni.switchTab({ url: '/pages/home/index/index' });
+							}
 						}
 					})
 				}
@@ -282,8 +289,8 @@ export default {
 		queryBankCardInfo() {
 			this.$http.get('/core/softconf/bankcard', {}, true)
 			.then(res => {
-				const card = res.card;
-				// todo: 弹出银行卡弹窗
+				this.bankCard = res.card;
+				this.$refs.daLuanModel.show();
 			});
 		},
   }
