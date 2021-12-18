@@ -260,10 +260,19 @@ export default {
 			this.$http
 				.post('/b/ordermaster/add', params, true)
 				.then(res => {
-					uni.showToast({
-						title: '发布成功',
-						success: () => {
-							uni.navigateBack({});
+					uni.showModal({
+						title: '提示',
+						content: '需求发布成功,等待承接方报价',
+						confirmText: '查看订单',
+						cancelText: '返回首页',
+						success: (res) => {
+							if (res.confirm) {
+								uni.navigateTo({
+								  url: `/pages/place-order/orderDetail/orderDetail?id=${res.id}&isPlaceOrder=1`,
+								})
+							} else {
+								uni.switchTab({ url: '/pages/home/index/index' });
+							}
 						}
 					})
 				});
