@@ -75,7 +75,7 @@
           <!-- 发单方 -->
           <view v-if="isPlaceOrder">
             <view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
-              <view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @click="cancelOrderTip(item.id)">取消订单</view>
+              <view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @click="cancelOrderTip(item)">取消订单</view>
               <!-- 待报价 待确认 -->
               <view class="plo-btn1" v-if="[10, 20].includes(value) || (item.state == 30 && item.subState == 4)" @click="toQuestionPage(item)">查看问题</view>
               <!-- 待确认 -->
@@ -97,7 +97,7 @@
           <!-- 接单方 -->
           <view v-else>
             <view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
-              <view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @click="cancelOrderTip(item.id)">取消订单</view>
+              <view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @click="cancelOrderTip(item)">取消订单</view>
               <!-- 待报价 待确认 -->
               <view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuestionPage(item)">咨询</view>
               <view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuoteOrder(item)">去报价</view>
@@ -124,12 +124,12 @@
     <modal-box ref="modalBox">
       <template #slot1>
         <view class="cancel-order-model">
-          <view class="com-tip">取消订单会影响后续发包</view>
+          <view class="com-tip">{{ cancelWarning }}</view>
           <view class="com-tip-title">
-            <view class="com-tip-title1">取消原因：</view>
+            <!-- <view class="com-tip-title1">取消原因：</view>
             <view class="com-tip-input-box">
               <input class="com-tip-input" placeholder-class="placeholder-class" placeholder="请输入" />
-            </view>
+            </view> -->
           </view>
         </view>
       </template>
@@ -153,7 +153,8 @@ export default {
       isPlaceOrder: true,
       value: 10, // state 状态 10待报价，20待确认，30待开始，40待完工，50已完成，90已取消
       orderList: [],
-      cancelReason: '',
+			cancelItem: {},
+      cancelWarning: '',
     };
   },
   computed: {
@@ -172,7 +173,6 @@ export default {
   onReady() {
   },
   onShow() {
-    this.$refs.modalBox.show() // TODO 调完自行删除
     this.queryOrderList();
   },
   onPullDownRefresh() {
@@ -215,17 +215,27 @@ export default {
     },
 
     // 取消订单
-    cancelOrderTip(id) {
+    cancelOrderTip(item) {
       //TODO 临时添加 联调结束后自行删除
-      this.$refs.modalBox.show()
-
-      return
+			// this.cancelItem = item;
+			// if (item.state == 10 || item.state == 20) {
+			// 	this.cancelWarning = '取消订单会影响您的声誉，影响后续发单。您确定要取消订单吗？'
+			// } else {
+			// 	this.cancelWarning = '取消订单会影响您的声誉，影响后续发单，并会扣除部分款项。您确定要取消订单吗？'
+			// }
+   //    this.$refs.modalBox.show()
+			// return;
+			
+			let warning = '取消订单会影响您的声誉，影响后续发单，并会扣除部分款项。您确定要取消订单吗？'
+			if (item.state == 10 || item.state == 20) {
+				warning = '取消订单会影响您的声誉，影响后续发单。您确定要取消订单吗？'
+			}
       uni.showModal({
         title: '提示',
-        content: '确认取消该订单?',
+        content: warning,
         success: (res) => {
           if (res.confirm) {
-            this.cancelOrder(id);
+            this.cancelOrder(item.id);
           }
         }
       })
@@ -532,7 +542,7 @@ export default {
 
 .cancel-order-model {
   .com-tip {
-    height: 88rpx;
+    min-height: 88rpx;
     background: rgba(255, 149, 0, 0.1);
     box-sizing: border-box;
     padding: 26rpx 48rpx;
