@@ -13,7 +13,7 @@
             <view class="wallet-top-number">{{ showBalance ? balance : '***'}}</view>
             <!-- <view class="wallet-top-btn" @click="withdrawMoney()">提现</view>-->
             <!-- TODO 临时的入口按钮 链条结束后自行删除  -->
-            <view class="wallet-top-btn" @click="show">提现</view>
+            <view class="wallet-top-btn" @click="showWithdraw">提现</view>
           </view>
         </view>
       </template>
@@ -41,12 +41,12 @@
     </back-container>
 
     <!-- 提现弹窗 -->
-    <model-slot v-if="visible" title="提现" ref="modelSlot" @sure="hide" @hide="hide">
+    <model-slot v-if="visible" title="提现" ref="modelSlot" @sure="withdrawMoney" @hide="hide">
       <template #slot1>
         <view class="wallet-model">
           <view class="wallet-model1">
             提现金额：
-            <text class="wallet-model1-1">134</text>
+            <text class="wallet-model1-1">{{ balance }}</text>
             <text class="wallet-model1-2">元</text>
           </view>
           <view class="wallet-model1">提现到：</view>
@@ -54,12 +54,8 @@
             <bank-card-item
                 background-color="#F3F4F5"
                 :i="2"
-                :item="{
-                  householderName: '建行',
-                  bankName: '交通银行栖霞分行',
-                  bankCardNo: '1851 8617 7282 5013'
-                }"
-                @click=""
+                :item="bankCard"
+                @click="selectBankCard"
             />
           </view>
         </view>
@@ -85,7 +81,8 @@ export default {
 	    balance: 0,
 			balanceList: [],
 			showBalance: true,
-      visible: true,
+      visible: false,
+			bankCard: {},
 	  };
 	},
 	onReady() {},
@@ -96,12 +93,6 @@ export default {
 		this.refresh();
 	},
 	methods: {
-    show() {
-      this.visible = true;
-    },
-    hide() {
-      this.visible = false;
-    },
 		refresh() {
 			this.queryBalanceInfo();
 			this.queryBalanceList();
@@ -127,15 +118,40 @@ export default {
 		showRule() {
 			uni.showModal({
 				title: '提现规则',
-				content: 'ABCDEFG',
+				content: '一次性全部提出，提现申请通过后，将提现到您的银行卡',
 				showCancel: false,
+			})
+		},
+		hide() {
+		  this.visible = false;
+		},
+		showWithdraw() {
+			this.$http.post('/b/customerbank/queryPageList', { pageSize: 1 }, true)
+			.then(res => {
+			  this.bankCard = res.dataList[0];
+				this.visible = true;
+			})
+		},
+		selectBankCard() {
+			uni.navigateTo({
+				url: `/pages/mine/myBankCard/myBankCard?isSelect=1&selectCard=${this.bankCard.bankCardNo || ''}`,
+				events: {
+					onSelect: (card) => {
+						this.bankCard = card;
+					}
+				}
 			})
 		},
 		// 提现申请
 		withdrawMoney() {
-			this.$http.post('/b/account/withdrawApply', { }, true)
+			const params = {
+				cash: this.balance,
+				customerBankId: this.bankCard.id,
+			}
+			this.$http.post('/b/withdraworder/wechatWithdraw', params, true)
 			.then(res => {
 			  uni.showToast({ title: '申请提现成功' })
+				this.visible = false;
 			})
 		}
 	},

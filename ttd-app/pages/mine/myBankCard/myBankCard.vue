@@ -15,7 +15,7 @@
           <uni-icons v-else-if="i === 2" type="arrowright" size="22" color="#969799" />
           <uni-icons v-else type="circle" size="22" color="#969799" />
         </view>-->
-        <bank-card-item v-for="(item, i) in cardList" :key="i" :i="i" :item="item" @click="editCard(item)" />
+        <bank-card-item v-for="(item, i) in cardList" :key="i" :i="isSelect ? (selectCard == item.bankCardNo ? 1 : 3) : 2 " :item="item"@click="editCard(item)" />
       </view>
     </back-container>
 
@@ -36,7 +36,17 @@ export default {
   components: { BankCardItem, BackContainer, BigBtn, IphonexBottom },
 	data() {
 		return {
+			isSelect: false,
+			selectCard: '',
 			cardList: [],
+		}
+	},
+	onLoad(option) {
+	  if (option.isSelect) {
+	    this.isSelect = option.isSelect == '1';
+	  }
+		if (option.selectCard) {
+		  this.selectCard = option.selectCard;
 		}
 	},
 	onReady() {},
@@ -51,7 +61,14 @@ export default {
 			})
 		},
 		editCard(card) {
-		  uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount?id=${card.id}` })
+			if (this.isSelect) {
+			  const eventChannel = this.getOpenerEventChannel();
+			  eventChannel.emit('onSelect', card);
+			
+			  uni.navigateBack({});
+			} else {
+		    uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount?id=${card.id}` })
+			}
 		},
 		addCard() {
 			uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount` })
