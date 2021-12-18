@@ -87,14 +87,14 @@
       }
     },
     /*我的 - begin */
-		{
-		  "path": "pages/mine/signIn/signIn",
-		  "style": {
-		    "navigationBarTitleText": "我的签到",
-		    "navigationStyle": "custom",
-		    "enablePullDownRefresh": false
-		  }
-		},
+    {
+      "path": "pages/mine/signIn/signIn",
+      "style": {
+        "navigationBarTitleText": "我的签到",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
     {
       "path": "pages/mine/addressManage/addressManage",
       "style": {
@@ -191,14 +191,14 @@
         "enablePullDownRefresh": false
       }
     },
-		{
-		  "path": "pages/mine/undertakePartyApply/undertakePartyApply",
-		  "style": {
-		    "navigationBarTitleText": "承接方申请",
-		    "navigationStyle": "custom",
-		    "enablePullDownRefresh": false
-		  }
-		},
+    {
+      "path": "pages/mine/undertakePartyApply/undertakePartyApply",
+      "style": {
+        "navigationBarTitleText": "承接方申请",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
     {
       "path": "pages/mine/helpCenter/helpCenter",
       "style": {
@@ -207,14 +207,14 @@
         "enablePullDownRefresh": false
       }
     },
-		{
-		  "path": "pages/mine/aboutUs/aboutUs",
-		  "style": {
-		    "navigationBarTitleText": "关于我们",
-		    "navigationStyle": "custom",
-		    "enablePullDownRefresh": false
-		  }
-		},
+    {
+      "path": "pages/mine/aboutUs/aboutUs",
+      "style": {
+        "navigationBarTitleText": "关于我们",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
     /*我的 - end */
 
     // 接单 begin
@@ -401,6 +401,38 @@
       "path": "pages/receive-order/questionAnswer/questionAnswer",
       "style": {
         "navigationBarTitleText": "问答",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/message/message",
+      "style": {
+        "navigationBarTitleText": "消息",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/messageDetail/messageDetail",
+      "style": {
+        "navigationBarTitleText": "消息详情",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/messageList/messageList",
+      "style": {
+        "navigationBarTitleText": "列表消息",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/helpDetail/helpDetail",
+      "style": {
+        "navigationBarTitleText": "帮助详情",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }

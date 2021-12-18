@@ -15,6 +15,8 @@
       </view>
     </back-container>
 
+    <view style="height: 100rpx;border: 1rpx solid red;" @click="$refs.daLuanModel.show()">点击显示银行打款弹窗  用完自己删除啊</view>
+
     <view class="order-fini-5">
       <view class="fini-51">
         <text class="fini-51l">订单金额</text>
@@ -29,7 +31,7 @@
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view>
 
-      <view class="fini-51">
+      <view class="fini-51" @click="$refs.useIntegral.show()">
         <text class="fini-51l">
           积分（
           <text class="fini-51l-red">{{ integralBalance }}</text>
@@ -85,6 +87,11 @@
         <view class="order-fini-sure" @click="createOrder">支付</view>
       </view>
     </iphonex-bottom>
+
+    <dakuan-model ref="daLuanModel" />
+
+    <use-integral ref="useIntegral"/>
+
   </view>
 </template>
 <script>
@@ -99,10 +106,14 @@ import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import EvaluateCard from "../../receive-order/myTeam/evaluateCard";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import CheckdItem from "../placeOrder/checkdItem";
+import UseIntegral from "./useIntegral";
+import DakuanModel from "./dakuanModel";
 
 export default {
   name: 'orderDetailFinish',
   components: {
+    DakuanModel,
+    UseIntegral,
     CheckdItem,
     IphonexBottom,
     EvaluateCard,
@@ -134,6 +145,9 @@ export default {
     };
   },
 	onLoad(option) {
+    this.$refs.useIntegral.show(); // TODO 调完自行删除
+    this.$refs.daLuanModel.show(); // TODO 调完自行删除
+
 		if (option.id) {
 			this.id = option.id;
 			this.queryOrderInfo();

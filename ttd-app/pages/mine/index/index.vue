@@ -110,6 +110,10 @@ export default {
       return [
         { title: '帮助中心', url: '/pages/mine/helpCenter/helpCenter', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' },
         { title: '关于我们', url: '/pages/mine/aboutUs/aboutUs', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
+        { title: '消息-临时', url: '/pages/mine/message/message', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
+        { title: '消息详情-临时', url: '/pages/mine/messageDetail/messageDetail', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
+        { title: '列表消息-临时', url: '/pages/mine/messageList/messageList', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
+        { title: '帮助详情-临时', url: '/pages/mine/helpDetail/helpDetail', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
       ]
     },
   },

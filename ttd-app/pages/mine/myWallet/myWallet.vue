@@ -11,7 +11,9 @@
           </view>
           <view class="wallet-top-ac">
             <view class="wallet-top-number">{{ showBalance ? balance : '***'}}</view>
-            <view class="wallet-top-btn" @click="withdrawMoney()">提现</view>
+            <!-- <view class="wallet-top-btn" @click="withdrawMoney()">提现</view>-->
+            <!-- TODO 临时的入口按钮 链条结束后自行删除  -->
+            <view class="wallet-top-btn" @click="show">提现</view>
           </view>
         </view>
       </template>
@@ -38,7 +40,33 @@
       </view>
     </back-container>
 
-    <iphonex-bottom :show-common-area="false" />
+    <!-- 提现弹窗 -->
+    <model-slot v-if="visible" title="提现" ref="modelSlot" @sure="hide" @hide="hide">
+      <template #slot1>
+        <view class="wallet-model">
+          <view class="wallet-model1">
+            提现金额：
+            <text class="wallet-model1-1">134</text>
+            <text class="wallet-model1-2">元</text>
+          </view>
+          <view class="wallet-model1">提现到：</view>
+          <view class="wallet-model3">
+            <bank-card-item
+                background-color="#F3F4F5"
+                :i="2"
+                :item="{
+                  householderName: '建行',
+                  bankName: '交通银行栖霞分行',
+                  bankCardNo: '1851 8617 7282 5013'
+                }"
+                @click=""
+            />
+          </view>
+        </view>
+      </template>
+    </model-slot>
+
+    <iphonex-bottom z-index="99" :show-common-area="false" />
   </view>
 </template>
 <script>
@@ -46,15 +74,18 @@ import BackContainer from "../addressManage/component/backContainer";
 import IphonexBottom from "../addressManage/component/iphonexBottom";
 import BottomOperate from "../addressManage/component/bottomOperate";
 import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-icons";
+import ModelSlot from "../aboutUs/modelSlot";
+import BankCardItem from "../myBankCard/bankCardItem";
 
 export default {
   name: 'myWallet',
-  components: { UniIcons, BottomOperate, IphonexBottom, BackContainer },
+  components: { BankCardItem, ModelSlot, UniIcons, BottomOperate, IphonexBottom, BackContainer },
 	data() {
 	  return {
 	    balance: 0,
 			balanceList: [],
 			showBalance: true,
+      visible: true,
 	  };
 	},
 	onReady() {},
@@ -65,6 +96,12 @@ export default {
 		this.refresh();
 	},
 	methods: {
+    show() {
+      this.visible = true;
+    },
+    hide() {
+      this.visible = false;
+    },
 		refresh() {
 			this.queryBalanceInfo();
 			this.queryBalanceList();
@@ -237,6 +274,37 @@ export default {
         }
       }
     }
+  }
+}
+
+.wallet-model {
+  .wallet-model1 {
+    padding: 36rpx 32rpx 0 32rpx;
+    font-size: 28rpx;
+    font-family: PingFang SC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #323335;
+    line-height: 36rpx;
+
+    .wallet-model1-1 {
+      font-size: 36rpx;
+      font-family: PingFang SC-Medium, PingFang SC;
+      font-weight: 500;
+      color: #FF3B30;
+      line-height: 44rpx;
+    }
+    .wallet-model1-2 {
+      font-size: 24rpx;
+      font-family: PingFang SC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #828282;
+      display: inline-block;
+      padding-left: 10rpx;
+      line-height: 32rpx;
+    }
+  }
+  .wallet-model3 {
+    margin-top: 12rpx;
   }
 }
 </style>

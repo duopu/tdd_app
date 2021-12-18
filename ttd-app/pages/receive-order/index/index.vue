@@ -143,7 +143,7 @@ export default {
 				return;
 			}
 			const params = {
-				teamLogo,
+				teamLogo: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com:443/public%2F2021%2F12%2F08%2F01%2F39%2FBN6YVGX89ULVUL388987718092178.jpeg',
 				teamName,
 				teamIntroduce,
 			}

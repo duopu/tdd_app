@@ -40,6 +40,14 @@
       </view>
     </back-container>
 
+    <view style="padding-bottom: 50px;border: 1rpx solid red;" @click="$refs.choosePriceModal.show()">
+      确定选价弹窗1 - 临时的 调完删掉
+    </view>
+
+    <view style="padding-bottom: 50px;border: 1rpx solid red;" @click="$refs.choosePriceModal1.show()">
+      确定选价弹窗2 - 临时的 调完删掉
+    </view>
+
     <iphonex-bottom>
       <view class="chp-b1">
         <view class="chp-b2">
@@ -55,6 +63,28 @@
         </view>
       </view>
     </iphonex-bottom>
+
+
+    <!-- 确定选假1 -->
+    <modal-box ref="choosePriceModal" center-msg="你确定提交选价？" />
+
+    <!-- 确定选假2 -->
+    <modal-box ref="choosePriceModal1" @hide="" @show="">
+      <template #slot1>
+        <view class="choose-price-slot">
+          <view class="yellow-text">
+            你选择的报价中有
+            <text class="yellow-text-red">1</text>
+            项未有报价，你可以将未报价的部分单独发包。
+          </view>
+
+          <view class="checked-bsx">
+            <checkd-item :label="' '" :value="value111" @change="((value) => {value111 = value})" :list="[{ text: '未报项单独发包', value: '1' }, { text: '关闭未报项', value: '2' }]" />
+          </view>
+        </view>
+      </template>
+    </modal-box>
+
   </view>
 </template>
 
@@ -65,10 +95,12 @@ import MyPrice from "../../receive-order/component/myPrice";
 import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-icons";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import CornerMark from "../../receive-order/component/cornerMark";
+import ModalBox from "./modalBox";
+import CheckdItem from "../placeOrder/checkdItem";
 
 export default {
   name: "choosePrice",
-  components: { CornerMark, IphonexBottom, UniIcons, MyPrice, MyStar, BackContainer },
+  components: { CheckdItem, ModalBox, CornerMark, IphonexBottom, UniIcons, MyPrice, MyStar, BackContainer },
   data() {
     return {
 			id: '',
@@ -76,6 +108,7 @@ export default {
 			itemCount: 0,
 			quoteList: [],
 			selectCount: 0,
+      value111: '1',
 			selectList: [],
     };
   },
@@ -355,6 +388,27 @@ export default {
       color: #999999;
       margin-left: auto;
     }
+  }
+}
+
+.choose-price-slot {
+  .yellow-text {
+    background: rgba(255, 149, 0, 0.1);
+    border-radius: 8rpx;
+    padding: 26rpx 48rpx;
+    font-size: 28rpx;
+    font-family: PingFang SC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #323335;
+    line-height: 36rpx;
+
+    .yellow-text-red {
+      color: #FF3B30;
+    }
+  }
+
+  .checked-bsx {
+    padding: 20rpx 40rpx 60rpx 0;
   }
 }
 </style>

@@ -5,7 +5,7 @@ import tool from './tool.js';
 export default {
 
 	request(url, data, method, loading) {
-		
+
 		let header = {
 			Accept: 'application/json',
 			'Content-Type': method == 'POST' ? 'application/json; charset=utf-8' : 'application/x-www-form-urlencoded',
@@ -30,7 +30,7 @@ export default {
 				mask: true,
 			})
 		}
-		
+
 		return uni.request(options).then(response => {
 			console.log('响应原始信息',response);
 			const res = response[1].data
@@ -43,7 +43,7 @@ export default {
 			console.log('请求地址', url);
 			console.log('请求参数', options);
 			console.log('全部响应', res);
-			
+
 			if (loading) {
 				uni.hideLoading()
 			}
@@ -62,19 +62,19 @@ export default {
 					请求信息：${JSON.stringify(options)}
 					响应信息：${JSON.stringify(res)}
 				`);
-				
+
 				if (loading) {
 					uni.showToast({
 						title: msg,
 						icon: 'none'
-					}) 
+					})
 				}
 				throw {
 					message: msg
 				};
 			}
 		}).catch(err => {
-			
+
 			const message = err.message || '请求失败,请检查网络'
 			if (loading) {
 				uni.showToast({
@@ -87,7 +87,7 @@ export default {
 			};
 		})
 	},
-	
+
 	// get 方法 url:请求路由   data:携带参数   loading：是否显示loading效果
 	get(url = '', data = {}, loading = false) {
 		return this.request(url, data, 'GET', loading);
@@ -100,23 +100,23 @@ export default {
 	delete(url = '', data = {}, loading = false) {
 		return this.request(url, data, 'DELETE', loading);
 	},
-	
+
 	/**
 	 * 上传单个文件
-	 * @param {Object} data 参数  {path:"",file:{}}  path是文件路径  file是文件对象 
+	 * @param {Object} data 参数  {path:"",file:{}}  path是文件路径  file是文件对象
 	 * @param {Object} loading 是否显示loading效果
 	 */
 	upload( data = {}, loading = false) {
 
 		return new Promise((resolve, reject) => {
-			
+
 			if (loading) {
 				uni.showLoading({
 					title: '努力上传中...',
 					mask: true,
 				})
 			}
-			
+
 			let header = {
 				'x-uid':1,
 			}
@@ -125,9 +125,9 @@ export default {
 				console.log('注入token',user.token);
 				header.Authorization = user.token
 			}
-			
+
 			uni.uploadFile({
-				url: config.baseUrl + '/core/upload/uploadPic', 
+				url: config.baseUrl + '/core/upload/uploadPic',
 				filePath: data.path,
 				name: 'file',
 				formData: {
@@ -138,7 +138,7 @@ export default {
 
 					const res = JSON.parse(uploadFileRes.data);
 					console.log('上传结束',res);
-					
+
 					const rescode = res.rescode;
 					const msg = res.msg;
 					const data = res.data;
@@ -171,7 +171,7 @@ export default {
 					reject({message})
 				}
 			});
-			
+
 		})
 
 	}
