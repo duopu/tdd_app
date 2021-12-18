@@ -40,14 +40,6 @@
       </view>
     </back-container>
 
-    <view style="padding-bottom: 50px;border: 1rpx solid red;" @click="$refs.choosePriceModal.show()">
-      确定选价弹窗1 - 临时的 调完删掉
-    </view>
-
-    <view style="padding-bottom: 50px;border: 1rpx solid red;" @click="$refs.choosePriceModal1.show()">
-      确定选价弹窗2 - 临时的 调完删掉
-    </view>
-
     <iphonex-bottom>
       <view class="chp-b1">
         <view class="chp-b2">
@@ -64,22 +56,18 @@
       </view>
     </iphonex-bottom>
 
-
-    <!-- 确定选假1 -->
-    <modal-box ref="choosePriceModal" center-msg="你确定提交选价？" />
-
-    <!-- 确定选假2 -->
-    <modal-box ref="choosePriceModal1" @hide="" @show="">
+    <!-- 确定选价 -->
+    <modal-box ref="choosePriceModal" @confirm="confirmPrice">
       <template #slot1>
         <view class="choose-price-slot">
           <view class="yellow-text">
             你选择的报价中有
-            <text class="yellow-text-red">1</text>
+            <text class="yellow-text-red">{{ showCount(2) }}</text>
             项未有报价，你可以将未报价的部分单独发包。
           </view>
 
           <view class="checked-bsx">
-            <checkd-item :label="' '" :value="value111" @change="((value) => {value111 = value})" :list="[{ text: '未报项单独发包', value: '1' }, { text: '关闭未报项', value: '2' }]" />
+            <checkd-item :label="' '" :value="remainItemSetting" @change="((value) => { remainItemSetting = value })" :list="[{ text: '未报项单独发包', value: 2 }, { text: '关闭未报项', value: 1 }]" />
           </view>
         </view>
       </template>
@@ -108,7 +96,7 @@ export default {
 			itemCount: 0,
 			quoteList: [],
 			selectCount: 0,
-      value111: '1',
+      remainItemSetting: 1,
 			selectList: [],
     };
   },
@@ -183,9 +171,9 @@ export default {
 			uni.navigateBack({});
 		},
 		onConfirm() {
-			const unQuote = showCount(2);
+			const unQuote = this.showCount(2);
 			if (unQuote > 0) {
-				// todo: 弹窗
+				this.$refs.choosePriceModal.show();
 			} else {
 				uni.showModal({
 					title: '提示',
@@ -199,13 +187,15 @@ export default {
 			}
 		},
 		confirmPrice() {
+			const unQuote = this.showCount(2);
 			const params = {
 				orderMasterId: this.id,
 				quoteIdList: this.selectList.map((q) => q.id),
-				remainItemSetting: undefined, // 确认报价后剩余工作项设置 1 关闭 2 单独发包
+				remainItemSetting: unQuote > 0 ? this.remainItemSetting : undefined, // 确认报价后剩余工作项设置 1 关闭 2 单独发包
 			}
 			this.$http.post('/b/orderquote/confirmQuote', params, true)
 			.then(res => {
+				this.$refs.choosePriceModal.hide();
 			  // 跳转支付订单
 				uni.redirectTo({
 					url: `/pages/place-order/orderPay/orderPay?id=${this.orderId}`,
