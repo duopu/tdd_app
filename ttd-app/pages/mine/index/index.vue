@@ -6,7 +6,7 @@
 
     <view class="mine-top">
       <view class="mt-1">
-        <image :src="userHeaderImg" class="mt-11" />
+        <image :src="userHeaderImg" class="mt-11" @click="$refs.updateHeader.show()" />
         <view class="mt-12">
           <text class="mt-14">{{ showWelcome() }}</text>
           <view class="mt-15" @click="toPage({url: '/pages/mine/myIntegral/myIntegral'})">
@@ -70,12 +70,15 @@
 
     <view class="logout">退出登录</view>
 
+    <update-header ref="updateHeader" />
   </view>
 </template>
 
 <script>
 
+import UpdateHeader from "./updateHeader";
 export default {
+  components: { UpdateHeader },
   data() {
     return {
       demo: true,

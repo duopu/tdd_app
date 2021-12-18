@@ -23,6 +23,7 @@ export default {
   name: "uploadList",
   components: { UniIcons },
   props: {
+    // 回显图片
     imgList: {
       type: Array,
       default() {

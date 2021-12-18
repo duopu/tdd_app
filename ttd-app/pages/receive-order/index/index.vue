@@ -154,7 +154,8 @@ export default {
 			})
 		},
 		toTeamDetail(team) {
-			uni.navigateTo({
+      console.log('ssssssssssss');
+      uni.navigateTo({
 				url: `/pages/receive-order/myTeam/myTeam?id=${team.id}`
 			})
 		}

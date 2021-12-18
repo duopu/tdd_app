@@ -1,7 +1,7 @@
 <template>
   <view class="team-card">
     <image class="team-card-img" :src="team.teamLogo" />
-    <view class="team-card-dtl">
+    <view class="team-card-dtl team-card-nm">
       <view class="team-card-1">
         <text class="team-card-name">{{ team.teamName || '' }}</text>
         <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconEditWhite.svg" v-if="showEdit" @click="edit" class="icon-sty"  />
@@ -111,6 +111,10 @@ export default {
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
+  }
+
+  .team-card-nm {
+    flex: 1;
   }
 }
 </style>

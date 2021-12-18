@@ -8,9 +8,9 @@
 				 :team="team"
 				 :showEdit="team.leaderFlag"
 				 :showSetting="team.leaderFlag"
-				 @onSave="updateTeam" 
+				 @onSave="updateTeam"
 				 @onComment="toCommentPage"
-				 @onSetting="toSettingPage" 
+				 @onSetting="toSettingPage"
 				/>
       </template>
 
@@ -24,6 +24,8 @@
       <team-list-item v-for="(item, i) in memberList" :member="item" @onClick="toPersonDetail(item)" @onDelete="removePerson(item.id)"/>
     </view>
 
+    <invite-member-model ref="inviteMemberModel" />
+
 	</view>
 </template>
 <script>
@@ -32,9 +34,10 @@
   import EarningNums from "./earningNums";
   import MemberTitle from "./memberTitle";
   import TeamListItem from "./teamListItem";
+  import InviteMemberModel from "./inviteMemberModel";
   export default {
 		name: "myTeam",
-    components: { TeamListItem, MemberTitle, EarningNums, TeamCard, BackContainer },
+    components: { InviteMemberModel, TeamListItem, MemberTitle, EarningNums, TeamCard, BackContainer },
 		data() {
 			return {
 				id: '',
@@ -51,6 +54,7 @@
 			}
 		},
 		onLoad(option) {
+      this.$refs.inviteMemberModel.show(); // todo 邀请成员弹窗 调完可删
 			if (option.id) {
 			  this.id = option.id;
 				this.refresh()
@@ -133,6 +137,8 @@
 				})
 			},
 			invitePerson(id) {
+			  this.$refs.inviteMemberModel.show(); // todo 邀请成员弹窗 调完可删
+			  return
 				this.$http.post('/b/teammember/invitationMember', { inviteeId: 'C1000837506814080' }, true)
 				.then(res => {
 				})
