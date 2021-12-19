@@ -12,7 +12,7 @@ export default {
   props: {
     text1: {
       type: String,
-      default: '暂无订单'
+      default: '暂无数据'
     },
     text2: {
       type: String,

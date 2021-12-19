@@ -6,11 +6,13 @@
 			<template v-slot:headerSlot>
 			  <blue-tab :active-key="activeKey" :list="tabList" @change="change" />
 			</template>
-			
+
       <view class="my-coupon">
         <view class="my-coupon-item" v-for="(item, i) in couponsList" :key="i">
           <coupon-card :minus-type="i" :coupon="item" @useCoupon="useCoupon" />
         </view>
+
+        <list-empty v-if="!couponsList.length" :text2="' '" />
       </view>
     </back-container>
   </view>
@@ -20,10 +22,11 @@
 import BackContainer from "../addressManage/component/backContainer";
 import BlueTab from "../addressManage/component/blueTab";
 import CouponCard from "./children/couponCard";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "myCoupons",
-  components: { CouponCard, BlueTab, BackContainer },
+  components: { ListEmpty, CouponCard, BlueTab, BackContainer },
   data() {
     return {
       activeKey: '0',
@@ -80,7 +83,7 @@ export default {
 			if (this.isSelect) {
 				const eventChannel = this.getOpenerEventChannel();
 				eventChannel.emit('onSelect', coupon);
-				
+
 				uni.navigateBack({});
 			} else {
 				uni.switchTab({
