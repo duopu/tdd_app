@@ -94,6 +94,7 @@ import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import OfferContentCard from "../../receive-order/component/offerContentCard";
 import MyChooseTime from "./myChooseTime";
 import AddRemark from "../../receive-order/component/addRemark";
+import dayjs from 'dayjs';
 
 export default {
   name: 'placeOrder',
@@ -242,7 +243,40 @@ export default {
 				  }
 			})
 		},
+		checkParams() {
+			if (this.orderMode == 0 && !this.appointPhone) {
+				uni.showToast({ title: '请输入指定人的手机号', icon: 'none' });
+				return false;
+			}
+			const quoteEnd = this.quoteTime[1];
+			if (!this.quoteEnd) {
+				uni.showToast({ title: '请选择报价周期', icon: 'none' });
+				return false;
+			}
+			const now = dayjs(new Date());
+			const end = dayjs(quoteEnd);
+			if (now.valueOf() >= end.valueOf()) {
+				uni.showToast({ title: '报价周期不能早于今天', icon: 'none' });
+				return false;
+			}
+			if (!this.orderAddress.name) {
+				uni.showToast({ title: '请选择地址', icon: 'none' });
+				return false;
+			}
+			if (this.orderAddress.name) {
+				uni.showToast({ title: '请选择地址', icon: 'none' });
+				return false;
+			}
+			if (this.orderItemList.length == 0) {
+				uni.showToast({ title: '请添加工作', icon: 'none' });
+				return false;
+			}
+			
+			return true;
+		},
     submitOrder() {
+			if (!this.checkParams()) return;
+			
 			const params = {
 				appointPhone: this.appointPhone ? this.appointPhone : undefined,
 				distance: this.distance ? this.distance : undefined,
