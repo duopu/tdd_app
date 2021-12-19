@@ -436,6 +436,22 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/mine/myDistribution/myDistribution",
+      "style": {
+        "navigationBarTitleText": "我的分销",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/distributionDetail/distributionDetail",
+      "style": {
+        "navigationBarTitleText": "分销详情",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {
