@@ -1,228 +1,291 @@
 <!-- 我的 -->
 <template>
-  <view class="mine">
+	<view class="mine">
 
-    <custom-navbar title="我的" :show-left-icon="false" />
+		<custom-navbar title="我的" :show-left-icon="false" />
 
-    <view class="mine-top">
-      <view class="mt-1">
-        <image :src="userHeaderImg" class="mt-11" @click="navPeopleDetail" />
-        <view class="mt-12">
-          <text class="mt-14">{{ showWelcome() }}</text>
-          <view class="mt-15" @click="toPage({url: '/pages/mine/myIntegral/myIntegral'})">
-            <text class="mt-16">我的积分：{{ integral }}</text>
-            <uni-icons type="arrowright" class="mt-17" color="rgba(256, 256, 256, 0.2)" size="14" />
-          </view>
-        </view>
-        <view class="mt-13">
-          <text class="mt-18">剩余抽奖次数</text>
-          <text class="mt-19">0</text>
-        </view>
-      </view>
-    </view>
+		<view class="mine-top">
+			<view class="mt-1">
+				<image :src="userHeaderImg" class="mt-11" @click="navPeopleDetail" />
+				<view class="mt-12">
+					<text class="mt-14">{{ showWelcome() }}</text>
+					<view class="mt-15" @click="toPage({url: '/pages/mine/myIntegral/myIntegral'})">
+						<text class="mt-16">我的积分：{{ integral }}</text>
+						<uni-icons type="arrowright" class="mt-17" color="rgba(256, 256, 256, 0.2)" size="14" />
+					</view>
+				</view>
+				<view class="mt-13">
+					<text class="mt-18">剩余抽奖次数</text>
+					<text class="mt-19">0</text>
+				</view>
+			</view>
+		</view>
 
-    <view class="mine-middle">
-      <view class="mm-1">
-        <view class="mm-11" @click="toPage({url: '/pages/mine/signIn/signIn'})">
-          <view class="mm-12">{{ signCount }}</view>
-          <view class="mm-13">签到</view>
-        </view>
-        <view class="mm-11" @click="toPage({url: '/pages/mine/myCoupons/myCoupons'})">
-          <view class="mm-12">{{ couponCount }}</view>
-          <view class="mm-13">我的优惠券</view>
-        </view>
-        <view class="mm-11" @click="toPage({url: '/pages/mine/myWallet/myWallet'})">
-          <view class="mm-12 mm-14">
-            <text>{{ moneyZheng() }}</text>
-            <text class="mm-15">{{ moneyFen() }}</text>
-          </view>
-          <view class="mm-13 mm-131">我的钱包</view>
-        </view>
-      </view>
+		<view class="mine-middle">
+			<view class="mm-1">
+				<view class="mm-11" @click="toPage({url: '/pages/mine/signIn/signIn'})">
+					<view class="mm-12">{{ signCount }}</view>
+					<view class="mm-13">签到（次）</view>
+				</view>
+				<view class="mm-11" @click="toPage({url: '/pages/mine/myCoupons/myCoupons'})">
+					<view class="mm-12">{{ couponCount }}</view>
+					<view class="mm-13">我的优惠券</view>
+				</view>
+				<view class="mm-11" @click="toPage({url: '/pages/mine/myWallet/myWallet'})">
+					<view class="mm-12 mm-14">
+						<text>{{ moneyZheng }}</text>
+						<text class="mm-15">{{ moneyFen }}</text>
+					</view>
+					<view class="mm-13 mm-131">我的钱包</view>
+				</view>
+			</view>
 
-      <image class="mm-2" :src="IDcardBack" />
+			<image class="mm-2" :src="IDcardBack" />
 
-      <view class="mm-3">
-        <template v-for="(i, index) in newList">
-          <view class="mm-31" @click="toPage(i)" :key="i.url">
-            <image class="mm-32" :src="i.img" />
-            <view class="mm-33">{{ i.title }}</view>
+			<view class="mm-3">
+				<template v-for="(i, index) in newList">
+					<view class="mm-31" @click="toPage(i)" :key="i.url">
+						<image class="mm-32" :src="i.img" />
+						<view class="mm-33">{{ i.title }}</view>
 						<view class="mm-33" v-if="i.title == '实名认证' && realAuth">已认证</view>
-            <uni-icons type="arrowright" color="#BDBDBD" size="16" />
-          </view>
-          <view class="mm-35" v-if="index < (newList.length - 1)" />
-        </template>
-      </view>
+						<uni-icons type="arrowright" color="#BDBDBD" size="16" />
+					</view>
+					<view class="mm-35" v-if="index < (newList.length - 1)" />
+				</template>
+			</view>
 
 
-      <view class="mm-3 mm-4">
-        <template v-for="(i, index) in newList1">
-          <view class="mm-31" @click="toPage(i)" :key="i.url">
-            <image class="mm-32" :src="i.img" />
-            <view class="mm-33">{{ i.title }}</view>
-            <uni-icons type="arrowright" color="#BDBDBD" size="16" />
-          </view>
-          <view class="mm-35" v-if="index < (newList1.length - 1)" />
-        </template>
-      </view>
+			<view class="mm-3 mm-4">
+				<template v-for="(i, index) in newList1">
+					<view class="mm-31" @click="toPage(i)" :key="i.url">
+						<image class="mm-32" :src="i.img" />
+						<view class="mm-33">{{ i.title }}</view>
+						<uni-icons type="arrowright" color="#BDBDBD" size="16" />
+					</view>
+					<view class="mm-35" v-if="index < (newList1.length - 1)" />
+				</template>
+			</view>
 
-    </view>
+		</view>
 
-    <view class="logout">退出登录</view>
+		<view class="logout">退出登录</view>
 
-    <update-header ref="updateHeader" />
-  </view>
+		<update-header ref="updateHeader" />
+	</view>
 </template>
 
 <script>
-
-import UpdateHeader from "./updateHeader";
-export default {
-  components: { UpdateHeader },
-  data() {
-    return {
-      demo: true,
-      mineTopBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/mine-top-back.png',
-      IDcardBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
-			integral: 0,
-			signCount: 0,
-			money: 0,
-			realAuth: false,
-			couponCount: 0,
-    };
-  },
-  computed: {
-    userName() {
-      return this.$store.state.user.name
-    },
-		userHeaderImg() {
-			return (this.$store.state.user.headImgUrl || this.IDcardBack);
+	import UpdateHeader from "./updateHeader";
+	export default {
+		components: {
+			UpdateHeader
 		},
-    newList() {
-      return [
-        { title: '邀请好友', url: '/pages/mine/invite/invite', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-7.png' },
-        { title: '承接方申请', url: '/pages/mine/undertakePartyApply/undertakePartyApply', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-8.png' },
-        { title: '实名认证', url: '/pages/mine/realNameAuth/realNameAuth', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png' },
-        { title: '我的银行账户', url: '/pages/mine/myBankCard/myBankCard', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-3.png' },
-        { title: '发票信息', url: '/pages/mine/myInvoice/myInvoice', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png' },
-        { title: '我的投诉', url: '/pages/mine/myComplain/myComplain', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-5.png' },
-        { title: '我的服务地址', url: '/pages/mine/addressManage/addressManage', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-6.png' },
-      ]
-    },
-    newList1() {
-      return [
-        { title: '帮助中心', url: '/pages/mine/helpCenter/helpCenter', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' },
-        { title: '关于我们', url: '/pages/mine/aboutUs/aboutUs', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
-        { title: '消息-临时', url: '/pages/mine/message/message', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
-        { title: '消息详情-临时', url: '/pages/mine/messageDetail/messageDetail', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
-        { title: '列表消息-临时', url: '/pages/mine/messageList/messageList', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
-        { title: '帮助详情-临时', url: '/pages/mine/helpDetail/helpDetail', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
-        { title: '我的分销-临时', url: '/pages/mine/myDistribution/myDistribution', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
-        { title: '分销详情-临时', url: '/pages/mine/distributionDetail/distributionDetail', img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png' },
-      ]
-    },
-  },
-	onReady() {},
-	onShow() {
-		this.$tool.actionForLogin();
-		this.refresh();
-	},
-	onPullDownRefresh() {
-		this.refresh();
-	},
-  methods: {
-		// 跳转个人信息
-		navPeopleDetail(){
-			uni.navigateTo({
-				url:'/pages/receive-order/peopleDetail/peopleDetail'
-			})
+		data() {
+			return {
+				demo: true,
+				mineTopBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/mine-top-back.png',
+				IDcardBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
+				integral: 0,
+				signCount: 0,
+				money: 0,
+				realAuth: false,
+				couponCount: 0,
+			};
 		},
-		refresh() {
-			this.queryIntegralInfo();
-			this.queryCouponInfo();
-			this.queryMoneyInfo();
-			this.querySignInfo();
-			this.queryAuthInfo();
-		},
-		showWelcome() {
-			const now = new Date().getHours();
-			let welcome = '';
-			if (now < 5 || now >= 18) {
-				welcome = '晚上好, '
-			} else if (now >= 5 && now < 9) {
-				welcome = '早上好, '
-			} else if (now >= 9 && now < 12) {
-				welcome = '上午好, '
-			} else if (now >= 12 && now < 14) {
-				welcome = '中午好, '
-			} else if (now >= 14 && now < 18) {
-				welcome = '下午好, '
+		computed: {
+			userName() {
+				return this.$store.state.user.name
+			},
+			userHeaderImg() {
+				return (this.$store.state.user.headImgUrl || this.IDcardBack);
+			},
+			newList() {
+				return [{
+						title: '邀请好友',
+						url: '/pages/mine/invite/invite',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-7.png'
+					},
+					{
+						title: '承接方申请',
+						url: '/pages/mine/undertakePartyApply/undertakePartyApply',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-8.png'
+					},
+					{
+						title: '实名认证',
+						url: '/pages/mine/realNameAuth/realNameAuth',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-2.png'
+					},
+					{
+						title: '我的银行账户',
+						url: '/pages/mine/myBankCard/myBankCard',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-3.png'
+					},
+					{
+						title: '发票信息',
+						url: '/pages/mine/myInvoice/myInvoice',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png'
+					},
+					{
+						title: '我的投诉',
+						url: '/pages/mine/myComplain/myComplain',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-5.png'
+					},
+					{
+						title: '我的服务地址',
+						url: '/pages/mine/addressManage/addressManage',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-6.png'
+					},
+				]
+			},
+			newList1() {
+				return [{
+						title: '帮助中心',
+						url: '/pages/mine/helpCenter/helpCenter',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png'
+					},
+					{
+						title: '关于我们',
+						url: '/pages/mine/aboutUs/aboutUs',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
+					},
+					{
+						title: '消息-临时',
+						url: '/pages/mine/message/message',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
+					},
+					{
+						title: '消息详情-临时',
+						url: '/pages/mine/messageDetail/messageDetail',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
+					},
+					{
+						title: '列表消息-临时',
+						url: '/pages/mine/messageList/messageList',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
+					},
+					{
+						title: '帮助详情-临时',
+						url: '/pages/mine/helpDetail/helpDetail',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
+					},
+					{
+						title: '我的分销-临时',
+						url: '/pages/mine/myDistribution/myDistribution',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
+					},
+					{
+						title: '分销详情-临时',
+						url: '/pages/mine/distributionDetail/distributionDetail',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
+					},
+				]
+			},
+			moneyZheng(){
+				if(this.money < 100000){
+					return (this.money / 100).toFixed(2).split('.')[0]
+				}else{
+					return (this.money / 100000).toFixed(2)
+				}
+			},
+			moneyFen(){
+				if(this.money < 100000){
+					return (this.money / 100).toFixed(2).split('.')[1]
+				}else{
+					return 'k'
+				}
 			}
-			const user = this.$store.state.user;
-			console.log('user ', user);
-			welcome = welcome + user.name;
-			return welcome;
 		},
-		queryIntegralInfo() {
-			this.$http.get('/b/integral/query', { })
-			.then(res => {
-			  this.integral = res.balance;
-			})
+		onReady() {},
+		onShow() {
+			this.$tool.actionForLogin();
+			this.refresh();
 		},
-		queryCouponInfo() {
-			this.$http.post('/b/coupon/queryPageList', { state: 0, pageSize: 1 },)
-			.then(res => {
-			  this.couponCount = res.totalCount;
-			})
+		onPullDownRefresh() {
+			this.refresh();
 		},
-		queryMoneyInfo() {
-			this.$http.post('/b/account/queryBalance', { }, true)
-			.then(res => {
-				uni.stopPullDownRefresh();
-			  this.money = res.balance || 0;
-			}).catch((e) => {
-				uni.stopPullDownRefresh();
-			})
-		},
-		querySignInfo() {
-			this.$http.post('/b/signin/queryByUser', { })
-			.then(res => {
-				this.signCount = res.signAccount;
-			})
-		},
-		// 查询是否实名认证
-		queryAuthInfo() {
-			this.$http.post('/b/customerrealauth/query', { })
-			.then(res => {
-				this.realAuth = res.state == 1;
-			})
-		},
-		moneyZheng() {
-		  return this.money.toString()?.split('.')?.[0] || '0'
-		},
-		moneyFen() {
-		  return `${this.money.toString()?.split('.')?.[1] || '0' }00`.slice(0, 2)
-		},
-    navInvite() {
-      uni.navigateTo({
-        url: '/pages/mine/invite/invite'
-      })
-    },
-    toPage(row) {
-      uni.navigateTo({ url: row.url })
-    },
-    toWallet() {
-      uni.navigateTo({ url: `/pages/mine/myWallet/myWallet` })
-    },
-  }
-};
+		methods: {
+			// 跳转个人信息
+			navPeopleDetail() {
+				uni.navigateTo({
+					url: '/pages/receive-order/peopleDetail/peopleDetail'
+				})
+			},
+			refresh() {
+				this.queryIntegralInfo();
+				this.queryCouponInfo();
+				this.queryMoneyInfo();
+				this.querySignInfo();
+				this.queryAuthInfo();
+			},
+			showWelcome() {
+				const now = new Date().getHours();
+				let welcome = '';
+				if (now < 5 || now >= 18) {
+					welcome = '晚上好, '
+				} else if (now >= 5 && now < 9) {
+					welcome = '早上好, '
+				} else if (now >= 9 && now < 12) {
+					welcome = '上午好, '
+				} else if (now >= 12 && now < 14) {
+					welcome = '中午好, '
+				} else if (now >= 14 && now < 18) {
+					welcome = '下午好, '
+				}
+				const user = this.$store.state.user;
+				welcome = welcome + user.name;
+				return welcome;
+			},
+			queryIntegralInfo() {
+				this.$http.get('/b/integral/query', {})
+					.then(res => {
+						this.integral = res.balance;
+					})
+			},
+			queryCouponInfo() {
+				this.$http.post('/b/coupon/queryPageList', {
+						state: 0,
+						pageSize: 1
+					}, )
+					.then(res => {
+						this.couponCount = res.totalCount;
+					})
+			},
+			queryMoneyInfo() {
+				this.$http.post('/b/account/queryBalance')
+					.then(res => {
+						uni.stopPullDownRefresh();
+						this.money = res.balance || 0;
+					}).catch((e) => {
+						uni.stopPullDownRefresh();
+					})
+			},
+			querySignInfo() {
+				this.$http.post('/b/signin/queryByUser', {})
+					.then(res => {
+						this.signCount = res.signAccount;
+					})
+			},
+			// 查询是否实名认证
+			queryAuthInfo() {
+				this.$http.post('/b/customerrealauth/query', {})
+					.then(res => {
+						this.realAuth = res.state == 1;
+					})
+			},
+			toPage(row) {
+				uni.navigateTo({
+					url: row.url
+				})
+			}
+		}
+	};
 </script>
 
 <style src="./style.scss" lang="scss" scoped></style>
 
 <style>
-page {
-  max-height: 100vh;
-  overflow-y: scroll;
-}
+	page {
+		max-height: 100vh;
+		overflow-y: scroll;
+	}
 </style>
