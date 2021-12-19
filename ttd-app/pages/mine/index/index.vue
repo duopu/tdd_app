@@ -6,7 +6,7 @@
 
 		<view class="mine-top">
 			<view class="mt-1">
-				<image :src="userHeaderImg" class="mt-11" @click="navPeopleDetail" />
+				<image :src="userHeaderImg" class="mt-11" @click="navPeopleDetail" mode="aspectFill" />
 				<view class="mt-12">
 					<text class="mt-14">{{ showWelcome() }}</text>
 					<view class="mt-15" @click="toPage({url: '/pages/mine/myIntegral/myIntegral'})">
@@ -85,6 +85,7 @@
 				demo: true,
 				mineTopBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/mine-top-back.png',
 				IDcardBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
+				logo:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/logo.png',
 				integral: 0,
 				signCount: 0,
 				money: 0,
@@ -97,7 +98,7 @@
 				return this.$store.state.user.name
 			},
 			userHeaderImg() {
-				return (this.$store.state.user.headImgUrl || this.IDcardBack);
+				return (this.$store.state.user.headImgUrl || this.logo);
 			},
 			newList() {
 				return [{

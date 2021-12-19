@@ -1,3 +1,5 @@
 /ttd-app/unpackage/
 /.idea/*
 /ttd-app/node_modules/
+
+/.hbuildx/*
