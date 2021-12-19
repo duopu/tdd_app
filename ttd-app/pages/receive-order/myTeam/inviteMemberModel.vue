@@ -5,7 +5,7 @@
         <view class="invite-member">
           <view class="invite-member1">手机号：</view>
           <view class="invite-member2">
-            <input class="invite-member4" :value="phone" @input="onInput" placeholder-class="input-placeholder" />
+            <input class="invite-member4 input-sty" :value="phone" @input="onInput" placeholder-class="input-placeholder" />
           </view>
           <view class="invite-member3" @click="search">查找</view>
         </view>
@@ -66,6 +66,7 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "../../mine/addressManage/_commonPlaceholder.scss";
+@import "../../mine/addressManage/_inputStyle.scss";
 
 .invite-mem {
   .invite-member {

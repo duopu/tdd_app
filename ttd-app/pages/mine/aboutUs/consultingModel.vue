@@ -4,7 +4,7 @@
     <template #slot1>
       <view class="cmb-input">
         <view class="cmb-input-title">电话号码</view>
-        <input type="text" :value="phone" class="cmb-inputs" @input="inputChange" placeholder="请输入" />
+        <input type="text" :value="phone" class="cmb-inputs input-sty" @input="inputChange" placeholder-class="input-placeholder" placeholder="请输入" />
       </view>
 
       <add-remark label="咨询内容：" :value="content" @input="contentChange" placeholder="可以的话，多少写点！方便工作人员快速排队故障。" />
@@ -46,6 +46,8 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import "../../mine/addressManage/_inputStyle.scss";
+
 .cmb-input {
   height: 88rpx;
   display: flex;

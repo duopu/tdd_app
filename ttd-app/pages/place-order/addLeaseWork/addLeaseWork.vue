@@ -17,7 +17,7 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">使用路径距离</view>
-          <input class="add-i-midle" :value="distance" @input="inputChange" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="add-i-midle input-sty" :value="distance" @input="inputChange" placeholder="请输入" placeholder-class="input-placeholder" />
           <text class="add-i-unit">公里</text>
         </view>
 
@@ -166,6 +166,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../addImplementation/_addImplementation.scss";
+@import "../../mine/addressManage/_inputStyle.scss";
 </style>
 
 <style lang="scss">

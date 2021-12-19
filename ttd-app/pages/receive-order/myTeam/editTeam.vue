@@ -14,7 +14,7 @@
       </view>
 
       <view class="edit-team-name">
-        <input class="edit-team-input" :value="newTitle" @input="(e) => onInput(e, 'title')" placeholder="请输入团队名称" placeholder-class="input-placeholder" />
+        <input class="edit-team-input input-sty" :value="newTitle" @input="(e) => onInput(e, 'title')" placeholder="请输入团队名称" placeholder-class="input-placeholder" />
       </view>
 
       <view class="edit-team-intro">
@@ -107,6 +107,8 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+@import "../../mine/addressManage/_inputStyle.scss";
+
 .edit-team {
   position: fixed;
   left: 0;

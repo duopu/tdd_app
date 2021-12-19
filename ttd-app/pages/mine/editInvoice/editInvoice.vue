@@ -218,6 +218,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import "../../mine/addressManage/_inputStyle.scss";
+
 .edit-invoice {
   .edit-in-addr {
     box-sizing: border-box;

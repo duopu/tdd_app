@@ -21,7 +21,7 @@
 
       <view class="order-set21" v-if="!setting.onOffLimitFlag">
         <view class="order-set21-title">接单范围</view>
-        <input placeholder="请输入" class="input-so" :value="setting.receivingDistance" @input="onInput" placeholder-class="placeholder-class" />
+        <input placeholder="请输入" class="input-so input-sty" :value="setting.receivingDistance" @input="onInput" placeholder-class="placeholder-class" />
         <text class="order-set2-unit">公里</text>
       </view>
     </view>
@@ -117,6 +117,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../mine/addressManage/_inputStyle.scss";
+
 .order-set1 {
   padding: 28rpx 32rpx 28rpx 32rpx;
   display: flex;

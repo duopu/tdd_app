@@ -18,17 +18,17 @@
 
         <view class="edit-item">
           <view class="edit-lable">详细地址</view>
-          <input class="edit-midle" :value="address" @input="onAddressInput" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-midle input-sty" :value="address" @input="onAddressInput" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-item">
           <view class="edit-lable">联系人</view>
-          <input class="edit-midle" :value="name" @input="onNameInput" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-midle input-sty" :value="name" @input="onNameInput" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-item">
           <view class="edit-lable">联系电话</view>
-          <input class="edit-midle" :value="phone" @input="onPhoneInput" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-midle input-sty" :value="phone" @input="onPhoneInput" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
       </view>
@@ -175,9 +175,9 @@ export default {
 		},
 		// 新增/编辑地址
     operateSave() {
-			
+
 			if (!this.checkParams()) return;
-			
+
 			const params  = {
 				id: this.id,
 				address: this.address,
@@ -190,9 +190,9 @@ export default {
 				phone: this.phone,
 				provinceId: this.provinceId,
 			};
-			
-			const url = `/b/customeraddress/${this.id ? 'update' : 'add'}`; 
-			
+
+			const url = `/b/customeraddress/${this.id ? 'update' : 'add'}`;
+
 			this.$http
 				.post(url, params, true)
 				.then(res => {
@@ -206,7 +206,7 @@ export default {
     },
 		// 删除地址
     operateDel() {
-			
+
 			uni.showModal({
 				content: '是否删除该地址?',
 				success: (res) => {
@@ -233,6 +233,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import "../../mine/addressManage/_inputStyle.scss";
+
 .edit-address {
   .edit-addr {
     box-sizing: border-box;
