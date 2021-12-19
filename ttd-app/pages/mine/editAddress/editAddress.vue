@@ -123,7 +123,7 @@ export default {
 		queryGeoAddressInfo(latitude, longitude) {
 			const params = {
 				latitude,
-				longitude
+				longitude,
 			}
 			this.$http.post('/core/geo/queryRegionByLocation', params, true)
 			.then(res => {
