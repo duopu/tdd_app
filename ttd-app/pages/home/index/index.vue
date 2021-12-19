@@ -2,7 +2,7 @@
 <template>
   <view>
     <!-- 搜索 -->
-    <home-search v-model="searchVal" :message-num="2" @change="change11" />
+    <home-search v-model="searchVal" :message-num="messageCount" @message="toMessage" @change="change11" />
 
     <!-- 横向菜单 -->
     <view class="home-her">
@@ -146,7 +146,8 @@ export default {
       itemListList: [],
       bannerList: [],
       searchVal: '',
-      testText: 'asd'
+      testText: 'asd',
+			messageCount: 0,
     };
   },
   onLoad(option) {
@@ -219,6 +220,14 @@ export default {
         this.bannerList = res;
       });
     },
+		queryMessage() {
+			this.$http.post('/core/sitemessage/queryPageList', {
+			  readFlag: 0,
+				pageSize: 1,
+			}).then(res => {
+			  this.messageCount = res.totalCount;
+			});
+		},
     // 计算箭头的位置
     getArrowLeftDistance(index) {
       const distance = (100 / this.menuItemLists.length) * index + 100 / (this.menuItemLists.length * 2);
@@ -280,7 +289,12 @@ export default {
         }
         console.log('eee');
       });
-    }
+    },
+		toMessage() {
+			uni.navigateTo({
+				url: '/pages/mine/message/message'
+			})
+		},
   }
 };
 </script>
