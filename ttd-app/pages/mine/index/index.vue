@@ -40,7 +40,7 @@
 				</view>
 			</view>
 
-			<image class="mm-2" :src="IDcardBack" />
+			<image class="mm-2" :src="qdyjx" mode="aspectFill" />
 
 			<view class="mm-3">
 				<template v-for="(i, index) in newList">
@@ -84,7 +84,7 @@
 			return {
 				demo: true,
 				mineTopBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/mine-top-back.png',
-				IDcardBack: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
+				qdyjx: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/qdyjx.png',
 				logo:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/logo.png',
 				integral: 0,
 				signCount: 0,
