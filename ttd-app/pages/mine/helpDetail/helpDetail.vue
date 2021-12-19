@@ -4,13 +4,9 @@
 
     <back-container>
       <view class="help-detail">
-        <view class="h-detail1">复工复产，如何做好一天的防护</view>
-        <view class="h-detail2">2021-10-24 10:00</view>
-        <view class="h-detail3">毫无疑问，比亚迪在中国新能源市场的表现，已经与特斯拉平分秋色，甚至在销量层面已经赶超特斯拉。
-          然而在几年前，特斯拉还未曾将比亚迪当过对手，甚至马斯克对比亚迪的印象为：没有什么好产品。
-          日前，有网友扒出一段数年前的视频，关于马斯克接受采访，对特斯拉评价的内容。
-          主持人问道：你如何评价比亚迪，马斯克没有直接回答，反而是直接大笑。随后又反问道，你见过比亚迪的车辆吗？“我不认为比亚迪有什么好的产品”，这也是马斯克对比亚迪最原始的印象之一。
-        </view>
+        <view class="h-detail1">{{ detail.title }}</view>
+        <view class="h-detail2">{{ detail.addTime || '' }}</view>
+        <view class="h-detail3">{{ detail.detail }}</view>
 
         <view class="h-detail4">
           <upload-list
@@ -32,7 +28,27 @@ import UploadList from "../../receive-order/component/uploadList";
 
 export default {
   name: "helpDetail",
-  components: { UploadList, BackContainer }
+  components: { UploadList, BackContainer },
+	data() {
+	  return {
+			id: 0,
+			detail: {},
+		};
+	},
+	onLoad(option) {
+		if (option.id) { // 编辑地址
+		  this.id = Number(option.id);
+			this.queryDetail();
+		}
+	},
+	methods: {
+		queryDetail() {
+			this.$http.post('/core/supportcenter/query', { id: this.id }, true)
+				.then(res => {
+					this.detail = res;
+				})
+		},
+	}
 }
 </script>
 <style lang="scss">

@@ -4,12 +4,12 @@
 
     <back-container>
       <view class="help-center">
-        <view class="help-center-item" v-for="(item, i) in dataList" :key="i">
+        <view class="help-center-item" v-for="(item, i) in dataList" :key="i" @click="toDetail(item)">
           <view class="hc-title">{{ item.title }}</view>
           <view class="hc-text">{{ item.detail }}</view>
-          <view class="hc-img-box">
+          <!-- <view class="hc-img-box">
             <image v-for="i in 3" class="hc-img-item" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png" :key="i" />
-          </view>
+          </view> -->
         </view>
 
         <list-empty v-if="!dataList.length" />
@@ -40,8 +40,12 @@ export default {
 				.then(res => {
 					this.dataList = res.dataList;
 				});
-
 		},
+		toDetail(item) {
+			uni.navigateTo({
+				url: `/pages/mine/helpDetail/helpDetail?id=${item.id}`,
+			})
+		}
 	}
 }
 </script>
