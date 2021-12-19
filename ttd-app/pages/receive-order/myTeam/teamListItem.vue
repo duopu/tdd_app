@@ -94,6 +94,7 @@ export default {
       .tlr-2 {
         margin-top: 16rpx;
         display: flex;
+        flex-flow: wrap row;
 
         .tlr-2-item {
           padding: 0 8rpx;
@@ -105,7 +106,7 @@ export default {
           font-family: PingFang SC-Regular, PingFang SC;
           font-weight: 400;
           color: #4F4F4F;
-          margin-right: 8rpx;
+          margin: 0 8rpx 8rpx 0;
         }
       }
     }

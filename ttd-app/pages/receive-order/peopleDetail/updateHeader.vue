@@ -8,7 +8,8 @@
       <view class="up-head-text">修改头像</view>
 
       <view class="up-head-add">
-        <image class="up-head-add-pic" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadAdd.svg" />
+        <image v-if="url" class="up-head-add-pic up-head-add-xxx" :src="url" />
+        <image v-else class="up-head-add-pic" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadAdd.svg" />
       </view>
 
       <view class="up-head-model-btn" @click="hide">保存</view>
@@ -18,6 +19,13 @@
 <script>
 export default {
   name: "updateHeader",
+  props: {
+    // 回填的头像
+    url: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       visible: false,
@@ -81,6 +89,12 @@ export default {
       .up-head-add-pic {
         width: 156rpx;
         height: 156rpx;
+      }
+
+      .up-head-add-xxx {
+        width: 312rpx;
+        height: 312rpx;
+        border-radius: 156rpx;
       }
     }
   }

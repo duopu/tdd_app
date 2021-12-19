@@ -9,7 +9,7 @@
       <view class="edit-team-title">团队信息</view>
 
       <view class="edit-team-add" @click="chooseImage">
-				<image v-if="newLogo" :src="newLogo" class="edit-team-add-imag" />
+				<image v-if="newLogo" :src="newLogo" class="edit-team-add-imag edit-team-add-full" />
         <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadAdd.svg" class="edit-team-add-imag" />
       </view>
 
@@ -157,6 +157,12 @@ export default {
       .edit-team-add-imag {
         width: 100rpx;
         height: 100rpx;
+      }
+
+      .edit-team-add-full {
+        width: 200rpx;
+        height: 200rpx;
+        border-radius: 200rpx;
       }
     }
 
