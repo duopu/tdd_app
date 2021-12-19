@@ -11,7 +11,6 @@
 				<invoice-card v-if="['1', '2'].includes(activeKey)" v-for="(i, index) in invoiceList" :key="index"
 					:invoice="i" />
 
-
 				<!-- 发票 信息  -->
 				<invoice-info-card v-if="['3'].includes(activeKey)" v-for="(item, i) in myInvoiceList" :key="i"
 					:invoice="item" :item="{ iconType: i }" @onClick="toMyInvoice()" />
