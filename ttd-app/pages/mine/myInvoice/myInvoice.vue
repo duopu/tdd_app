@@ -20,6 +20,10 @@
 
 			</view>
 		</back-container>
+		
+		<iphonex-bottom v-if="activeKey == '3'">
+		  <big-btn button-text="新增发票抬头" @click="toAdd"/>
+		</iphonex-bottom>
 	</view>
 </template>
 <script>
@@ -28,6 +32,8 @@
 	import InvoiceCard from "./card/invoiceCard";
 	import InvoiceInfoCard from "./card/invoiceInfoCard";
 	import ListEmpty from "../../place-order/orderList/listEmpty";
+	import IphonexBottom from "../addressManage/component/iphonexBottom";
+	import BigBtn from "../addressManage/component/bigBtn";
 
 	export default {
 		name: "myInvoice",
@@ -36,7 +42,9 @@
 			InvoiceInfoCard,
 			InvoiceCard,
 			BlueTab,
-			BackContainer
+			BackContainer,
+			BigBtn, 
+			IphonexBottom,
 		},
 		data() {
 			return {
@@ -84,6 +92,11 @@
 			toMyInvoice(invoice) {
 				uni.navigateTo({
 					url: `/pages/mine/editInvoice/editInvoice?id=${invoice.id}`
+				});
+			},
+			toAdd() {
+				uni.navigateTo({
+					url: `/pages/mine/editInvoice/editInvoice`
 				});
 			},
 		}
