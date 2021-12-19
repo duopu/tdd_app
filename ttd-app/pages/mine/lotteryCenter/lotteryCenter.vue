@@ -46,7 +46,7 @@ export default {
 		};
   },
 	onShow() {
-		
+		this.refresh();
 	},
   methods: {
 		refresh() {
