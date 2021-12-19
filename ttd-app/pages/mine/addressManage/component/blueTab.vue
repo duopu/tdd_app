@@ -13,8 +13,8 @@ export default {
       type: Array,
       default() {
         return [
-          { text: '处理中', key: '1' },
-          { text: '已结束', key: '2' },
+          { text: '处理中', key: '0' },
+          { text: '已处理', key: '1' },
         ]
       }
     },

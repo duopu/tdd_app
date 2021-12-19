@@ -1,6 +1,6 @@
 <template>
   <view class="bc-item" @click="$emit('click')" :style="{ backgroundColor: backgroundColor }">
-    <image src="http://jycrm.bm001.com/favicon.png" class="bc-left"></image>
+    <!-- <image src="http://jycrm.bm001.com/favicon.png" class="bc-left"></image> -->
     <view class="bc-midle">
       <view class="bc-midle-name">{{ item.householderName }}</view>
       <view class="bc-midle-bank-name">开户行：{{ item.bankName }}</view>

@@ -1,7 +1,7 @@
 <template>
   <view class="edit-invoice">
 
-    <custom-navbar title="发票信息添加" />
+    <custom-navbar title="添加发票抬头" />
 
     <back-container>
       <view class="edit-in-addr">

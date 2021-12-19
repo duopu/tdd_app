@@ -3,14 +3,14 @@
     <view class="cl-item">
       <view class="cl-item1">
         <view class="cl-item1-left">订单：{{ complain.receiveOrderId }}</view>
-        <view class="cl-item1-right" :class="cardType == '1' ? 'cl-item1-right-ac' : ''">待处理</view>
+        <view class="cl-item1-right" :class="cardType == '0' ? 'cl-item1-right-ac' : ''">{{ cardType == '0' ? '待处理' : '已处理'}}</view>
       </view>
       <view class="cl-item2">投诉内容：</view>
       <view class="cl-item3">{{ complain.detail }}</view>
-      <view class="cl-item4">{{ cardType == '2' ? '投诉时间：' : '' }}{{ complain.addTime }}</view>
+      <view class="cl-item4">{{ cardType == '1' ? '投诉时间：' : '' }}{{ complain.addTime }}</view>
     </view>
 
-    <view class="cl-item-bottm" v-if="cardType == '2'">
+    <view class="cl-item-bottm" v-if="cardType == '1'">
       <view class="cl-item-bottm1">处理结果：{{ complain.processContent }}</view>
       <view class="cl-item-bottm2">处理时间：{{ complain.processTime }}</view>
     </view>
