@@ -5,7 +5,7 @@
 		<view class="flex-center top">
 			<image mode="aspectFill" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/search-white.png"
 				class="image-logo"></image>
-			<input class="flex-1 input" type="text" value="" placeholder-class="input-placeholder"
+			<input class="flex-1 input input-sty" type="text" value="" placeholder-class="input-placeholder"
 				placeholder="请输入服务类型名称" />
 		</view>
 		<!-- 横向菜单 -->
@@ -212,5 +212,8 @@
 		}
 	};
 </script>
+<style lang="scss" scoped>
+@import "../../mine/addressManage/_inputStyle.scss";
+</style>
 
 <style src="./style.scss" lang="scss" scoped></style>

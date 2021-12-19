@@ -55,6 +55,43 @@ export default {
     return {};
   },
   onReady() {
+    /**
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     * todo demo 地址 https://ext.dcloud.net.cn/plugin?id=1287
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
     this.$refs
         .uqrcode
         .make({

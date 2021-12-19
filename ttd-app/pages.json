@@ -452,6 +452,14 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/mine/lotteryCenter/lotteryCenter",
+      "style": {
+        "navigationBarTitleText": "抽奖中心",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "tabBar": {

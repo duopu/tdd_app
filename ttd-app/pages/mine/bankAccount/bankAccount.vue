@@ -5,9 +5,9 @@
       <view class="bank-addr">
 				<view class="bank-ac-item">
 				  <view class="bank-ac-lable">卡号</view>
-				  <input class="bank-ac-midle" :value="bankCardNo" @input="(e) => onInput(e, 'number')" placeholder="请输入卡号" placeholder-class="input-placeholder" />
+				  <input class="bank-ac-midle input-sty" :value="bankCardNo" @input="(e) => onInput(e, 'number')" placeholder="请输入卡号" placeholder-class="input-placeholder" />
 				</view>
-				
+
         <view class="bank-ac-item">
           <view class="bank-ac-lable">开户行</view>
           <view class="bank-ac-midle">{{ bankName || '请输入卡号' }}</view>
@@ -16,12 +16,12 @@
 
         <view class="bank-ac-item">
           <view class="bank-ac-lable">开户网点</view>
-          <input class="bank-ac-midle" placeholder="可选输入" placeholder-class="input-placeholder" />
+          <input class="bank-ac-midle input-sty" placeholder="可选输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="bank-ac-item">
           <view class="bank-ac-lable">户名</view>
-          <input class="bank-ac-midle" :value="householderName" @input="(e) => onInput(e, 'name')" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="bank-ac-midle input-sty" :value="householderName" @input="(e) => onInput(e, 'name')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
       </view>
@@ -88,9 +88,9 @@ export default {
 		onInput(event, type) {
 			const text = event.target.value;
 			if (type == 'name') {
-				this.householderName = text;		
+				this.householderName = text;
 			} else if (type == 'number') {
-				this.bankCardNo = text;	
+				this.bankCardNo = text;
 				if (text.length >= 16) {
 					this.queryBankCardInfo(text);
 				}
@@ -113,18 +113,18 @@ export default {
 		},
 		// 新增/编辑地址
 		operateSave() {
-			
+
 			if (!this.checkParams()) return;
-			
+
 			const params  = {
 				id: this.id,
 				bankName: this.bankName,
 				bankCardNo: this.bankCardNo,
 				householderName: this.householderName,
 			};
-			
-			const url = `/b/customerbank/${this.id ? 'update' : 'add'}`; 
-			
+
+			const url = `/b/customerbank/${this.id ? 'update' : 'add'}`;
+
 			this.$http
 				.post(url, params, true)
 				.then(res => {
@@ -138,7 +138,7 @@ export default {
 		},
 		// 删除地址
 		operateDel() {
-			
+
 			uni.showModal({
 				content: '是否删除该银行卡?',
 				success: (res) => {
@@ -164,6 +164,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import "../../mine/addressManage/_inputStyle.scss";
+
 .bank-account {
   .bank-addr {
     box-sizing: border-box;

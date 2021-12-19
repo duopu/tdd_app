@@ -11,7 +11,7 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">面积</view>
-          <input class="add-i-midle" :value="number" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="add-i-midle input-sty" :value="number" placeholder="请输入" placeholder-class="input-placeholder" />
           <text class="add-i-unit">平方</text>
         </view>
 
@@ -25,7 +25,7 @@
 
       </view>
       <view class="add-i-aline" />
-			
+
 			<add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 
       <view class="up-list up-list1">
@@ -66,7 +66,7 @@ export default {
 			number: 0, // 数量
 			requireInfo: '', // 备注
 			orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
-			
+
 			workList: [], // 勘测类型数据源
     };
   },
@@ -159,6 +159,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../addImplementation/_addImplementation.scss";
+@import "../../mine/addressManage/_inputStyle.scss";
 </style>
 
 <style lang="scss">

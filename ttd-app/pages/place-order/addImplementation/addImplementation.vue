@@ -25,7 +25,7 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">型号</view>
-          <input class="add-i-midle" :value="model" @input="modelChange" placeholder="可选输入" placeholder-class="input-placeholder" />
+          <input class="add-i-midle input-sty" :value="model" @input="modelChange" placeholder="可选输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="add-i-item">
@@ -83,7 +83,7 @@ export default {
 			number: 0, // 数量
 			requireInfo: '', // 备注
 			orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
-			
+
 			skillList: [], // 服务类型数据源
 			brandList: [], // 品牌类型数据源
     };
@@ -208,6 +208,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../mine/addressManage/_inputStyle.scss";
 @import "./_addImplementation.scss";
 </style>
 

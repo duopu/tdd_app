@@ -7,11 +7,11 @@
       <view class="complaint">
         <view class="complaint-text">评价内容：</view>
         <view class="complaint-content">
-					<input :value="content" @input="onInput" placeholder="可以的话，多少写点！\n方便工作人员快速排队故障。可以的话，多少写点！方便工作人员快速排队故障。" />
+					<input :value="content" class="input-sty" placeholder-class="input-placeholder" @input="onInput" placeholder="可以的话，多少写点！\n方便工作人员快速排队故障。可以的话，多少写点！方便工作人员快速排队故障。" />
         </view>
-				
+
         <upload-list upload-text="添加照片" :img-list="imageList" @upload="chooseImage"/>
-				
+
          <upload-list upload-icon="2" @upload="chooseFile"/>
       </view>
 
@@ -104,6 +104,8 @@
 	}
 </script>
 <style lang="scss">
+@import "../../mine/addressManage/_inputStyle.scss";
+
 .complaint {
   padding: 40rpx 32rpx 16rpx 32rpx;
 

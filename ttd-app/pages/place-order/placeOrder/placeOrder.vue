@@ -19,7 +19,7 @@
 
         <view v-if="orderMode == 0" class="receipt-ac-item">
           <view class="receipt-ac-lable">承接人手机号</view>
-          <input class="receipt-ac-midle" :value="appointPhone" @input="(e) => onInput(e, 'phone')" placeholder="可选输入" placeholder-class="input-placeholder" />
+          <input class="receipt-ac-midle input-sty" :value="appointPhone" @input="(e) => onInput(e, 'phone')" placeholder="可选输入" placeholder-class="input-placeholder" />
         </view>
 
         <my-choose-time v-model="quoteTime" title="报价周期" @change="(time) => onTimeChange(time, 1)" />
@@ -72,7 +72,7 @@
 
       <view class="require-order-set21">
         <view class="require-order-set21-title">接单范围</view>
-        <input placeholder="请输入" class="require-input-so" :value="distance" @input="(e) => onInput(e, 'distance')" placeholder-class="placeholder-class" />
+        <input placeholder="请输入" class="require-input-so input-sty" :value="distance" @input="(e) => onInput(e, 'distance')" placeholder-class="placeholder-class" />
         <text class="require-order-set2-unit">公里</text>
       </view>
     </view>
@@ -282,6 +282,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../mine/addressManage/_inputStyle.scss";
+
 .receipt {
   .receipt-addr {
     box-sizing: border-box;
