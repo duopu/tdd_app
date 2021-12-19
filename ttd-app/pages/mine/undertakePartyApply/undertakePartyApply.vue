@@ -39,6 +39,8 @@
         <view class="upa-item-8" v-if="apply.approveState == 2">原因：{{ apply.refusalReason }}</view>
 
       </view>
+
+      <list-empty v-if="!applyList.length" />
     </view>
 
     <iphonex-bottom>
@@ -49,9 +51,10 @@
 <script>
 import IphonexBottom from "../addressManage/component/iphonexBottom";
 import BigBtn from "../addressManage/component/bigBtn";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 export default {
   name: "undertakePartyApply",
-  components: { BigBtn, IphonexBottom },
+  components: { ListEmpty, BigBtn, IphonexBottom },
   data() {
     return {
 			applyList: [],
@@ -121,9 +124,10 @@ export default {
 
           .upa-item-9 {
             display: flex;
+            flex-flow: row wrap;
 
             .upa-item-10 {
-              margin-right: 8rpx;
+              margin: 0 8rpx 8rpx 0;
               padding: 0 12rpx;
               @include flexCenter;
               height: 40rpx;

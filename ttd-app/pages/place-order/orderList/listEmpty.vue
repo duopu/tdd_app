@@ -16,7 +16,7 @@ export default {
     },
     text2: {
       type: String,
-      default: '去下一单试试……'
+      default: ''
     },
     url: {
       type: String,

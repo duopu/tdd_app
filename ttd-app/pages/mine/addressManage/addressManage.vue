@@ -5,6 +5,8 @@
       <view>
         <address-item v-for="(item, index) in addressList" :key="index" :address="item" @onClick="itemClick"
                       @rightClick="rightClick" />
+
+        <list-empty v-if="!addressList.length" />
       </view>
     </back-container>
 
@@ -20,9 +22,10 @@ import BackContainer from './component/backContainer';
 import AddressItem from './component/addressItem';
 import IphonexBottom from "./component/iphonexBottom";
 import BigBtn from "./component/bigBtn";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
-  components: { BigBtn, IphonexBottom, AddressItem, BackContainer },
+  components: { ListEmpty, BigBtn, IphonexBottom, AddressItem, BackContainer },
   data() {
     return {
       isSelect: false,

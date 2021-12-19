@@ -11,6 +11,8 @@
             <image v-for="i in 3" class="hc-img-item" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png" :key="i" />
           </view>
         </view>
+
+        <list-empty v-if="!dataList.length" />
       </view>
     </back-container>
   </view>
@@ -18,10 +20,11 @@
 
 <script>
 import BackContainer from "../addressManage/component/backContainer";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "helpCenter",
-  components: { BackContainer },
+  components: { ListEmpty, BackContainer },
   data() {
     return {
 			dataList: [],

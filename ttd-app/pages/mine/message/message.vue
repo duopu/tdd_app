@@ -15,6 +15,8 @@
           </view>
           <uni-icons type="arrowright" size="20" color="#969799" />
         </view>
+
+        <list-empty v-if="true" />
       </view>
     </back-container>
 
@@ -22,10 +24,11 @@
 </template>
 <script>
 import BackContainer from "../addressManage/component/backContainer";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "message",
-  components: { BackContainer },
+  components: { ListEmpty, BackContainer },
   data() {
     return {};
   },
