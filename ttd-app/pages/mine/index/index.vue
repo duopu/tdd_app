@@ -8,15 +8,15 @@
 			<view class="mt-1">
 				<image :src="userHeaderImg" class="mt-11" @click="navPeopleDetail" mode="aspectFill" />
 				<view class="mt-12">
-					<text class="mt-14">{{ showWelcome() }}</text>
+					<text class="mt-14" @click="navPeopleDetail">{{ showWelcome() }}</text>
 					<view class="mt-15" @click="toPage({url: '/pages/mine/myIntegral/myIntegral'})">
 						<text class="mt-16">我的积分：{{ integral }}</text>
 						<uni-icons type="arrowright" class="mt-17" color="rgba(256, 256, 256, 0.2)" size="14" />
 					</view>
 				</view>
-				<view class="mt-13">
+				<view class="mt-13" @click="toPage({url: '/pages/mine/lotteryCenter/lotteryCenter'})">
 					<text class="mt-18">剩余抽奖次数</text>
-					<text class="mt-19">0</text>
+					<text class="mt-19">{{ lotteryCount }}</text>
 				</view>
 			</view>
 		</view>
@@ -40,7 +40,7 @@
 				</view>
 			</view>
 
-			<image class="mm-2" :src="qdyjx" mode="aspectFill" />
+			<image class="mm-2" :src="qdyjx" mode="aspectFill" @click="toPage({url: '/pages/mine/signIn/signIn'})"/>
 
 			<view class="mm-3">
 				<template v-for="(i, index) in newList">
@@ -91,6 +91,7 @@
 				money: 0,
 				realAuth: false,
 				couponCount: 0,
+				lotteryCount: 0,
 			};
 		},
 		computed: {
@@ -150,26 +151,6 @@
 						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
 					},
 					{
-						title: '消息-临时',
-						url: '/pages/mine/message/message',
-						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
-					},
-					{
-						title: '消息详情-临时',
-						url: '/pages/mine/messageDetail/messageDetail',
-						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
-					},
-					{
-						title: '列表消息-临时',
-						url: '/pages/mine/messageList/messageList',
-						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
-					},
-					{
-						title: '帮助详情-临时',
-						url: '/pages/mine/helpDetail/helpDetail',
-						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
-					},
-					{
 						title: '我的分销-临时',
 						url: '/pages/mine/myDistribution/myDistribution',
 						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
@@ -216,6 +197,7 @@
 				this.queryCouponInfo();
 				this.queryMoneyInfo();
 				this.querySignInfo();
+				this.queryLotteryCount();
 				this.queryAuthInfo();
 			},
 			showWelcome() {
@@ -264,6 +246,12 @@
 				this.$http.post('/b/signin/queryByUser', {})
 					.then(res => {
 						this.signCount = res.signAccount;
+					})
+			},
+			queryLotteryCount() {
+				this.$http.post('/b/lottery/remainLotteryNum', {})
+					.then(res => {
+						this.lotteryCount = res || 0;
 					})
 			},
 			// 查询是否实名认证

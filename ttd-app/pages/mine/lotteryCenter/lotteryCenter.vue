@@ -12,19 +12,19 @@
 
         <view class="wheel-box-det1">
           你还有
-          <text class="wheel-box-det2">3</text>
+          <text class="wheel-box-det2">{{ lotteryCount }}</text>
           次抽奖机会
         </view>
       </view>
 
       <view class="wheel-boo0">
         <view class="wheel-boo1">中奖记录</view>
-        <view class="wheel-boo2" v-for="i in 5" :key="i">
+        <view class="wheel-boo2" v-for="i in lotteryList" :key="i.id">
           <view class="wheel-boo3">
-            <view class="wheel-boo31">电脑一台</view>
-            <view class="wheel-boo32">2021-11-03 23:24</view>
+            <view class="wheel-boo31">{{ i.prize }}</view>
+            <view class="wheel-boo32">{{ i.prizeTime }}</view>
           </view>
-          <view class="wheel-boo4">待处理</view>
+          <view class="wheel-boo4">{{ i.state == 1 ? '未发放' : i.state == 2 ? '物流快递中' : '已发放'}}</view>
         </view>
       </view>
 
@@ -39,12 +39,47 @@ export default {
   name: "lotteryCenter",
   components: { HxrWheel },
   data() {
-    return {};
+    return {
+			lotteryCount: 0,
+			prizeList: [],
+			lotteryList: [],
+		};
   },
+	onShow() {
+		
+	},
   methods: {
+		refresh() {
+			this.queryLotteryCount();
+			this.queryPriceList();
+			this.queryLotteryList();
+		},
+		queryLotteryCount() {
+			this.$http.post('/b/lottery/remainLotteryNum', {})
+				.then(res => {
+					this.lotteryCount = res || 0;
+				})
+		},
+		queryPriceList() {
+			this.$http.post('/b/lottery/prizeList', {})
+				.then(res => {
+					this.prizeList = res || [];
+				})
+		},
+		queryLotteryList() {
+			this.$http.post('/b/lottery/queryPageList', {})
+				.then(res => {
+					this.lotteryList = res.dataList || [];
+				})
+		},
     start() {
-      this.$refs.hxrWheel.begin(3);
-    }
+      this.$refs.hxrWheel.begin(4);
+    },
+		startLottery() {
+			this.$http.post('/b/lottery/startLottery', {})
+				.then(res => {
+				})
+		},
   }
 }
 </script>
