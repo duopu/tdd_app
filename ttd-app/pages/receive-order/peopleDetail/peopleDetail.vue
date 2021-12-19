@@ -56,7 +56,8 @@
 			<member-title :show-right="false" title="评价" />
 			<evaluate-card v-for="i in commentList" :key="i.id" :comment="i" />
 		</view>
-		<update-header ref="updateHeader" />
+		
+		<update-header ref="updateHeader" :url="headImgUrl" @onSave="updateHeader"/>
 
 	</view>
 </template>
@@ -144,7 +145,18 @@
 			// 编辑头像
 			editHeader() {
 				this.$refs.updateHeader.show()
-			}
+			},
+			updateHeader(headImgUrl) {
+				this.$http
+					.post('/b/customer/updateHeadImg', {
+						headImgUrl,
+					}, true)
+					.then(res => {
+						this.$refs.updateHeader.hide();
+						uni.showToast({ title: '更新成功' });
+						this.queryPersonInfo();
+					});
+			},
 		},
 	}
 </script>

@@ -7,12 +7,12 @@
     <view class="up-head-model-box">
       <view class="up-head-text">修改头像</view>
 
-      <view class="up-head-add">
-        <image v-if="url" class="up-head-add-pic up-head-add-xxx" :src="url" />
+      <view class="up-head-add" @click="chooseImage">
+        <image v-if="newUrl" class="up-head-add-pic up-head-add-xxx" :src="newUrl" />
         <image v-else class="up-head-add-pic" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadAdd.svg" />
       </view>
 
-      <view class="up-head-model-btn" @click="hide">保存</view>
+      <view class="up-head-model-btn" @click="save">保存</view>
     </view>
   </view>
 </template>
@@ -29,15 +29,42 @@ export default {
   data() {
     return {
       visible: false,
+			newUrl:  this.url,
     }
   },
+	watch: {
+		url(newVal) {
+			this.newUrl = newVal;
+		},
+	},
   methods: {
     show() {
       this.visible = true;
     },
     hide() {
       this.visible = false;
-    }
+    },
+		save() {
+			this.$emit('onSave', this.newUrl);
+		},
+		chooseImage() {
+			uni.chooseImage({
+			    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+			    success: (res) => {
+							const path = res.tempFilePaths[0];
+							this.uploadImage(path);
+			    }
+			});
+		},
+		uploadImage(path) {
+			const param = {
+				file: path,
+			};
+			this.$http.upload({ path }, true)
+			.then(res=>{
+				this.newUrl = res;
+			});
+		},
   }
 }
 </script>
