@@ -5,18 +5,16 @@
     <back-container>
 
       <view class="message-list">
-        <view class="mist-item" v-for="i in 5" :key="i">
-          <view class="mist-item1">邀请你加入</view>
-          <view class="mist-item2">
-            当前，海外共建“一带一路”项目边防控、边生产，全力保障员工健康安全，努力满足当地生产需求，也把各国人民的心连接起来。一些共建“一带一路”项目当地员工分享了他们的抗疫故事和感受　　5月18日，甘再水电站项目的柬方员工正在中央控制室值班。
-          </view>
-          <view class="mist-item3" v-if="i === 1">
-            <view class="mist-item4">拒绝</view>
-            <view class="mist-item4 mist-item5">接受</view>
+        <view class="mist-item" v-for="(message, index) in messageList" :key="index">
+          <view class="mist-item1">{{ message.title }}</view>
+          <view class="mist-item2">{{ message.content }}</view>
+          <view class="mist-item3" v-if="message.scenarioType == 1">
+            <view class="mist-item4" @click="progressMessage(message, 0)">拒绝</view>
+            <view class="mist-item4 mist-item5" @click="progressMessage(message, 1)">接受</view>
           </view>
         </view>
 
-        <list-empty v-if="true" />
+        <list-empty v-if="messageList.length == 0" />
       </view>
     </back-container>
 
@@ -28,7 +26,35 @@ import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "messageList",
-  components: { ListEmpty, BackContainer }
+  components: { ListEmpty, BackContainer },
+	data() {
+	  return {
+			messageList: [],
+		};
+	},
+	onShow() {
+		this.queryMessageList()
+	},
+	methods: {
+		queryMessageList() {
+			this.$http.post('/core/sitemessage/queryPageList')
+				.then(res => {
+					this.messageList = res.dataList || [];
+				})
+		},
+	  toDtl(message) {
+	    uni.navigateTo({ url: `/pages/mine/messageDetail/messageDetail?id=${message.id}` })
+	  },
+		progressMessage(message, inviteState) {
+			this.$http.post('/core/sitemessage/processDealerInvite', {
+				id: message.id,
+				inviteState,
+			}, true)
+				.then(res => {
+					this.messageList = res.dataList || [];
+				})
+		},
+	}
 }
 </script>
 <style lang="scss" scoped>

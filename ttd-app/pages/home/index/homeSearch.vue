@@ -15,7 +15,7 @@
             />
           </view>
 
-          <view class="msg-out">
+          <view class="msg-out" @click="$emit('message')">
             <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/home-message-icon.svg" class="msg-img" />
             <view class="msg-num">{{ messageNum }}</view>
           </view>

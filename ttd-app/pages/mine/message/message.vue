@@ -5,18 +5,18 @@
     <back-container>
 
       <view class="message">
-        <view class="m-item" v-for="i in 10" :key="i" @click="toDtl">
+        <view class="m-item" v-for="(message, index) in messageList" :key="index" @click="toDtl(message)">
           <view class="mli-left">
             <view class="mli-left1">
-              <view :class="['mli-left3', i === 2 ? 'mli-left3-ac' : '']">未读</view>
-              <view class="mli-left4">疫情已到尾声？这5件事提醒我们，还没疫情已到尾声？这5件事提醒我们，还</view>
+              <view :class="['mli-left3', message.readFlag === 1 ? 'mli-left3-ac' : '']">{{ message.readFlag === 1 ? '已读' : '未读' }}</view>
+              <view class="mli-left4">{{ message.title }}</view>
             </view>
-            <view class="mli-left2">申请时间：2020-01-01 12:12:12</view>
+            <view class="mli-left2">{{ message.addTime }}</view>
           </view>
           <uni-icons type="arrowright" size="20" color="#969799" />
         </view>
 
-        <list-empty v-if="true" />
+        <list-empty v-if="messageList.length == 0" />
       </view>
     </back-container>
 
@@ -30,11 +30,22 @@ export default {
   name: "message",
   components: { ListEmpty, BackContainer },
   data() {
-    return {};
+    return {
+			messageList: [],
+		};
   },
+	onShow() {
+		this.queryMessageList()
+	},
   methods: {
-    toDtl() {
-      uni.navigateTo({ url: `/pages/mine/messageDetail/messageDetail` })
+		queryMessageList() {
+			this.$http.post('/core/sitemessage/queryPageList')
+				.then(res => {
+					this.messageList = res.dataList || [];
+				})
+		},
+    toDtl(message) {
+      uni.navigateTo({ url: `/pages/mine/messageDetail/messageDetail?id=${message.id}` })
     }
   }
 }
