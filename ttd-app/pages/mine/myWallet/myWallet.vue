@@ -112,7 +112,11 @@
 			},
 			queryBalanceList() {
 				this.$http.post('/b/account/queryBookKeepPageList', {
-						pageSize: 5
+						pageSize: 100,
+						sortInfos: [{
+							field: 'addTime',
+							sort: 'desc',
+						}]
 					}, true)
 					.then(res => {
 						this.balanceList = res.dataList;

@@ -9,6 +9,7 @@
       </template>
 
       <view class="plo-list">
+				<list ref="list" class="plo-list" loadmoreoffset="200" @loadmore="loadMore">
         <view class="plo-item" v-for="(item, index) in orderList" :key="index">
           <view class="plo-itop">
             <text class="plo-itop-name">
@@ -118,6 +119,7 @@
           </view>
 
         </view>
+				</list>
 
         <list-empty v-if="!orderList.length" text2="去下一单试试……" />
 
@@ -159,6 +161,8 @@ export default {
       orderList: [],
 			cancelItem: {},
       cancelWarning: '',
+			page: 0,
+			isNoMore: true,
     };
   },
   computed: {
@@ -177,24 +181,42 @@ export default {
   onReady() {
   },
   onShow() {
-    this.queryOrderList();
+    this.onRefresh();
   },
   onPullDownRefresh() {
-    this.queryOrderList();
+    this.onRefresh();
   },
   methods: {
     changeVal(val) {
       this.value = val;
-      this.queryOrderList();
+      this.onRefresh();
     },
+		onRefresh() {
+			this.page = 0;
+			this.queryOrderList();
+		},
+		loadMore(e) {
+			this.$refs["list"].resetLoadmore();
+			console.log('loadmore ', e);
+			if (this.isNoMore) return;
+			this.page = this.page + 1;
+			this.queryOrderList();
+		},
     queryOrderList() {
       const url = this.isPlaceOrder ? '/b/ordermaster/queryPageList' : '/b/orderreceive/queryPageList';
       this.$http.post(url, {
-        state: this.value
+        state: this.value,
+				pageNum: this.page,
+				sortInfos: [{
+					field: 'addTime',
+					sort: 'desc',
+				}]
       }, true)
           .then(res => {
             uni.stopPullDownRefresh();
             this.orderList = res.dataList;
+						this,page = res.pageNum;
+						this.isNoMore = res.dataList.length < res.pageSize;
           }).catch((e) => {
         uni.stopPullDownRefresh();
       })

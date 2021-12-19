@@ -41,7 +41,7 @@ export default {
 	},
 	methods: {
 		queryInvoiceList() {
-			this.$http.post('/b/customerinvoiceinfo/queryPageList', { }, true)
+			this.$http.post('/b/customerinvoiceinfo/queryPageList', { pageSize: 100 }, true)
 			.then(res => {
 			  this.invoiceList = res.dataList;
 			})

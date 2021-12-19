@@ -50,6 +50,11 @@
 					.post('/b/ordercomment/queryPageList', { 
 						userId,
 						userType: 2,
+						pageSize: 100,
+						sortInfos: [{
+							field: 'addTime',
+							sort: 'desc',
+						}]
 					}, true)
 					.then(res => {
 						this.commentList = res.dataList;

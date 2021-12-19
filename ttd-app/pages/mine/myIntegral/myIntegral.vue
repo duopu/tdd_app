@@ -84,7 +84,7 @@
 			},
 			queryIntegralList() {
 				const param = {
-					pageSize: 10,
+					pageSize: 100,
 					sortInfos: [{
 						field: 'addTime',
 						sort: 'desc'

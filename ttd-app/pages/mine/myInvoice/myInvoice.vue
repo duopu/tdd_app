@@ -77,14 +77,19 @@
 			},
 			queryInvoiceList() {
 				this.$http.post('/b/orderinvoice/queryPageList', {
-						invoiceState: this.activeKey
+						invoiceState: this.activeKey,
+						pageSize: 100,
+						sortInfos: [{
+							field: 'addTime',
+							sort: 'desc',
+						}]
 					}, true)
 					.then(res => {
 						this.invoiceList = res.dataList;
 					})
 			},
 			queryMyInvoiceInfo() {
-				this.$http.post('/b/customerinvoiceinfo/queryPageList', {}, true)
+				this.$http.post('/b/customerinvoiceinfo/queryPageList', { pageSize: 100 }, true)
 					.then(res => {
 						this.myInvoiceList = res.dataList;
 					})

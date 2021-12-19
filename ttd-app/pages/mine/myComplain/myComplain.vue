@@ -40,7 +40,14 @@ export default {
 			this.queryComplainList();
     },
 		queryComplainList() {
-			this.$http.post('/b/ordercomplain/queryPageList', { state: this.activeKey }, true)
+			this.$http.post('/b/ordercomplain/queryPageList', { 
+				state: this.activeKey, 
+				pageSize: 100,
+				sortInfos: [{
+					field: 'addTime',
+					sort: 'desc',
+				}]
+		  }, true)
 			.then(res => {
 			  this.complainList = res.dataList;
 			})

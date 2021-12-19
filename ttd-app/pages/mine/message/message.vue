@@ -39,7 +39,13 @@ export default {
 	},
   methods: {
 		queryMessageList() {
-			this.$http.post('/core/sitemessage/queryPageList')
+			this.$http.post('/core/sitemessage/queryPageList', {
+				pageSize: 100,
+				sortInfos: [{
+					field: 'addTime',
+					sort: 'desc',
+				}]
+			}, true)
 				.then(res => {
 					this.messageList = res.dataList || [];
 				})

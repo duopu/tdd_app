@@ -65,7 +65,13 @@ export default {
 	},
 	methods: {
 		queryApplyList() {
-			this.$http.post('/b/applyundertaker/queryPageList', { }, true)
+			this.$http.post('/b/applyundertaker/queryPageList', { 
+				pageSize: 100,
+				sortInfos: [{
+					field: 'addTime',
+					sort: 'desc',
+				}],
+			}, true)
 			.then(res => {
 				this.applyList = res.dataList;
 			})

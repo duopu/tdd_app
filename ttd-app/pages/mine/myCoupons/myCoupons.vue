@@ -66,14 +66,16 @@ export default {
 			this.queryCouponsList();
     },
 		queryCouponsList() {
-			let params = { state: this.activeKey };
-			if (this.isSelect) {
-				params = {
-					minUsePrice: this.minUsePrice,
-					orderType: this.orderType,
-					state: this.state,
-				};
-			}
+			const params = { 
+				minUsePrice: this.isSelect ? this.minUsePrice : undefined,
+				orderType: this.isSelect ? this.orderType : undefined,
+				state: this.isSelect ? this.state : this.activeKey, 
+			  pageSize: 100,
+				sortInfos: [{
+					field: 'parvalue',
+					sort: 'desc',
+				}]
+			};
 			this.$http.post('/b/coupon/queryPageList', params, true)
 			.then(res => {
 			  this.couponsList = res.dataList;

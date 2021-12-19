@@ -67,7 +67,13 @@ export default {
 				})
 		},
 		queryLotteryList() {
-			this.$http.post('/b/lottery/queryPageList', {})
+			this.$http.post('/b/lottery/queryPageList', { 
+				pageSize: 100,
+				sortInfos: [{
+					field: 'prizeTime',
+					sort: 'desc',
+				}]
+			})
 				.then(res => {
 					this.lotteryList = res.dataList || [];
 				})
