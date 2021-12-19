@@ -51,6 +51,8 @@
           </view>
 
         </view>
+				
+				<list-empty v-if="!recordList.length" />
       </view>
     </back-container>
 
@@ -59,10 +61,11 @@
 
 <script>
 import BackContainer from "../../mine/addressManage/component/backContainer";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "changeRecord",
-  components: { BackContainer },
+  components: { ListEmpty, BackContainer },
   data() {
     return {
       MDicon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png',

@@ -39,6 +39,8 @@
 						<view class="wallet-item-right2">交易成功</view>
 					</view>
 				</view>
+				
+				<list-empty v-if="!balanceList.length" />
 			</view>
 		</back-container>
 
@@ -69,10 +71,12 @@
 	import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-icons";
 	import ModelSlot from "../aboutUs/modelSlot";
 	import BankCardItem from "../myBankCard/bankCardItem";
+	import ListEmpty from "../../place-order/orderList/listEmpty";
 
 	export default {
 		name: 'myWallet',
 		components: {
+			ListEmpty,
 			BankCardItem,
 			ModelSlot,
 			UniIcons,

@@ -55,6 +55,7 @@
 		<view class="pd-comment">
 			<member-title :show-right="false" title="评价" />
 			<evaluate-card v-for="i in commentList" :key="i.id" :comment="i" />
+			<list-empty v-if="!commentList.length" />
 		</view>
 		
 		<update-header ref="updateHeader" :url="headImgUrl" @onSave="updateHeader"/>
@@ -65,11 +66,13 @@
 	import UpdateHeader from "./updateHeader";
 	import MemberTitle from "../myTeam/memberTitle";
 	import EvaluateCard from "../myTeam/evaluateCard";
+	import ListEmpty from "../../place-order/orderList/listEmpty";
 
 	export default {
 
 		name: "peopleDetail",
 		components: {
+			ListEmpty,
 			EvaluateCard,
 			MemberTitle,
 			UpdateHeader

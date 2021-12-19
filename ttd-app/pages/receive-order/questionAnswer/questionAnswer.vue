@@ -40,6 +40,7 @@
             </view>
           </view>
         </view>
+				<list-empty v-if="!questionList.length" />
       </view>
     </back-container>
 
@@ -62,10 +63,11 @@ import OfferHead from "../component/offerHead";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
 import AskQuestionsModel from "./askQuestionsModel";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "questionAnswer",
-  components: { AskQuestionsModel, BigBtn, IphonexBottom, OfferHead, BackContainer },
+  components: { ListEmpty, AskQuestionsModel, BigBtn, IphonexBottom, OfferHead, BackContainer },
   data() {
     return {
       MDicon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png',

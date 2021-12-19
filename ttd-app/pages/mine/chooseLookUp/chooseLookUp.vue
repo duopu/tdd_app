@@ -12,6 +12,8 @@
 						:invoice="item"
 						@onClick="onInvoiceClick"
         />
+				
+				<list-empty v-if="!invoiceList.length" />
       </view>
     </back-container>
 		
@@ -27,10 +29,11 @@ import BackContainer from "../addressManage/component/backContainer";
 import InvoiceInfoCard from "../myInvoice/card/invoiceInfoCard";
 import IphonexBottom from "../addressManage/component/iphonexBottom";
 import BigBtn from "../addressManage/component/bigBtn";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "chooseLookUp",
-  components: { InvoiceInfoCard, BackContainer, BigBtn, IphonexBottom },
+  components: { ListEmpty, InvoiceInfoCard, BackContainer, BigBtn, IphonexBottom },
   data() {
     return {
 			invoiceList: [],

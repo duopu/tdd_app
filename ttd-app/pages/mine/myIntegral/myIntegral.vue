@@ -27,6 +27,7 @@
 					<view class="detail-item-right" :class="i === 1 ? 'detail-item-right-minus' : ''">
 						{{ `${item.actNum ? '+ ' : ''}${item.actNum}`}}</view>
 				</view>
+				<list-empty v-if="!integralList.length" />
 			</view>
 		</back-container>
 
@@ -47,10 +48,12 @@
 	import BackContainer from "../addressManage/component/backContainer";
 	import IphonexBottom from "../addressManage/component/iphonexBottom";
 	import BottomOperate from "../addressManage/component/bottomOperate";
+	import ListEmpty from "../../place-order/orderList/listEmpty";
 
 	export default {
 		name: 'myIntegral',
 		components: {
+			ListEmpty,
 			BottomOperate,
 			IphonexBottom,
 			BackContainer

@@ -26,6 +26,8 @@
           </view>
           <view class="wheel-boo4">{{ i.state == 1 ? '未发放' : i.state == 2 ? '物流快递中' : '已发放'}}</view>
         </view>
+				
+				<list-empty v-if="!lotteryList.length" />
       </view>
 
     </view>
@@ -34,10 +36,11 @@
 
 <script>
 import HxrWheel from "./hxrWheel";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "lotteryCenter",
-  components: { HxrWheel },
+  components: { ListEmpty, HxrWheel },
   data() {
     return {
 			lotteryCount: 0,

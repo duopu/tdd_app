@@ -52,6 +52,7 @@
     <view class="order-dtl-team">
       <member-title :show-right="false" title="评价" />
       <evaluate-card v-for="i in commentList" :key="i" />
+			<list-empty v-if="!commentList.length" />
     </view>
 
     <view class="order-dtl-botb" />
@@ -107,10 +108,11 @@ import UniIcons from "../../../uni_modules/uni-icons/components/uni-icons/uni-ic
 import MemberTitle from "../../receive-order/myTeam/memberTitle";
 import EvaluateCard from "../../receive-order/myTeam/evaluateCard";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
+import ListEmpty from "../orderList/listEmpty";
 
 export default {
   name: 'orderDetail',
-  components: { IphonexBottom, EvaluateCard, MemberTitle, UniIcons, OfferContentCard, AddRemark, QuotedIten, MyPrice, OfferHead, BackContainer },
+  components: { ListEmpty, IphonexBottom, EvaluateCard, MemberTitle, UniIcons, OfferContentCard, AddRemark, QuotedIten, MyPrice, OfferHead, BackContainer },
   data() {
     return {
 			id: '',
