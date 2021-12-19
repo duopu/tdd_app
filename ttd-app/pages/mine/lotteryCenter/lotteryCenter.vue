@@ -5,7 +5,7 @@
 
     <view>
       <view class="wheel-box">
-        <view class="wheel-box-det">查看规则</view>
+        <view class="wheel-box-det" @click="checkRule">查看规则</view>
 
 
         <hxr-wheel @start="start" ref="hxrWheel" />
@@ -80,6 +80,14 @@ export default {
 				.then(res => {
 					this.lotteryList = res.dataList || [];
 				})
+		},
+		checkRule() {
+			uni.showModal({
+				title: '抽奖规则',
+				content: '给我中！给我中！给我中！给我中！给我中！给我中！给我中！给我中！给我中！',
+				showCancel: false,
+				confirmText: '我知道了',
+			})
 		},
     start() {
       this.$refs.hxrWheel.begin(4);

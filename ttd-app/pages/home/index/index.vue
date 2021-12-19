@@ -283,7 +283,7 @@ export default {
             });
           } else {
             uni.navigateTo({
-              url: `/pages/place-order/placeOrder/placeOrder?orderType=${item.module}`,
+              url: `/pages/place-order/placeOrder/placeOrder?orderType=${item.type}`,
             })
           }
         }
