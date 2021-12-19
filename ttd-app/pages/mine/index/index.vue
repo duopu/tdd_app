@@ -6,7 +6,7 @@
 
     <view class="mine-top">
       <view class="mt-1">
-        <image :src="userHeaderImg" class="mt-11" @click="$refs.updateHeader.show()" />
+        <image :src="userHeaderImg" class="mt-11" @click="navPeopleDetail" />
         <view class="mt-12">
           <text class="mt-14">{{ showWelcome() }}</text>
           <view class="mt-15" @click="toPage({url: '/pages/mine/myIntegral/myIntegral'})">
@@ -129,6 +129,12 @@ export default {
 		this.refresh();
 	},
   methods: {
+		// 跳转个人信息
+		navPeopleDetail(){
+			uni.navigateTo({
+				url:'/pages/receive-order/peopleDetail/peopleDetail'
+			})
+		},
 		refresh() {
 			this.queryIntegralInfo();
 			this.queryCouponInfo();
