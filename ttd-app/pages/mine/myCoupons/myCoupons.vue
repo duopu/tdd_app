@@ -12,7 +12,7 @@
           <coupon-card :minus-type="i" :coupon="item" @useCoupon="useCoupon" />
         </view>
 
-        <list-empty v-if="!couponsList.length" :text2="' '" />
+        <list-empty v-if="!couponsList.length" />
       </view>
     </back-container>
   </view>

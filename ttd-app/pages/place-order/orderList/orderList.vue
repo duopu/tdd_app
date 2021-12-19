@@ -55,7 +55,7 @@
               <view v-if="isPlaceOrder" class="plo-im-3red">{{ item.subState == 6 ? '等待承接方完成工作' : '承接方完成工作,等待您的确认' }}</view>
               <view v-else class="plo-im-3red">{{ item.subState == 6 ? '' : '等待用户确认完工' }}</view>
             </view>
-						
+
 						<view class="state1-tip" v-if="!isPlaceOrder && item.settleState == 1">
 						  <view class="plo-im-3red">已支付{{ item.settleAmount / 100 }}元</view>
 						</view>
@@ -119,7 +119,7 @@
 
         </view>
 
-        <list-empty v-if="!orderList.length" />
+        <list-empty v-if="!orderList.length" text2="去下一单试试……" />
 
       </view>
     </back-container>
@@ -229,7 +229,7 @@ export default {
 			// }
    //    this.$refs.modalBox.show()
 			// return;
-			
+
 			let warning = '取消订单会影响您的声誉，影响后续发单，并会扣除部分款项。您确定要取消订单吗？'
 			if (item.state == 10 || item.state == 20) {
 				warning = '取消订单会影响您的声誉，影响后续发单。您确定要取消订单吗？'

@@ -10,6 +10,7 @@
         <!-- 已开票  开票中-->
         <invoice-card v-if="['1', '2'].includes(activeKey)" v-for="(i, index) in invoiceList" :key="index" :invoice="i"/>
 
+
         <!-- 发票 信息  -->
         <invoice-info-card
             v-if="['3'].includes(activeKey)"
@@ -19,6 +20,9 @@
             :item="{ iconType: i }"
 						@onClick="toMyInvoice()"
         />
+
+        <list-empty v-if="(!invoiceList.length && ['1', '2'].includes(activeKey)) || (!myInvoiceList.length && ['3'].includes(activeKey))" />
+
       </view>
     </back-container>
   </view>
@@ -28,10 +32,11 @@ import BackContainer from "../addressManage/component/backContainer";
 import BlueTab from "../addressManage/component/blueTab";
 import InvoiceCard from "./card/invoiceCard";
 import InvoiceInfoCard from "./card/invoiceInfoCard";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "myInvoice",
-  components: { InvoiceInfoCard, InvoiceCard, BlueTab, BackContainer },
+  components: { ListEmpty, InvoiceInfoCard, InvoiceCard, BlueTab, BackContainer },
   data() {
     return {
       activeKey: '2',

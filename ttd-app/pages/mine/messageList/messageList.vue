@@ -15,6 +15,8 @@
             <view class="mist-item4 mist-item5">接受</view>
           </view>
         </view>
+
+        <list-empty v-if="true" />
       </view>
     </back-container>
 
@@ -22,10 +24,11 @@
 </template>
 <script>
 import BackContainer from "../addressManage/component/backContainer";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "messageList",
-  components: { BackContainer }
+  components: { ListEmpty, BackContainer }
 }
 </script>
 <style lang="scss" scoped>

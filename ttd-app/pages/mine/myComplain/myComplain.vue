@@ -10,6 +10,8 @@
 
       <view class="complain-list">
         <complain-card v-for="i in complainList" :key="i.id" :complain="i" :card-type="activeKey" />
+
+        <list-empty v-if="!complainList.length" />
       </view>
     </back-container>
   </view>
@@ -18,10 +20,11 @@
 import BackContainer from "../addressManage/component/backContainer";
 import BlueTab from "../addressManage/component/blueTab";
 import ComplainCard from "./children/complainCard";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: "myComplain",
-  components: { ComplainCard, BlueTab, BackContainer },
+  components: { ListEmpty, ComplainCard, BlueTab, BackContainer },
   data() {
     return {
       activeKey: 1,

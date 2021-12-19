@@ -16,6 +16,7 @@
           <uni-icons v-else type="circle" size="22" color="#969799" />
         </view>-->
         <bank-card-item v-for="(item, i) in cardList" :key="i" :i="isSelect ? (selectCard == item.bankCardNo ? 1 : 3) : 2 " :item="item"@click="editCard(item)" />
+        <list-empty v-if="!cardList.length" />
       </view>
     </back-container>
 
@@ -30,10 +31,11 @@ import BackContainer from "../addressManage/component/backContainer";
 import IphonexBottom from "../addressManage/component/iphonexBottom";
 import BigBtn from "../addressManage/component/bigBtn";
 import BankCardItem from "./bankCardItem";
+import ListEmpty from "../../place-order/orderList/listEmpty";
 
 export default {
   name: 'myBankCard',
-  components: { BankCardItem, BackContainer, BigBtn, IphonexBottom },
+  components: { ListEmpty, BankCardItem, BackContainer, BigBtn, IphonexBottom },
 	data() {
 		return {
 			isSelect: false,
@@ -64,7 +66,7 @@ export default {
 			if (this.isSelect) {
 			  const eventChannel = this.getOpenerEventChannel();
 			  eventChannel.emit('onSelect', card);
-			
+
 			  uni.navigateBack({});
 			} else {
 		    uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount?id=${card.id}` })

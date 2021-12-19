@@ -7,39 +7,39 @@
       <view class="edit-in-addr">
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">公司名称</view>
-          <input class="edit-in-ac-midle" :value="name" @input="(e) => onInput(e, 'name')" placeholder="请务必输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="name" @input="(e) => onInput(e, 'name')" placeholder="请务必输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">统一税号</view>
-          <input class="edit-in-ac-midle" :value="dutyNo" @input="(e) => onInput(e, 'duty')" placeholder="请务必输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="dutyNo" @input="(e) => onInput(e, 'duty')" placeholder="请务必输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">单位地址</view>
-          <input class="edit-in-ac-midle" :value="address" @input="(e) => onInput(e, 'address')" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="address" @input="(e) => onInput(e, 'address')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">电话号码</view>
-          <input class="edit-in-ac-midle" :value="phone" @input="(e) => onInput(e, 'phone')" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="phone" @input="(e) => onInput(e, 'phone')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">开户银行</view>
-          <input class="edit-in-ac-midle" :value="openingBank" @input="(e) => onInput(e, 'bank')" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="openingBank" @input="(e) => onInput(e, 'bank')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">银行帐户</view>
-          <input class="edit-in-ac-midle" :value="bankAccount" @input="(e) => onInput(e, 'account')" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="bankAccount" @input="(e) => onInput(e, 'account')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="up-box">
           <view class="up-box-title">营业执照</view>
           <view class="up-box-area" @click="chooseImage()">
 						<view v-if="businessLicense">
-							 <image class="up-box-center-image" :src="businessLicense" />
+							 <image class="up-box-langou" :src="businessLicense" />
 						</view>
             <view v-else class="up-box-center">
               <image class="up-box-center-image" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/upload-image-icon.svg" />
@@ -271,6 +271,11 @@ export default {
         height: 320rpx;
         background: #F3F4F5;
         margin: 0 auto 0 104rpx;
+
+        .up-box-langou {
+          width: 480rpx;
+          height: 320rpx;
+        }
 
         .up-box-center {
           text-align: center;
