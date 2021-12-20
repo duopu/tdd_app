@@ -32,14 +32,10 @@
       <view class="add-i-aline" />
 
       <add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
-
-      <view class="up-list up-list1">
-        <upload-list upload-text="添加图片" @upload="chooseImage"/>
-        <!-- <upload-list upload-icon="4" upload-text="拍照" /> -->
-        <upload-list upload-icon="2" @upload="chooseFile"/>
-        <upload-list upload-icon="3" upload-text="添加语音" @upload="startRecord"/>
-        <upload-list upload-icon="3" upload-text="添加语音" @upload="endRecord"/>
-      </view>
+			
+			<!-- 上传文件 -->
+			<up-file v-model="orderResourceList" @input="fileChange"/>
+	
     </back-container>
 
     <view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>
@@ -73,9 +69,8 @@ export default {
     };
   },
   onLoad() {
-  	let self = this;
 		// 监听上级页面传入数据
-		const eventChannel = self.getOpenerEventChannel();
+		const eventChannel = this.getOpenerEventChannel();
 		eventChannel.on('editWork', (work) => {
 		    console.log('editWork ', work);
 				this.cateId = work.cateId;
@@ -85,12 +80,6 @@ export default {
 				this.requireInfo = work.requireInfo;
 				this.orderResourceList = work.orderResourceList;
 		})
-		// 监听录音事件
-  	recorderManager.onStop(function (res) {
-  		console.log('recorder stop' + JSON.stringify(res));
-     const path = res.tempFilePath;
-  		self.uploadImage(path, 2);
-    });
   },
 	mounted() {
 		uni.$on('submitSelectEquipmenttoolTree',(toolList)=>{
@@ -107,51 +96,14 @@ export default {
 				url:`/pages/main/apply/tree?type=equipmenttool`
 			})
 		},
-    chooseImage() {
-    	uni.chooseImage({
-    	    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-    	    success: (res) => {
-    					const path = res.tempFilePaths[0];
-    					this.uploadImage(path, 1);
-    	    }
-    	});
-    },
-    chooseFile() {
-    	wx.chooseMessageFile({
-    	  count: 1,
-    		success: function (res) {
-    	    const path = res.tempFilePaths[0];
-    	    this.uploadImage(path, 3);
-    	  }
-    	});
-    },
-    startRecord() {
-    	console.log('开始录音');
-    	recorderManager.start();
-    },
-    endRecord() {
-      console.log('录音结束');
-      recorderManager.stop();
-    },
-    uploadImage(path, type) {
-    	const param = {
-    		file: path,
-    	};
-    	this.$http.upload({ path }, true)
-    	.then(res=>{
-    		const a = this.orderResourceList.slice();
-    		a.push({
-    			url: res,
-    			resourceType: type,
-    		});
-    		this.orderResourceList = a.slice();
-    	});
-    },
 		inputChange(e) {
 			this.distance = e.target.value;
 		},
 		infoChange(t) {
 			this.requireInfo = t;
+		},
+		fileChange(list) {
+			this.orderResourceList = list;
 		},
     onSubmit() {
     	const work = Object.assign({}, this.$data);

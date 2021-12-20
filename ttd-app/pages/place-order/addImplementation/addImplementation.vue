@@ -41,17 +41,8 @@
 
 			<add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 			<!-- 上传文件 -->
-			<up-file v-model="orderResourceList"></up-file>
-
-			<!-- <view class="up-list">
-				<upload-list upload-text="添加图片" :fileList="imgList"  @upload="chooseImage" />
-				<!-- <upload-list upload-icon="4" upload-text="拍照" /> -->
-			<!-- <upload-list upload-icon="2" :fileList="fileList" @upload="chooseFile" />
-				<upload-list upload-icon="3" upload-text="添加语音" @upload="startRecord" />
-				<upload-list upload-icon="3" upload-text="添加语音" @upload="endRecord" /> -->
-			<!-- @longpress="handleLongPress" @touchend="handleTouchEnd" -->
-
-			<!-- </view> -->
+			<up-file v-model="orderResourceList" @input="fileChange"/>
+			
 		</back-container>
 
 		<view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>
@@ -71,7 +62,6 @@
 	import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 	import BigBtn from "../../mine/addressManage/component/bigBtn";
 
-	const recorderManager = uni.getRecorderManager();
 
 	export default {
 		name: "addImplementation",
@@ -95,17 +85,14 @@
 				number: 0, // 数量
 				requireInfo: '', // 备注
 				orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
-				imgList: [],
-				fileList: [],
 
 				skillList: [], // 服务类型数据源
 				brandList: [], // 品牌类型数据源
 			};
 		},
 		onLoad(option) {
-			let self = this;
 			// 监听上级页面传入数据
-			const eventChannel = self.getOpenerEventChannel();
+			const eventChannel = this.getOpenerEventChannel();
 			eventChannel.on('editWork', (work) => {
 				console.log('editWork ', work);
 				this.type = work.type;
@@ -118,12 +105,6 @@
 				this.requireInfo = work.requireInfo;
 				this.orderResourceList = work.orderResourceList;
 			})
-			// 监听录音事件
-			recorderManager.onStop(function(res) {
-				console.log('recorder stop' + JSON.stringify(res));
-				const path = res.tempFilePath;
-				self.uploadImage(path, 2);
-			});
 		},
 		onReady() {},
 		mounted() {
@@ -166,6 +147,9 @@
 			},
 			infoChange(t) {
 				this.requireInfo = t;
+			},
+			fileChange(list) {
+				this.orderResourceList = list;
 			},
 			onSubmit() {
 				const work = Object.assign({}, this.$data);

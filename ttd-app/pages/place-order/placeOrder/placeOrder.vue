@@ -306,7 +306,7 @@
 					return false;
 				}
 				const quoteEnd = this.quoteTime[1];
-				if (!this.quoteEnd) {
+				if (!quoteEnd) {
 					uni.showToast({
 						title: '请选择报价周期',
 						icon: 'none'
@@ -323,13 +323,6 @@
 					return false;
 				}
 				if (!this.orderAddress.name) {
-					uni.showToast({
-						title: '请选择地址',
-						icon: 'none'
-					});
-					return false;
-				}
-				if (this.orderAddress.name) {
 					uni.showToast({
 						title: '请选择地址',
 						icon: 'none'
@@ -371,8 +364,8 @@
 							content: '需求发布成功,等待承接方报价',
 							confirmText: '查看订单',
 							cancelText: '返回首页',
-							success: (res) => {
-								if (res.confirm) {
+							success: (res1) => {
+								if (res1.confirm) {
 									uni.navigateTo({
 										url: `/pages/place-order/orderDetail/orderDetail?id=${res.id}&isPlaceOrder=1`,
 									})
