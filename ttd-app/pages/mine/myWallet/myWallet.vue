@@ -56,7 +56,7 @@
 					<view class="wallet-model1">提现到：</view>
 					<view class="wallet-model3">
 						<bank-card-item v-if="Object.keys(bankCard).length" background-color="#F3F4F5" :i="2" :item="bankCard" @click="selectBankCard" />
-            <empty-bank-card-item v-else />
+            <empty-bank-card-item v-else @add="toAdd"/>
 					</view>
 				</view>
 			</template>
@@ -147,6 +147,16 @@
 						this.bankCard = res.dataList[0];
 						this.visible = true;
 					})
+			},
+			toAdd() {
+				uni.navigateTo({ 
+					url: `/pages/mine/bankAccount/bankAccount`,
+					events: {
+						onAdd: () => {
+							this.showWithdraw();
+						}
+					}
+				})
 			},
 			selectBankCard() {
 				uni.navigateTo({

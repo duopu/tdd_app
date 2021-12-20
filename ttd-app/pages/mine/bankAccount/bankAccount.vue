@@ -128,6 +128,10 @@ export default {
 			this.$http
 				.post(url, params, true)
 				.then(res => {
+					
+					const eventChannel = this.getOpenerEventChannel();
+					eventChannel.emit('onAdd');
+					
 					uni.showToast({
 						title: '编辑成功',
 					  success: () => {

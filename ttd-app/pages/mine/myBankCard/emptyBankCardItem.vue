@@ -6,7 +6,7 @@
       <view class="empty-b-name">未绑定银行卡</view>
       <view class="empty-b-bank-name">请先添加默认银行卡</view>
     </view>
-    <view class="empty-b-add">去添加</view>
+    <view class="empty-b-add" @click="$emit('add')">去添加</view>
   </view>
 </template>
 <script>
