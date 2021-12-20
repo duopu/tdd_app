@@ -39,7 +39,7 @@
 						<view class="wallet-item-right2">交易成功</view>
 					</view>
 				</view>
-				
+
 				<list-empty v-if="!balanceList.length" />
 			</view>
 		</back-container>
@@ -55,7 +55,8 @@
 					</view>
 					<view class="wallet-model1">提现到：</view>
 					<view class="wallet-model3">
-						<bank-card-item background-color="#F3F4F5" :i="2" :item="bankCard" @click="selectBankCard" />
+						<bank-card-item v-if="Object.keys(bankCard).length" background-color="#F3F4F5" :i="2" :item="bankCard" @click="selectBankCard" />
+            <empty-bank-card-item v-else />
 					</view>
 				</view>
 			</template>
@@ -72,10 +73,12 @@
 	import ModelSlot from "../aboutUs/modelSlot";
 	import BankCardItem from "../myBankCard/bankCardItem";
 	import ListEmpty from "../../place-order/orderList/listEmpty";
+  import EmptyBankCardItem from "../myBankCard/emptyBankCardItem";
 
 	export default {
 		name: 'myWallet',
 		components: {
+      EmptyBankCardItem,
 			ListEmpty,
 			BankCardItem,
 			ModelSlot,
