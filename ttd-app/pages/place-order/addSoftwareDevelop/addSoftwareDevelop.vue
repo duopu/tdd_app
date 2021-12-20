@@ -24,7 +24,7 @@
       <add-remark label="要求：" required :value="requireInfo" @input="infoChange"  />
 			
 			<!-- 上传文件 -->
-			<up-file v-model="orderResourceList" @input="fileChange"/>
+			<up-file v-model="orderResourceList"/>
 
     </back-container>
 
@@ -86,9 +86,6 @@ export default {
 		},
 		infoChange(t) {
 			this.requireInfo = t;
-		},
-		fileChange(list) {
-			this.orderResourceList = list;
 		},
     onSubmit() {
     	const work = Object.assign({}, this.$data);

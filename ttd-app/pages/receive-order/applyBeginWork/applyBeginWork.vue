@@ -43,7 +43,7 @@
           <view v-if="isPlaceOrder" class="abwp-rtime">{{ startApplyInfo.applyTime }}</view>
 					
 					<!-- 上传文件 -->
-					<up-file v-model="startApplyInfo.resourceList" :modal="order.subState != 4 ? 'show' : 'select'" :showAudio="false" @input="fileChange1"/>
+					<up-file v-model="startApplyInfo.resourceList" :modal="order.subState != 4 ? 'show' : 'select'" :showAudio="false"/>
 
           <!-- <upload-list :hideUploadBtn="order.subState != 4" upload-text="添加照片" :fileList="startApplyInfo.picList" @upload="chooseImage(1)"/> -->
 
@@ -68,7 +68,7 @@
 				<view v-if="isPlaceOrder" class="abwp-rtime">{{ completeApplyInfo.applyTime }}</view>
 				
 				<!-- 上传文件 -->
-				<up-file v-model="completeApplyInfo.resourceList" :modal="order.subState != 6 ? 'show' : 'select'" :showAudio="false" @input="fileChange2"/>
+				<up-file v-model="completeApplyInfo.resourceList" :modal="order.subState != 6 ? 'show' : 'select'" :showAudio="false"/>
 				
         <upload-list :hideUploadBtn="order.subState != 6" upload-text="添加照片" :fileList="completeApplyInfo.picList" @upload="chooseImage(2)"/>
 
@@ -237,12 +237,6 @@ export default {
 					this.completeApplyInfo.address.provinceId = res.provinceId;
 				}
 			})
-		},
-		fileChange1(list) {
-			this.startApplyInfo.resourceList = list;
-		},
-		fileChange2(list) {
-			this.completeApplyInfo.resourceList = list;
 		},
 		chooseImage(type) {
 			uni.chooseImage({
