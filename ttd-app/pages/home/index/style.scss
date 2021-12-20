@@ -184,6 +184,19 @@
   }
 }
 
+.advertise {
+  margin-top: 20rpx;
+  padding: 0 32rpx;
+  box-sizing: border-box;
+  .image-advertise {
+    margin-bottom: 24rpx;
+    flex-shrink: 0;
+    width: 100%;
+    height: 164rpx;
+    border-radius: 16rpx;
+  }
+}
+
 .home-mnum {
   padding: 48rpx;
   margin: 24rpx;

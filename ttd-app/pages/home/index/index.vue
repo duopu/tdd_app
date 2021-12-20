@@ -101,6 +101,11 @@
       </swiper-item>
     </swiper>
 
+    <view class="advertise">
+        <image class="image-advertise" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList1.png" mode="aspectFill"></image>
+        <image class="image-advertise" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList2.png" mode="aspectFill"></image>
+    </view>
+
     <view class="iam-aline" />
   </view>
 </template>
@@ -143,6 +148,7 @@ export default {
       ],
       // 菜单内容
       itemListList: [],
+      imageButtonList: ['https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList1.png'],
       bannerList: [],
       searchVal: '',
       testText: 'asd',
