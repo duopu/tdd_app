@@ -12,7 +12,7 @@
           <upload-list
               hide-upload-btn
               :show-delete="false"
-              :img-list="[
+              :fileList="[
                   'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
                   'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
               ]"

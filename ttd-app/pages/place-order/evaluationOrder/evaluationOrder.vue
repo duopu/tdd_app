@@ -25,7 +25,7 @@
           <add-remark label="评价内容：" :value="member.content" @input="(text) => contentChange(text, index)" />
 
           <view class="upload-list-obox">
-            <upload-list upload-text="添加照片" :img-list="member.imgUrlList" @upload="chooseImage(index)" />
+            <upload-list upload-text="添加照片" :fileList="member.imgUrlList" @upload="chooseImage(index)" />
           </view>
         </view>
       </view>

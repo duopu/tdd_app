@@ -13,7 +13,7 @@
       <add-remark label="内容：" :value="content" @input="contentChange" placeholder="可以的话，多少写点！方便工作人员快速排队故障。" />
 
       <view class="qus-model-img-box">
-        <upload-list upload-text="添加图片" :imgList="pictureList" @upload="chooseImage" />
+        <upload-list upload-text="添加图片" :fileList="pictureList" @upload="chooseImage" />
       </view>
 
     </template>

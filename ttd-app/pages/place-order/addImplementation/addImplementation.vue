@@ -48,7 +48,7 @@
 				<upload-list upload-icon="3" upload-text="添加语音" @upload="startRecord" />
 				<upload-list upload-icon="3" upload-text="添加语音" @upload="endRecord" />
 				<!-- @longpress="handleLongPress" @touchend="handleTouchEnd" -->
-			
+
 			</view>
 		</back-container>
 

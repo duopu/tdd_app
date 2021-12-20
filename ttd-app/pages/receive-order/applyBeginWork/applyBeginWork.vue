@@ -42,7 +42,7 @@
 
           <view v-if="isPlaceOrder" class="abwp-rtime">{{ startApplyInfo.applyTime }}</view>
 
-          <upload-list :hideUploadBtn="order.subState != 4" upload-text="添加照片" :img-list="startApplyInfo.picList" @upload="chooseImage(1)"/>
+          <upload-list :hideUploadBtn="order.subState != 4" upload-text="添加照片" :fileList="startApplyInfo.picList" @upload="chooseImage(1)"/>
 
           <view v-if="order.subState == 6 || order.subState == 7" class="iamaline" />
 
@@ -64,7 +64,7 @@
 
 				<view v-if="isPlaceOrder" class="abwp-rtime">{{ completeApplyInfo.applyTime }}</view>
 
-        <upload-list :hideUploadBtn="order.subState != 6" upload-text="添加照片" :img-list="completeApplyInfo.picList" @upload="chooseImage(2)"/>
+        <upload-list :hideUploadBtn="order.subState != 6" upload-text="添加照片" :fileList="completeApplyInfo.picList" @upload="chooseImage(2)"/>
 
         <upload-list :hideUploadBtn="order.subState != 6" upload-icon="2" @upload="chooseFile(2)"/>
 
