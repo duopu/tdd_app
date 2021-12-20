@@ -293,7 +293,7 @@ export default {
     },
 		toMessage() {
 			uni.navigateTo({
-				url: '/pages/mine/message/message'
+				url: '/pages/mine/messageList/messageList'
 			})
 		},
   }
