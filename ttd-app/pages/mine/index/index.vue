@@ -150,16 +150,6 @@
 						url: '/pages/mine/aboutUs/aboutUs',
 						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
 					},
-					{
-						title: '我的分销-临时',
-						url: '/pages/mine/myDistribution/myDistribution',
-						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
-					},
-					{
-						title: '分销详情-临时',
-						url: '/pages/mine/distributionDetail/distributionDetail',
-						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png'
-					},
 				]
 			},
 			moneyZheng(){
