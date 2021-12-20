@@ -102,8 +102,8 @@
     </swiper>
 
     <view class="advertise">
-        <image class="image-advertise" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList1.png" mode="aspectFill"></image>
-        <image class="image-advertise" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList2.png" mode="aspectFill"></image>
+        <image class="image-advertise" @click="toInvite" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList1.png" mode="aspectFill" />
+        <image class="image-advertise" @click="toSign" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList2.png" mode="aspectFill"/>
     </view>
 
     <view class="iam-aline" />
@@ -297,9 +297,25 @@ export default {
       });
     },
 		toMessage() {
-			uni.navigateTo({
-				url: '/pages/mine/messageList/messageList'
-			})
+			this.$tool.actionForLogin(() => {
+				uni.navigateTo({
+					url: '/pages/mine/messageList/messageList'
+				})
+			});
+		},
+		toInvite() {
+			this.$tool.actionForLogin(() => {
+				uni.navigateTo({
+					url: '/pages/mine/invite/invite'
+				})
+			});
+		},
+		toSign() {
+			this.$tool.actionForLogin(() => {
+				uni.navigateTo({
+					url: '/pages/mine/signIn/signIn'
+				})
+			});
 		},
   }
 };
