@@ -18,10 +18,9 @@
     <!-- 滚动 单个 -->
     <view class="home-single">
       <view class="home-item-box">
-        <view class="home-item" v-for="i in 30" :key="i">
-          <image class="home-item-img"
-                 src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-1.png" />
-          <view class="home-item-text">操作系统</view>
+        <view class="home-item" v-for="(item, subIndex) in itemList" :key="subIndex">
+          <image class="home-item-img" :src="item.icon" />
+          <view class="home-item-text">{{ item.name }}</view>
         </view>
       </view>
       <view class="home-item-bottom"></view>
@@ -151,7 +150,6 @@ export default {
     };
   },
   onLoad(option) {
-
     console.log('启动页传参', option);
     if (option.contentMapId) { // 分享小程序 打开获取的参数
       this.queryContentmapping(option.contentMapId)
@@ -162,7 +160,10 @@ export default {
       this.queryContentmapping(contentMapId)
     }
   },
-  onReady() {
+  computed: {
+    itemList() {
+      return this.itemListList?.[this.swiperIndex]
+    }
   },
   onShow() {
     this.refresh();
