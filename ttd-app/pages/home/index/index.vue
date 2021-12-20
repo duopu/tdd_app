@@ -178,6 +178,7 @@ export default {
     refresh() {
       this.queryHomeItemData();
       this.queryBannerData();
+			this.queryMessageCount();
       this.$store.dispatch('queryApproveDetail');
     },
     // 查找映射数据
@@ -221,12 +222,10 @@ export default {
         this.bannerList = res;
       });
     },
-		queryMessage() {
-			this.$http.post('/core/sitemessage/queryPageList', {
-			  readFlag: 0,
-				pageSize: 1,
-			}).then(res => {
-			  this.messageCount = res.totalCount;
+		queryMessageCount() {
+			this.$http.post('/core/sitemessage/unreadCount', {})
+			.then(res => {
+			  this.messageCount = res;
 			});
 		},
     // 计算箭头的位置
