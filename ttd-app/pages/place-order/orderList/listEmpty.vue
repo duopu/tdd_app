@@ -1,6 +1,5 @@
 <template>
   <view class="list-empty" :style="{ height: height }">
-    <!-- TODO 图片待替换 -->
     <image class="list-empty-img" :src="url" />
     <view class="list-empty-text1">{{ text1 }}</view>
     <view class="list-empty-text2">{{ text2 }}</view>
@@ -20,7 +19,7 @@ export default {
     },
     url: {
       type: String,
-      default: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png'
+      default: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/no-bankcard-icon.svg'
     },
     height: {
       type: String,
