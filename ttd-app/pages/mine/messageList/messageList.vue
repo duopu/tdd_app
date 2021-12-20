@@ -8,7 +8,7 @@
         <view class="mist-item" v-for="(message, index) in messageList" :key="index">
           <view class="mist-item1">{{ message.title }}</view>
           <view class="mist-item2">{{ message.content }}</view>
-          <view class="mist-item3" v-if="message.scenarioType == 1">
+          <view class="mist-item3" v-if="(message.scenarioType == 1 || message.scenarioType == 2) && message.readFlag == 0">
             <view class="mist-item4" @click="progressMessage(message, 0)">拒绝</view>
             <view class="mist-item4 mist-item5" @click="progressMessage(message, 1)">接受</view>
           </view>
@@ -32,10 +32,18 @@ export default {
 			messageList: [],
 		};
 	},
+	onReady() {
+		this.readMessage();
+	},
 	onShow() {
 		this.queryMessageList()
 	},
 	methods: {
+		readMessage() {
+			this.$http.post('/core/sitemessage/readNotice', { scenarioType: 0 })
+				.then(res => {
+				})
+		},
 		queryMessageList() {
 			this.$http.post('/core/sitemessage/queryPageList', {
 				pageSize: 100,
@@ -52,12 +60,38 @@ export default {
 	    uni.navigateTo({ url: `/pages/mine/messageDetail/messageDetail?id=${message.id}` })
 	  },
 		progressMessage(message, inviteState) {
+			if (message.scenarioType == 1) {
+				this.processDealerInvite(message.id, inviteState);
+			} else {
+				this.processTeamInvite(message.id, inviteState);
+			}
+		},
+		processDealerInvite(id, inviteState) {
 			this.$http.post('/core/sitemessage/processDealerInvite', {
-				id: message.id,
+				id,
 				inviteState,
 			}, true)
 				.then(res => {
-					this.messageList = res.dataList || [];
+					uni.showToast({
+						title: '处理成功',
+						success: () => {
+							this.queryMessageList();
+						}
+					})
+				})
+		},
+		processTeamInvite(id, inviteState) {
+			this.$http.post('/core/sitemessage/processTeamInvite', {
+				id,
+				inviteState,
+			}, true)
+				.then(res => {
+					uni.showToast({
+						title: '处理成功',
+						success: () => {
+							this.queryMessageList();
+						}
+					})
 				})
 		},
 	}
