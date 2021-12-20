@@ -9,14 +9,7 @@
         <view class="h-detail3">{{ detail.detail }}</view>
 
         <view class="h-detail4">
-          <upload-list
-              hide-upload-btn
-              :show-delete="false"
-              :fileList="[
-                  'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
-                  'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/idcard-back.png',
-              ]"
-          />
+          <up-file v-model="detail.supportDetailList" :modal="show"/>
         </view>
       </view>
     </back-container>

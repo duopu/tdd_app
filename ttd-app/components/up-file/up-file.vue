@@ -19,7 +19,7 @@
 					mode="aspectFit"></image>
 				<view class="btn-text">添加文件</view>
 			</view>
-			<view class="btn-view" @longpress="handleLongPress" @touchend="handleTouchEnd">
+			<view v-if="showAudio" class="btn-view" @longpress="handleLongPress" @touchend="handleTouchEnd">
 				<image class="btn-icon"
 					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadYuyin.svg" mode="aspectFit">
 				</image>
@@ -66,6 +66,10 @@
 			modal:{
 				type:String,
 				default:'select' // 模式  select:选择文件   show:展示模式
+			},
+			showAudio: {
+				type: Boolean,
+				default: true,
 			},
 			value:{
 				type:Array,// {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
