@@ -40,16 +40,18 @@
 			<view class="add-i-aline" />
 
 			<add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
+			<!-- 上传文件 -->
+			<up-file v-model="orderResourceList"></up-file>
 
-			<view class="up-list">
+			<!-- <view class="up-list">
 				<upload-list upload-text="添加图片" :fileList="imgList"  @upload="chooseImage" />
 				<!-- <upload-list upload-icon="4" upload-text="拍照" /> -->
-				<upload-list upload-icon="2" :fileList="fileList" @upload="chooseFile" />
+			<!-- <upload-list upload-icon="2" :fileList="fileList" @upload="chooseFile" />
 				<upload-list upload-icon="3" upload-text="添加语音" @upload="startRecord" />
-				<upload-list upload-icon="3" upload-text="添加语音" @upload="endRecord" />
-				<!-- @longpress="handleLongPress" @touchend="handleTouchEnd" -->
+				<upload-list upload-icon="3" upload-text="添加语音" @upload="endRecord" /> -->
+			<!-- @longpress="handleLongPress" @touchend="handleTouchEnd" -->
 
-			</view>
+			<!-- </view> -->
 		</back-container>
 
 		<view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>
@@ -164,54 +166,6 @@
 			},
 			infoChange(t) {
 				this.requireInfo = t;
-			},
-			chooseImage() {
-				uni.chooseImage({
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					success: (res) => {
-						const path = res.tempFilePaths[0];
-						this.uploadImage(path, 1);
-					}
-				});
-			},
-			chooseFile() {
-				wx.chooseMessageFile({
-					count: 1,
-					success: (res) => {
-						console.log('file res ', res);
-						const path = res.tempFiles[0].path;
-						this.uploadImage(path, 3);
-					}
-				});
-			},
-			startRecord() {
-				console.log('开始录音');
-				recorderManager.start();
-			},
-			endRecord() {
-				console.log('录音结束');
-				recorderManager.stop();
-			},
-			uploadImage(path, type) {
-				const param = {
-					file: path,
-				};
-				this.$http.upload({
-						path
-					}, true)
-					.then(res => {
-						if (type == 1) {
-							this.imgList.push(res);
-						} else {
-							this.fileList.push(res);
-						}
-						// const a = this.orderResourceList.slice();
-						// a.push({
-						// 	url: res,
-						// 	resourceType: type,
-						// });
-						// this.orderResourceList = a.slice();
-					});
 			},
 			onSubmit() {
 				const work = Object.assign({}, this.$data);
