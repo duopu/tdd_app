@@ -42,9 +42,9 @@
 			<add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 
 			<view class="up-list">
-				<upload-list upload-text="添加图片" @upload="chooseImage" />
+				<upload-list upload-text="添加图片" :fileList="imgList"  @upload="chooseImage" />
 				<!-- <upload-list upload-icon="4" upload-text="拍照" /> -->
-				<upload-list upload-icon="2" @upload="chooseFile" />
+				<upload-list upload-icon="2" :fileList="fileList" @upload="chooseFile" />
 				<upload-list upload-icon="3" upload-text="添加语音" @upload="startRecord" />
 				<upload-list upload-icon="3" upload-text="添加语音" @upload="endRecord" />
 				<!-- @longpress="handleLongPress" @touchend="handleTouchEnd" -->
@@ -93,6 +93,8 @@
 				number: 0, // 数量
 				requireInfo: '', // 备注
 				orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
+				imgList: [],
+				fileList: [],
 
 				skillList: [], // 服务类型数据源
 				brandList: [], // 品牌类型数据源
@@ -175,8 +177,9 @@
 			chooseFile() {
 				wx.chooseMessageFile({
 					count: 1,
-					success: function(res) {
-						const path = res.tempFilePaths[0];
+					success: (res) => {
+						console.log('file res ', res);
+						const path = res.tempFiles[0].path;
 						this.uploadImage(path, 3);
 					}
 				});
@@ -197,12 +200,17 @@
 						path
 					}, true)
 					.then(res => {
-						const a = this.orderResourceList.slice();
-						a.push({
-							url: res,
-							resourceType: type,
-						});
-						this.orderResourceList = a.slice();
+						if (type == 1) {
+							this.imgList.push(res);
+						} else {
+							this.fileList.push(res);
+						}
+						// const a = this.orderResourceList.slice();
+						// a.push({
+						// 	url: res,
+						// 	resourceType: type,
+						// });
+						// this.orderResourceList = a.slice();
 					});
 			},
 			onSubmit() {
