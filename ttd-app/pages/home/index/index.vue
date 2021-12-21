@@ -30,7 +30,7 @@
       <view class="home-mnum1">
         <view class="home-mnum2">
           <view class="home-mnum4">
-            <text class="home-mnum5">1282</text>
+            <text class="home-mnum5">{{ statistics.waitOrderCount }}</text>
             <text class="home-mnum7">笔</text>
           </view>
           <view class="home-mnum6">等待中订单</view>
@@ -40,7 +40,7 @@
 
         <view class="home-mnum2">
           <view class="home-mnum4">
-            <text class="home-mnum5 home-mnum8">1282</text>
+            <text class="home-mnum5 home-mnum8">{{ statistics.waitOrderAmount }}</text>
             <text class="home-mnum7">千元</text>
           </view>
           <view class="home-mnum6">等待中订单</view>
@@ -52,7 +52,7 @@
       <view class="home-bo">
         <view class="home-bo1">
           <view class="home-bo2">
-            <text class="home-bo3">3222</text>
+            <text class="home-bo3">{{ statistics.yearCompleteOrderCount }}</text>
             <text class="home-bo4">笔</text>
           </view>
           <view class="home-bo5">年成交订单数</view>
@@ -60,7 +60,7 @@
         <view class="home-bo1-line" />
         <view class="home-bo1">
           <view class="home-bo2">
-            <text class="home-bo3">3222</text>
+            <text class="home-bo3">{{ statistics.monthCompleteOrderAmount }}</text>
             <text class="home-bo4">笔</text>
           </view>
           <view class="home-bo5">月成交额</view>
@@ -68,7 +68,7 @@
         <view class="home-bo1-line" />
         <view class="home-bo1">
           <view class="home-bo2">
-            <text class="home-bo3">3222</text>
+            <text class="home-bo3">{{ statistics.curMonthOrderCount }}</text>
             <text class="home-bo4">笔</text>
           </view>
           <view class="home-bo5">当月订单数</view>
@@ -153,6 +153,13 @@ export default {
       searchVal: '',
       testText: 'asd',
 			messageCount: 0,
+			statistics: {
+				curMonthOrderCount: 0,
+				monthCompleteOrderAmount: 0,
+				waitOrderAmount: 0,
+				waitOrderCount: 0,
+				yearCompleteOrderCount: 0,
+			},
     };
   },
   onLoad(option) {
@@ -185,6 +192,7 @@ export default {
       this.queryHomeItemData();
       this.queryBannerData();
 			this.queryMessageCount();
+			this.queryStatistics();
       this.$store.dispatch('queryApproveDetail');
     },
     // 查找映射数据
@@ -232,6 +240,12 @@ export default {
 			this.$http.post('/core/sitemessage/unreadCount', {})
 			.then(res => {
 			  this.messageCount = res;
+			});
+		},
+		queryStatistics() {
+			this.$http.get('/core/softconf/homePageData', {})
+			.then(res => {
+			  this.statistics = res;
 			});
 		},
     // 计算箭头的位置
