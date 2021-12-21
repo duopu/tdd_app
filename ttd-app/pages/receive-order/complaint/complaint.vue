@@ -10,9 +10,8 @@
 					<input :value="content" class="input-sty" placeholder-class="input-placeholder" @input="onInput" placeholder="可以的话，多少写点！\n方便工作人员快速排队故障。可以的话，多少写点！方便工作人员快速排队故障。" />
         </view>
 
-        <upload-list upload-text="添加照片" :fileList="imageList" @upload="chooseImage"/>
-
-         <upload-list upload-icon="2" @upload="chooseFile"/>
+        <up-file v-model="resourceList" :showAudio="false"/>
+				
       </view>
 
     </back-container>
@@ -36,8 +35,7 @@
 			return {
 				id: '',
 				content: '',
-				fileList: [],
-				imageList: [],
+				resourceList: [],
 			};
 		},
 		onLoad(option) {
@@ -83,8 +81,7 @@
 			commitComplaint() {
 				const params = {
 					detail: this.content,
-					fileList: this.fileList,
-					picList: this.imageList,
+					resourceList: this.resourceList,
 					receiveOrderId: this.id,
 				};
 				this.$http.post('/b/ordercomplain/add', params, true)

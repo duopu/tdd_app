@@ -14,7 +14,8 @@
       <view class="cl-item-bottm1">处理结果：{{ complain.processContent }}</view>
       <view class="cl-item-bottm2">处理时间：{{ complain.processTime }}</view>
     </view>
-		<!-- 投诉的图片列表   complain.picList -->
+		<!-- 投诉的图片列表 -->
+		<up-file v-model="complain.resourceList" :modal="show"/>
   </view>
 </template>
 <script>
