@@ -7,7 +7,7 @@
     <!-- 横向菜单 -->
     <view class="home-her">
       <view class="home-her-item" v-for="(item, index) in menuItemLists" :key="index" @click="onMenuItem(index)">
-        <image :src="item.image" class="home-her-image" />
+        <image :src="swiperIndex == index? item.selectImage :  item.image" class="home-her-image" />
         <view :class="['home-her-text', swiperIndex === index ? 'home-her-text-ac' : '']">{{ item.text }}</view>
         <view :class="['home-her-line', swiperIndex === index ? 'home-her-line-ac' : '']" />
       </view>
@@ -122,27 +122,33 @@ export default {
       // 菜单项
       menuItemLists: [
         {
-          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/home_icon_implement.png',
+          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-0.svg',
+		  selectImage:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-1.svg',
           text: '实施'
         },
         {
-          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/home_icon_maintenance.png',
+          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-10.svg',
+          selectImage:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-11.svg',
           text: '维修'
         },
         {
-          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/home_icon_survey.png',
+          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-4.svg',
+          selectImage:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-5.svg',
           text: '勘测'
         },
         {
-          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/home_icon_Renttohire.png',
+          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-4.svg',
+          selectImage:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-5.svg',
           text: '租聘'
         },
         {
-          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/home_icon_training.png',
+          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-6.svg',
+          selectImage:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-7.svg',
           text: '培训'
         },
         {
-          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/home_icon_personnel.png',
+          image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-8.svg',
+          selectImage:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-9.svg',
           text: '人员'
         }
       ],
