@@ -36,7 +36,7 @@
 		<view class="address-box">
 			<member-title title="工作地址：" :show-right="false" />
 			<view class="address-bi" @click="selectAddress">
-				<image src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png'
+				<image src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/default-head.svg'
 					class="address-img" />
 				<view class="address-right">
 					<view class="address-rt">

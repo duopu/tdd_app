@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="oc-card" @click="$emit('onClick')">
-			<image src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png'
+			<image src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/default-head.svg'
 				class="oc-card-img" />
 			<view class="oc-middle">
 				<view class="oc-middle-title">{{ title }}</view>

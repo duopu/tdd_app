@@ -13,13 +13,13 @@
 
 				<view class="add-i-item">
 					<view class="add-i-lable">服务内容</view>
-					<view class="add-i-midle" @click="skillSelect"> {{ cateName || '请选择' }}</view>
+					<view class="add-i-midle" :class="cateName ? 'add-i-acc' : ''" @click="skillSelect"> {{ cateName || '请选择' }}</view>
 					<uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
 				</view>
 
 				<view class="add-i-item">
 					<view class="add-i-lable">品牌</view>
-					<view class="add-i-midle" @click="brandSelect">{{ brand || '请选择' }}</view>
+					<view class="add-i-midle" :class="brand ? 'add-i-acc' : ''" @click="brandSelect">{{ brand || '请选择' }}</view>
 					<uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
 				</view>
 
@@ -42,7 +42,7 @@
 			<add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 			<!-- 上传文件 -->
 			<up-file v-model="orderResourceList" />
-			
+
 		</back-container>
 
 		<view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>

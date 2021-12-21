@@ -64,7 +64,7 @@
   border-radius: 16rpx;
 
   .home-item-box {
-    height: 756rpx;
+    height: 560rpx;
     padding: 30rpx;
     display: flex;
     overflow-y: scroll;
@@ -89,11 +89,19 @@
 
       .home-item-text {
         margin-top: 14rpx;
-        font-size: 24rpx;
+        font-size: 22rpx;
         font-family: PingFang SC-Regular, PingFang SC;
         font-weight: 400;
         color: #666666;
         line-height: 32rpx;
+        width: 95rpx;
+        text-align: center;
+        text-overflow: -o-ellipsis-lastline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
       }
     }
   }
@@ -101,7 +109,7 @@
   .home-item-bottom {
     height: 32rpx;
     background: #FFFFFF;
-    box-shadow: 0 -8rpx 8rpx 2px rgba(0, 0, 0, 0.05);
+    //box-shadow: 0 -8rpx 8rpx 2px rgba(0, 0, 0, 0.05);
     border-radius: 0 0 16rpx 16rpx;
   }
 }

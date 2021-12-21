@@ -12,7 +12,7 @@
         <view class="add-i-item">
           <view class="add-i-lable">类别</view>
 					<picker class="add-i-midle" @change="softwareSelect" :value="cateName" :range="softwareList" range-key="name">
-					  <view class="add-i-midle">{{ cateName || '请选择' }}</view>
+					  <view class="add-i-midle" :class="cateName ? 'add-i-acc' : ''">{{ cateName || '请选择' }}</view>
 					</picker>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
@@ -22,7 +22,7 @@
       <view class="add-i-aline" />
 
       <add-remark label="要求：" required :value="requireInfo" @input="infoChange"  />
-			
+
 			<!-- 上传文件 -->
 			<up-file v-model="orderResourceList"/>
 
@@ -54,7 +54,7 @@ export default {
 			cateName: '', // 软件类型
 			requireInfo: '', // 备注
       orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
-			
+
 			softwareList: [],
     };
   },
