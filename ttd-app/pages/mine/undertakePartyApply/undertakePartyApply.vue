@@ -65,7 +65,7 @@ export default {
 	},
 	methods: {
 		queryApplyList() {
-			this.$http.post('/b/applyundertaker/queryPageList', { 
+			this.$http.post('/b/applyundertaker/queryPageList', {
 				pageSize: 100,
 				sortInfos: [{
 					field: 'addTime',

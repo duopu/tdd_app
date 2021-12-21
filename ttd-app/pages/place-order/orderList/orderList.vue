@@ -186,6 +186,10 @@ export default {
   onPullDownRefresh() {
     this.onRefresh();
   },
+  onReachBottom() {
+    // TOdo  上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载
+    console.log('onReachBottom 上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载');
+  },
   methods: {
     changeVal(val) {
       this.value = val;
