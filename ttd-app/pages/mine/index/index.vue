@@ -169,11 +169,14 @@
 		},
 		onReady() {},
 		onShow() {
-			this.$tool.actionForLogin();
-			this.refresh();
+			this.$tool.actionForLogin(() => {
+				this.refresh();
+			});
 		},
 		onPullDownRefresh() {
-			this.refresh();
+			this.$tool.actionForLogin(() => {
+				this.refresh();
+			});
 		},
 		methods: {
 			// 跳转个人信息
@@ -252,9 +255,12 @@
 					})
 			},
 			toPage(row) {
-				uni.navigateTo({
-					url: row.url
-				})
+				if (row.title == '实名认证' && this.realAuth) return;
+				this.$tool.actionForLogin(() => {
+					uni.navigateTo({
+						url: row.url
+					})
+				});
 			}
 		}
 	};

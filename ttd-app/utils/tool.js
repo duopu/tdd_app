@@ -32,26 +32,28 @@ const login = (user) => {
 		data: user
 	});
 	// 内存保存
-	store.commit('setUser',user)
+	store.commit('setUser', user)
 
 	// 更新 申请承接方 信息
 	store.dispatch('queryApproveDetail');
-
+	// 更新实名认证信息
+	store.dispatch('queryAuthenticationInfo');
 }
 
 // 登出
 const logout = () => {
-	store.commit('setUser',{})
+	store.commit('setUser', {})
 	uni.removeStorage({
 		key: config.storageKeys.loginUserKey,
 	})
 }
 
 // 显示弹窗
-const showModal = (title,content,callback)=>{
+const showModal = (title, content, callback, confirmText) => {
 	uni.showModal({
 		title,
 		content,
+		confirmText: confirmText || '确定',
 		success: (res) => {
 			if (res.confirm) {
 				callback && callback();
@@ -66,11 +68,25 @@ const actionForLogin = (action) => {
 	if (user.token) {
 		if (action) action();
 	} else {
-		showModal('提示','此操作需要先登录',()=>{
+		showModal('提示', '此操作需要先登录', () => {
 			uni.navigateTo({
 				url: '/pages/main/login/login'
 			})
-		})
+		}, '去登录')
+	}
+}
+
+// 需要认证的操作 在此处过一遍
+const actionForAuth = (action) => {
+	const auth = store.state.authentication;
+	if (auth.state == 1) {
+		if (action) action();
+	} else {
+		showModal('提示', '此操作需要实名认证', () => {
+			uni.navigateTo({
+				url: '/pages/mine/realNameAuth/realNameAuth'
+			})
+		}, '去认证');
 	}
 }
 
@@ -79,22 +95,22 @@ const actionForLogin = (action) => {
 const orderType = (type) => {
 	switch (type) {
 		case 1:
-		  return '实施/维修';
-		  break;
+			return '实施/维修';
+			break;
 		case 2:
-		  return '勘测';
-		  break;
+			return '勘测';
+			break;
 		case 3:
-		  return '人员';
-		  break;
+			return '人员';
+			break;
 		case 4:
-		  return '租赁';
-		  break;
+			return '租赁';
+			break;
 		case 5:
-		  return '软件';
-		  break;
-		default: 
-		  return '';
+			return '软件';
+			break;
+		default:
+			return '';
 	}
 }
 
@@ -102,25 +118,25 @@ const orderType = (type) => {
 const orderState = (state) => {
 	switch (state) {
 		case 10:
-		  return '待报价';
-		  break;
+			return '待报价';
+			break;
 		case 20:
-		  return '待确认';
-		  break;
+			return '待确认';
+			break;
 		case 30:
-		  return '待开始';
-		  break;
+			return '待开始';
+			break;
 		case 40:
-		  return '待完工';
-		  break;
+			return '待完工';
+			break;
 		case 50:
-		  return '已完工';
-		  break;
+			return '已完工';
+			break;
 		case 90:
-		  return '已取消';
-		  break;
-		default: 
-		  return '';
+			return '已取消';
+			break;
+		default:
+			return '';
 	}
 }
 
@@ -132,6 +148,7 @@ export default {
 	logout,
 	login,
 	actionForLogin,
+	actionForAuth,
 	orderType,
 	orderState,
 }

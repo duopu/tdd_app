@@ -52,11 +52,14 @@ export default {
     };
   },
 	onShow() {
-		this.$tool.actionForLogin();
-		this.queryOrderCount();
+		this.$tool.actionForLogin(() => {
+			this.queryOrderCount();
+		});
 	},
 	onPullDownRefresh() {
-		this.queryOrderCount();
+		this.$tool.actionForLogin(() => {
+			this.queryOrderCount();
+		});
 	},
   methods: {
 		queryOrderCount() {

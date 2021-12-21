@@ -80,11 +80,14 @@ export default {
   },
   onReady() {},
 	onShow() {
-		this.$tool.actionForLogin();
-		this.refresh();
+		this.$tool.actionForLogin(() => {
+			this.refresh();
+		});
 	},
 	onPullDownRefresh() {
-		this.refresh();
+		this.$tool.actionForLogin(() => {
+			this.refresh();
+		});
 	},
 	methods: {
 		refresh() {
@@ -126,38 +129,43 @@ export default {
 			})
 		},
 		toOrderList(state) {
-			uni.navigateTo({
-				url: `/pages/place-order/orderList/orderList?isPlaceOrder=0&state=${state}`,
-			})
+			this.$tool.actionForAuth(() => {
+				uni.navigateTo({
+					url: `/pages/place-order/orderList/orderList?isPlaceOrder=0&state=${state}`,
+				})
+			});
 		},
 		showCreateTeam() {
 			this.$refs.editTeam.show();
 		},
 		createTeam(teamLogo, teamName, teamIntroduce) {
-			if (!teamName) {
-				uni.showToast({ title:  '请输入团队名称', icon:  'none' });
-				return;
-			}
-			if (!teamIntroduce) {
-				uni.showToast({ title:  '请输入团队介绍', icon:  'none' });
-				return;
-			}
-			const params = {
-				teamLogo: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com:443/public%2F2021%2F12%2F08%2F01%2F39%2FBN6YVGX89ULVUL388987718092178.jpeg',
-				teamName,
-				teamIntroduce,
-			}
-			this.$http.post('/b/teaminfo/add', params, true)
-			.then(res => {
-				uni.showToast({ title:  '创建成功' });
-				this.queryMyTeamList();
-			})
+			this.$tool.actionForAuth(() => {
+				if (!teamName) {
+					uni.showToast({ title:  '请输入团队名称', icon:  'none' });
+					return;
+				}
+				if (!teamIntroduce) {
+					uni.showToast({ title:  '请输入团队介绍', icon:  'none' });
+					return;
+				}
+				const params = {
+					teamLogo: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com:443/public%2F2021%2F12%2F08%2F01%2F39%2FBN6YVGX89ULVUL388987718092178.jpeg',
+					teamName,
+					teamIntroduce,
+				}
+				this.$http.post('/b/teaminfo/add', params, true)
+				.then(res => {
+					uni.showToast({ title:  '创建成功' });
+					this.queryMyTeamList();
+				})
+			});
 		},
 		toTeamDetail(team) {
-      console.log('ssssssssssss');
-      uni.navigateTo({
-				url: `/pages/receive-order/myTeam/myTeam?id=${team.id}`
-			})
+      this.$tool.actionForAuth(() => {
+      	uni.navigateTo({
+      		url: `/pages/receive-order/myTeam/myTeam?id=${team.id}`
+      	})
+      });
 		}
 	}
 }

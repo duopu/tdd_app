@@ -198,6 +198,7 @@ export default {
 			this.queryMessageCount();
 			this.queryStatistics();
       this.$store.dispatch('queryApproveDetail');
+      this.$store.dispatch('queryAuthenticationInfo');
     },
     // 查找映射数据
     queryContentmapping(contentMapId) {
