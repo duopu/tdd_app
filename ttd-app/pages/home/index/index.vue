@@ -43,7 +43,7 @@
             <text class="home-mnum5 home-mnum8">1282</text>
             <text class="home-mnum7">千元</text>
           </view>
-          <view class="home-mnum6">等待中订单</view>
+          <view class="home-mnum6">等待订单总额</view>
         </view>
       </view>
 
@@ -61,7 +61,7 @@
         <view class="home-bo1">
           <view class="home-bo2">
             <text class="home-bo3">3222</text>
-            <text class="home-bo4">笔</text>
+            <text class="home-bo4">千元</text>
           </view>
           <view class="home-bo5">月成交额</view>
         </view>
@@ -105,8 +105,6 @@
         <image class="image-advertise" @click="toInvite" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList1.png" mode="aspectFill" />
         <image class="image-advertise" @click="toSign" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList2.png" mode="aspectFill"/>
     </view>
-
-    <view class="iam-aline" />
   </view>
 </template>
 
