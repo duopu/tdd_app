@@ -28,9 +28,9 @@
 		</template>
 
 		<!-- 资料展示 -->
-		<view class="source-item" v-for="item in value" @click="showItemAction(item)">
+		<view class="source-item" v-for="item in value">
 			<!-- 图片 -->
-			<template v-if="item.resourceType == 1" >
+			<template v-if="item.resourceType == 1">
 				<image :src="item.url" mode="aspectFill" class="source-image"></image>
 			</template>
 			<!-- 音频 -->
@@ -51,15 +51,13 @@
 				<view class="source-text">文件</view>
 			</template>
 			
-			<uni-icons class="clear-icon" type="clear" :size="24" color="#ff0000" @click="deleteItem(item)"></uni-icons>
+			<uni-icons v-if="modal == 'select'" class="clear-icon" type="clear" :size="24" color="#ff0000" @click="deleteItem(item)"></uni-icons>
 		</view>
 	</view>
 </template>
 
 <script>
 	const recorderManager = uni.getRecorderManager();
-	const innerAudioContext = uni.createInnerAudioContext();
-	
 	import dayjs from 'dayjs';
 
 	export default {
@@ -150,9 +148,7 @@
 				uni.showLoading({
 					title:'录音中...'
 				})
-				recorderManager.start({
-					format:'mp3'
-				})
+				recorderManager.start()
 			},
 			// 手指离开页面滑动
 			handleTouchEnd() {
@@ -181,28 +177,6 @@
 			// 响应文件变化
 			commitSourceList(newResourceList){
 				this.$emit('input',newResourceList)
-			},
-			showItemAction(item){
-				
-				if(item.resourceType == 1){ // 图片
-					// 预览图片
-					console.log('ff',item);
-					        uni.previewImage({
-					            urls: [item.url],
-					        });
-				}else if(item.resourceType == 2){ // 语音
-					innerAudioContext.src = item.url;
-					innerAudioContext.onPlay(() => {
-					  console.log('开始播放');
-					});
-					innerAudioContext.onError((res) => {
-					  console.log(res.errMsg);
-					  console.log(res.errCode);
-					});
-					innerAudioContext.play();
-				}else if(item.resourceType == 3){ // 文件
-					
-				}
 			}
 		}
 	}
