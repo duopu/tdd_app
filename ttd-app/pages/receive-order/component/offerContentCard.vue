@@ -1,8 +1,7 @@
 <template>
 	<view>
 		<view class="oc-card" @click="$emit('onClick')">
-			<image src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png'
-				class="oc-card-img" />
+			<image :src="image" class="oc-card-img" />
 			<view class="oc-middle">
 				<view class="oc-middle-title">{{ title }}</view>
 				<view class="oc-middle-text" v-for="i in specItem" :key="i.label">

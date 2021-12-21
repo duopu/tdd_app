@@ -56,9 +56,14 @@
 		<view class="require-box">
 			<member-title title="工作需求：" right-text="添加工作" @add="toAddWorkPage" />
 			<view class="require-white">
-				<offer-content-card v-for="(i, index) in orderItemList" :key="index" right-type="0"
-					:title="getItemTitle(i)" :specItem="getSpecList(i)"
-					:show-last-border-bottom="index < (orderItemList.length -1)" @onClick="toEditWorkPage(index, i)" />
+				<offer-content-card v-for="(i, index) in orderItemList" :key="index"
+				  right-type="0"
+					:title="getItemTitle(i)" 
+					:specItem="getSpecList(i)"
+					:image="itemImage"
+					:show-last-border-bottom="index < (orderItemList.length -1)"
+					@onClick="toEditWorkPage(index, i)" 
+				/>
 			</view>
 		</view>
 
@@ -161,6 +166,7 @@
 					address: '',
 				}, // 地址
 				orderItemList: [], // 工作列表
+				itemImage: '',
 				quoteTime: [], // 报价周期
 				workTime: [], // 工作周期
 				remark: '', // 备注
@@ -173,6 +179,7 @@
 		},
 		onReady() {
 			this.queryDefaultAddress();
+			this.queryItemImg();
 		},
 		methods: {
 			queryDefaultAddress() {
@@ -183,6 +190,14 @@
 						if (res.totalCount == 1) {
 							this.orderAddress = res.dataList[0];
 						}
+					})
+			},
+			queryItemImg() {
+				this.$http.post('/b/ordermaster/orderTypeImg', {})
+					.then(res => {
+						const item = res.filter((i) => i.type == this.orderType)[0];
+						this.itemImage = item ? item.icon : '';
+						console.log('itemImage ',this.itemImage);
 					})
 			},
 			orderModeChange(e) {
