@@ -125,8 +125,6 @@ export default {
 					province: '',
 					provinceId: 0,
 				},
-				fileList: [],
-				picList: [],
 				resourceList: [],
 				applyTime: '',
 			},
@@ -142,8 +140,6 @@ export default {
 					province: '',
 					provinceId: 0,
 				},
-				fileList: [],
-				picList: [],
 				resourceList: [],
 				applyTime: '',
 			},
@@ -172,23 +168,9 @@ export default {
 			.then(res => {
 				if (res.startApplyInfo.address) {
 			    this.startApplyInfo = res.startApplyInfo;
-					const a = (res.startApplyInfo.picList || []).map(p => {
-						return { resourceType: 1, url: p };
-					})
-					const b = (res.startApplyInfo.fileList || []).map(p => {
-						return { resourceType: 3, url: p };
-					})
-					this.startApplyInfo.resourceList = a.concat(b);
 				}
 				if (res.completeApplyInfo.address) {
 			    this.completeApplyInfo = res.completeApplyInfo;
-					const a = (res.completeApplyInfo.picList || []).map(p => {
-						return { resourceType: 1, url: p };
-					})
-					const b = (res.completeApplyInfo.fileList || []).map(p => {
-						return { resourceType: 3, url: p };
-					})
-					this.completeApplyInfo.resourceList = a.concat(b);
 				}
 			})
 		},
@@ -287,16 +269,10 @@ export default {
 		},
 		applyBeginWork() {
 			const url = `/b/orderreceive/apply${this.order.subState == 4 ? 'Start' : 'Complete'}`
-			const resource = this.order.subState == 4 ? this.startApplyInfo.resourceList :  this.completeApplyInfo.resourceList;
-			const pics = resource.filter((r) => r.resourceType == 1).map((r) => r.url);
-			const files = resource.filter((r) => r.resourceType == 3).map((r) => r.url);
 			
 			const params = {
 				receiveOrderId: this.id,
-				// fileList: this.order.subState == 4 ? this.startApplyInfo.fileList : this.completeApplyInfo.fileList,
-				// picList: this.order.subState == 4 ? this.startApplyInfo.picList : this.completeApplyInfo.picList,
-				fileList: files,
-				picList: pics,
+				resourceList: this.order.subState == 4 ? this.startApplyInfo.resourceList : this.completeApplyInfo.resourceList,
 				orderAddress: this.order.subState == 4 ? this.startApplyInfo.address : this.completeApplyInfo.address,
 			};
 			this.$http.post(url, params, true)
