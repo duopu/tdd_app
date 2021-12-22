@@ -56,7 +56,7 @@
 		<view class="ro-6" @click="toSet">
 			<image class="ros-img"
 				src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/receiving-order-set-icon.svg" />
-			<view class="set-title">接单设置</view>
+			<view class="set-title">我的接单设置</view>
 			<uni-icons type="right" color="#999999"></uni-icons>
 		</view>
 
