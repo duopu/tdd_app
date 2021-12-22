@@ -86,9 +86,9 @@ export default {
   },
   onReady() {},
 	onShow() {
-		// this.$tool.actionForLogin(() => {
-		// 	this.refresh();
-		// });
+		this.$tool.actionForLogin(() => {
+			this.refresh();
+		});
 	},
 	onPullDownRefresh() {
 		this.$tool.actionForLogin(() => {
