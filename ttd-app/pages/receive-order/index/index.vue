@@ -52,6 +52,12 @@
 
 		<edit-team ref="editTeam" btnText="创建" @onSave="createTeam" />
 
+    <view class="receive-order-set" @click="toSet">
+      <image class="ros-img" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/receiving-order-set-icon.svg" />
+      <view class="ros-label">接单设置</view>
+      <uni-icons type="arrowright" class="ros-icon" color="#BDBDBD" size="18" />
+    </view>
+
   </view>
 </template>
 <script>
@@ -80,9 +86,9 @@ export default {
   },
   onReady() {},
 	onShow() {
-		this.$tool.actionForLogin(() => {
-			this.refresh();
-		});
+		// this.$tool.actionForLogin(() => {
+		// 	this.refresh();
+		// });
 	},
 	onPullDownRefresh() {
 		this.$tool.actionForLogin(() => {
@@ -166,7 +172,10 @@ export default {
       		url: `/pages/receive-order/myTeam/myTeam?id=${team.id}`
       	})
       });
-		}
+		},
+    toSet() {
+      uni.navigateTo({ url: `/pages/receive-order/orderToSet/orderToSet` })
+    }
 	}
 }
 </script>
@@ -330,6 +339,34 @@ export default {
       text-align: center;
       color: #323232;
     }
+  }
+}
+
+.receive-order-set {
+  height: 112rpx;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  margin-top: 32rpx;
+  padding: 0 32rpx;
+
+  .ros-img {
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 16rpx;
+  }
+
+  .ros-label {
+    flex: 1;
+    font-size: 32rpx;
+    font-family: PingFang SC-Regular, PingFang SC;
+    font-weight: 400;
+    line-height: 40rpx;
+    color: #3D49AB;
+  }
+
+  .ros-icon {
+    padding-top: 3rpx;
   }
 }
 </style>
