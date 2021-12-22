@@ -162,7 +162,7 @@
 			},
 			toSettingPage() {
 				uni.navigateTo({
-					url: `/pages/receive-order/orderToSet/orderToSet?id=${this.id}`
+					url: `/pages/receive-order/orderToSet/orderToSet?isTeam=1`
 				})
 			},
 			toSelectPersonPage() {

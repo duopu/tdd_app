@@ -47,7 +47,7 @@ export default {
 				address: '',
 				city: '',
 				cityId: 0,
-				customerType: 1, // 客户类型 1：团队，2：个人
+				customerType: 2, // 客户类型 1：团队，2：个人
 				district: '',
 				districtId: 0,
 				latitude: 0,
@@ -61,19 +61,21 @@ export default {
     };
   },
 	onLoad(option) {
-		if (option.id) { // 编辑地址
-		  this.id = option.id;
-			this.querySettingInfo(this.id);
+		if (option.isTeam) { // 编辑地址
+		  this.setting.customerType = option.isTeam == 1 ? 1 : 2;
 		}
+	},
+	onReady() {
+		this.querySettingInfo();
 	},
   methods: {
 		querySettingInfo(id) {
 			this.$http
-				.post('/b/systemconfig/queryReceivingConf', { id }, true)
+				.post('/b/systemconfig/queryReceivingConf', { customerType: this.setting.customerType }, true)
 				.then(res => {
 					this.setting = {
 						...res,
-						customerType: 1,
+						customerType: this.setting.customerType,
 					};
 				});
 		},
