@@ -47,8 +47,8 @@
 					<view class="mm-31" @click="toPage(i)" :key="i.url">
 						<image class="mm-32" :src="i.img" />
 						<view class="mm-33">{{ i.title }}</view>
-						<view class="mm-33" v-if="i.title == '实名认证' && realAuth">已认证</view>
-						<uni-icons type="arrowright" color="#BDBDBD" size="16" />
+						<view class="mm-3320" v-if="i.title == '实名认证' && realAuth">已认证</view>
+						<uni-icons type="arrowright" class="arrowright-cc" color="#BDBDBD" size="16" />
 					</view>
 					<view class="mm-35" v-if="index < (newList.length - 1)" />
 				</template>
@@ -60,7 +60,7 @@
 					<view class="mm-31" @click="toPage(i)" :key="i.url">
 						<image class="mm-32" :src="i.img" />
 						<view class="mm-33">{{ i.title }}</view>
-						<uni-icons type="arrowright" color="#BDBDBD" size="16" />
+						<uni-icons type="arrowright" class="arrowright-cc" color="#BDBDBD" size="16" />
 					</view>
 					<view class="mm-35" v-if="index < (newList1.length - 1)" />
 				</template>
