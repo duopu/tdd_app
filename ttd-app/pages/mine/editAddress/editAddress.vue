@@ -1,4 +1,4 @@
-<template>
+ <template>
   <view class="edit-address">
     <custom-navbar title="编辑地址" />
     <back-container>
@@ -125,7 +125,7 @@ export default {
 				latitude,
 				longitude,
 			}
-			this.$http.post('/core/geo/queryRegionByLocation', params, true)
+			this.$http.post('/core/geo/queryRegionByLocation', params)
 			.then(res => {
 				this.address = res.street + res.streetNum;
 				this.city = res.city;
