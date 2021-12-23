@@ -74,7 +74,11 @@
 		methods: {
 			queryAuthInfo() {
 				this.$http.post('/b/customerrealauth/query', {}, true)
-					.then(res => {})
+					.then(res => {
+						this.faceImage = res.faceImage;
+						this.faceIdcardImage = res.faceIdcardImage;
+						this.backIdcardImage = res.backIdcardImage;
+					})
 			},
 			chooseImage(index) {
 				uni.chooseImage({
