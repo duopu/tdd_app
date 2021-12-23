@@ -17,7 +17,7 @@
 
     <view class="order-fini-5">
       <view class="fini-51">
-        <text class="fini-51l">订单金额</text>
+        <text class="fini-51l">订单金额(含税)</text>
         <view class="fini-51r">
           <my-price show-yang :price="order.payAmount / 100" scale="1" />
         </view>
@@ -79,7 +79,7 @@
 
     <iphonex-bottom>
       <view class="order-fini-btn-box">
-        <text class="order-fini-total-fee">总金额：</text>
+        <text class="order-fini-total-fee">总金额(含税)：</text>
         <my-price :price="showPayAmount()" />
         <view class="order-fini-calcel">取消</view>
         <view class="order-fini-sure" @click="createOrder">支付</view>
