@@ -187,8 +187,7 @@ export default {
     this.onRefresh();
   },
   onReachBottom() {
-    // TOdo  上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载
-    console.log('onReachBottom 上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载上拉加载');
+		this.loadMore();
   },
   methods: {
     changeVal(val) {
@@ -199,9 +198,9 @@ export default {
 			this.page = 0;
 			this.queryOrderList();
 		},
-		loadMore(e) {
-			this.$refs["list"].resetLoadmore();
-			console.log('loadmore ', e);
+		loadMore() {
+			// this.$refs["list"].resetLoadMore();
+			console.log('loadmore ');
 			if (this.isNoMore) return;
 			this.page = this.page + 1;
 			this.queryOrderList();
