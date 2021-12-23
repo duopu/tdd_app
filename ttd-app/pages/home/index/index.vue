@@ -30,20 +30,20 @@
 			<view class="home-mnum1">
 				<view class="home-mnum2">
 					<view class="home-mnum4">
-						<text class="home-mnum5">{{ statistics.waitOrderCount }}</text>
-						<text class="home-mnum7">笔</text>
+						<text class="home-mnum5">{{ oneItem.number || ''}}</text>
+						<text class="home-mnum7">{{oneItem.unit || ''}}</text>
 					</view>
-					<view class="home-mnum6">等待中订单</view>
+					<view class="home-mnum6">{{oneItem.label || ''}}</view>
 				</view>
 
 				<view class="home-mnum3" />
 
 				<view class="home-mnum2">
 					<view class="home-mnum4">
-						<text class="home-mnum5 home-mnum8">{{ statistics.waitOrderAmount }}</text>
-						<text class="home-mnum7">人</text>
+						<text class="home-mnum5 home-mnum8">{{ twoItem.number  || ''}}</text>
+						<text class="home-mnum7">{{twoItem.unit || ''}}</text>
 					</view>
-					<view class="home-mnum6">接单中人数</view>
+					<view class="home-mnum6">{{twoItem.label || ''}}</view>
 				</view>
 			</view>
 
@@ -52,26 +52,26 @@
 			<view class="home-bo">
 				<view class="home-bo1">
 					<view class="home-bo2">
-						<text class="home-bo3">{{ statistics.yearCompleteOrderCount }}</text>
-						<text class="home-bo4">笔</text>
+						<text class="home-bo3">{{ threeItem.number  || ''}}</text>
+						<text class="home-bo4">{{threeItem.unit || ''}}</text>
 					</view>
-					<view class="home-bo5">年成交订单数</view>
+					<view class="home-bo5">{{threeItem.label || ''}}</view>
 				</view>
 				<view class="home-bo1-line" />
 				<view class="home-bo1">
 					<view class="home-bo2">
-						<text class="home-bo3">{{ statistics.monthCompleteOrderAmount }}</text>
-						<text class="home-bo4">千元</text>
+						<text class="home-bo3">{{ fourItem.number }}</text>
+						<text class="home-bo4">{{fourItem.unit}}</text>
 					</view>
-					<view class="home-bo5">月成交额</view>
+					<view class="home-bo5">{{fourItem.label}}</view>
 				</view>
 				<view class="home-bo1-line" />
 				<view class="home-bo1">
 					<view class="home-bo2">
-						<text class="home-bo3">{{ statistics.curMonthOrderCount }}</text>
-						<text class="home-bo4">笔</text>
+						<text class="home-bo3">{{ fiveItem.number  || ''}}</text>
+						<text class="home-bo4">{{fiveItem.unit || ''}}</text>
 					</view>
-					<view class="home-bo5">当月订单数</view>
+					<view class="home-bo5">{{fiveItem.label || ''}}</view>
 				</view>
 			</view>
 		</view>
@@ -162,13 +162,11 @@
 				searchVal: '',
 				testText: 'asd',
 				messageCount: 0,
-				statistics: {
-					curMonthOrderCount: 0,
-					monthCompleteOrderAmount: 0,
-					waitOrderAmount: 0,
-					waitOrderCount: 0,
-					yearCompleteOrderCount: 0,
-				},
+				oneItem: {},
+				twoItem: {},
+				threeItem: {},
+				fourItem: {},
+				fiveItem: {},
 			};
 		},
 		onLoad(option) {
@@ -253,10 +251,15 @@
 					});
 			},
 			queryStatistics() {
-				this.$http.get('/core/softconf/homePageData', {})
-					.then(res => {
-						this.statistics = res;
-					});
+				this.$http
+					.get('/core/softconf/homePageData')
+					.then((res) => {
+						if (res.oneItem) this.oneItem = res.oneItem
+						if (res.twoItem) this.twoItem = res.twoItem
+						if (res.threeItem) this.threeItem = res.threeItem
+						if (res.fourItem) this.fourItem = res.fourItem
+						if (res.fiveItem) this.fiveItem = res.fiveItem
+					})
 			},
 			// 计算箭头的位置
 			getArrowLeftDistance(index) {
