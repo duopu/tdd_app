@@ -10,7 +10,7 @@
 
       <view class="plo-list">
 				<list ref="list" class="plo-list" loadmoreoffset="200" @loadmore="loadMore">
-        <view class="plo-item" v-for="(item, index) in orderList" :key="index">
+        <view class="plo-item" v-for="(item, index) in orderList" :key="index" @click="toOrderDetail(item)">
           <view class="plo-itop">
             <text class="plo-itop-name">
               {{ $tool.orderType(item.orderType) }} {{ item.teamName ? `(${item.teamName})` : '' }}
@@ -68,7 +68,7 @@
 
           </view>
 
-          <view class="plo-content" @click="toOrderDetail(item)">
+          <view class="plo-content">
             <view class="plo-ct">报价周期：{{ item.quotationStart.slice(0, 10) }} 至 {{item.quotationEnd.slice(0, 10)}}</view>
             <view class="plo-ct">工作周期：{{ item.workStart.slice(0, 10) }} 至 {{ item.workEnd.slice(0, 10) }}</view>
             <view class="plo-ct">
@@ -80,41 +80,41 @@
           <!-- 发单方 -->
           <view v-if="isPlaceOrder">
             <view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
-              <view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @click="cancelOrderTip(item)">取消订单</view>
+              <view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @tap.stop="cancelOrderTip(item)">取消订单</view>
               <!-- 待报价 待确认 -->
-              <view class="plo-btn1" v-if="[10, 20].includes(value) || (item.state == 30 && item.subState == 4)" @click="toQuestionPage(item)">查看问题</view>
+              <view class="plo-btn1" v-if="[10, 20].includes(value) || (item.state == 30 && item.subState == 4)" @tap.stop="toQuestionPage(item)">查看问题</view>
               <!-- 待确认 -->
-              <view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @click="toChoosePrice(item)">选价</view>
-              <!-- <view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @click="toPayOrder(item)">付款</view> -->
+              <view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @tap.stop="toChoosePrice(item)">选价</view>
+              <!-- <view class="choose-change-btn" v-if="item.state == 20 && item.subState == 3" @tap.stop="toPayOrder(item)">付款</view> -->
               <!-- 待开始 -->
-              <view class="plo-btn1" v-if="item.applyOrderMemberFlag" @click="toReviewTeam(item)">审核人员</view>
-              <view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
-              <view class="choose-change-btn" v-if="item.state == 30 && item.subState == 5" @click="toOrderWork(item)">确认开始</view>
+              <view class="plo-btn1" v-if="item.applyOrderMemberFlag" @tap.stop="toReviewTeam(item)">审核人员</view>
+              <view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @tap.stop="toComplainPage(item)">投诉</view>
+              <view class="choose-change-btn" v-if="item.state == 30 && item.subState == 5" @tap.stop="toOrderWork(item)">确认开始</view>
               <!-- 待完工 -->
-              <view class="choose-change-btn" v-if="item.state == 40 && item.subState == 6" @click="toPayPartMoney(item)">部分付款</view>
-              <view class="choose-change-btn" v-if="item.state == 40 && item.subState == 7" @click="toOrderWork(item)">确认完工</view>
+              <view class="choose-change-btn" v-if="item.state == 40 && item.subState == 6" @tap.stop="toPayPartMoney(item)">部分付款</view>
+              <view class="choose-change-btn" v-if="item.state == 40 && item.subState == 7" @tap.stop="toOrderWork(item)">确认完工</view>
               <!-- 已完工 -->
-              <!-- <view class="plo-btn1" v-if="[50].includes(value)" @click="toOrderInvoice(item)">开发票</view> -->
-              <view class="plo-btn1" v-if="[50].includes(value)" @click="toOrderComment(item)">去评价</view>
+              <!-- <view class="plo-btn1" v-if="[50].includes(value)" @tap.stop="toOrderInvoice(item)">开发票</view> -->
+              <view class="plo-btn1" v-if="[50].includes(value)" @tap.stop="toOrderComment(item)">去评价</view>
 
             </view>
           </view>
           <!-- 接单方 -->
           <view v-else>
             <view class="plo-bottom" :class="{'no-mar-bottom': [90].includes(value)}">
-              <view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @click="cancelOrderTip(item)">取消订单</view>
+              <view class="plo-btn1" v-if="[10, 20, 30].includes(value)" @tap.stop="cancelOrderTip(item)">取消订单</view>
               <!-- 待报价 待确认 -->
-              <view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuestionPage(item)">咨询</view>
-              <view class="plo-btn1" v-if="[10, 20].includes(value)" @click="toQuoteOrder(item)">去报价</view>
+              <view class="plo-btn1" v-if="[10, 20].includes(value)" @tap.stop="toQuestionPage(item)">咨询</view>
+              <view class="plo-btn1" v-if="[10, 20].includes(value)" @tap.stop="toQuoteOrder(item)">去报价</view>
               <!-- 待确认 -->
-              <view class="plo-btn1" v-if="[20].includes(value)" @click="toQuoteOrder(item)">修改报价</view>
+              <view class="plo-btn1" v-if="[20].includes(value)" @tap.stop="toQuoteOrder(item)">修改报价</view>
               <!-- 待开始 -->
-              <view class="plo-btn1" v-if="[30, 40].includes(value) && item.subState != 7 && item.receiverType == 2" @click="toReviewTeam(item)">变更人员</view>
-              <view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @click="toComplainPage(item)">投诉</view>
-              <view class="choose-change-btn" v-if="[30].includes(value) && item.subState == 4" @click="toOrderWork(item)">申请开始</view>
+              <view class="plo-btn1" v-if="[30, 40].includes(value) && item.subState != 7 && item.receiverType == 2" @tap.stop="toReviewTeam(item)">变更人员</view>
+              <view class="plo-btn1" v-if="[30, 40, 50].includes(value)" @tap.stop="toComplainPage(item)">投诉</view>
+              <view class="choose-change-btn" v-if="[30].includes(value) && item.subState == 4" @tap.stop="toOrderWork(item)">申请开始</view>
               <!-- 待完工 -->
-              <view class="choose-change-btn" v-if="item.receiverType == 2 && (item.settleState == 1 || item.settleState == 2)" @click="toDistributionIncome(item)">收益分配</view>
-              <view class="choose-change-btn" v-if="[40].includes(value) && item.subState == 6" @click="toOrderWork(item)">申请完工</view>
+              <view class="choose-change-btn" v-if="item.receiverType == 2 && (item.settleState == 1 || item.settleState == 2)" @tap.stop="toDistributionIncome(item)">收益分配</view>
+              <view class="choose-change-btn" v-if="[40].includes(value) && item.subState == 6" @tap.stop="toOrderWork(item)">申请完工</view>
             </view>
           </view>
 
