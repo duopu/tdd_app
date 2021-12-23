@@ -255,7 +255,6 @@
 					})
 			},
 			toPage(row) {
-				if (row.title == '实名认证' && this.realAuth) return;
 				this.$tool.actionForLogin(() => {
 					uni.navigateTo({
 						url: row.url
