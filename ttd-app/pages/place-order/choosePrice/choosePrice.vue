@@ -5,7 +5,7 @@
     <back-container>
 
       <view class="chp">
-        <view class="chp-1" v-for="(item, index) in quoteList" :key="index" @click="onChange(item)">
+        <view class="chp-1" v-for="(item, index) in quoteList" :key="index" @click="toQuoteDetail(item)">
           <view class="chp-11">
             <image v-if="item.logo" class="chp-13" :src="item.logo" />
             <image v-else class="chp-13" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' />
@@ -28,8 +28,8 @@
               </view>
             </view>
 
-            <image v-if="showSelect(item)" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxChecked.svg" class="chp-193-right3" />
-            <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxEmpty.svg" class="chp-193-right3" />
+            <image v-if="showSelect(item)" @tap.stop="onChange(item)" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxChecked.svg" class="chp-193-right3" />
+            <image v-else @tap.stop="onChange(item)"  src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxEmpty.svg" class="chp-193-right3" />
 
           </view>
 
