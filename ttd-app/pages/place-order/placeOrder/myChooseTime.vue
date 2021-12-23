@@ -21,6 +21,7 @@
         class="choose-picker"
         v-model="innerTime"
         :type="timeType"
+				:start="startTime"
         @change="changeTime"
     />
   </view>
@@ -83,7 +84,10 @@ export default {
       let obj = {};
       for (let i in _formatArr) if (_formatArr.hasOwnProperty(i)) obj[i.toLowerCase()] = _formatArr[i];
       return obj?.[_type] || 'daterange'
-    }
+    },
+		startTime() {
+			return dayjs().format('YYYY-MM-DD');
+		},
   },
   watch: {
     value: {
