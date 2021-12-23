@@ -1,6 +1,6 @@
 <!-- 申请承接方 -->
 <template>
-	<view class="page-container apply" >
+	<view class="page-container apply">
 		<view class="tips">
 			所有非必填项，按您的实际情况填写；填写内容关乎您接单的数量，请尽可能把您信息都上传，加大匹配订单成功率！
 		</view>
@@ -14,12 +14,12 @@
 						:value="name" @input="nameChange" />
 				</custom-input-row>
 				<custom-input-row label-text="手机号码" :required="true">
-					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="number" placeholder="请输入手机号码"
-						:value="phone" @input="phoneChange" />
+					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="number"
+						placeholder="请输入手机号码" :value="phone" @input="phoneChange" />
 				</custom-input-row>
 				<custom-input-row label-text="身份证" :required="true">
-					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="idcard" placeholder="请输入身份证号"
-						 :value="idCard" @input="idCardChange" />
+					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="idcard"
+						placeholder="请输入身份证号" :value="idCard" @input="idCardChange" />
 				</custom-input-row>
 			</view>
 			<!-- 简介 -->
@@ -37,8 +37,8 @@
 						<view class="text text-ellipis">{{item.name}}</view>
 						<view class="describe">{{item.brandList.join('、')}}</view>
 					</view>
-					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
-						@click="deleteSkill(index)"></image>
+					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill"
+						class="image-delete" @click="deleteSkill(index)"></image>
 				</view>
 				<button class="btn btn-add" @click="openPopup('technologyPopup')">新增技能</button>
 			</view>
@@ -50,8 +50,8 @@
 						<view class="text text-ellipis">{{item.name}}</view>
 						<view class="describe">{{item.softwareconfList.join('、')}}</view>
 					</view>
-					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
-						@click="deleteSoftwareconf(index)"></image>
+					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill"
+						class="image-delete" @click="deleteSoftwareconf(index)"></image>
 				</view>
 				<button class="btn btn-add" @click="openPopup('staffPopup')">新增人员</button>
 			</view>
@@ -63,8 +63,8 @@
 						<view class="text text-ellipis">行业名称：{{item.name}}</view>
 						<view class="describe">履历：{{item.content}}</view>
 					</view>
-					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
-						@click="deleteProject(index)"></image>
+					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill"
+						class="image-delete" @click="deleteProject(index)"></image>
 				</view>
 				<button class="btn btn-add" @click="openPopup('projectPopup')">新增项目</button>
 			</view>
@@ -76,8 +76,8 @@
 						<view class="text text-ellipis">{{item.name}}</view>
 						<view class="describe">是否租赁：{{item.leaseFlag ? '是' : '否'}}</view>
 					</view>
-					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill" class="image-delete"
-						@click="deleteTool(index)"></image>
+					<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/delete.png" mode="aspectFill"
+						class="image-delete" @click="deleteTool(index)"></image>
 				</view>
 				<button class="btn btn-add" @click="openPopup('toolsPopup')">新增工具</button>
 			</view>
@@ -123,11 +123,11 @@
 				// 工具列表
 				toolData: [],
 				// 滚动的位置
-				scrollTop:0,
+				scrollTop: 0,
 			};
 		},
 		computed: {
-			approveDetail(){
+			approveDetail() {
 				return this.$store.state.approveDetail || {};
 			}
 		},
@@ -136,22 +136,22 @@
 		},
 		methods: {
 			// 姓名改变
-			nameChange(e){
+			nameChange(e) {
 				this.name = e.detail.value;
 				this.saveInfoStorage();
 			},
 			// 手机号改变
-			phoneChange(e){
+			phoneChange(e) {
 				this.phone = e.detail.value;
 				this.saveInfoStorage();
 			},
 			// 身份证号改变
-			idCardChange(e){
+			idCardChange(e) {
 				this.idCard = e.detail.value;
 				this.saveInfoStorage();
 			},
 			// 简介改变
-			remarkChange(e){
+			remarkChange(e) {
 				this.remark = e.detail.value;
 				this.saveInfoStorage();
 			},
@@ -240,8 +240,26 @@
 						leaseFlag: t.leaseFlag
 					}));
 					this.$http.post('/b/applyundertaker/apply', param, true).then(res => {
+
 						this.$tool.showToast('申请已提交，等待管理员审核', () => {
-							uni.navigateBack({})
+							const auth = this.$store.state.authentication.state;
+							if (auth == 1) {
+								uni.navigateBack({})
+							} else {
+								uni.showModal({
+									title: '提示',
+									content: '接单需要实名认证',
+									confirmText: '去认证',
+									cancelText: '不认证',
+									success: (res) => {
+										if (res.confirm) {
+											uni.replace({
+												url: '/pages/mine/realNameAuth/realNameAuth'
+											})
+										}
+									}
+								})
+							}
 						})
 						// 刷新审核状态
 						this.$store.dispatch('queryApproveDetail');
@@ -249,15 +267,17 @@
 				}
 			},
 			// 让列表滚动
-			scrollTopAction(type){
-				if(type == 'skill'){
+			scrollTopAction(type) {
+				if (type == 'skill') {
 					this.scrollTop = this.skillData.length * 62;
-				}else if(type == 'userrole'){
-					this.scrollTop = this.skillData.length * 62 + 100 + this.userroleData.length * 62 ;
-				}else if(type == 'project'){
-					this.scrollTop = this.skillData.length * 62 + 100 + this.userroleData.length * 62  + 100 + this.projectData.length * 62;
-				}else if(type == 'tool'){
-					this.scrollTop =  this.skillData.length * 62 + 100 + this.userroleData.length * 62  + 100 + this.projectData.length * 62 + 1000 + this.toolData.length * 62;
+				} else if (type == 'userrole') {
+					this.scrollTop = this.skillData.length * 62 + 100 + this.userroleData.length * 62;
+				} else if (type == 'project') {
+					this.scrollTop = this.skillData.length * 62 + 100 + this.userroleData.length * 62 + 100 + this
+						.projectData.length * 62;
+				} else if (type == 'tool') {
+					this.scrollTop = this.skillData.length * 62 + 100 + this.userroleData.length * 62 + 100 + this
+						.projectData.length * 62 + 1000 + this.toolData.length * 62;
 				}
 			},
 			// 保存信息到本地
@@ -276,8 +296,8 @@
 				uni.getStorage({
 					key: config.storageKeys.applyInfoStorage,
 					success: (res) => {
-						console.log('从本地拉出信息成功 ',res);
-						
+						console.log('从本地拉出信息成功 ', res);
+
 						const data = res.data
 						this.name = data.name;
 						this.phone = data.phone;
@@ -289,50 +309,50 @@
 						this.toolData = data.toolData;
 					},
 					fail: () => {
-						console.log('从本地拉出信息失败 ',this.approveDetail);
-						if(this.approveDetail.id){
+						console.log('从本地拉出信息失败 ', this.approveDetail);
+						if (this.approveDetail.id) {
 							this.name = this.approveDetail.name;
 							this.phone = this.approveDetail.phone;
 							this.idCard = this.approveDetail.idCard;
 							this.remark = this.approveDetail.remark;
-							if(this.approveDetail.skillApplyList){
-								this.skillData = this.approveDetail.skillApplyList.map(s=>{
+							if (this.approveDetail.skillApplyList) {
+								this.skillData = this.approveDetail.skillApplyList.map(s => {
 									return {
-										id:s.skillId,
-										name:s.nodeLink,
-										brandList:s.brandList
+										id: s.skillId,
+										name: s.nodeLink,
+										brandList: s.brandList
 									}
 								})
 							}
-							if(this.approveDetail.userRoleApplyList){
-								this.userroleData = this.approveDetail.userRoleApplyList.map(u=>{
+							if (this.approveDetail.userRoleApplyList) {
+								this.userroleData = this.approveDetail.userRoleApplyList.map(u => {
 									return {
-										softwareconfList:u.softwareList,
-										id:u.userRoleId,
-										name:u.nodeLink
+										softwareconfList: u.softwareList,
+										id: u.userRoleId,
+										name: u.nodeLink
 									}
 								})
 							}
-							
-							if(this.approveDetail.projectApplyList){
-								this.projectData = this.approveDetail.projectApplyList.map(p=>{
+
+							if (this.approveDetail.projectApplyList) {
+								this.projectData = this.approveDetail.projectApplyList.map(p => {
 									return {
-										name:p.projectName,
-										content:p.resume
+										name: p.projectName,
+										content: p.resume
 									}
 								})
 							}
-							
-							if(this.approveDetail.toolApplyList ){
-								this.toolData = this.approveDetail.toolApplyList.map(t=>{
+
+							if (this.approveDetail.toolApplyList) {
+								this.toolData = this.approveDetail.toolApplyList.map(t => {
 									return {
-										id:t.toolId,
-										name:t.nodeLink,
-										leaseFlag:t.leaseFlag
+										id: t.toolId,
+										name: t.nodeLink,
+										leaseFlag: t.leaseFlag
 									}
 								})
 							}
-						}else{
+						} else {
 							const user = this.$store.state.user;
 							this.name = user.name;
 							this.phone = user.phone;

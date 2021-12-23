@@ -15,20 +15,22 @@
 				<view class="btn-text">拍照</view>
 			</view>
 			<view class="btn-view" @click="selectFile">
-				<image class="btn-icon" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadPdf.svg"
+				<image class="btn-icon"
+					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadPdf.svg"
 					mode="aspectFit"></image>
 				<view class="btn-text">添加文件</view>
 			</view>
 			<view v-if="showAudio" class="btn-view" @longpress="handleLongPress" @touchend="handleTouchEnd">
 				<image class="btn-icon"
-					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadYuyin.svg" mode="aspectFit">
+					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadYuyin.svg"
+					mode="aspectFit">
 				</image>
 				<view class="btn-text">长按语音</view>
 			</view>
 		</template>
 
 		<!-- 资料展示 -->
-		<view class="source-item" v-for="item in value">
+		<view class="source-item" v-for="item in value" @click="showItemAction(item)">
 			<!-- 图片 -->
 			<template v-if="item.resourceType == 1">
 				<image :src="item.url" mode="aspectFill" class="source-image"></image>
@@ -50,35 +52,36 @@
 				</image>
 				<view class="source-text">文件</view>
 			</template>
-			
-			<uni-icons v-if="modal == 'select'" class="clear-icon" type="clear" :size="24" color="#ff0000" @click="deleteItem(item)"></uni-icons>
+
+			<uni-icons class="clear-icon" type="clear" :size="24" color="#ff0000" @click="deleteItem(item)"></uni-icons>
 		</view>
 	</view>
 </template>
 
 <script>
 	const recorderManager = uni.getRecorderManager();
+	const innerAudioContext = uni.createInnerAudioContext();
+
 	import dayjs from 'dayjs';
 
 	export default {
 		name: "up-file",
-		props:{
-			modal:{
-				type:String,
-				default:'select' // 模式  select:选择文件   show:展示模式
+		props: {
+			modal: {
+				type: String,
+				default: 'select' // 模式  select:选择文件   show:展示模式
+			},
+			value: {
+				type: Array, // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
+				default: () => []
 			},
 			showAudio: {
 				type: Boolean,
 				default: true,
 			},
-			value:{
-				type:Array,// {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
-				default:()=>[]
-			}
 		},
 		data() {
-			return {
-			};
+			return {};
 		},
 		mounted() {
 			recorderManager.onStart(() => {
@@ -146,9 +149,11 @@
 			handleLongPress(e) {
 				console.log('语音开始');
 				uni.showLoading({
-					title:'录音中...'
+					title: '录音中...'
 				})
-				recorderManager.start()
+				recorderManager.start({
+					format: 'mp3'
+				})
 			},
 			// 手指离开页面滑动
 			handleTouchEnd() {
@@ -166,17 +171,39 @@
 						resourceType,
 						url
 					}
-					this.commitSourceList([...this.value,resource])
+					this.commitSourceList([...this.value, resource])
 				});
 			},
 			// 删除文件
-			deleteItem(item){
-				const newResourceList = this.resourceList.filter(f=>f.url !== item.url)
+			deleteItem(item) {
+				const newResourceList = this.resourceList.filter(f => f.url !== item.url)
 				this.commitSourceList(newResourceList)
 			},
 			// 响应文件变化
-			commitSourceList(newResourceList){
-				this.$emit('input',newResourceList)
+			commitSourceList(newResourceList) {
+				this.$emit('input', newResourceList)
+			},
+			showItemAction(item) {
+
+				if (item.resourceType == 1) { // 图片
+					// 预览图片
+					console.log('ff', item);
+					uni.previewImage({
+						urls: [item.url],
+					});
+				} else if (item.resourceType == 2) { // 语音
+					innerAudioContext.src = item.url;
+					innerAudioContext.onPlay(() => {
+						console.log('开始播放');
+					});
+					innerAudioContext.onError((res) => {
+						console.log(res.errMsg);
+						console.log(res.errCode);
+					});
+					innerAudioContext.play();
+				} else if (item.resourceType == 3) { // 文件
+
+				}
 			}
 		}
 	}
@@ -250,8 +277,8 @@
 				text-overflow: ellipsis;
 				white-space: nowrap;
 			}
-			
-			.clear-icon{
+
+			.clear-icon {
 				position: absolute;
 				padding: 5rpx;
 				top: -20rpx;

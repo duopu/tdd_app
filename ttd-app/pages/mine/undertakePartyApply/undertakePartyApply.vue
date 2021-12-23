@@ -37,14 +37,13 @@
         </view>
 
         <view class="upa-item-8" v-if="apply.approveState == 2">原因：{{ apply.refusalReason }}</view>
-
       </view>
 
       <list-empty v-if="!applyList.length" />
     </view>
 
     <iphonex-bottom>
-      <big-btn button-text="提交申请" @click="toApply"/>
+      <big-btn :button-text="applyList.length == 0 ? '申请承接方' : '再次申请' " @click="toApply"/>
     </iphonex-bottom>
   </view>
 </template>
