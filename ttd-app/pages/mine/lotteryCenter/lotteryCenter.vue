@@ -4,11 +4,30 @@
     <custom-navbar title="抽奖中心" />
 
     <view>
-      <view class="wheel-box">
+      <view>
         <view class="wheel-box-det" @click="checkRule">查看规则</view>
 
 
-        <hxr-wheel @start="start" ref="hxrWheel" />
+        <!-- <hxr-wheel @start="start" ref="hxrWheel" />-->
+
+        <view style="width: 300rpx;height: 300rpx;border: 1rpx solid black;">llllll</view>
+
+        <!--https://100px.net/usage/uni-app.html   https://100px.net/demo/wheel.html  -->
+        <LuckyWheel
+            ref="myLucky"
+            width="600rpx"
+            height="600rpx"
+            :blocks="blocks"
+            :prizes="prizes"
+            :buttons="buttons"
+            :defaultStyle="defaultStyle"
+            @start="startCallBack"
+            @end="endCallBack"
+        />
+
+        <view style="width: 300rpx;height: 300rpx;border: 1rpx solid black;">llllll</view>
+        <view style="width: 300rpx;height: 300rpx;border: 1rpx solid black;">llllll</view>
+        <view style="width: 300rpx;height: 300rpx;border: 1rpx solid black;">llllll</view>
 
         <view class="wheel-box-det1">
           你还有
@@ -26,7 +45,7 @@
           </view>
           <view class="wheel-boo4">{{ i.state == 1 ? '未发放' : i.state == 2 ? '物流快递中' : '已发放'}}</view>
         </view>
-				
+
 				<list-empty v-if="!lotteryList.length" />
       </view>
 
@@ -37,12 +56,42 @@
 <script>
 import HxrWheel from "./hxrWheel";
 import ListEmpty from "../../place-order/orderList/listEmpty";
+import LuckyWheel from '@lucky-canvas/uni/lucky-wheel' // 大转盘
 
 export default {
   name: "lotteryCenter",
-  components: { ListEmpty, HxrWheel },
+  components: { ListEmpty, HxrWheel, LuckyWheel },
   data() {
     return {
+
+      blocks: [{ padding: '13px', background: '#FF5B2D' }],
+      prizes: [
+        { fonts: [{ text: '0', top: '10%' }], background: '#50CA12' },
+        { fonts: [{ text: '1', top: '10%' }], background: '#FFB42C' },
+        { fonts: [{ text: '2', top: '10%' }], background: '#50CA12' },
+        { fonts: [{ text: '3', top: '10%' }], background: '#FFB42C' },
+        { fonts: [{ text: '4', top: '10%' }], background: '#50CA12' },
+        { fonts: [{ text: '5', top: '10%' }], background: '#FFB42C' },
+        { fonts: [{ text: '6', top: '10%' }], background: '#50CA12' },
+        { fonts: [{ text: '7', top: '10%' }], background: '#FFB42C' },
+      ],
+      defaultStyle: {
+        position: 'relative',
+        left: '100rpx',
+        top: '200rpx'
+      },
+      buttons: [
+        {
+          radius: '50%',
+          imgs: [{
+            src: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/s-dial_pointer.png',
+            width: '100%',
+            top: '-100%'
+          }]
+        }
+      ],
+
+
 			lotteryCount: 0,
 			prizeList: [],
 			lotteryList: [],
@@ -52,6 +101,26 @@ export default {
 		this.refresh();
 	},
   methods: {
+
+    // 点击抽奖按钮触发回调
+    startCallBack () {
+      // 先开始旋转
+      this.$refs.myLucky.play()
+      // 使用定时器来模拟请求接口
+      setTimeout(() => {
+        // 假设后端返回的中奖索引是0
+        const index = 0
+        // 调用stop停止旋转并传递中奖索引
+        this.$refs.myLucky.stop(2)
+      }, 3000)
+    },
+    // 抽奖结束触发回调
+    endCallBack (prize) {
+      // 奖品详情
+      console.log(prize)
+    },
+
+
 		refresh() {
 			this.queryLotteryCount();
 			this.queryPriceList();
@@ -70,7 +139,7 @@ export default {
 				})
 		},
 		queryLotteryList() {
-			this.$http.post('/b/lottery/queryPageList', { 
+			this.$http.post('/b/lottery/queryPageList', {
 				pageSize: 100,
 				sortInfos: [{
 					field: 'prizeTime',
@@ -103,6 +172,9 @@ export default {
 
 <style lang="scss">
 .wheel-box {
+  background-image: url("https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/lottery-back.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   padding: 100rpx 36rpx;
   box-sizing: border-box;
 
