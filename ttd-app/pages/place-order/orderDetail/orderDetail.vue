@@ -25,6 +25,7 @@
 				  :right-type="item.quoteAmount ? 5 : 4"
 				  :title="getItemTitle(item)"
 				  :specItem="getSpecList(item)"
+					:image="itemImage"
 				  :price="item.quoteAmount / 100"
 				  :show-last-border-bottom="index < (showWorkList.length - 1)"
 				  @onChange="changeQuote(item)"
@@ -118,6 +119,7 @@ export default {
 			id: '',
 			isPlaceOrder: true,
 			order: {},
+			itemImage: '',
 			workList: [],
 			showWorkList: [],
 			showWorkMore: false,
@@ -140,7 +142,16 @@ export default {
 			this.$http.post('/b/orderreceive/query', { id: this.id }, true)
 			.then(res => {
 			  this.order = res;
+				this.queryItemImg();
 			})
+		},
+		queryItemImg() {
+			this.$http.post('/b/ordermaster/orderTypeImg', {})
+				.then(res => {
+					const item = res.filter((i) => i.type == this.order.orderType)[0];
+					this.itemImage = item ? item.icon : '';
+					console.log('itemImage ',this.itemImage);
+				})
 		},
 		queryWorkList() {
 			this.$http.post('/b/orderquote/receiveQuoteDetail', { id: this.id })
