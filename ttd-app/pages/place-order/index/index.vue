@@ -75,14 +75,18 @@ export default {
 			})
 		},
 		toOrderList(state) {
-			uni.navigateTo({
-				url: `/pages/place-order/orderList/orderList?isPlaceOrder=1&state=${state}`,
-			})
+			this.$tool.actionForAuth(() => {
+				uni.navigateTo({
+					url: `/pages/place-order/orderList/orderList?isPlaceOrder=1&state=${state}`,
+				})
+			});
 		},
     publishOrder(orderType) {
-			uni.navigateTo({
-				url: `/pages/place-order/placeOrder/placeOrder?orderType=${orderType}`,
-			})
+			this.$tool.actionForAuth(() => { 
+				uni.navigateTo({
+					url: `/pages/place-order/placeOrder/placeOrder?orderType=${orderType}`,
+				})
+			});
     },
   }
 }
