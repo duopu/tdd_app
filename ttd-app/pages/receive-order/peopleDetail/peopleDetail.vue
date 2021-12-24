@@ -114,14 +114,14 @@
 				this.id = this.$store.state.user.id
 				this.userType = 'self'
 			}
-			this.queryPersonInfo(this.id);
-			this.queryComments(this.id);
+			this.queryPersonInfo();
+			this.queryComments();
 		},
 		methods: {
-			queryPersonInfo(id) {
+			queryPersonInfo() {
 				this.$http
 					.post('/b/customer/queryDetailInfo', {
-						id
+						id: this.id,
 					}, true)
 					.then(res => {
 						this.idCard = res.idCard;
@@ -135,10 +135,10 @@
 						this.allList[3].data = res.toolSet;
 					});
 			},
-			queryComments(userId) {
+			queryComments() {
 				this.$http
 					.post('/b/ordercomment/queryPageList', {
-						userId,
+						userId: this.id,
 						userType: 1,
 						pageSize: 100,
 						sortInfos: [{
