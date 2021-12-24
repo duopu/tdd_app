@@ -140,7 +140,7 @@ export default {
         { label: '线上支付', leftIcon: 'chatboxes', wayId: 12, show: true, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankUnderline.svg' },
       ],
       payWay: 12,
-			bankCard: '2382 2324 2344 2344',
+			bankCard: '',
     };
   },
 	onLoad(option) {
