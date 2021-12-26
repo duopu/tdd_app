@@ -11,21 +11,27 @@
 			<view class="white">
 				<custom-input-row label-text="姓名" :required="true">
 					<input class="input" placeholder-class="input-placeholder" type="text" placeholder="请输入姓名"
-						:value="name" @input="nameChange" />
+						:value="name" @input="nameChange" :disabled="authentication" />
 				</custom-input-row>
 				<custom-input-row label-text="手机号码" :required="true">
 					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="number"
-						placeholder="请输入手机号码" :value="phone" @input="phoneChange" />
+						placeholder="请输入手机号码" :value="phone"  :disabled="true" />
+				</custom-input-row>
+				<custom-input-row label-text="备用手机号码">
+					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="number"
+						placeholder="请输入备用手机号码" :value="contactPhone" @input="contactPhoneChange"  />
 				</custom-input-row>
 				<custom-input-row label-text="身份证" :required="true">
 					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="idcard"
-						placeholder="请输入身份证号" :value="idCard" @input="idCardChange" />
+						placeholder="请输入身份证号" :value="idCard" @input="idCardChange" :disabled="authentication" />
 				</custom-input-row>
 			</view>
 			<!-- 简介 -->
 			<view class="title flex-center-start m-top-16">简介</view>
-			<view class="white"><textarea class="profile-text" maxlength="200" placeholder="请输入简介"
-					placeholder-class="input-placeholder" :value="remark" @input="remarkChange" /></view>
+			<view class="white">
+				<textarea class="profile-text" maxlength="200" placeholder="请输入简介" placeholder-class="input-placeholder"
+					:value="remark" @input="remarkChange" />
+			</view>
 			<!-- 从业信息 -->
 			<view class="title flex-center-start m-top-16">从业信息</view>
 			<!-- 技能 -->
@@ -112,6 +118,7 @@
 			return {
 				name: '',
 				phone: '',
+				contactPhone:'',
 				idCard: '',
 				remark: '',
 				// 技能列表
@@ -129,6 +136,9 @@
 		computed: {
 			approveDetail() {
 				return this.$store.state.approveDetail || {};
+			},
+			authentication() {
+				return this.$store.state.authentication.state == 1;
 			}
 		},
 		onReady() {
@@ -141,8 +151,8 @@
 				this.saveInfoStorage();
 			},
 			// 手机号改变
-			phoneChange(e) {
-				this.phone = e.detail.value;
+			contactPhoneChange(e) {
+				this.contactPhone = e.detail.value;
 				this.saveInfoStorage();
 			},
 			// 身份证号改变
@@ -207,8 +217,6 @@
 			submitApply() {
 				if (!this.name) {
 					this.$tool.showToast('请输入姓名');
-				} else if (!this.phone) {
-					this.$tool.showToast('请输入手机号');
 				} else if (!this.idCard || this.idCard.length !== 18) {
 					this.$tool.showToast('请输入正确的身份证号');
 				} else if (this.skillData.length == 0 && this.userroleData.length == 0 && this.toolData.length == 0) {
@@ -217,6 +225,7 @@
 					const param = {
 						name: this.name,
 						phone: this.phone,
+						contactPhone:this.contactPhone,
 						idCard: this.idCard,
 						remark: this.remark,
 					}
@@ -256,6 +265,8 @@
 											uni.replace({
 												url: '/pages/mine/realNameAuth/realNameAuth'
 											})
+										}else{
+											uni.navigateBack({})
 										}
 									}
 								})
@@ -301,6 +312,7 @@
 						const data = res.data
 						this.name = data.name;
 						this.phone = data.phone;
+						this.contactPhone = data.contactPhone;
 						this.idCard = data.idCard;
 						this.remark = data.remark;
 						this.skillData = data.skillData;
@@ -313,6 +325,7 @@
 						if (this.approveDetail.id) {
 							this.name = this.approveDetail.name;
 							this.phone = this.approveDetail.phone;
+							this.contactPhone = this.approveDetail.contactPhone;
 							this.idCard = this.approveDetail.idCard;
 							this.remark = this.approveDetail.remark;
 							if (this.approveDetail.skillApplyList) {
