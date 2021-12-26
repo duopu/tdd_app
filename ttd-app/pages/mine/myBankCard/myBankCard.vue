@@ -73,7 +73,9 @@ export default {
 			}
 		},
 		addCard() {
-			uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount` })
+			this.$tool.actionForAuth(() => {
+				uni.navigateTo({ url: `/pages/mine/bankAccount/bankAccount` })
+			});
 		}
   }
 }
