@@ -47,7 +47,7 @@ export default {
 				address: '',
 				city: '',
 				cityId: 0,
-				customerType: 2, // 客户类型 1：团队，2：个人
+				customerType: 1, // 客户类型 1：个人，2：团队
 				district: '',
 				districtId: 0,
 				latitude: 0,
@@ -62,7 +62,7 @@ export default {
   },
 	onLoad(option) {
 		if (option.isTeam) { // 编辑地址
-		  this.setting.customerType = option.isTeam == 1 ? 1 : 2;
+		  this.setting.customerType = option.isTeam == 1 ? 2 : 1;
 		}
 	},
 	onReady() {
