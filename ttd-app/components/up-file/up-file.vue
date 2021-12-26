@@ -6,13 +6,13 @@
 				<image class="btn-icon"
 					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadImageJia.svg"
 					mode="aspectFit"></image>
-				<view class="btn-text">添加照片</view>
+				<view class="btn-text">添加图片</view>
 			</view>
 			<view class="btn-view" @click="openCamera">
 				<image class="btn-icon"
 					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/uploadImageTake.svg"
 					mode="aspectFit"></image>
-				<view class="btn-text">拍照</view>
+				<view class="btn-text">添加视频</view>
 			</view>
 			<view class="btn-view" @click="selectFile">
 				<image class="btn-icon"
@@ -35,6 +35,7 @@
 			<template v-if="item.resourceType == 1">
 				<image :src="item.url" mode="aspectFill" class="source-image"></image>
 			</template>
+			
 			<!-- 音频 -->
 			<template v-if="item.resourceType == 2">
 				<image class="source-icon"
@@ -51,6 +52,11 @@
 					mode="aspectFit">
 				</image>
 				<view class="source-text">文件</view>
+			</template>
+			
+			<!-- 视频 -->
+			<template v-if="item.resourceType == 4">
+				<video :src="item.url" :control="false" class="source-image" :show-play-btn="true" :show-center-play-btn="false"></video>
 			</template>
 
 			<uni-icons class="clear-icon" type="clear" :size="24" color="#ff0000" @click="deleteItem(item)"></uni-icons>
@@ -72,7 +78,7 @@
 				default: 'select' // 模式  select:选择文件   show:展示模式
 			},
 			value: {
-				type: Array, // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
+				type: Array, // {	resourceType: 1, // 资源类型 1、图片 4：视频 2、语音 3、文件    url: ''  }
 				default: () => []
 			},
 			showAudio: {
@@ -109,27 +115,26 @@
 				const name = dirList[dirList.length - 1]
 				return name
 			},
-			// 相册
+			// 图片
 			selectImage() {
 				uni.chooseImage({
 					count: 1,
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['album'],
+					sourceType: ['album','camera'],
 					success: (res) => {
 						const path = res.tempFilePaths[0];
 						this.uploadFile(path, 1);
 					}
 				});
 			},
-			// 拍摄
+			// 视频
 			openCamera() {
-				uni.chooseImage({
-					count: 1,
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['camera'],
+				uni.chooseVideo({
+					maxDuration: 60,
 					success: (res) => {
-						const path = res.tempFilePaths[0];
-						this.uploadFile(path, 1);
+						console.log('视频选择',res);
+						const path = res.tempFilePath;
+						this.uploadFile(path, 4);
 					}
 				});
 			},
