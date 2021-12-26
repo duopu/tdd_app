@@ -3,7 +3,7 @@
 	<view class="page-container select-lists">
 		<!--搜索-->
 		<custom-search-input class="search-content" v-model="searchText" @search="onSearchAction"></custom-search-input>
-
+		<text class="tip-text">如果下面类别没有您要的内容，可以点“自定义”按钮添加</text>
 		<template v-if="type == 1">
 			<!-- 面包屑 -->
 			<scroll-view scroll-x="true" class="breadcrumb" scroll-into-view="current">
