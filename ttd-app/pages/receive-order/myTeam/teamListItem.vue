@@ -11,12 +11,11 @@
 					<text class="tlr-name">{{ member.userName }}</text>
 					<text class="tlr-phone">{{ member.phone }}</text>
 				</view>
-				<view class="tlr-2">
+				<view class="tlr-2" v-if="skillList.length">
 					<text class="tlr-2-item" v-for="i in skillList" :key="i">{{ i }}</text>
 				</view>
 			</view>
-			<view v-if="!member.leaderFlag" class="team-list-right2" hover-stop-propagation
-				@click.stop="$emit('onDelete')">删除</view>
+			<view v-if="!member.leaderFlag && showDelete" class="team-list-right2" @tap.stop="$emit('onDelete')">删除</view>
 			<uni-icons size="18" class="team-list-right3" type="forward" color="#BDBDBD" />
 		</view>
 
@@ -34,11 +33,9 @@
 				leaderFlag: false,
 				skills: [],
 			},
-			tagList: {
-				type: Array,
-				default () {
-					return ['', '', '']
-				}
+			showDelete: {
+				type: Boolean,
+				default: true
 			},
 		},
 		computed: {

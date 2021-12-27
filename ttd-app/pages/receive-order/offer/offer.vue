@@ -16,8 +16,14 @@
     </back-container>
 
     <view class="offer-8900" v-if="order.receiverType == 2">
-      <member-title title="参与人员" show-right right-text="选择人员" @add="toSelectPerson"/>
-      <team-list-item v-for="i in memberList" :key="i.userId" :member="i" @onDelete="removePerson(i)"/>
+      <member-title title="参与人员" :show-right="!isPlaceOrder" right-text="选择人员" @add="toSelectPerson"/>
+      <team-list-item v-for="(i, index) in memberList"
+			 :key="i.userId"
+			 :member="i" 
+			 :showDelete="!isPlaceOrder" 
+			 @onDelete="removePerson(i)" 
+			 @onClick="toPersonDetail(i)"
+			/>
     </view>
 
     <view class="offer-5">
@@ -111,6 +117,9 @@ export default {
 			this.queryOrderInfo();
 			this.queryWorkList();
 		}
+		if (this.isPlaceOrder) {
+			this.queryMemberList();
+		}
 	},
   methods: {
 		queryOrderInfo() {
@@ -126,6 +135,20 @@ export default {
 			  this.workList = res.orderItemList;
 				this.showWorkList = this.workList.slice(0, 5);
 				console.log('showWorkList ', this.showWorkList);
+			})
+		},
+		queryMemberList() {
+			this.$http.post('/b/ordermember/queryMemberListAndApplyInfo', { id: this.id }, true)
+			.then(res => {
+				this.memberList = (res.applyMemberList || []).map((m) => {
+					return {
+						headImgUrl: m.headImgUrl,
+						userName: m.name,
+						phone: m.phone,
+						skills: m.skills,
+						userId: m.id,
+					}
+				});
 			})
 		},
     inputChange(value) {
@@ -221,8 +244,14 @@ export default {
 			})
 		},
 		removePerson(person) {
+			if (this.isPlaceOrder) return;
 			const index = this.memberList.findIndex((p) => p.userId == person.userId);
 			this.memberList.splice(index, 1);
+		},
+		toPersonDetail(person) {
+			uni.navigateTo({
+				url: `/pages/receive-order/peopleDetail/peopleDetail?id=${person.userId}`
+			})
 		},
 		cancelQuote() {
 			uni.navigateBack({});
