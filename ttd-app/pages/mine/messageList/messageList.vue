@@ -5,7 +5,7 @@
     <back-container>
 
       <view class="message-list">
-        <view class="mist-item" v-for="(message, index) in messageList" :key="index">
+        <view class="mist-item" v-for="(message, index) in messageList" :key="index" @click="toDtl(message)">
           <view class="mist-item1">{{ message.title }}</view>
           <view class="mist-item2">{{ message.content }}</view>
           <view class="mist-item3" v-if="(message.scenarioType == 1 || message.scenarioType == 2) && message.readFlag == 0">
@@ -40,7 +40,7 @@ export default {
 	},
 	methods: {
 		readMessage() {
-			this.$http.post('/core/sitemessage/readNotice', { scenarioType: 0 })
+			this.$http.post('/core/sitemessage/readMessage', { scenarioTypeList: [0, 3] })
 				.then(res => {
 				})
 		},
@@ -57,7 +57,14 @@ export default {
 				})
 		},
 	  toDtl(message) {
-	    uni.navigateTo({ url: `/pages/mine/messageDetail/messageDetail?id=${message.id}` })
+			if (message.linkPage == 101) {
+				const params = message.linkParamJson;
+				// 订单消息
+				uni.navigateTo({
+				  url: `/pages/place-order/orderDetail/orderDetail?id=${params.id}&isPlaceOrder=${params.detailType == 1 ? 1 : 0}`,
+				})
+			}
+	    // uni.navigateTo({ url: `/pages/mine/messageDetail/messageDetail?id=${message.id}` })
 	  },
 		progressMessage(message, inviteState) {
 			if (message.scenarioType == 1) {
