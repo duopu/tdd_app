@@ -454,9 +454,17 @@
       }
     },
     {
-      "path": "pages/mine/lotteryCenter/lotteryCenter",
+      "path": "pages/mine/lotteryCenter/child/lottery",
       "style": {
         "navigationBarTitleText": "抽奖中心",
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/mine/lotteryCenter/child/lotteryRecord",
+      "style": {
+        "navigationBarTitleText": "抽奖记录",
         "navigationStyle": "custom",
         "enablePullDownRefresh": false
       }

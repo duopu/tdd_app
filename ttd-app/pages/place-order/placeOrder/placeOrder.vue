@@ -58,11 +58,11 @@
 			<view class="require-white">
 				<offer-content-card v-for="(i, index) in orderItemList" :key="index"
 				  right-type="0"
-					:title="getItemTitle(i)" 
+					:title="getItemTitle(i)"
 					:specItem="getSpecList(i)"
 					:image="itemImage"
 					:show-last-border-bottom="index < (orderItemList.length -1)"
-					@onClick="toEditWorkPage(index, i)" 
+					@onClick="toEditWorkPage(index, i)"
 				/>
 			</view>
 		</view>
@@ -79,6 +79,8 @@
 				<text class="require-order-set2-unit">公里</text>
 			</view>
 		</view>
+
+    <bottom-height />
 
 		<iphonex-bottom :z-index="99">
 			<big-btn @click="submitOrder" />
@@ -97,10 +99,12 @@
 	import MyChooseTime from "./myChooseTime";
 	import AddRemark from "../../receive-order/component/addRemark";
 	import dayjs from 'dayjs';
+  import BottomHeight from "../../mine/realNameAuth/bottomHeight";
 
 	export default {
 		name: 'placeOrder',
 		components: {
+      BottomHeight,
 			AddRemark,
 			MyChooseTime,
 			OfferContentCard,
@@ -511,7 +515,7 @@
 		}
 
 		.require-bbl {
-			margin: 0 0 200rpx 0;
+			//margin: 0 0 200rpx 0;
 			background-color: white;
 
 			.top-aline111 {

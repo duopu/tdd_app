@@ -34,6 +34,9 @@
 
           <image class="upa-item-7"
                  :src="`https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/${apply.approveState == 2 ? 'refused-icon' : 'pass-icon11'}.svg`" />
+
+          <image class="upa-item-7" v-if="apply.approveState == 3"
+                 :src="`https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/in-processing-icon.svg`" />
         </view>
 
         <view class="upa-item-8" v-if="apply.approveState == 2">原因：{{ apply.refusalReason }}</view>
