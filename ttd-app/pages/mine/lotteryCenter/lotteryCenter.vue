@@ -1,6 +1,8 @@
 <template>
   <view>
 
+    <!-- TODO 原抽奖中心 现已废弃  抽奖组件样式有问题 故而分开  -->
+
     <custom-navbar title="抽奖中心" />
 
     <view>
@@ -10,8 +12,7 @@
 
         <!-- <hxr-wheel @start="start" ref="hxrWheel" />-->
 
-        <view style="width: 300rpx;height: 300rpx;border: 1rpx solid black;">llllll</view>
-
+        <!--TODO 原抽奖中心 现已废弃  抽奖组件样式有问题 故而分开-->
         <!--https://100px.net/usage/uni-app.html   https://100px.net/demo/wheel.html  -->
         <LuckyWheel
             ref="myLucky"
@@ -24,10 +25,6 @@
             @start="startCallBack"
             @end="endCallBack"
         />
-
-        <view style="width: 300rpx;height: 300rpx;border: 1rpx solid black;">llllll</view>
-        <view style="width: 300rpx;height: 300rpx;border: 1rpx solid black;">llllll</view>
-        <view style="width: 300rpx;height: 300rpx;border: 1rpx solid black;">llllll</view>
 
         <view class="wheel-box-det1">
           你还有
@@ -57,6 +54,9 @@
 import HxrWheel from "./hxrWheel";
 import ListEmpty from "../../place-order/orderList/listEmpty";
 import LuckyWheel from '@lucky-canvas/uni/lucky-wheel' // 大转盘
+
+
+// TODO 原抽奖中心 现已废弃  抽奖组件样式有问题 故而分开
 
 export default {
   name: "lotteryCenter",
