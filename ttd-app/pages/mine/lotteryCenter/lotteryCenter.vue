@@ -130,8 +130,8 @@
 						});
 						console.log('bkb',this.prizes);
 					})
-					
-					
+
+
 			},
 			// 查询中奖记录
 			queryLotteryList() {
@@ -143,7 +143,7 @@
 						}]
 					})
 					.then(res => {
-						
+
 						this.lotteryList = res.dataList || [];
 					})
 			},
@@ -177,14 +177,14 @@
 		flex-direction: column;
 		align-items: stretch;
 	}
-	
+
 	.luck-draw-view{
 		@extend  .flex;
 		height: 870rpx;
 		background-image: url('https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/luck-draw-bg.png') ;
 		background-size: 750rpx 870rpx;
 		background-repeat: no-repeat;
-		
+
 		.wheel-box-det {
 			font-size: 28rpx;
 			position: absolute;
@@ -195,12 +195,12 @@
 			color: #FFFFFF;
 			line-height: 36rpx;
 		}
-		
+
 		.LuckyWheel{
 			align-self: center;
 			margin-top: 100rpx;
 		}
-		
+
 		.count-text{
 			@extend  .flex;
 			width: 340rpx;
@@ -214,7 +214,7 @@
 			align-self: center;
 			color: #333333;
 			font-size: 28rpx;
-			
+
 			.count-num-text{
 				color: #FF3B30;
 				font-size: 36rpx;
@@ -224,13 +224,16 @@
 			}
 		}
 	}
-	
+
 	.wheel-boo0 {
+    height: calc(100vh - 870rpx);
+    overflow-y: scroll;
 		background: white;
 		padding-top: 16rpx;
 		margin-bottom: 68rpx;
-	
+
 		.wheel-boo1 {
+      overflow-y: scroll;
 			padding: 0 32rpx;
 			height: 88rpx;
 			font-size: 28rpx;
@@ -240,18 +243,18 @@
 			font-weight: 400;
 			color: #828282;
 		}
-	
+
 		.wheel-boo2 {
 			padding: 32rpx 32rpx 16rpx 0;
 			border-top: 1rpx solid #EDEDED;
 			margin-left: 32rpx;
 			display: flex;
 			align-items: center;
-	
-	
+
+
 			.wheel-boo3 {
 				flex: 1;
-	
+
 				.wheel-boo31 {
 					font-size: 28rpx;
 					font-family: PingFang SC-Regular, PingFang SC;
@@ -259,7 +262,7 @@
 					color: #323335;
 					line-height: 36rpx;
 				}
-	
+
 				.wheel-boo32 {
 					margin-top: 16rpx;
 					font-size: 24rpx;
@@ -269,7 +272,7 @@
 					line-height: 32rpx;
 				}
 			}
-	
+
 			.wheel-boo4 {
 				width: 116rpx;
 				@include flexCenter;
