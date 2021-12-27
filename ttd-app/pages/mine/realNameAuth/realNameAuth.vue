@@ -36,10 +36,20 @@
 							</view>
 						</view>
 					</view>
+
+
+          <view class="rn-end-text">上传头像照片</view>
+          <view class="rn-sf-rl">
+            <image :src="takePhotoIcon" class="rn-end-img11" />
+            <!--上传后图片的样式  放开判断条件 填充图片链接 即可-->
+            <image v-if="false" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com:443/public%2F2021%2F12%2F27%2F11%2F04%2FDQSRf5HMbQ7NWR405742531002141.jpg" class="rn-sf-rlwww" />
+          </view>
 				</view>
 			</view>
 
 		</back-container>
+
+    <bottom-height />
 
 		<iphonex-bottom>
 			<big-btn buttonText="自拍" @click="facePhoto()" />
@@ -51,10 +61,12 @@
 	import BackContainer from "../addressManage/component/backContainer";
 	import IphonexBottom from "../addressManage/component/iphonexBottom";
 	import BigBtn from "../addressManage/component/bigBtn";
+  import BottomHeight from "./bottomHeight";
 
 	export default {
 		name: "realNameAuth",
 		components: {
+      BottomHeight,
 			BigBtn,
 			IphonexBottom,
 			BackContainer
@@ -234,6 +246,30 @@
 			}
 		}
 	}
+
+  .rn-sf-rl {
+    margin: 0 auto;
+    width: 236rpx;
+    height: 330rpx;
+    background: #F3F4F5;
+    border-radius: 16rpx;
+    position: relative;
+    opacity: 0.8;
+    @include flexCenter;
+
+    .rn-sf-rlwww {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .rn-end-img11 {
+      width: 48rpx;
+      height: 48rpx;
+    }
+  }
 </style>
 
 <style lang="scss">
