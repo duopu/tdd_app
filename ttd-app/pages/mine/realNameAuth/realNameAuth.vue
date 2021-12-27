@@ -39,10 +39,10 @@
 
 
           <view class="rn-end-text">上传头像照片</view>
-          <view class="rn-sf-rl">
+          <view class="rn-sf-rl" @click="facePhoto">
             <image :src="takePhotoIcon" class="rn-end-img11" />
             <!--上传后图片的样式  放开判断条件 填充图片链接 即可-->
-            <image v-if="false" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com:443/public%2F2021%2F12%2F27%2F11%2F04%2FDQSRf5HMbQ7NWR405742531002141.jpg" class="rn-sf-rlwww" />
+            <image v-if="faceImage" :src="faceImage" class="rn-sf-rlwww" />
           </view>
 				</view>
 			</view>
@@ -52,7 +52,7 @@
     <bottom-height />
 
 		<iphonex-bottom>
-			<big-btn buttonText="自拍" @click="facePhoto()" />
+			<big-btn buttonText="提交认证" @click="commitAuth" />
 		</iphonex-bottom>
 	</view>
 </template>
@@ -79,10 +79,10 @@
 				backIdcardImage: '',
 			};
 		},
-		onReady() {},
-		onShow() {
+		onReady() {
 			this.queryAuthInfo();
 		},
+		onShow() {},
 		methods: {
 			queryAuthInfo() {
 				this.$http.post('/b/customerrealauth/query', {}, true)
@@ -116,7 +116,6 @@
 							this.backIdcardImage = res;
 						} else {
 							this.faceImage = res;
-							this.commitAuth();
 						}
 					});
 			},
@@ -135,6 +134,18 @@
 				});
 			},
 			commitAuth() {
+				if (!this.faceIdcardImage) {
+					uni.showToast({ title: '请上传身份证人像面', icon: 'none' });
+					return;
+				}
+				if (!this.backIdcardImage) {
+					uni.showToast({ title: '请上传身份证国辉面', icon: 'none' });
+					return;
+				}
+				if (!this.faceImage) {
+					uni.showToast({ title: '请上传人像照片', icon: 'none' });
+					return;
+				}
 				const params = {
 					faceImage: this.faceImage,
 					faceIdcardImage: this.faceIdcardImage,
