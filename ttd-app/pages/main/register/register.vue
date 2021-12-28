@@ -1,7 +1,8 @@
 <!--登录-->
 <template>
 	<view class="page-container flex-column-center">
-		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/logo.png" mode="aspectFill" class="image-logo"></image>
+		<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/logo.png" mode="aspectFill"
+			class="image-logo"></image>
 		<text class="invite-text" v-if="inviteInfo.shareUserId">邀请人：{{inviteInfo.shareUserName}}</text>
 		<view class="name-view flex">
 			<text>姓名： </text>
@@ -9,6 +10,13 @@
 		</view>
 
 		<button class="btn primary" open-type="getPhoneNumber" @getphonenumber="registerAction">微信号码一键注册</button>
+
+		<view class="tip-view">
+			<view class="tip-text">
+				注册即表示同意<text class="link-text" @click="navAgreement('userAgreement')">《用户协议》</text>和
+				<text class="link-text" @click="navAgreement('privacyAgreement')">《隐私政策》</text>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -22,22 +30,26 @@
 				code: '',
 				name: '',
 				// 邀请信息
-				inviteInfo:{},
+				inviteInfo: {},
+				// 协议版本号
+				agreementDate: '',
 			};
 		},
 		onReady() {
 			uni.getStorage({
-				key:config.storageKeys.inviteInfoStorage,
+				key: config.storageKeys.inviteInfoStorage,
 				success: (res) => {
 					this.inviteInfo = res.data;
 				}
 			})
 			// 获取code
 			this.getAuthCode();
+
+			this.loadAgreementData();
 		},
 		methods: {
 			// 获取code
-			getAuthCode(){
+			getAuthCode() {
 				uni.login({
 					provider: 'oauth',
 					success: res => {
@@ -54,16 +66,16 @@
 			registerAction(data) {
 				if (!this.name) {
 					this.$tool.showToast('注册操作需要输入姓名')
-				} else if(/\d/.test(this.name)){
+				} else if (/\d/.test(this.name)) {
 					this.$tool.showToast('姓名中不能含有数字')
-				}else{
+				} else {
 					this.bindgetphonenumber(data)
 				}
 			},
 			// 用户授权手机号的回调
 			bindgetphonenumber(data) {
 				const info = data.detail;
-				console.log('ad',info);
+				console.log('ad', info);
 				const param = {
 					appId: config.appId,
 					code: this.code,
@@ -79,14 +91,28 @@
 						token: res.token
 					}
 					this.$tool.login(user)
-					this.$tool.showToast('注册成功', () => { 
+					this.$tool.showToast('注册成功', () => {
 						uni.navigateBack({})
 					})
+
+					// 更新协议版本号
+					uni.setStorageSync(config.storageKeys.agreementVersionStorage, this.agreementDate)
 				}).catch(err => {
 					this.$tool.showToast('注册错误，请重试一次')
 					this.getAuthCode();
 				});
-			}
+			},
+			loadAgreementData(localVersion) {
+				this.$http.get('/core/softconf/agreement').then(res => {
+					this.agreementDate = res.date;
+				})
+			},
+			// 去协议页面
+			navAgreement(type) {
+				uni.navigateTo({
+					url: `/pages/home/agreement/agreement?type=${type}`
+				})
+			},
 		}
 	};
 </script>

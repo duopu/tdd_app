@@ -2,7 +2,7 @@
 <template>
 	<view>
 		<!-- 搜索 -->
-		<home-search v-model="searchVal" :message-num="messageCount" @message="toMessage" @change="change11" />
+		<home-search v-model="searchVal" :message-num="messageCount" @message="toMessage" @change="searchTextChange" />
 
 		<!-- 横向菜单 -->
 		<view class="home-her">
@@ -109,6 +109,9 @@
 				src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList2.png"
 				mode="aspectFill" />
 		</view>
+		
+		<!-- 协议弹层 -->
+		<agreement-modal ref="agreementModal" ></agreement-modal>
 	</view>
 </template>
 
@@ -179,6 +182,7 @@
 				console.log('scene contentMapId', contentMapId);
 				this.queryContentmapping(contentMapId)
 			}
+			
 		},
 		computed: {
 			itemList() {
@@ -192,7 +196,7 @@
 			this.refresh();
 		},
 		methods: {
-			change11(data) {
+			searchTextChange(data) {
 				console.log('data', data);
 			},
 			refresh() {

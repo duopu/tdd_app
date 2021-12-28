@@ -69,16 +69,17 @@
 		</view>
 
 		<view class="logout">退出登录</view>
-
-		<update-header ref="updateHeader" />
+		
+		<!-- 协议弹层 -->
+		<agreement-modal ref="agreementModal" ></agreement-modal>
 	</view>
 </template>
 
 <script>
-	import UpdateHeader from "./updateHeader";
+
 	export default {
 		components: {
-			UpdateHeader
+
 		},
 		data() {
 			return {
