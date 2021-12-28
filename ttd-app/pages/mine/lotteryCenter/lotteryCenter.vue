@@ -12,6 +12,15 @@
 					<text class="count-num-text">{{ lotteryCount }}</text>
 					次抽奖机会
 				</view>
+				
+				<wyb-noticeBar 
+				  class="notice-bar"
+				  :text="notices"
+					color="#f5a300"
+					bgColor="transparent"
+					:showIcon="false"
+					:showMore="false"
+				/>
 			</view>
 
 			<view class="wheel-boo0">
@@ -65,6 +74,7 @@
 						top:'-70rpx'
 					}]
 				}],
+				notices: [''],
 				lotteryCount: 0,
 				lotteryList: [],
 			};
@@ -76,24 +86,31 @@
 
 			// 点击抽奖按钮触发回调
 			startCallBack() {
-				// 先开始旋转
-				this.$refs.myLucky.play()
-				// 使用定时器来模拟请求接口
-				setTimeout(() => {
-					// 假设后端返回的中奖索引是0
-					const index = 0
-					// 调用stop停止旋转并传递中奖索引
-					this.$refs.myLucky.stop(2)
-				}, 3000)
+				// 调抽奖接口
+				this.$http.post('/b/lottery/startLottery', {}, true)
+					.then(res => {
+						// 先开始旋转
+						this.$refs.myLucky.play()
+						// 后端返回的中奖索引
+						const index = this.prizes.findIndex((p) => p.id == res);
+						// 使用定时器来模拟请求接口
+						setTimeout(() => {
+							// 调用stop停止旋转并传递中奖索引
+							this.$refs.myLucky.stop(index)
+						}, 2000)
+					})
 			},
 			// 抽奖结束触发回调
 			endCallBack(prize) {
 				// 奖品详情
-				console.log(prize)
+				console.log(prize);
+				this.queryLotteryCount();
+				this.queryLotteryList();
 			},
 			refresh() {
 				this.queryLotteryCount();
 				this.queryPriceList();
+				this.queryNoticeInfo();
 				this.queryLotteryList();
 			},
 			// 查询剩余抽奖次数
@@ -133,6 +150,13 @@
 
 
 			},
+			// 查询跑马灯显示信息
+			queryNoticeInfo() {
+				this.$http.get('/core/softconf/winning', {})
+					.then(res => {
+						this.notices = res.winningList || [];
+					})
+			},
 			// 查询中奖记录
 			queryLotteryList() {
 				this.$http.post('/b/lottery/queryPageList', {
@@ -143,7 +167,6 @@
 						}]
 					})
 					.then(res => {
-
 						this.lotteryList = res.dataList || [];
 					})
 			},
@@ -222,6 +245,17 @@
 				margin-left: 10rpx;
 				margin-right: 10rpx;
 			}
+		}
+		
+		.notice-bar {
+			@extend  .flex;
+			width: 480rpx;
+			height: 68rpx;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			margin-top: 28rpx;
+			align-self: center;
 		}
 	}
 
