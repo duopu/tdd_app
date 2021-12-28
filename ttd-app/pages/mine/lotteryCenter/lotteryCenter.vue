@@ -13,11 +13,14 @@
 					次抽奖机会
 				</view>
 				
-				<wyb-noticeBar 
+				<wyb-noticeBar
+				  v-if="notices.length > 0"
 				  class="notice-bar"
 				  :text="notices"
+					type="vert"
 					color="#f5a300"
 					bgColor="transparent"
+					time="2000"
 					:showIcon="false"
 					:showMore="false"
 				/>
@@ -74,7 +77,7 @@
 						top:'-70rpx'
 					}]
 				}],
-				notices: [''],
+				notices: [],
 				lotteryCount: 0,
 				lotteryList: [],
 			};
