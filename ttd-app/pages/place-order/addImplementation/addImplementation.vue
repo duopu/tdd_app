@@ -1,6 +1,6 @@
 <template>
 	<view class="add-im">
-		<custom-navbar title="添加实施工作" />
+		<custom-navbar :title="`${isEdit ? '添加' : '查看'}实施工作`" />
 
 		<back-container>
 			<template #headerSlot>
@@ -25,14 +25,14 @@
 
 				<view class="add-i-item">
 					<view class="add-i-lable">型号</view>
-					<input class="add-i-midle input-sty" :value="model" @input="modelChange" placeholder="可选输入"
+					<input class="add-i-midle input-sty" :value="model" :disabled="!isEdit" @input="modelChange" placeholder="可选输入"
 						placeholder-class="input-placeholder" />
 				</view>
 
 				<view class="add-i-item">
 					<view class="add-i-lable">数量</view>
 					<view class="add-i-midle">
-						<uni-number-box v-model="number" />
+						<uni-number-box v-model="number" :disabled="!isEdit" />
 					</view>
 				</view>
 			</view>
@@ -41,13 +41,13 @@
 
 			<add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 			<!-- 上传文件 -->
-			<up-file v-model="orderResourceList" />
+			<up-file v-model="orderResourceList" :modal="isEdit ? 'select' : 'show'"/>
 
 		</back-container>
 
-		<view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>
+		<view class="add-im-tips" v-if="isEdit">上传完整清晰图片、视频，以便师傅更快接单</view>
 
-		<iphonex-bottom>
+		<iphonex-bottom v-if="isEdit">
 			<big-btn @click="onSubmit" />
 		</iphonex-bottom>
 	</view>
@@ -76,6 +76,7 @@
 		},
 		data() {
 			return {
+				isEdit: true,
 				type: '1', // 类别 1、实施，2、维修
 				cateId: '', // 需求分类ID
 				cateName: '', // 需求名称
@@ -91,6 +92,9 @@
 			};
 		},
 		onLoad(option) {
+			if (option.isEdit) {
+				this.isEdit = option.isEdit ==  '0' ? false : true;
+			}
 			// 监听上级页面传入数据
 			const eventChannel = this.getOpenerEventChannel();
 			eventChannel.on('editWork', (work) => {
@@ -126,17 +130,20 @@
 		},
 		methods: {
 			changeType(value) {
+				if (!this.isEdit) return;
 				this.type = value
 			},
 			modelChange(e) {
 				this.model = e.target.value;
 			},
 			skillSelect() {
+				if (!this.isEdit) return;
 				uni.navigateTo({
 					url: `/pages/main/apply/tree?type=skill`
 				});
 			},
 			brandSelect() {
+				if (!this.isEdit) return;
 				if (this.skillList.length == 0) {
 					this.$tool.showToast('请先选择技能')
 				} else {
@@ -146,6 +153,7 @@
 				}
 			},
 			infoChange(t) {
+				if (!this.isEdit) return;
 				this.requireInfo = t;
 			},
 			onSubmit() {

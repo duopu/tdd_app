@@ -1,6 +1,6 @@
 <template>
   <view class="add-im">
-    <custom-navbar title="添加人员工作" />
+    <custom-navbar :title="`${isEdit ? '添加' : '查看'}人员工作`" />
 
     <back-container>
       <template #headerSlot>
@@ -18,7 +18,7 @@
         <view class="add-i-item">
           <view class="add-i-lable">人员数量</view>
           <view class="add-i-midle">
-            <uni-number-box v-model="number" />
+            <uni-number-box v-model="number" :disabled="!isEdit"/>
           </view>
         </view>
 
@@ -28,13 +28,13 @@
       <add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 
 			<!-- 上传文件 -->
-			<up-file v-model="orderResourceList"/>
+			<up-file v-model="orderResourceList" :modal="isEdit ? 'select' : 'show'"/>
 
     </back-container>
 
-    <view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>
+    <view class="add-im-tips" v-if="isEdit">上传完整清晰图片、视频，以便师傅更快接单</view>
 
-    <iphonex-bottom>
+    <iphonex-bottom v-if="isEdit">
       <big-btn @click="onSubmit"/>
     </iphonex-bottom>
   </view>
@@ -54,6 +54,7 @@ export default {
   components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
+			isEdit: true,
 			cateId: '', // 人员类型id
 			cateName: '', // 人员类型
 			number: 0, // 面积
@@ -61,7 +62,10 @@ export default {
       orderResourceList: [], // {	resourceType: 1, // 资源类型 1、图片视频 2、语音 3、文件    url: ''  }
     };
   },
-	onLoad() {
+	onLoad(option) {
+		if (option.isEdit) {
+			this.isEdit = option.isEdit ==  '0' ? false : true;
+		}
 		// 监听上级页面传入数据
 		const eventChannel = this.getOpenerEventChannel();
 		eventChannel.on('editWork', (work) => {
@@ -85,11 +89,13 @@ export default {
 	},
 	methods: {
 		roleSelect() {
+			if (!this.isEdit) return;
 			uni.navigateTo({
 				url:`/pages/main/apply/tree?type=userrole`
 			})
 		},
 		infoChange(t) {
+			if (!this.isEdit) return;
 			this.requireInfo = t;
 		},
 	  onSubmit() {

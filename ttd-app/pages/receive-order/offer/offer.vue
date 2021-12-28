@@ -35,8 +35,10 @@
 				:right-type="isPlaceOrder ? 5 : item.quoteAmount ? 1 : 2"
 				:title="getItemTitle(item)"
 				:specItem="getSpecList(item)"
+				:image="itemImage"
 				:price="item.quoteAmount / 100"
         :show-last-border-bottom="index < (showWorkList.length - 1)"
+				@onClick="checkItem(item)"
 				@onChange="changeQuote(item)"
 				/>
       </view>
@@ -102,6 +104,7 @@ export default {
 			isPlaceOrder: false,
 			order: {},
 			workList: [],
+			itemImage: '',
       memberList: [],
 			showWorkList: [],
 			showWorkMore: false,
@@ -127,7 +130,16 @@ export default {
 			.then(res => {
 			  this.order = res;
 				this.remark = res.receiveRemark || '';
+				this.queryItemImg();
 			})
+		},
+		queryItemImg() {
+			this.$http.post('/b/ordermaster/orderTypeImg', {})
+				.then(res => {
+					const item = res.filter((i) => i.type == this.order.orderType)[0];
+					this.itemImage = item ? item.icon : '';
+					console.log('itemImage ',this.itemImage);
+				})
 		},
 		queryWorkList() {
 			this.$http.post('/b/orderquote/receiveQuoteDetail', { id: this.id }, true)
@@ -161,6 +173,22 @@ export default {
 			} else {
 				this.showWorkList = this.workList.slice(0, 5);
 			}
+		},
+		checkItem(work) {
+			const typeArray = [
+				'/pages/place-order/addImplementation/addImplementation?isEdit=0',
+				'/pages/place-order/addCanBeSetWork/addCanBeSetWork?isEdit=0',
+				'/pages/place-order/addPersonWork/addPersonWork?isEdit=0',
+				'/pages/place-order/addLeaseWork/addLeaseWork?isEdit=0',
+				'/pages/place-order/addSoftwareDevelop/addSoftwareDevelop?isEdit=0',
+			];
+			uni.navigateTo({
+				url: typeArray[this.order.orderType - 1],
+				success: (res) => {
+					// 通过eventChannel向被打开页面传送数据
+					res.eventChannel.emit('editWork', work);
+				}
+			})
 		},
 		changeQuote(work) {
 			uni.showModal({

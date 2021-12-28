@@ -9,13 +9,13 @@
 				</view>
 			</view>
 
-			<view class="oc-right-set" v-if="rightType == 2" @click="$emit('onChange')">设置报价</view>
+			<view class="oc-right-set" v-if="rightType == 2" @tap.stop="$emit('onChange')">设置报价</view>
 
-			<view class="oc-right-set" v-if="rightType == 3" @click="$emit('onChange')">分配金额</view>
+			<view class="oc-right-set" v-if="rightType == 3" @tap.stop="$emit('onChange')">分配金额</view>
 
 			<view class="oc-right" v-if="rightType == 1">
 				<my-price :price="price" />
-				<view class="oc-right-btn" @click="$emit('onChange')">修改</view>
+				<view class="oc-right-btn" @tap.stop="$emit('onChange')">修改</view>
 			</view>
 
 			<view v-if="rightType == 4" class="oc-right4">未报价</view>

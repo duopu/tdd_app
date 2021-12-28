@@ -1,6 +1,6 @@
 <template>
   <view class="add-im">
-    <custom-navbar title="添加软件开发" />
+    <custom-navbar :title="`${isEdit ? '添加' : '查看'}软件开发`" />
 
     <back-container>
       <template #headerSlot>
@@ -11,7 +11,7 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">类别</view>
-					<picker class="add-i-midle" @change="softwareSelect" :value="cateName" :range="softwareList" range-key="name">
+					<picker class="add-i-midle" @change="softwareSelect" :disabled="!isEdit" :value="cateName" :range="softwareList" range-key="name">
 					  <view class="add-i-midle" :class="cateName ? 'add-i-acc' : ''">{{ cateName || '请选择' }}</view>
 					</picker>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
@@ -24,13 +24,13 @@
       <add-remark label="要求：" required :value="requireInfo" @input="infoChange"  />
 
 			<!-- 上传文件 -->
-			<up-file v-model="orderResourceList"/>
+			<up-file v-model="orderResourceList" :modal="isEdit ? 'select' : 'show'"/>
 
     </back-container>
 
-    <view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>
+    <view class="add-im-tips" v-if="isEdit">上传完整清晰图片、视频，以便师傅更快接单</view>
 
-    <iphonex-bottom>
+    <iphonex-bottom v-if="isEdit">
       <big-btn @click="onSubmit"/>
     </iphonex-bottom>
   </view>
@@ -50,6 +50,7 @@ export default {
   components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
+			isEdit: true,
 			cateId: '', // 软件类型id
 			cateName: '', // 软件类型
 			requireInfo: '', // 备注
@@ -58,7 +59,10 @@ export default {
 			softwareList: [],
     };
   },
-  onLoad() {
+  onLoad(option) {
+		if (option.isEdit) {
+			this.isEdit = option.isEdit ==  '0' ? false : true;
+		}
 		// 监听上级页面传入数据
 		const eventChannel = this.getOpenerEventChannel();
 		eventChannel.on('editWork', (work) => {
@@ -85,6 +89,7 @@ export default {
 			this.cateName = this.softwareList[index].name;
 		},
 		infoChange(t) {
+			if (!this.isEdit) return;
 			this.requireInfo = t;
 		},
     onSubmit() {

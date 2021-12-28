@@ -1,6 +1,6 @@
 <template>
   <view class="add-im">
-    <custom-navbar title="添加勘设工作" />
+    <custom-navbar :title="`${isEdit ? '添加' : '查看'}勘设工作`" />
 
     <back-container>
       <template #headerSlot>
@@ -11,13 +11,13 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">面积</view>
-          <input class="add-i-midle input-sty" :value="number" @input="inputChange" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="add-i-midle input-sty" :value="number" :disabled="!isEdit" @input="inputChange" placeholder="请输入" placeholder-class="input-placeholder" />
           <text class="add-i-unit">平方</text>
         </view>
 
         <view class="add-i-item">
           <view class="add-i-lable">工作类别</view>
-					<picker class="add-i-midle" @change="workChange" :value="cateName" :range="workList">
+					<picker class="add-i-midle" :disabled="!isEdit" @change="workChange" :value="cateName" :range="workList">
             <view class="add-i-midle">{{ cateName || '请选择' }}</view>
 					</picker>
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
@@ -29,13 +29,13 @@
 			<add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 			
 			<!-- 上传文件 -->
-			<up-file v-model="orderResourceList"/>
+			<up-file v-model="orderResourceList" :modal="isEdit ? 'select' : 'show'"/>
 
     </back-container>
 
-    <view class="add-im-tips">上传完整清晰图片、视频，以便师傅更快接单</view>
+    <view class="add-im-tips" v-if="isEdit">上传完整清晰图片、视频，以便师傅更快接单</view>
 
-    <iphonex-bottom>
+    <iphonex-bottom v-if="isEdit">
       <big-btn @click="onSubmit"/>
     </iphonex-bottom>
   </view>
@@ -55,6 +55,7 @@ export default {
   components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
+			isEdit: true,
 			cateId: '', // 勘测类型id
 			cateName: '', // 勘测类型
 			number: 0, // 数量
@@ -64,7 +65,10 @@ export default {
 			workList: [], // 勘测类型数据源
     };
   },
-	onLoad() {
+	onLoad(option) {
+		if (option.isEdit) {
+			this.isEdit = option.isEdit ==  '0' ? false : true;
+		}
 		// 监听上级页面传入数据
 		const eventChannel = this.getOpenerEventChannel();
 		eventChannel.on('editWork', (work) => {
@@ -94,6 +98,7 @@ export default {
 			this.number = e.target.value;
 		},
 		infoChange(t) {
+			if (!this.isEdit) return;
 			this.requireInfo = t;
 		},
     onSubmit() {

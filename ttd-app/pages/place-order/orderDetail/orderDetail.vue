@@ -28,6 +28,7 @@
 					:image="itemImage"
 				  :price="item.quoteAmount / 100"
 				  :show-last-border-bottom="index < (showWorkList.length - 1)"
+					@onClick="checkItem(item)"
 				  @onChange="changeQuote(item)"
 				/>
 
@@ -219,6 +220,23 @@ export default {
 				];
 			}
 			return [];
+		},
+		// 查看工作内容
+		checkItem(work) {
+			const typeArray = [
+				'/pages/place-order/addImplementation/addImplementation?isEdit=0',
+				'/pages/place-order/addCanBeSetWork/addCanBeSetWork?isEdit=0',
+				'/pages/place-order/addPersonWork/addPersonWork?isEdit=0',
+				'/pages/place-order/addLeaseWork/addLeaseWork?isEdit=0',
+				'/pages/place-order/addSoftwareDevelop/addSoftwareDevelop?isEdit=0',
+			];
+			uni.navigateTo({
+				url: typeArray[this.order.orderType - 1],
+				success: (res) => {
+					// 通过eventChannel向被打开页面传送数据
+					res.eventChannel.emit('editWork', work);
+				}
+			})
 		},
 		
 		// 人员变更记录
