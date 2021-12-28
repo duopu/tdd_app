@@ -24,9 +24,9 @@
 						placeholder="可选输入" placeholder-class="input-placeholder" />
 				</view>
 
-				<my-choose-time v-model="quoteTime" title="报价周期" @change="(time) => onTimeChange(time, 1)" />
+				<my-choose-time v-model="quoteTime" title="报价周期" format="YYYY-MM-DD HH:mm:ss" @change="(time) => onTimeChange(time, 1)" />
 
-				<my-choose-time v-model="workTime" title="工作周期" @change="(time) => onTimeChange(time, 2)" />
+				<my-choose-time v-model="workTime" title="工作周期" format="YYYY-MM-DD HH:mm:ss" @change="(time) => onTimeChange(time, 2)" />
 
 				<checkd-item :value="invoiceType" @change="change" />
 
