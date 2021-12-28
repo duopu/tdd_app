@@ -59,7 +59,7 @@
 				<video :src="item.url" :control="false" class="source-image" :show-play-btn="true" :show-center-play-btn="false"></video>
 			</template>
 
-			<uni-icons class="clear-icon" type="clear" :size="24" color="#ff0000" @click="deleteItem(item)"></uni-icons>
+			<uni-icons class="clear-icon" v-if="modal == 'select'" type="clear" :size="24" color="#ff0000" @click="deleteItem(item)"></uni-icons>
 		</view>
 	</view>
 </template>
