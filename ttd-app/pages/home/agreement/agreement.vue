@@ -27,7 +27,7 @@
 			loadAgreementData() {
 				this.$http.get('/core/softconf/agreement').then(res => {
 					this.title = res[this.type].title;
-					this.content = res[this.type].content.split(';');
+					this.content = res[this.type].content.split('；');
 				})
 			},
 		}
