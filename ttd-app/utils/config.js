@@ -12,5 +12,7 @@ export default {
 		applyInfoStorage:'applyInfoStorage',
 		// 保存邀请信息
 		inviteInfoStorage:'inviteInfoStorage',
+		// 当前协议版本号保存
+		agreementVersionStorage:'agreementVersionStorage'
 	}
 }

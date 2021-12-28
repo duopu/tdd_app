@@ -25,7 +25,9 @@
     <view class="place-order-img-box">
       <image class="place-order-img" v-for="(i, index) in imageList" :key="index" :src="i.url" @click="publishOrder(i.orderType)" />
     </view>
-
+	
+<!-- 协议弹层 -->
+		<agreement-modal ref="agreementModal" ></agreement-modal>
   </view>
 </template>
 

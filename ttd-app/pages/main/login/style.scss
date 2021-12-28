@@ -56,3 +56,22 @@
 		margin-left: 40rpx;
 	}
 }
+
+.flex{
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		box-sizing: border-box;
+		position: relative;
+	}
+.tip-view{
+	@extend  .flex;
+	flex: 1;
+	justify-content: flex-end;
+	padding-bottom: 40rpx;
+	
+	.link-text {
+		color: $uni-color-primary;
+		text-decoration: underline;
+	}
+}

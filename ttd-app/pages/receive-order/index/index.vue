@@ -61,7 +61,9 @@
 		</view>
 
 		<edit-team ref="editTeam" btnText="创建" @onSave="createTeam" />
-
+		
+<!-- 协议弹层 -->
+		<agreement-modal ref="agreementModal" ></agreement-modal>
 	</view>
 </template>
 <script>
