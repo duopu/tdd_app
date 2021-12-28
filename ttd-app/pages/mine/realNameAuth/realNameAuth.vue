@@ -51,7 +51,7 @@
 
     <bottom-height />
 
-		<iphonex-bottom>
+		<iphonex-bottom v-if="state != 1">
 			<big-btn buttonText="提交认证" @click="commitAuth" />
 		</iphonex-bottom>
 	</view>
@@ -77,6 +77,7 @@
 				faceImage: '',
 				faceIdcardImage: '',
 				backIdcardImage: '',
+				state: 0,
 			};
 		},
 		onReady() {
@@ -90,6 +91,7 @@
 						this.faceImage = res.faceImage;
 						this.faceIdcardImage = res.faceIdcardImage;
 						this.backIdcardImage = res.backIdcardImage;
+						this.state = res.state;
 					})
 			},
 			chooseImage(index) {
