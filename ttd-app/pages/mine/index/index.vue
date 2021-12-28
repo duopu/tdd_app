@@ -208,7 +208,7 @@
 					welcome = '下午好, '
 				}
 				const user = this.$store.state.user;
-				welcome = welcome + user.name;
+				welcome = welcome + (user.name || '');
 				return welcome;
 			},
 			queryIntegralInfo() {
