@@ -3,7 +3,6 @@
 		<custom-navbar title="实名认证" />
 
 		<back-container>
-
 			<view class="real-name-auth">
 				<view class="rn-top">为了保障平台安全，请使用与资金账户一致的身份证进行注册。提交的资料仅用于实名认证，不会用作其他用途，请放心上传。</view>
 				<view class="rn-middle" />
@@ -40,7 +39,7 @@
 
           <view class="rn-end-text">上传头像照片</view>
           <view class="rn-sf-rl" @click="facePhoto">
-            <image :src="takePhotoIcon" class="rn-end-img11" />
+            <image :src="userHeader" class="rn-end-img11" mode="aspectFit" />
             <!--上传后图片的样式  放开判断条件 填充图片链接 即可-->
             <image v-if="faceImage" :src="faceImage" class="rn-sf-rlwww" />
           </view>
@@ -74,6 +73,7 @@
 		data() {
 			return {
 				takePhotoIcon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/take-photo-icon.svg',
+				userHeader:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/user_header.png',
 				faceImage: '',
 				faceIdcardImage: '',
 				backIdcardImage: '',
@@ -279,8 +279,8 @@
     }
 
     .rn-end-img11 {
-      width: 48rpx;
-      height: 48rpx;
+      width: 236rpx;
+      height: 330rpx;
     }
   }
 </style>

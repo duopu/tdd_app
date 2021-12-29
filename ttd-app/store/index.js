@@ -26,6 +26,7 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		// 查询审核信息
 		queryApproveDetail({
 			commit,
 			state
@@ -34,12 +35,23 @@ const store = new Vuex.Store({
 				commit('setApproveDetail', res);
 			})
 		},
+		// 查询实名认证信息
 		queryAuthenticationInfo({
 			commit,
 			state
 		}) {
 			http.post('/b/customerrealauth/query').then(res => {
 				commit('setAuthentication', res);
+			})
+		},
+		// 查询用户信息
+		queryUserInfo({
+			commit,
+			state
+		}) {
+			http.post('/b/customer/query').then(res => {
+				console.log('+++++++++',state.user);
+				commit('setUser', {...state.user,masterWorkFlag:res.masterWorkFlag});
 			})
 		}
 	}

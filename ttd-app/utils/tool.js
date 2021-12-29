@@ -78,31 +78,34 @@ const actionForLogin = (action) => {
 
 // 需要认证的操作 在此处过一遍
 const actionForAuth = (action) => {
-	const auth = store.state.authentication;
-	if (auth.state == 1) {
-		if (action) action();
-	} else {
-		showModal('提示', '此操作需要实名认证', () => {
-			uni.navigateTo({
-				url: '/pages/mine/realNameAuth/realNameAuth'
-			})
-		}, '去认证');
-	}
+	actionForLogin(()=>{
+		const auth = store.state.authentication;
+		if (auth.state == 1) {
+			if (action) action();
+		} else {
+			showModal('提示', '此操作需要实名认证', () => {
+				uni.navigateTo({
+					url: '/pages/mine/realNameAuth/realNameAuth'
+				})
+			}, '去认证');
+		}
+	})
 }
 
 // 需要承接方资质，在这里过一下
 const masterWorker = (action)=>{
-	const user = store.state.user;
-	console.log(user);
-	if (user.masterWorkFlag) {
-		if (action) action();
-	} else {
-		showModal('提示', '此操作需要注册承接方信息', () => {
-			uni.navigateTo({
-				url: '/pages/main/apply/apply'
-			})
-		}, '去注册')
-	}
+	actionForLogin(()=>{
+		const user = store.state.user;
+		if (user.masterWorkFlag) {
+			if (action) action();
+		} else {
+			showModal('提示', '此操作需要注册承接方信息', () => {
+				uni.navigateTo({
+					url: '/pages/main/apply/apply'
+				})
+			}, '去注册')
+		}
+	})
 }
 
 // 订单

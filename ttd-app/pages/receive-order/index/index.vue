@@ -122,6 +122,7 @@
 			this.$tool.actionForLogin(() => {
 				this.refresh();
 			});
+			this.$store.dispatch('queryUserInfo')
 		},
 		onPullDownRefresh() {
 			this.$tool.actionForLogin(() => {

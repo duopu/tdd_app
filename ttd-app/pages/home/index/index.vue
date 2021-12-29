@@ -109,9 +109,9 @@
 				src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList2.png"
 				mode="aspectFill" />
 		</view>
-		
+
 		<!-- 协议弹层 -->
-		<agreement-modal ref="agreementModal" ></agreement-modal>
+		<agreement-modal ref="agreementModal"></agreement-modal>
 	</view>
 </template>
 
@@ -182,7 +182,7 @@
 				console.log('scene contentMapId', contentMapId);
 				this.queryContentmapping(contentMapId)
 			}
-			
+
 		},
 		computed: {
 			itemList() {
@@ -273,9 +273,6 @@
 			// 切换菜单列表
 			onMenuItem(index) {
 				this.swiperIndex = index;
-				if (this.swiperIndex > 1) {
-					this.$tool.actionForLogin();
-				}
 			},
 			// swiper 切换
 			swiperChange(event) {
@@ -283,13 +280,11 @@
 			},
 			// item 点击事件
 			onItemClick(item) {
-				this.$tool.actionForLogin(() => {
-					this.$tool.actionForAuth(()=>{
-						uni.navigateTo({
-							url: `/pages/place-order/placeOrder/placeOrder?orderType=${item.type}`,
-						})
+				this.$tool.actionForAuth(() => {
+					uni.navigateTo({
+						url: `/pages/place-order/placeOrder/placeOrder?orderType=${item.type}`,
 					})
-				});
+				})
 			},
 			toMessage() {
 				this.$tool.actionForLogin(() => {
