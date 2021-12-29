@@ -66,7 +66,7 @@
 
 <script>
 	const recorderManager = uni.getRecorderManager();
-	const innerAudioContext = uni.createInnerAudioContext();
+	const innerAudioContext = uni.createInnerAudioContext({});
 
 	import dayjs from 'dayjs';
 
@@ -199,7 +199,7 @@
 				} else if (item.resourceType == 2) { // 语音
 					innerAudioContext.src = item.url;
 					innerAudioContext.onPlay(() => {
-						console.log('开始播放');
+						console.log('开始播放2',item.url);
 					});
 					innerAudioContext.onError((res) => {
 						console.log(res.errMsg);

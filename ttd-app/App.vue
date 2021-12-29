@@ -13,6 +13,19 @@ export default {
 				this.$store.commit('setUser',res.data)
 			}
 		});
+		
+		// ios端音频不能在静音下播放处理
+		    let music = wx.setInnerAudioOption({
+		      obeyMuteSwitch: false,
+		
+		      success:  (res) => {
+		        console.log("开启静音模式下播放音乐的功能",res);
+		      },
+		
+		      fail:  (err) => {
+		        console.log("静音设置失败",err);
+		      },
+		    });
 	},
 	onShow: function() {
 		console.log('App Show');

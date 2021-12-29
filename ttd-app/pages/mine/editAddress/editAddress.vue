@@ -8,8 +8,7 @@
 
  				<view class="edit-item">
  					<view class="edit-lable">所在地区</view>
- 					<view class="edit-midle">{{ address ? `${province} ${city} ${district}` : '定位中...'}}</view>
- 					<!-- <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" /> -->
+ 					<view class="edit-midle input-sty">{{ address ? `${province} ${city} ${district}` : '定位中...'}}</view>
  				</view>
 
  				<view class="edit-item">
@@ -110,11 +109,10 @@
  			getLocation() {
  				console.log('getLocation');
  				uni.getLocation({
- 					type: 'wgs84',
+ 					type: 'gcj02',
  					geocode: true,
  					success: (res) => {
- 						console.log('当前位置的经度：' + res.longitude);
- 						console.log('当前位置的纬度：' + res.latitude);
+ 						console.log('当前位置的经度：' + res);
  						this.latitude = res.latitude;
  						this.longitude = res.longitude;
  						// 用于地图显示
@@ -126,13 +124,15 @@
  				});
  			},
  			queryGeoAddressInfo(latitude, longitude) {
+				if(latitude == 0 || longitude == 0) return;
  				const params = {
  					latitude,
  					longitude,
  				}
  				this.$http.post('/core/geo/queryRegionByLocation', params)
  					.then(res => {
- 						this.address = res.street + res.streetNum;
+						console.log('eeee',res);
+ 						this.address = res.formattedAddress.replace(res.province ,'').replace(res.city ,'').replace(res.district ,'');
  						this.city = res.city;
  						this.cityId = res.cityId;
  						this.district = res.district;

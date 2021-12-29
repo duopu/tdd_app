@@ -60,7 +60,8 @@
             "scope.userLocation" : {
                 "desc" : "获取您的当前位置,用于地址管理"
             }
-        }
+        },
+		"requiredBackgroundModes": ["audio"]
     },
     "mp-alipay" : {
         "usingComponents" : true
