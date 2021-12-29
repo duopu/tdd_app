@@ -82,7 +82,7 @@
 			// 点击抽奖按钮触发回调
 			startCallBack() {
 				// 调抽奖接口
-				this.$http.post('/b/lottery/startLottery', {}, true)
+				this.$http.post('/b/lottery/startLottery', {})
 					.then(res => {
 						// 先开始旋转
 						this.$refs.myLucky.play()
@@ -98,7 +98,8 @@
 			// 抽奖结束触发回调
 			endCallBack(prize) {
 				// 奖品详情
-				console.log(prize);
+				console.log('奖品详情',prize);
+				this.$tool.showToast(`恭喜您获得了 ${prize.fonts[0].text}`)
 				this.queryLotteryCount();
 				this.queryLotteryList();
 			},
