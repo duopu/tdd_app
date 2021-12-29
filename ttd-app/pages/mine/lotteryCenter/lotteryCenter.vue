@@ -4,26 +4,18 @@
 		<view>
 			<view class="luck-draw-view">
 				<view class="wheel-box-det" @click="checkRule">查看规则</view>
-				<LuckyWheel class="LuckyWheel" ref="myLucky" width="560rpx" height="560rpx" :blocks="blocks" :prizes="prizes"
-					:buttons="buttons" :defaultStyle="defaultStyle" @start="startCallBack" @end="endCallBack" />
+				<LuckyWheel class="LuckyWheel" ref="myLucky" width="560rpx" height="560rpx" :blocks="blocks"
+					:prizes="prizes" :buttons="buttons" :defaultStyle="defaultStyle" @start="startCallBack"
+					@end="endCallBack" />
 
 				<view class="count-text">
 					你还有
 					<text class="count-num-text">{{ lotteryCount }}</text>
 					次抽奖机会
 				</view>
-				
-				<wyb-noticeBar
-				  v-if="notices.length > 0"
-				  class="notice-bar"
-				  :text="notices"
-					type="vert"
-					color="#f5a300"
-					bgColor="transparent"
-					time="2000"
-					:showIcon="false"
-					:showMore="false"
-				/>
+
+				<wyb-noticeBar v-if="notices.length > 0" class="notice-bar" :text="notices" type="vert" color="#f5a300"
+					bgColor="transparent" time="2000" :showIcon="false" :showMore="false" />
 			</view>
 
 			<view class="wheel-boo0">
@@ -74,7 +66,7 @@
 						src: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/s-dial_pointer.png',
 						width: '140rpx',
 						height: '140rpx',
-						top:'-70rpx'
+						top: '-70rpx'
 					}]
 				}],
 				notices: [],
@@ -127,31 +119,43 @@
 			queryPriceList() {
 				this.$http.post('/b/lottery/prizeList', {})
 					.then(res => {
-						this.prizes = res.map((pri,index)=>{
-							const background = index % 2 == 1 ? '#50CA12' : '#FFB42C'
+						this.prizes = res.map((pri, index) => {
+							const background = index % 2 == 1 ? '#50CA12' : '#FFB42C';
+							uni.downloadFile({
+								url: pri.icon, //仅为示例，并非真实的资源
+								success: (res) => {
+									if (res.statusCode === 200) {
+										const tempFilePath = res.tempFilePath;
+										const temp = [...this.prizes]
+										temp.splice(index, 1, {
+											...this.prizes[index],
+											imgs: [{
+												src: tempFilePath,
+												width: '30px',
+												height: '30px',
+												top: '40px'
+											}]
+										})
+										this.prizes = temp
+										console.log('下载成功', res.tempFilePath);
+									}
+								}
+							});
 							return {
-								range:pri.point,
+								range: pri.point,
 								background,
-								id:pri.id,
-								fonts:[{
-									text:pri.name,
-									top:'10px',
-									fontColor:'#ffffff',
-									fontSize:'16px',
-									wordWrap:false
-									}],
-								imgs:[{
-									src:pri.icon || 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/my_icon_wallet.png',
-									width:'30px',
-									height:'30px',
-									top:'40px'
+								id: pri.id,
+								fonts: [{
+									text: pri.name,
+									top: '10px',
+									fontColor: '#ffffff',
+									fontSize: '16px',
+									wordWrap: false
 								}]
 							}
 						});
-						console.log('bkb',this.prizes);
+						console.log('bkb', this.prizes);
 					})
-
-
 			},
 			// 查询跑马灯显示信息
 			queryNoticeInfo() {
@@ -193,10 +197,9 @@
 </script>
 
 <style lang="scss">
-	.lottery-page {
+	.lottery-page {}
 
-	}
-	.flex{
+	.flex {
 		display: flex;
 		box-sizing: border-box;
 		position: relative;
@@ -204,10 +207,10 @@
 		align-items: stretch;
 	}
 
-	.luck-draw-view{
-		@extend  .flex;
+	.luck-draw-view {
+		@extend .flex;
 		height: 870rpx;
-		background-image: url('https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/luck-draw-bg.png') ;
+		background-image: url('https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/luck-draw-bg.png');
 		background-size: 750rpx 870rpx;
 		background-repeat: no-repeat;
 
@@ -222,13 +225,13 @@
 			line-height: 36rpx;
 		}
 
-		.LuckyWheel{
+		.LuckyWheel {
 			align-self: center;
 			margin-top: 100rpx;
 		}
 
-		.count-text{
-			@extend  .flex;
+		.count-text {
+			@extend .flex;
 			width: 340rpx;
 			height: 76rpx;
 			border-radius: 38rpx;
@@ -241,7 +244,7 @@
 			color: #333333;
 			font-size: 28rpx;
 
-			.count-num-text{
+			.count-num-text {
 				color: #FF3B30;
 				font-size: 36rpx;
 				font-weight: bold;
@@ -249,9 +252,9 @@
 				margin-right: 10rpx;
 			}
 		}
-		
+
 		.notice-bar {
-			@extend  .flex;
+			@extend .flex;
 			width: 480rpx;
 			height: 68rpx;
 			flex-direction: row;
@@ -263,14 +266,14 @@
 	}
 
 	.wheel-boo0 {
-    height: calc(100vh - 870rpx);
-    overflow-y: scroll;
+		height: calc(100vh - 870rpx);
+		overflow-y: scroll;
 		background: white;
 		padding-top: 16rpx;
 		margin-bottom: 68rpx;
 
 		.wheel-boo1 {
-      overflow-y: scroll;
+			overflow-y: scroll;
 			padding: 0 32rpx;
 			height: 88rpx;
 			font-size: 28rpx;

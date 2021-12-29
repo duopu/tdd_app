@@ -160,6 +160,7 @@
 				this.$http.post('/b/customerrealauth/realAuth', params)
 					.then(res => {
 						this.$store.dispatch('queryAuthenticationInfo');
+						this.$store.dispatch('queryUserInfo');
 						uni.hideLoading();
 						uni.showToast({
 							title: '实名认证已成功',

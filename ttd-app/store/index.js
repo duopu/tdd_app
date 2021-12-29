@@ -9,6 +9,8 @@ const store = new Vuex.Store({
 	state: {
 		// 用户信息
 		user: {},
+		// token信息
+		token:'',
 		// 申请承接方申请信息
 		approveDetail: {},
 		// 实名认证信息
@@ -17,6 +19,9 @@ const store = new Vuex.Store({
 	mutations: {
 		setUser(state, user) {
 			state.user = user;
+		},
+		setToken(state,token){
+			state.token = token;
 		},
 		setApproveDetail(state, detail) {
 			state.approveDetail = detail
@@ -50,8 +55,7 @@ const store = new Vuex.Store({
 			state
 		}) {
 			http.post('/b/customer/query').then(res => {
-				console.log('+++++++++',state.user);
-				commit('setUser', {...state.user,masterWorkFlag:res.masterWorkFlag});
+				commit('setUser', {...res,token:state.user.token});
 			})
 		}
 	}

@@ -9,11 +9,11 @@
 			<!-- 基本信息 -->
 			<view class="title flex-center-start">基本信息</view>
 			<view class="white">
-				<custom-input-row label-text="姓名" :required="true">
+				<custom-input-row label-text="姓名">
 					<input class="input" placeholder-class="input-placeholder" type="text" placeholder="请输入姓名"
-						:value="name" @input="nameChange" :disabled="authentication" />
+						:value="name" @input="nameChange" :disabled="true" />
 				</custom-input-row>
-				<custom-input-row label-text="手机号码" :required="true">
+				<custom-input-row label-text="手机号码" >
 					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="number"
 						placeholder="请输入手机号码" :value="phone"  :disabled="true" />
 				</custom-input-row>
@@ -21,9 +21,9 @@
 					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="number"
 						placeholder="请输入备用手机号码" :value="contactPhone" @input="contactPhoneChange"  />
 				</custom-input-row>
-				<custom-input-row label-text="身份证" :required="true">
+				<custom-input-row label-text="身份证" >
 					<input always-embed="true" class="input" placeholder-class="input-placeholder" type="idcard"
-						placeholder="请输入身份证号" :value="idCard" @input="idCardChange" :disabled="authentication" />
+						placeholder="请输入身份证号" :value="idCard" @input="idCardChange" :disabled="true" />
 				</custom-input-row>
 			</view>
 			<!-- 简介 -->
@@ -116,10 +116,10 @@
 		},
 		data() {
 			return {
-				name: '',
-				phone: '',
+				// name: '',
+				// phone: '',
 				contactPhone:'',
-				idCard: '',
+				// idCard: '',
 				remark: '',
 				// 技能列表
 				skillData: [],
@@ -137,11 +137,20 @@
 			approveDetail() {
 				return this.$store.state.approveDetail || {};
 			},
-			authentication() {
-				return this.$store.state.authentication.state == 1;
+			name(){
+				console.log('啊大神大所大所',this.$store.state.user);
+				return this.$store.state.user.name
+			},
+			phone(){
+				return this.$store.state.user.phone
+			},
+			idCard(){
+				return this.$store.state.user.idCard
 			}
 		},
 		onReady() {
+			console.log('啊大神大所大所',this.$store.state.user);
+			
 			this.recoveryInfoStorage()
 		},
 		methods: {
@@ -215,11 +224,7 @@
 			},
 			// 提交申请
 			submitApply() {
-				if (!this.name) {
-					this.$tool.showToast('请输入姓名');
-				} else if (!this.idCard || this.idCard.length !== 18) {
-					this.$tool.showToast('请输入正确的身份证号');
-				} else if (this.skillData.length == 0 && this.userroleData.length == 0 && this.toolData.length == 0) {
+				if (this.skillData.length == 0 && this.userroleData.length == 0 && this.toolData.length == 0) {
 					this.$tool.showToast('请输入从业信息');
 				} else {
 					const param = {
@@ -308,12 +313,8 @@
 					key: config.storageKeys.applyInfoStorage,
 					success: (res) => {
 						console.log('从本地拉出信息成功 ', res);
-
 						const data = res.data
-						this.name = data.name;
-						this.phone = data.phone;
 						this.contactPhone = data.contactPhone;
-						this.idCard = data.idCard;
 						this.remark = data.remark;
 						this.skillData = data.skillData;
 						this.userroleData = data.userroleData;
@@ -323,10 +324,7 @@
 					fail: () => {
 						console.log('从本地拉出信息失败 ', this.approveDetail);
 						if (this.approveDetail.id) {
-							this.name = this.approveDetail.name;
-							this.phone = this.approveDetail.phone;
 							this.contactPhone = this.approveDetail.contactPhone;
-							this.idCard = this.approveDetail.idCard;
 							this.remark = this.approveDetail.remark;
 							if (this.approveDetail.skillApplyList) {
 								this.skillData = this.approveDetail.skillApplyList.map(s => {
@@ -365,10 +363,6 @@
 									}
 								})
 							}
-						} else {
-							const user = this.$store.state.user;
-							this.name = user.name;
-							this.phone = user.phone;
 						}
 					}
 				})
