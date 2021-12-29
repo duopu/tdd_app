@@ -151,6 +151,7 @@ import CornerMark from "../../receive-order/component/cornerMark";
 import ListEmpty from "./listEmpty";
 import ModalBox from "../choosePrice/modalBox";
 import AddRemark from "../../receive-order/component/addRemark";
+import dayjs from 'dayjs'
 
 export default {
   components: { AddRemark, ModalBox, ListEmpty, CornerMark, StateTabList, BackContainer },
@@ -225,8 +226,8 @@ export default {
       })
     },
     getCountDownDay(time, type) {
-      const now = new Date().getTime();
-      const end = new Date(time).getTime();
+      const now = dayjs().valueOf();
+      const end = dayjs(time).valueOf();
       // 时间差
       const leftTime = end - now;
       if (leftTime <= 0) return '-';
@@ -234,11 +235,14 @@ export default {
       if (type == 'day') {
         return Math.floor(leftTime / 1000 / 60 / 60 / 24);
       } else if (type == 'hour') {
-        return Math.floor(leftTime / 1000 / 60 / 60 % 24);
+				const hour = Math.floor(leftTime / 1000 / 60 / 60 % 24);
+        return hour.toString().length == 2 ? hour : `0${hour}`;
       } else if (type == 'minute') {
-        return Math.floor(leftTime / 1000 / 60 % 60);
+				const minute = Math.floor(leftTime / 1000 / 60 % 60);
+        return minute.toString().length == 2 ? minute : `0${minute}`;
       } else if (type == 'second') {
-        return Math.floor(leftTime / 1000 % 60);
+        const second = Math.floor(leftTime / 1000 % 60);
+				return second.toString().length == 2 ? second : `0${second}`;
       }
       return '';
     },

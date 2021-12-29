@@ -151,7 +151,6 @@ export default {
 	},
 	onReady() {
 		this.queryIntegralInfo();
-		this.queryIntegralConfig();
 	},
   methods: {
 		queryOrderInfo() {
@@ -161,6 +160,7 @@ export default {
 				if ((res.payAmount || 0) > 2000000) {
 					this.payList[1].show = true;
 				}
+				this.queryIntegralConfig();
 			})
 		},
 		queryIntegralInfo() {
@@ -172,7 +172,7 @@ export default {
 		queryIntegralConfig() {
 			this.$http.post('/b/systemconfig/queryPlatformIntegralConf', { }, true)
 			.then(res => {
-			  this.integralUseMax = res.consumerDeductPercent;
+			  this.integralUseMax = this.order.payAmount * res.consumerDeductPercent / 100;
 			})
 		},
     change(data) {

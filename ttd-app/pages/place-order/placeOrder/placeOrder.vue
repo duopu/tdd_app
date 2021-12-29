@@ -329,9 +329,9 @@
 					});
 					return false;
 				}
-				const now = dayjs(new Date());
-				const end = dayjs(quoteEnd);
-				if (now.valueOf() >= end.valueOf()) {
+				const now = dayjs().valueOf();
+				const end = dayjs(quoteEnd).valueOf();
+				if (now >= end) {
 					uni.showToast({
 						title: '报价周期不能早于今天',
 						icon: 'none'
