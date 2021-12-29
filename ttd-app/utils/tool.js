@@ -90,6 +90,21 @@ const actionForAuth = (action) => {
 	}
 }
 
+// 需要承接方资质，在这里过一下
+const masterWorker = (action)=>{
+	const user = store.state.user;
+	console.log(user);
+	if (user.masterWorkFlag) {
+		if (action) action();
+	} else {
+		showModal('提示', '此操作需要注册承接方信息', () => {
+			uni.navigateTo({
+				url: '/pages/main/apply/apply'
+			})
+		}, '去注册')
+	}
+}
+
 // 订单
 // 订单类型
 const orderType = (type) => {
@@ -151,4 +166,5 @@ export default {
 	actionForAuth,
 	orderType,
 	orderState,
+	masterWorker
 }

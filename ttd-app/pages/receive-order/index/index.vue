@@ -61,9 +61,9 @@
 		</view>
 
 		<edit-team ref="editTeam" btnText="创建" @onSave="createTeam" />
-		
-<!-- 协议弹层 -->
-		<agreement-modal ref="agreementModal" ></agreement-modal>
+
+		<!-- 协议弹层 -->
+		<agreement-modal ref="agreementModal"></agreement-modal>
 	</view>
 </template>
 <script>
@@ -169,55 +169,66 @@
 			},
 			toOrderList(state) {
 				this.$tool.actionForAuth(() => {
-					uni.navigateTo({
-						url: `/pages/place-order/orderList/orderList?isPlaceOrder=0&state=${state}`,
+					this.$tool.masterWorker(() => {
+						uni.navigateTo({
+							url: `/pages/place-order/orderList/orderList?isPlaceOrder=0&state=${state}`,
+						})
 					})
 				});
 			},
 			showCreateTeam() {
-				this.$refs.editTeam.show();
+				this.$tool.actionForAuth(() => {
+					this.$tool.masterWorker(() => {
+						this.$refs.editTeam.show();
+					})
+				});
 			},
 			createTeam(teamLogo, teamName, teamIntroduce) {
-				this.$tool.actionForAuth(() => {
-					if (!teamName) {
+
+				if (!teamName) {
+					uni.showToast({
+						title: '请输入团队名称',
+						icon: 'none'
+					});
+					return;
+				}
+				if (!teamIntroduce) {
+					uni.showToast({
+						title: '请输入团队介绍',
+						icon: 'none'
+					});
+					return;
+				}
+				const params = {
+					teamLogo: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com:443/public%2F2021%2F12%2F08%2F01%2F39%2FBN6YVGX89ULVUL388987718092178.jpeg',
+					teamName,
+					teamIntroduce,
+				}
+				this.$http.post('/b/teaminfo/add', params, true)
+					.then(res => {
 						uni.showToast({
-							title: '请输入团队名称',
-							icon: 'none'
+							title: '创建成功'
 						});
-						return;
-					}
-					if (!teamIntroduce) {
-						uni.showToast({
-							title: '请输入团队介绍',
-							icon: 'none'
-						});
-						return;
-					}
-					const params = {
-						teamLogo: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com:443/public%2F2021%2F12%2F08%2F01%2F39%2FBN6YVGX89ULVUL388987718092178.jpeg',
-						teamName,
-						teamIntroduce,
-					}
-					this.$http.post('/b/teaminfo/add', params, true)
-						.then(res => {
-							uni.showToast({
-								title: '创建成功'
-							});
-							this.queryMyTeamList();
-						})
-				});
+						this.queryMyTeamList();
+					})
 			},
 			toTeamDetail(team) {
 				this.$tool.actionForAuth(() => {
-					uni.navigateTo({
-						url: `/pages/receive-order/myTeam/myTeam?id=${team.id}`
+					this.$tool.masterWorker(() => {
+						uni.navigateTo({
+							url: `/pages/receive-order/myTeam/myTeam?id=${team.id}`
+						})
 					})
 				});
 			},
 			toSet() {
-				uni.navigateTo({
-					url: `/pages/receive-order/orderToSet/orderToSet`
-				})
+				this.$tool.actionForAuth(() => {
+					this.$tool.masterWorker(() => {
+						uni.navigateTo({
+							url: `/pages/receive-order/orderToSet/orderToSet`
+						})
+					})
+				});
 			}
 		}
 	}

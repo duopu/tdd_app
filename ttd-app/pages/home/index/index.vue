@@ -18,7 +18,7 @@
 		<!-- 滚动 单个 -->
 		<view class="home-single">
 			<view class="home-item-box">
-				<view class="home-item" v-for="(item, subIndex) in itemList" :key="subIndex">
+				<view class="home-item" v-for="(item, subIndex) in itemList" :key="subIndex" @click="onItemClick(item)">
 					<image class="home-item-img" :src="item.icon" />
 					<view class="home-item-text">{{ item.name }}</view>
 				</view>
@@ -284,47 +284,11 @@
 			// item 点击事件
 			onItemClick(item) {
 				this.$tool.actionForLogin(() => {
-					const user = this.$store.state.user;
-					if (user.masterWorkFlag) {
-						this.$tool.showToast('火速开发中，敬请期待');
-					} else {
-						let tipText = '下单功能内测中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！';
-						let navUrl = '/pages/main/apply/apply';
-						const approveDetail = this.$store.state.approveDetail;
-						const approveState = approveDetail.approveState;
-						switch (approveState) {
-							case -1:
-								tipText = '下单功能内测中，请您稍等；接单方先完善信息，订单快马加鞭向您赶来！';
-								navUrl = '/pages/main/apply/apply';
-								break;
-							case 0:
-								tipText = '审核中（一般1至3个工作日）请您等待，谢谢！';
-								navUrl = '';
-								break;
-							case 1:
-								tipText = '审核通过，你可以开始接单了！如要添加修改已申请信息，可以点修改后再提交';
-								navUrl = '/pages/main/apply/apply';
-								break;
-							case 2:
-								tipText = `审核被退回！有需要您修改的信息，请修改后再提交，谢谢！拒绝理由：${approveDetail.refusalReason}`;
-								navUrl = '/pages/main/apply/apply';
-								break;
-						}
-						if (approveState != 1) {
-							this.$tool.showModal('提示', tipText, () => {
-								if (navUrl) {
-									uni.navigateTo({
-										url: navUrl
-									});
-								}
-							});
-						} else {
-							uni.navigateTo({
-								url: `/pages/place-order/placeOrder/placeOrder?orderType=${item.type}`,
-							})
-						}
-					}
-					console.log('eee');
+					this.$tool.actionForAuth(()=>{
+						uni.navigateTo({
+							url: `/pages/place-order/placeOrder/placeOrder?orderType=${item.type}`,
+						})
+					})
 				});
 			},
 			toMessage() {
