@@ -24,9 +24,11 @@
 						placeholder="可选输入" placeholder-class="input-placeholder" />
 				</view>
 
-				<my-choose-time v-model="quoteTime" title="报价周期" format="YYYY-MM-DD HH:mm:ss" @change="(time) => onTimeChange(time, 1)" />
+				<my-choose-time v-model="quoteTime" title="报价周期" format="YYYY-MM-DD HH:mm:ss"
+					@change="(time) => onTimeChange(time, 1)" />
 
-				<my-choose-time v-model="workTime" title="工作周期" format="YYYY-MM-DD HH:mm:ss" @change="(time) => onTimeChange(time, 2)" />
+				<my-choose-time v-model="workTime" title="工作周期" format="YYYY-MM-DD HH:mm:ss"
+					@change="(time) => onTimeChange(time, 2)" />
 
 				<checkd-item :value="invoiceType" @change="change" />
 
@@ -56,14 +58,9 @@
 		<view class="require-box">
 			<member-title title="工作需求：" right-text="添加工作" @add="toAddWorkPage" />
 			<view class="require-white">
-				<offer-content-card v-for="(i, index) in orderItemList" :key="index"
-				  right-type="0"
-					:title="getItemTitle(i)"
-					:specItem="getSpecList(i)"
-					:image="itemImage"
-					:show-last-border-bottom="index < (orderItemList.length -1)"
-					@onClick="toEditWorkPage(index, i)"
-				/>
+				<offer-content-card v-for="(i, index) in orderItemList" :key="index" right-type="0"
+					:title="getItemTitle(i)" :specItem="getSpecList(i)" :image="itemImage"
+					:show-last-border-bottom="index < (orderItemList.length -1)" @onClick="toEditWorkPage(index, i)" />
 			</view>
 		</view>
 
@@ -80,7 +77,7 @@
 			</view>
 		</view>
 
-    <bottom-height />
+		<bottom-height />
 
 		<iphonex-bottom :z-index="99">
 			<big-btn @click="submitOrder" />
@@ -99,12 +96,12 @@
 	import MyChooseTime from "./myChooseTime";
 	import AddRemark from "../../receive-order/component/addRemark";
 	import dayjs from 'dayjs';
-  import BottomHeight from "../../mine/realNameAuth/bottomHeight";
+	import BottomHeight from "../../mine/realNameAuth/bottomHeight";
 
 	export default {
 		name: 'placeOrder',
 		components: {
-      BottomHeight,
+			BottomHeight,
 			AddRemark,
 			MyChooseTime,
 			OfferContentCard,
@@ -201,7 +198,7 @@
 					.then(res => {
 						const item = res.filter((i) => i.type == this.orderType)[0];
 						this.itemImage = item ? item.icon : '';
-						console.log('itemImage ',this.itemImage);
+						console.log('itemImage ', this.itemImage);
 					})
 			},
 			orderModeChange(e) {
@@ -356,46 +353,56 @@
 					return false;
 				}
 
+				if (this.distance == 0) {
+					uni.showToast({
+						title: '接单距离不能为0',
+						icon: 'none'
+					});
+					return false;
+				}
+
 				return true;
 			},
 			submitOrder() {
 				if (!this.checkParams()) return;
 
-				const params = {
-					appointPhone: this.appointPhone ? this.appointPhone : undefined,
-					distance: this.distance ? this.distance : undefined,
-					invoiceType: this.invoiceType,
-					orderAddress: this.orderAddress,
-					orderItemList: this.orderItemList,
-					orderMode: this.orderMode,
-					orderType: this.orderType,
-					quotationEnd: this.quoteTime[1],
-					quotationStart: this.quoteTime[0],
-					remark: this.remark,
-					workEnd: this.workTime[1],
-					workStart: this.workTime[0],
-				}
-				this.$http
-					.post('/b/ordermaster/add', params, true)
-					.then(res => {
-						uni.showModal({
-							title: '提示',
-							content: '需求发布成功,等待承接方报价',
-							confirmText: '查看订单',
-							cancelText: '返回首页',
-							success: (res1) => {
-								if (res1.confirm) {
-									uni.navigateTo({
-										url: `/pages/place-order/orderDetail/orderDetail?id=${res.id}&isPlaceOrder=1`,
-									})
-								} else {
-									uni.switchTab({
-										url: '/pages/home/index/index'
-									});
+				this.$tool.actionForAuth(() => {
+					const params = {
+						appointPhone: this.appointPhone ? this.appointPhone : undefined,
+						distance: this.distance ? this.distance : undefined,
+						invoiceType: this.invoiceType,
+						orderAddress: this.orderAddress,
+						orderItemList: this.orderItemList,
+						orderMode: this.orderMode,
+						orderType: this.orderType,
+						quotationEnd: this.quoteTime[1],
+						quotationStart: this.quoteTime[0],
+						remark: this.remark,
+						workEnd: this.workTime[1],
+						workStart: this.workTime[0],
+					}
+					this.$http
+						.post('/b/ordermaster/add', params, true)
+						.then(res => {
+							uni.showModal({
+								title: '提示',
+								content: '需求发布成功,等待承接方报价',
+								confirmText: '查看订单',
+								cancelText: '返回首页',
+								success: (res1) => {
+									if (res1.confirm) {
+										uni.navigateTo({
+											url: `/pages/place-order/orderDetail/orderDetail?id=${res.id}&isPlaceOrder=1`,
+										})
+									} else {
+										uni.switchTab({
+											url: '/pages/home/index/index'
+										});
+									}
 								}
-							}
-						})
-					});
+							})
+						});
+				})
 			},
 		}
 	}

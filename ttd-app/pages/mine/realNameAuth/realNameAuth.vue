@@ -35,20 +35,19 @@
 							</view>
 						</view>
 					</view>
-
-
-          <view class="rn-end-text">上传头像照片</view>
-          <view class="rn-sf-rl" @click="facePhoto">
-            <image :src="userHeader" class="rn-end-img11" mode="aspectFit" />
-            <!--上传后图片的样式  放开判断条件 填充图片链接 即可-->
-            <image v-if="faceImage" :src="faceImage" class="rn-sf-rlwww" />
-          </view>
+					
+					<view class="rn-end-text">上传头像照片</view>
+					<view class="rn-sf-rl" @click="facePhoto">
+						<image :src="userHeader" class="rn-end-img11" mode="aspectFit" />
+						<!--上传后图片的样式  放开判断条件 填充图片链接 即可-->
+						<image v-if="faceImage" :src="faceImage" class="rn-sf-rlwww" />
+					</view>
 				</view>
 			</view>
 
 		</back-container>
 
-    <bottom-height />
+		<bottom-height />
 
 		<iphonex-bottom v-if="state != 1">
 			<big-btn buttonText="提交认证" @click="commitAuth" />
@@ -60,12 +59,12 @@
 	import BackContainer from "../addressManage/component/backContainer";
 	import IphonexBottom from "../addressManage/component/iphonexBottom";
 	import BigBtn from "../addressManage/component/bigBtn";
-  import BottomHeight from "./bottomHeight";
+	import BottomHeight from "./bottomHeight";
 
 	export default {
 		name: "realNameAuth",
 		components: {
-      BottomHeight,
+			BottomHeight,
 			BigBtn,
 			IphonexBottom,
 			BackContainer
@@ -73,7 +72,7 @@
 		data() {
 			return {
 				takePhotoIcon: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/take-photo-icon.svg',
-				userHeader:'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/user_header.png',
+				userHeader: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/user_header.png',
 				faceImage: '',
 				faceIdcardImage: '',
 				backIdcardImage: '',
@@ -137,15 +136,24 @@
 			},
 			commitAuth() {
 				if (!this.faceIdcardImage) {
-					uni.showToast({ title: '请上传身份证人像面', icon: 'none' });
+					uni.showToast({
+						title: '请上传身份证人像面',
+						icon: 'none'
+					});
 					return;
 				}
 				if (!this.backIdcardImage) {
-					uni.showToast({ title: '请上传身份证国辉面', icon: 'none' });
+					uni.showToast({
+						title: '请上传身份证国辉面',
+						icon: 'none'
+					});
 					return;
 				}
 				if (!this.faceImage) {
-					uni.showToast({ title: '请上传人像照片', icon: 'none' });
+					uni.showToast({
+						title: '请上传人像照片',
+						icon: 'none'
+					});
 					return;
 				}
 				const params = {
@@ -261,29 +269,29 @@
 		}
 	}
 
-  .rn-sf-rl {
-    margin: 0 auto;
-    width: 236rpx;
-    height: 330rpx;
-    background: #F3F4F5;
-    border-radius: 16rpx;
-    position: relative;
-    opacity: 0.8;
-    @include flexCenter;
+	.rn-sf-rl {
+		margin: 0 auto;
+		width: 236rpx;
+		height: 330rpx;
+		background: #F3F4F5;
+		border-radius: 16rpx;
+		position: relative;
+		opacity: 0.8;
+		@include flexCenter;
 
-    .rn-sf-rlwww {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-    }
+		.rn-sf-rlwww {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+		}
 
-    .rn-end-img11 {
-      width: 236rpx;
-      height: 330rpx;
-    }
-  }
+		.rn-end-img11 {
+			width: 236rpx;
+			height: 330rpx;
+		}
+	}
 </style>
 
 <style lang="scss">
