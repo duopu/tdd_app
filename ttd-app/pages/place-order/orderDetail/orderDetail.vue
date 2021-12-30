@@ -38,6 +38,27 @@
 			  <uni-icons class="oc-arrow" type="arrowright" size="20" color="#BDBDBD" />
 			</view>
     </view>
+		
+		<view class="offer-9" v-if="order.receiverId">
+			<view class="offer-91" >
+				<view class="offer-91-text">承接方</view>
+				<view class="offer-91-icon" :class="{
+					'offer-91-icon-yellow': order.receiverType == 1
+				}">{{ order.receiverType == 1 ? '个人' : '团队' }}</view>
+			</view>
+			<view class="offer-92">
+				<view class="offer-92-item" v-if="order.receiverType == 1" @click="toPersonDetail(order.receiverId)">
+				  <image v-if="order.receiverHeadImgUrl" class="offer-92-img" :src="order.receiverHeadImgUrl" />
+				  <image v-else class="offer-92-img" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' />
+				  <view class="offer-92-name">{{ order.receiverUserName }}</view>
+				</view>
+				<view class="offer-92-item" v-else v-for="(i, index) in memberList" :key="i.userId" @click="toPersonDetail(i.userId)">
+				  <image v-if="i.headImgUrl" class="offer-92-img" :src="i.headImgUrl" />
+				  <image v-else class="offer-92-img" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' />
+				  <view class="offer-92-name">{{ i.userName }}</view>
+				</view>
+			</view>
+		</view>
 
     <view class="order-dtl-6" @click="toQuestionPage">
       <text class="order-dtl-6t">咨询</text>
@@ -124,6 +145,7 @@ export default {
 			workList: [],
 			showWorkList: [],
 			showWorkMore: false,
+			memberList: [], // 承接方团队人员
 			commentList: [], // 评价
     };
   },
@@ -133,6 +155,7 @@ export default {
 			this.queryOrderInfo();
 			this.queryWorkList();
 			this.queryCommentList();
+			this.queryMemberList();
 		}
 		if (option.isPlaceOrder) {
 			this.isPlaceOrder = option.isPlaceOrder ==  '1';
@@ -160,6 +183,20 @@ export default {
 			  this.workList = res.orderItemList;
 				this.showWorkList = this.workList.slice(0, 5);
 				console.log('showWorkList ', this.showWorkList);
+			})
+		},
+		queryMemberList() {
+			this.$http.post('/b/ordermember/queryMemberListAndApplyInfo', { id: this.id }, true)
+			.then(res => {
+				this.memberList = (res.curtOrderMemberList || []).map((m) => {
+					return {
+						headImgUrl: m.headImgUrl,
+						userName: m.name,
+						phone: m.phone,
+						skills: m.skills,
+						userId: m.id,
+					}
+				});
 			})
 		},
 		queryCommentList() {
@@ -239,6 +276,12 @@ export default {
 			})
 		},
 		
+		// 查看承接方个人详情
+		toPersonDetail(userId) {
+			uni.navigateTo({
+				url: `/pages/receive-order/peopleDetail/peopleDetail?id=${userId}`
+			})
+		},
 		// 人员变更记录
 		toTeamChangeList() {
 			uni.navigateTo({
@@ -452,6 +495,69 @@ export default {
     font-weight: 400;
     color: #828282;
   }
+}
+
+.offer-9 {
+	background-color: white;
+	margin: 32rpx 0;
+	
+	.offer-91 {
+		height: 80rpx;
+		padding: 0 32rpx;
+		@include flexBetween;
+		
+		.offer-91-text {
+			font-size: 28rpx;
+			font-family: PingFang SC-Regular, PingFang SC;
+			font-weight: 400;
+		}
+		
+		.offer-91-icon {
+			padding: 0 12rpx;
+			height: 40rpx;
+			background: #5AC8FA;
+			border-radius: 8rpx;
+			font-size: 24rpx;
+			font-family: PingFang SC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #FFFFFF;
+			@include flexCenter;
+		}
+		.offer-91-icon-yellow {
+			background-color: #FF9500;
+		}
+	}
+
+  .offer-92 {
+		padding: 32rpx;
+		display: flex;
+		flex-flow: wrap row;
+		
+		.offer-92-item {
+		  margin-right: 58rpx;
+		  width: 127rpx;
+		
+		  &:nth-of-type(4n + 4) {
+		    margin: 0;
+		  }
+		
+		  .offer-92-img {
+		    width: 127rpx;
+		    height: 127rpx;
+		    border-radius: 8rpx;
+		  }
+		
+		  .offer-92-name {
+		    font-size: 28rpx;
+		    font-family: PingFang SC-Regular, PingFang SC;
+		    font-weight: 400;
+		    text-align: center;
+		    margin-top: 16rpx;
+		    color: #323232;
+		    line-height: 36rpx;
+		  }
+		}
+	}
 }
 
 .order-dtl-team {
