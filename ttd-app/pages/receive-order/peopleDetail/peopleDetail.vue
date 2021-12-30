@@ -24,8 +24,7 @@
 			<view class="pd-header-phone pd-header-phone1">
 				<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/linkPhoneIcon.svg"
 					class="pd-header-edit-icon" />
-				<text class="pd-header-phonenum">手机号：{{ phone.slice(0, 3) }} {{ phone.slice(3, 7) }}
-					{{ phone.slice(7, 11) }}</text>
+				<text class="pd-header-phonenum">手机号：{{ phone.slice(0, 3) }} {{ phone.slice(3, 7) }} {{ phone.slice(7, 11) }}</text>
 			</view>
 
 			<view class="pd-header-phone">
@@ -240,7 +239,7 @@
 
 		.pd-header-name {
 			font-size: 52rpx;
-			margin-top: 60rpx;
+			margin-top: 120rpx;
 			font-family: PingFang SC-Medium, PingFang SC;
 			font-weight: 500;
 			color: #2C3580;
