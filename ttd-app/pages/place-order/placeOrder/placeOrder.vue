@@ -78,7 +78,7 @@
 		<bottom-height />
 
 		<iphonex-bottom>
-			<big-btn @click="submitOrder" />
+			<big-btn @click="submitCheck" />
 		</iphonex-bottom>
 	</view>
 </template>
@@ -375,46 +375,59 @@
 
 				return true;
 			},
-			submitOrder() {
-				if (!this.checkParams()) return;
-
+			submitCheck() {
+				
 				this.$tool.actionForAuth(() => {
-					const params = {
-						appointPhone: this.appointPhone ? this.appointPhone : undefined,
-						distance: this.distance ? this.distance : undefined,
-						invoiceType: this.invoiceType,
-						orderAddress: this.orderAddress,
-						orderItemList: this.orderItemList,
-						orderMode: this.orderMode,
-						orderType: this.orderType,
-						quotationEnd: this.quoteTime[1],
-						quotationStart: this.quoteTime[0],
-						remark: this.remark,
-						workEnd: this.workTime[1],
-						workStart: this.workTime[0],
-					}
-					this.$http
-						.post('/b/ordermaster/add', params, true)
-						.then(res => {
-							uni.showModal({
-								title: '提示',
-								content: '需求发布成功,等待承接方报价',
-								confirmText: '查看订单',
-								cancelText: '返回首页',
-								success: (res1) => {
-									if (res1.confirm) {
-										uni.navigateTo({
-											url: `/pages/place-order/orderDetail/orderDetail?id=${res.id}&isPlaceOrder=1`,
-										})
-									} else {
-										uni.switchTab({
-											url: '/pages/home/index/index'
-										});
-									}
+					
+					if (!this.checkParams()) return;
+					
+					uni.showModal({
+						title: '提示',
+						content: '您确定发布订单吗?',
+						success: (res) => {
+							if (res.confirm) {
+								this.submitOrder();
+							}
+						}
+					})
+				});
+			},
+			submitOrder() {
+				const params = {
+					appointPhone: this.appointPhone ? this.appointPhone : undefined,
+					distance: this.distance ? this.distance : undefined,
+					invoiceType: this.invoiceType,
+					orderAddress: this.orderAddress,
+					orderItemList: this.orderItemList,
+					orderMode: this.orderMode,
+					orderType: this.orderType,
+					quotationEnd: this.quoteTime[1],
+					quotationStart: this.quoteTime[0],
+					remark: this.remark,
+					workEnd: this.workTime[1],
+					workStart: this.workTime[0],
+				}
+				this.$http
+					.post('/b/ordermaster/add', params, true)
+					.then(res => {
+						uni.showModal({
+							title: '提示',
+							content: '需求发布成功,等待承接方报价',
+							confirmText: '查看订单',
+							cancelText: '返回首页',
+							success: (res1) => {
+								if (res1.confirm) {
+									uni.navigateTo({
+										url: `/pages/place-order/orderDetail/orderDetail?id=${res.id}&isPlaceOrder=1`,
+									})
+								} else {
+									uni.switchTab({
+										url: '/pages/home/index/index'
+									});
 								}
-							})
-						});
-				})
+							}
+						})
+					});
 			},
 		}
 	}
