@@ -51,7 +51,7 @@
           <text class="chp-b31">总金额：</text>
           <my-price :price="showCount(4)" scale="0.9" />
           <view class="chp-b32 chp-b321" @click="cancelChoose">取消选价</view>
-          <view class="chp-b32" @click="confirmPrice">确认选价</view>
+          <view class="chp-b32" @click="onConfirm">确认选价</view>
         </view>
       </view>
     </iphonex-bottom>
@@ -171,6 +171,10 @@ export default {
 			uni.navigateBack({});
 		},
 		onConfirm() {
+			if (this.selectList.length == 0) {
+				uni.showToast({ title: '请选择报价', icon: 'none' });
+				return;
+			}
 			const unQuote = this.showCount(2);
 			if (unQuote > 0) {
 				this.$refs.choosePriceModal.show();
