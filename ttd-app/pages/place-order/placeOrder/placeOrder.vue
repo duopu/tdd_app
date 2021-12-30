@@ -24,11 +24,9 @@
 						placeholder="可选输入" placeholder-class="input-placeholder" />
 				</view>
 
-				<my-choose-time v-model="quoteTime" title="报价周期" format="YYYY-MM-DD HH:mm:ss"
-					@change="(time) => onTimeChange(time, 1)" />
+				<my-choose-time v-model="quoteTime" title="报价周期" format="YYYY-MM-DD HH:mm" placeholder="请选择报价周期" />
 
-				<my-choose-time v-model="workTime" title="工作周期" format="YYYY-MM-DD HH:mm:ss"
-					@change="(time) => onTimeChange(time, 2)" />
+				<my-choose-time v-model="workTime" title="工作周期" format="YYYY-MM-DD HH:mm" placeholder="请选择工作周期" />
 
 				<checkd-item :value="invoiceType" @change="change" />
 
@@ -79,7 +77,7 @@
 
 		<bottom-height />
 
-		<iphonex-bottom :z-index="99">
+		<iphonex-bottom>
 			<big-btn @click="submitOrder" />
 		</iphonex-bottom>
 	</view>
@@ -217,9 +215,6 @@
 					this.distance = text;
 				}
 			},
-			onTimeChange(time, id) {
-				console.log('time ', time, id);
-			},
 			remarkChange(value) {
 				this.remark = value;
 			},
@@ -338,6 +333,23 @@
 					});
 					return false;
 				}
+				const workStart = this.workTime[0];
+				if (!workStart) {
+					uni.showToast({
+						title: '请选择工作周期',
+						icon: 'none'
+					});
+					return false;
+				}
+				const workStartValue = dayjs(workStart).valueOf();
+				if(workStartValue < end){
+					uni.showToast({
+						title: '工作开始时间不能早于报价时间',
+						icon: 'none'
+					});
+					return false;
+				}
+				
 				if (!this.orderAddress.name) {
 					uni.showToast({
 						title: '请选择地址',

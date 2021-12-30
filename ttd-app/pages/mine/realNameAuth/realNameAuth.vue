@@ -36,7 +36,7 @@
 						</view>
 					</view>
 					
-					<view class="rn-end-text">上传头像照片</view>
+					<view class="rn-end-text">需本人胸部以上免冠照，五官清晰可见</view>
 					<view class="rn-sf-rl" @click="facePhoto">
 						<image :src="userHeader" class="rn-end-img11" mode="aspectFit" />
 						<!--上传后图片的样式  放开判断条件 填充图片链接 即可-->
@@ -229,7 +229,8 @@
 				font-family: PingFang SC-Regular, PingFang SC;
 				font-weight: 400;
 				color: #323335;
-				margin: 32rpx auto;
+				margin-top: 32rpx;
+				margin-bottom: 18rpx;
 				line-height: 32rpx;
 			}
 

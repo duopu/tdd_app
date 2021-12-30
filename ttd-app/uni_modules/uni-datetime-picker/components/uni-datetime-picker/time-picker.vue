@@ -826,7 +826,7 @@
 		right: 0px;
 		background-color: rgba(0, 0, 0, 0.4);
 		transition-duration: 0.3s;
-		z-index: 1998;
+		z-index: 998;
 	}
 
 	.uni-datetime-picker-popup {
@@ -845,7 +845,7 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		transition-duration: 0.3s;
-		z-index: 1999;
+		z-index: 999;
 	}
 
 	.fix-nvue-height {

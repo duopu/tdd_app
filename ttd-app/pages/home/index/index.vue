@@ -153,8 +153,8 @@
 						text: '人员'
 					},
 					{
-						image: '',
-						selectImage: '',
+						image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-12.svg',
+						selectImage: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-13.svg',
 						text: '软件'
 					}
 				],
@@ -280,7 +280,7 @@
 			},
 			// item 点击事件
 			onItemClick(item) {
-				this.$tool.actionForAuth(() => {
+				this.$tool.actionForLogin(() => {
 					uni.navigateTo({
 						url: `/pages/place-order/placeOrder/placeOrder?orderType=${item.type}`,
 					})

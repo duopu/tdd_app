@@ -613,7 +613,7 @@
 		transition-duration: 0.3s;
 		opacity: 0;
 		/* #ifndef APP-NVUE */
-		z-index: 199;
+		z-index: 99;
 		/* #endif */
 	}
 
@@ -630,7 +630,7 @@
 		transition-duration: 0.3s;
 		transform: translateY(460px);
 		/* #ifndef APP-NVUE */
-		z-index: 199;
+		z-index: 99;
 		/* #endif */
 	}
 
