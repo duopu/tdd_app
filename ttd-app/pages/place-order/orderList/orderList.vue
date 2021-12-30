@@ -200,17 +200,19 @@ export default {
 			this.queryOrderList();
 		},
 		loadMore() {
-			// this.$refs["list"].resetLoadMore();
+			// this.$refs["list"].resetLoadmore();
 			console.log('loadmore ');
 			if (this.isNoMore) return;
-			this.page = this.page + 1;
-			this.queryOrderList();
+			this.queryOrderList(true);
 		},
-    queryOrderList() {
+		resetLoadMore() {
+			this.$refs["list"].resetLoadmore();
+		},
+    queryOrderList(loadMore = false) {
       const url = this.isPlaceOrder ? '/b/ordermaster/queryPageList' : '/b/orderreceive/queryPageList';
       this.$http.post(url, {
         state: this.value,
-				pageNum: this.page,
+				pageNum: loadMore ? (this.page + 1) : this.page,
 				sortInfos: [{
 					field: 'addTime',
 					sort: 'desc',
@@ -218,8 +220,8 @@ export default {
       }, true)
           .then(res => {
             uni.stopPullDownRefresh();
-            this.orderList = res.dataList;
-						this,page = res.pageNum;
+            this.orderList = loadMore ? this.orderList.concat(res.dataList) : res.dataList;
+						this.page = res.pageNum;
 						this.isNoMore = res.dataList.length < res.pageSize;
           }).catch((e) => {
         uni.stopPullDownRefresh();
