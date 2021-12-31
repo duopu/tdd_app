@@ -1,5 +1,5 @@
 <template>
-  <view class="people-item-item">
+  <view class="people-item-item" @click="$emit('change')">
 
     <image v-if="person.headImgUrl" :src="person.headImgUrl" class="people-item-img" />
     <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png" class="people-item-img" />
@@ -11,11 +11,11 @@
           <text class="people-lkj-phone">{{ person.phone }}</text>
         </view>
         <view class="people-lkj-2">
-          <text class="people-lkj-2-item" v-for="i in tagList" :key="i">{{ i }}</text>
+          <text class="people-lkj-2-item" v-for="i in skillList" :key="i">{{ i }}</text>
         </view>
       </view>
-      <image v-if="checked" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxChecked.svg" class="people-item-right3" @click="change" />
-      <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxEmpty.svg" class="people-item-right3" @click="change" />
+      <image v-if="checked" src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxChecked.svg" class="people-item-right3" />
+      <image v-else src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/checkBoxEmpty.svg" class="people-item-right3" />
     </view>
 
   </view>
@@ -42,11 +42,15 @@ export default {
       default: true
     }
   },
-  methods: {
-    change() {
-      this.$emit('change')
-    }
-  }
+	computed: {
+		skillList() {
+			if (typeof this.person.skills == 'string') {
+				return (this.person.skills || '').split('、').slice(0, 3);
+			} else {
+				return (this.person.skills || []).slice(0, 3);
+			}
+		},
+	},
 }
 </script>
 <style scoped lang="scss">
@@ -92,6 +96,7 @@ export default {
       .people-lkj-2 {
         margin-top: 16rpx;
         display: flex;
+        flex-flow: wrap row;
 
         .people-lkj-2-item {
           padding: 0 8rpx;
@@ -103,7 +108,7 @@ export default {
           font-family: PingFang SC-Regular, PingFang SC;
           font-weight: 400;
           color: #4F4F4F;
-          margin-right: 8rpx;
+          margin: 0 8rpx 8rpx 0;
         }
       }
     }

@@ -15,7 +15,7 @@
 
     <view class="pc-02">
       <member-title title="变更人员" :showRight="!isPlaceOrder" right-text="选择人员" @add="selectPerson" />
-      <team-list-item v-for="i in changeList" :key="i.userId" :member="i" />
+      <team-list-item v-for="i in changeList" :key="i.userId" :member="i" :showDelete="false" />
     </view>
 
     <iphonex-bottom>
