@@ -53,12 +53,29 @@
 			</view>
 		</view>
 
-		<view class="require-box">
-			<member-title title="工作需求：" right-text="添加工作" @add="toAddWorkPage" />
-			<view class="require-white">
+		<view class="require-box dlFlex">
+			<view class="title dlFlex">工作需求</view>
+			<view class="empty-view dlFlex" v-if="orderItemList.length == 0" @click="toAddWorkPage">
+				<image class="empty-img"
+					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/default/noWork.png"
+					mode="aspectFit"></image>
+				<view class="dlFlex">
+					<view class="tipTitle">暂无工作需求</view>
+					<view class="tipDesc">可添加多个需求</view>
+				</view>
+			</view>
+			<view class="require-white" v-else>
 				<offer-content-card v-for="(i, index) in orderItemList" :key="index" right-type="0"
 					:title="getItemTitle(i)" :specItem="getSpecList(i)" :image="itemImage"
 					:show-last-border-bottom="index < (orderItemList.length -1)" @onClick="toEditWorkPage(index, i)" />
+			</view>
+
+			<view class="add-view dlFlex" @click="toAddWorkPage">
+				<image class="addImg"
+					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg"
+					mode="aspectFit"></image>
+				<view class="text">添加工作</view>
+				<uni-icons type="arrowright" size="20" color="#BDBDBD" />
 			</view>
 		</view>
 
@@ -342,14 +359,14 @@
 					return false;
 				}
 				const workStartValue = dayjs(workStart).valueOf();
-				if(workStartValue < end){
+				if (workStartValue < end) {
 					uni.showToast({
 						title: '工作开始时间不能早于报价时间',
 						icon: 'none'
 					});
 					return false;
 				}
-				
+
 				if (!this.orderAddress.name) {
 					uni.showToast({
 						title: '请选择地址',
@@ -376,11 +393,11 @@
 				return true;
 			},
 			submitCheck() {
-				
+
 				this.$tool.actionForAuth(() => {
-					
+
 					if (!this.checkParams()) return;
-					
+
 					uni.showModal({
 						title: '提示',
 						content: '您确定发布订单吗?',
@@ -538,16 +555,73 @@
 		}
 
 		.require-box {
-			margin: 16rpx 0 32rpx 0;
+			margin-top: 32rpx;
+			background-color: #FFFFFF;
+
+			.title {
+				height: 88rpx;
+				margin-left: 30rpx;
+				justify-content: center;
+				color: #333333;
+				font-size: 28rpx;
+				border-bottom: 1rpx solid #EDEDED;
+			}
+
+			.empty-view {
+				height: 224;
+				justify-content: center;
+				align-items: center;
+				flex-direction: row;
+				height: 224rpx;
+
+				.empty-img {
+					width: 96rpx;
+					height: 96rpx;
+				}
+
+				.tipTitle {
+					margin-left: 16rpx;
+					color: #333333;
+					font-size: 32rpx;
+				}
+
+				.tipDesc {
+					margin-left: 16rpx;
+					color: #bdbdbd;
+					font-size: 24rpx;
+					margin-top: 10rpx;
+				}
+			}
 
 			.require-white {
-				background-color: white;
-				padding-left: 32rpx;
+				margin-left: 30rpx;
+			}
+
+			.add-view {
+				margin-left: 30rpx;
+				padding-right: 30rpx;
+				height: 80rpx;
+				flex-direction: row;
+				align-items: center;
+				border-top: 1rpx solid #EDEDED;
+
+				.addImg {
+					width: 32rpx;
+					height: 32rpx;
+				}
+
+				.text {
+					font-size: 28rpx;
+					margin-left: 18rpx;
+					color: #3D49AB;
+					flex: 1;
+				}
 			}
 		}
 
 		.require-bbl {
 			//margin: 0 0 200rpx 0;
+			margin-top: 32rpx;
 			background-color: white;
 
 			.top-aline111 {
