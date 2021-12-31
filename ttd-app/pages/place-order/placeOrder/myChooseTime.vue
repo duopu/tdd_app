@@ -12,7 +12,7 @@
 		</view>
 
 		<uni-datetime-picker ref="dateRangePicker" class="choose-picker" :value="innerTime" :type="timeType"
-			:start="startTime" @change="changeTime" />
+			:start="startTime" @change="changeTime" :hide-second="true"/>
 	</view>
 </template>
 <script>

@@ -60,6 +60,15 @@
 		box-sizing: border-box;
 		overflow: hidden;
 	}
+	
+	.dlFlex{
+		display: flex;
+		box-sizing: border-box;
+		position: relative;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+	}
 
 	// flex
 	.flex {
