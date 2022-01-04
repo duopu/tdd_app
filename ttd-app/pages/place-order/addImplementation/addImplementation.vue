@@ -157,6 +157,10 @@
 				this.requireInfo = t;
 			},
 			onSubmit() {
+				if (!this.number) {
+					uni.showToast({ title: '请输入数量', icon: 'none' })
+					return;
+				}
 				if (!this.requireInfo) {
 					uni.showToast({ title: '请输入要求', icon: 'none' })
 					return;

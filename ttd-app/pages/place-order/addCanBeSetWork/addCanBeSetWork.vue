@@ -105,6 +105,10 @@ export default {
 			this.requireInfo = t;
 		},
     onSubmit() {
+			if (!this.number) {
+				uni.showToast({ title: '请输入面积', icon: 'none' })
+				return;
+			}
 			if (!this.requireInfo) {
 				uni.showToast({ title: '请输入要求', icon: 'none' })
 				return;
@@ -113,7 +117,6 @@ export default {
 				uni.showToast({ title: '请上传资料', icon: 'none' })
 				return;
 			}
-			
     	const work = Object.assign({}, this.$data);
     	console.log('work ', work);
     	const eventChannel = this.getOpenerEventChannel();
