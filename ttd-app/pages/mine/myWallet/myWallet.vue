@@ -149,13 +149,15 @@
 					})
 			},
 			toAdd() {
-				uni.navigateTo({ 
-					url: `/pages/mine/bankAccount/bankAccount`,
-					events: {
-						onAdd: () => {
-							this.showWithdraw();
+				this.$tool.actionForAuth(() => {
+					uni.navigateTo({
+						url: `/pages/mine/bankAccount/bankAccount`,
+						events: {
+							onAdd: () => {
+								this.showWithdraw();
+							}
 						}
-					}
+					})
 				})
 			},
 			selectBankCard() {
