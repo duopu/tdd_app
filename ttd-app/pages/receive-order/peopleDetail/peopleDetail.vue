@@ -162,6 +162,7 @@
 						this.$refs.updateHeader.hide();
 						uni.showToast({ title: '更新成功' });
 						this.queryPersonInfo();
+						this.$store.dispatch('queryUserInfo');
 					});
 			},
 		},
