@@ -157,6 +157,10 @@
 				this.requireInfo = t;
 			},
 			onSubmit() {
+				if (!this.requireInfo) {
+					uni.showToast({ title: '请输入要求', icon: 'none' })
+					return;
+				}
 				const work = Object.assign({}, this.$data);
 				console.log('work ', work);
 				const eventChannel = this.getOpenerEventChannel();
