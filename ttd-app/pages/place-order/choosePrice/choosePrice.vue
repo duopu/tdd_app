@@ -3,6 +3,9 @@
     <custom-navbar title="选价" />
 
     <back-container>
+      <template v-slot:headerSlot>
+        <view class="choose-tips">提示：您可以选择无重复报价项的多人报价</view>
+      </template>
 
       <view class="chp">
         <view class="chp-1" v-for="(item, index) in quoteList" :key="index" @click="toQuoteDetail(item)">
@@ -37,6 +40,8 @@
 
           <view class="cps-aline" />
         </view>
+
+        <list-empty v-if="!quoteList.length" />
       </view>
     </back-container>
 
@@ -85,10 +90,11 @@ import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import CornerMark from "../../receive-order/component/cornerMark";
 import ModalBox from "./modalBox";
 import CheckdItem from "../placeOrder/checkdItem";
+import ListEmpty from "../orderList/listEmpty";
 
 export default {
   name: "choosePrice",
-  components: { CheckdItem, ModalBox, CornerMark, IphonexBottom, UniIcons, MyPrice, MyStar, BackContainer },
+  components: { ListEmpty, CheckdItem, ModalBox, CornerMark, IphonexBottom, UniIcons, MyPrice, MyStar, BackContainer },
   data() {
     return {
 			id: '',
@@ -331,6 +337,14 @@ export default {
 
 .chp {
   margin-bottom: 300rpx;
+}
+
+.choose-tips {
+  padding: 32rpx;
+  color: rgba(256, 256, 256, .8);
+  font-size: 28rpx;
+  font-family: PingFang SC-Regular, PingFang SC;
+  font-weight: 400;
 }
 
 .chp-b1 {
