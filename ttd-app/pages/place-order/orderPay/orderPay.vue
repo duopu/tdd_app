@@ -135,9 +135,9 @@ export default {
       invoiceType: 1, // 发票类型 1专票 2普票
 			invoice: {},
       payList: [
-        { label: '银行支付', leftIcon: 'chat-filled', wayId: 9, show: true, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankCard.svg' },
+        { label: '银行支付（对公打款）', leftIcon: 'chat-filled', wayId: 9, show: true, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankCard.svg' },
         { label: '授信支付', leftIcon: 'chat', wayId: 10, show: false, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankPay.svg' },
-        { label: '线上支付', leftIcon: 'chatboxes', wayId: 12, show: true, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankUnderline.svg' },
+        { label: '微信支付', leftIcon: 'chatboxes', wayId: 12, show: true, picPath: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/bankUnderline.svg' },
       ],
       payWay: 12,
 			bankCard: '',

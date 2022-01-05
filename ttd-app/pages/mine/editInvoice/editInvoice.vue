@@ -4,7 +4,13 @@
     <custom-navbar title="添加发票抬头" />
 
     <back-container>
-      <view class="edit-in-addr">
+      <template v-slot:headerSlot>
+        <blue-tab :active-key="activeKey" :list="tabList" @change="change" />
+      </template>
+
+
+      <!--企业-->
+      <view class="edit-in-addr" v-if="activeKey === '0'">
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">公司名称</view>
           <input class="edit-in-ac-midle input-sty" :value="name" @input="(e) => onInput(e, 'name')" placeholder="请务必输入" placeholder-class="input-placeholder" />
@@ -47,8 +53,32 @@
             </view>
           </view>
         </view>
-
       </view>
+
+
+      <!--个人-->
+      <view class="edit-in-addr" v-if="activeKey === '1'">
+        <view class="edit-in-ac-item">
+          <view class="edit-in-ac-lable">姓名</view>
+          <input class="edit-in-ac-midle input-sty" placeholder="请务必输入" placeholder-class="input-placeholder" />
+        </view>
+
+        <view class="edit-in-ac-item">
+          <view class="edit-in-ac-lable">身份证</view>
+          <input class="edit-in-ac-midle input-sty" placeholder="请务必输入" placeholder-class="input-placeholder" />
+        </view>
+
+        <view class="edit-in-ac-item">
+          <view class="edit-in-ac-lable">电话</view>
+          <input class="edit-in-ac-midle input-sty" placeholder="请输入" placeholder-class="input-placeholder" />
+        </view>
+
+        <view class="edit-in-ac-item">
+          <view class="edit-in-ac-lable">地址</view>
+          <input class="edit-in-ac-midle input-sty" placeholder="请输入" placeholder-class="input-placeholder" />
+        </view>
+      </view>
+
     </back-container>
 
     <iphonex-bottom>
@@ -61,10 +91,11 @@
 import BackContainer from "../addressManage/component/backContainer";
 import IphonexBottom from "../addressManage/component/iphonexBottom";
 import BottomOperate from "../addressManage/component/bottomOperate";
+import BlueTab from "../addressManage/component/blueTab";
 
 export default {
   name: 'editInvoice',
-  components: { BottomOperate, IphonexBottom, BackContainer },
+  components: { BlueTab, BottomOperate, IphonexBottom, BackContainer },
   data() {
     return {
 			id: 0,
@@ -75,6 +106,11 @@ export default {
 			openingBank: '',
 			bankAccount: '',
 			businessLicense: '',
+      activeKey: '0',
+      tabList: [
+        { text: '企业', key: '0' },
+        { text: '个人', key: '1' },
+      ],
     }
   },
 	onLoad(option) {
@@ -84,6 +120,9 @@ export default {
 		}
 	},
   methods: {
+    change(data) {
+      this.activeKey = data;
+    },
 		queryInvoiceInfo(id) {
 			this.$http
 				.post('/b/customerinvoiceinfo/query', { id }, true)
