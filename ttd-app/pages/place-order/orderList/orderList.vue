@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<custom-navbar title="订单列表" />
+		<custom-navbar :title="isPlaceOrder? '发单订单列表' : '接单订单列表'" />
 
 		<back-container>
 			<template #headerSlot>
@@ -47,13 +47,15 @@
 
 							<view class="state1-tip" v-if="item.subState == 5 || (item.subState == 4 && isPlaceOrder)">
 								<view v-if="isPlaceOrder" class="plo-im-3red">
-									{{ item.subState == 4 ? '等待承接方开始工作' : '承接方开始工作,等待您的确认' }}</view>
+									{{ item.subState == 4 ? '等待承接方开始工作' : '承接方开始工作,等待您的确认' }}
+								</view>
 								<view v-else class="plo-im-3red">{{ item.subState == 4 ? '' : '等待用户确认开始' }}</view>
 							</view>
 
 							<view class="state1-tip" v-if="item.subState == 7 || (item.subState == 6 && isPlaceOrder)">
 								<view v-if="isPlaceOrder" class="plo-im-3red">
-									{{ item.subState == 6 ? '等待承接方完成工作' : '承接方完成工作,等待您的确认' }}</view>
+									{{ item.subState == 6 ? '等待承接方完成工作' : '承接方完成工作,等待您的确认' }}
+								</view>
 								<view v-else class="plo-im-3red">{{ item.subState == 6 ? '' : '等待用户确认完工' }}</view>
 							</view>
 
@@ -72,9 +74,11 @@
 
 						<view class="plo-content">
 							<view class="plo-ct">报价周期：{{ item.quotationStart.slice(0, 10) }} 至
-								{{item.quotationEnd.slice(0, 10)}}</view>
+								{{item.quotationEnd.slice(0, 10)}}
+							</view>
 							<view class="plo-ct">工作周期：{{ item.workStart.slice(0, 10) }} 至
-								{{ item.workEnd.slice(0, 10) }}</view>
+								{{ item.workEnd.slice(0, 10) }}
+							</view>
 							<view class="plo-ct">
 								工作地址：{{ item.orderAddress.province }} {{ item.orderAddress.city }}
 								{{ item.orderAddress.district }} {{ item.orderAddress.address }}
@@ -208,7 +212,8 @@
 				this.value = Number(option.state);
 			}
 		},
-		onReady() {},
+		onReady() {
+		},
 		onShow() {
 			this.onRefresh();
 		},
@@ -228,41 +233,41 @@
 				this.queryOrderList();
 			},
 			loadMore() {
-			    // this.$refs["list"].resetLoadmore();
-			    console.log('loadmore ');
-			    if (this.isNoMore) return;
-			    this.queryOrderList(true);
-		    },
-		    resetLoadMore() {
-			    this.$refs["list"].resetLoadmore();
-		    },
-            queryOrderList(loadMore = false) {
-                const url = this.isPlaceOrder ? '/b/ordermaster/queryPageList' : '/b/orderreceive/queryPageList';
-                this.$http.post(url, {
-                    state: this.value,
-				    pageNum: loadMore ? (this.page + 1) : this.page,
-				    sortInfos: [{
-					    field: 'addTime',
-					    sort: 'desc',
-				    }]
-                }, true)
-                    .then(res => {
-                        uni.stopPullDownRefresh();
-                        this.orderList = loadMore ? this.orderList.concat(res.dataList) : res.dataList;
+				// this.$refs["list"].resetLoadmore();
+				console.log('loadmore ');
+				if (this.isNoMore) return;
+				this.queryOrderList(true);
+			},
+			resetLoadMore() {
+				this.$refs["list"].resetLoadmore();
+			},
+			queryOrderList(loadMore = false) {
+				const url = this.isPlaceOrder ? '/b/ordermaster/queryPageList' : '/b/orderreceive/queryPageList';
+				this.$http.post(url, {
+						state: this.value,
+						pageNum: loadMore ? (this.page + 1) : this.page,
+						sortInfos: [{
+							field: 'addTime',
+							sort: 'desc',
+						}]
+					}, true)
+					.then(res => {
+						uni.stopPullDownRefresh();
+						this.orderList = loadMore ? this.orderList.concat(res.dataList) : res.dataList;
 						this.page = res.pageNum;
 						this.isNoMore = res.dataList.length < res.pageSize;
-                    }).catch((e) => {
-                        uni.stopPullDownRefresh();
-                })
-            },
+					}).catch((e) => {
+						uni.stopPullDownRefresh();
+					})
+			},
 			getCountDownDay(time, type) {
 
 				const now = dayjs().valueOf();
 				const end = dayjs(time).valueOf();
 				// 时间差
 				const leftTime = end - now;
-				console.log('过期时间',time,leftTime);
-				
+				console.log('过期时间', time, leftTime);
+
 				if (leftTime <= 0) return '-';
 
 				if (type == 'day') {

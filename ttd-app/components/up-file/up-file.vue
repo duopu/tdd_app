@@ -58,8 +58,8 @@
 			<template v-if="item.resourceType == 4">
 				<video :src="item.url" :control="false" class="source-image" :show-play-btn="true" :show-center-play-btn="false"></video>
 			</template>
-
-			<uni-icons class="clear-icon" v-if="modal == 'select'" type="clear" :size="24" color="#ff0000" @click="deleteItem(item)"></uni-icons>
+ 
+			<uni-icons class="clear-icon" v-if="modal == 'select'" type="clear" :size="24" color="#ff0000" @click.native.stop="deleteItem(item)"></uni-icons>
 		</view>
 	</view>
 </template>
@@ -180,16 +180,15 @@
 				});
 			},
 			// 删除文件
-			deleteItem(item) {
-				const newResourceList = this.resourceList.filter(f => f.url !== item.url)
-				this.commitSourceList(newResourceList)
+			deleteItem(item,e) {
+				const newValue = this.value.filter(f => f.url !== item.url)
+				this.commitSourceList(newValue)
 			},
 			// 响应文件变化
 			commitSourceList(newResourceList) {
 				this.$emit('input', newResourceList)
 			},
 			showItemAction(item) {
-
 				if (item.resourceType == 1) { // 图片
 					// 预览图片
 					console.log('ff', item);
@@ -198,12 +197,19 @@
 					});
 				} else if (item.resourceType == 2) { // 语音
 					innerAudioContext.src = item.url;
-					innerAudioContext.onPlay(() => {
-						console.log('开始播放2',item.url);
+					innerAudioContext.obeyMuteSwitch = false;
+					innerAudioContext.onPlay((e,b) => {
+						console.log('开始播放',item.url);
+						this.$tool.showToast('播放开始')
+					});
+					innerAudioContext.onEnded(() => {
+						this.$tool.showToast('播放结束')
+						console.log('音频自然播放结束事件',item.url);
 					});
 					innerAudioContext.onError((res) => {
-						console.log(res.errMsg);
-						console.log(res.errCode);
+						this.$tool.showToast('播放错误'+ res.errMsg)
+						console.log('播放错误',res.errMsg);
+						console.log('播放错误2',res.errCode);
 					});
 					innerAudioContext.play();
 				} else if (item.resourceType == 3) { // 文件

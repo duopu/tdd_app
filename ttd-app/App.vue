@@ -10,6 +10,8 @@
 				success: res => {
 					console.log('从本地缓存取出用户数据', res.data);
 					this.$store.commit('setUser', res.data)
+					
+					this.$store.dispatch('queryUserInfo')
 				}
 			});
 
