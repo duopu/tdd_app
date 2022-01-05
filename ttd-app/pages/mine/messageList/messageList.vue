@@ -58,7 +58,7 @@ export default {
 		},
 	  toDtl(message) {
 			if (message.linkPage == 101) {
-				const params = message.linkParamJson;
+				const params = JSON.parse(message.linkParamJson);
 				// 订单消息
 				uni.navigateTo({
 				  url: `/pages/place-order/orderDetail/orderDetail?id=${params.id}&isPlaceOrder=${params.detailType == 1 ? 1 : 0}`,
