@@ -39,11 +39,11 @@
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view>
 
-      <view class="fini-51" @click="toSelectInvoice">
+      <!-- <view class="fini-51" @click="toSelectInvoice">
         <text class="fini-51l">发票抬头</text>
         <text class="fini-51m">{{ invoice.name || '请选择' }}</text>
         <uni-icons type="arrowright" size="17" color="#969799" />
-      </view>
+      </view> -->
 
 
       <view class="fini-51">
@@ -227,14 +227,14 @@ export default {
 		},
 		createOrder() {
 
-			if (!this.invoice.id) {
-				uni.showToast({ title:  '请选择发票', icon:  'none' });
-				return;
-			}
+			// if (!this.invoice.id) {
+			// 	uni.showToast({ title:  '请选择发票', icon:  'none' });
+			// 	return;
+			// }
 
 			const params = {
 				couponId: this.coupon.id ? this.coupon.id : undefined,
-				customerInvoiceId: this.invoice.id,
+				// customerInvoiceId: this.invoice.id,
 				invoiceType: this.invoiceType,
 				recivierOrderId: this.id,
 				useIntegral: this.integral,

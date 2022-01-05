@@ -12,9 +12,7 @@
 					</view>
 					<view class="wallet-top-ac">
 						<view class="wallet-top-number">{{ showBalance ? balance : '***'}}</view>
-						<!-- <view class="wallet-top-btn" @click="withdrawMoney()">提现</view>-->
-						<!-- TODO 临时的入口按钮 链条结束后自行删除  -->
-						<view class="wallet-top-btn" @click="showWithdraw">提现</view>
+						<view class="wallet-top-btn" @click="withdrawCheck">提现</view>
 					</view>
 				</view>
 			</template>
@@ -56,7 +54,7 @@
 					<view class="wallet-model1">提现到：</view>
 					<view class="wallet-model3">
 						<bank-card-item v-if="Object.keys(bankCard).length" background-color="#F3F4F5" :i="2" :item="bankCard" @click="selectBankCard" />
-            <empty-bank-card-item v-else @add="toAdd"/>
+            <empty-bank-card-item v-else @add="toAddCard"/>
 					</view>
 				</view>
 			</template>
@@ -139,7 +137,17 @@
 			hide() {
 				this.visible = false;
 			},
-			showWithdraw() {
+			withdrawCheck() {
+				if (this.balance < 10) {
+					uni.showToast({ title: '最低提现金额10元', icon: 'none' })
+					return;
+				}
+				
+				this.$tool.actionForAuth(() => { 
+					this.checkBankCard();
+				})
+			},
+			checkBankCard() {
 				this.$http.post('/b/customerbank/queryPageList', {
 						pageSize: 1
 					}, true)
@@ -148,8 +156,8 @@
 						this.visible = true;
 					})
 			},
-			toAdd() {
-				uni.navigateTo({ 
+			toAddCard() {
+				uni.navigateTo({
 					url: `/pages/mine/bankAccount/bankAccount`,
 					events: {
 						onAdd: () => {

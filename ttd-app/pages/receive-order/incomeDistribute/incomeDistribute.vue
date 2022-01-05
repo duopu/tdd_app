@@ -10,7 +10,7 @@
       <view class="offer">
 
         <quoted-iten :order="order"/>
-
+				<view class="ind-2">可分配金额：{{ totalAmount / 100 }}元</view>
       </view>
 
     </back-container>
@@ -236,6 +236,16 @@ export default {
     }
   }
 
+}
+
+.ind-2 {
+	margin-top: 32rpx;
+	margin-left: 32rpx;
+	font-size: 28rpx;
+	font-family: PingFang SC-Regular, PingFang SC;
+	font-weight: 400;
+	color: #4F4F4F;
+	line-height: 52rpx;
 }
 
 .ind-5 {

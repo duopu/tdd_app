@@ -3,7 +3,7 @@
 		<custom-navbar title="人员详情" />
 
 		<view class="pd-top">
-			<view v-if="idCard" class="pd-top1">
+			<view v-if="realAuthFlag" class="pd-top1">
 				<image class="pd-top1-img"
 					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/trophy-icon.svg" />
 				<text class="pd-top1-text">已实名认证</text>
@@ -84,6 +84,7 @@
 				name: '',
 				phone: '',
 				intro: '',
+				realAuthFlag: 0, // 是否实名认证 0：否 1：是
 				allList: [{
 						title: '技能',
 						data: []
@@ -128,6 +129,7 @@
 						this.name = res.name;
 						this.phone = res.phone;
 						this.intro = res.intro || '';
+						this.realAuthFlag = res.realAuthFlag == 1;
 						this.allList[0].data = res.skillSet;
 						this.allList[1].data = res.userRoleSet;
 						this.allList[2].data = res.projectSet;
@@ -162,6 +164,7 @@
 						this.$refs.updateHeader.hide();
 						uni.showToast({ title: '更新成功' });
 						this.queryPersonInfo();
+						this.$store.dispatch('queryUserInfo');
 					});
 			},
 		},

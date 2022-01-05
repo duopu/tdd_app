@@ -515,7 +515,7 @@ export default {
 		.offer-91-icon {
 			padding: 0 12rpx;
 			height: 40rpx;
-			background: #5AC8FA;
+			background: #2C3580;
 			border-radius: 8rpx;
 			font-size: 24rpx;
 			font-family: PingFang SC-Regular, PingFang SC;

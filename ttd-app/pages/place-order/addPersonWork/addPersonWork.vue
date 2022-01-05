@@ -32,7 +32,9 @@
 
     </back-container>
 
-    <view class="add-im-tips" v-if="isEdit">上传完整清晰图片、视频，以便师傅更快接单</view>
+    <view class="add-im-tips" v-if="isEdit">
+			<red-star />上传完整清晰图片、视频，以便师傅更快接单
+		</view>
 
     <iphonex-bottom v-if="isEdit">
       <big-btn @click="onSubmit"/>
@@ -45,13 +47,14 @@ import BackContainer from "../../mine/addressManage/component/backContainer";
 import OfferHead from "../../receive-order/component/offerHead";
 import CheckdItem from "../placeOrder/checkdItem";
 import AddRemark from "../../receive-order/component/addRemark";
+import RedStar from "../../receive-order/component/redStar";
 import UploadList from "../../receive-order/component/uploadList";
 import IphonexBottom from "../../mine/addressManage/component/iphonexBottom";
 import BigBtn from "../../mine/addressManage/component/bigBtn";
 
 export default {
   name: "addPersonWork",
-  components: { BigBtn, IphonexBottom, UploadList, AddRemark, CheckdItem, OfferHead, BackContainer },
+  components: { BigBtn, IphonexBottom, UploadList, AddRemark, RedStar, CheckdItem, OfferHead, BackContainer },
   data() {
     return {
 			isEdit: true,
@@ -99,6 +102,18 @@ export default {
 			this.requireInfo = t;
 		},
 	  onSubmit() {
+			if (!this.number) {
+				uni.showToast({ title: '请输入数量', icon: 'none' })
+				return;
+			}
+			if (!this.requireInfo) {
+				uni.showToast({ title: '请输入要求', icon: 'none' })
+				return;
+			}
+			if (this.orderResourceList.length == 0) {
+				uni.showToast({ title: '请上传资料', icon: 'none' })
+				return;
+			}
 	  	const work = Object.assign({}, this.$data);
 	  	console.log('work ', work);
 	  	const eventChannel = this.getOpenerEventChannel();
