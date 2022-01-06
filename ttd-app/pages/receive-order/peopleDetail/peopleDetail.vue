@@ -24,14 +24,14 @@
 			<view class="pd-header-phone pd-header-phone1">
 				<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/linkPhoneIcon.svg"
 					class="pd-header-edit-icon" />
-				<text class="pd-header-phonenum">手机号：{{ phone.slice(0, 3) }} {{ phone.slice(3, 7) }} {{ phone.slice(7, 11) }}</text>
+				<text class="pd-header-phonenum">手机号：{{ hideInfo ? '--' : `${phone.slice(0, 3)} ${phone.slice(3, 7)} ${phone.slice(7, 11)}`}}</text>
 			</view>
 
 			<view class="pd-header-phone">
 				<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/linkPeopleIcon.svg"
 					class="pd-header-edit-icon" />
 				<text class="pd-header-phonenum">
-					身份证：{{ idCard ? `${ idCard.slice(0, 6) } ${ idCard.slice(6, 14) } ${ idCard.slice(14, 18) }` : '-' }}
+					身份证：{{ idCard && !hideInfo ? `${ idCard.slice(0, 6) } ${ idCard.slice(6, 14) } ${ idCard.slice(14, 18) }` : '--' }}
 				</text>
 			</view>
 
@@ -78,6 +78,7 @@
 		},
 		data() {
 			return {
+				hideInfo: false,
 				id: '',
 				idCard: '',
 				headImgUrl: '',
@@ -113,6 +114,9 @@
 			} else { // 自己的信息
 				this.id = this.$store.state.user.id
 				this.userType = 'self'
+			}
+			if (option.hideInfo) {
+				this.hideInfo = option.hideInfo == '1';
 			}
 			this.queryPersonInfo();
 			this.queryComments();

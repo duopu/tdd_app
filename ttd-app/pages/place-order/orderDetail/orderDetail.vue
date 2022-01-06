@@ -279,7 +279,8 @@ export default {
 		// 查看承接方个人详情
 		toPersonDetail(userId) {
 			uni.navigateTo({
-				url: `/pages/receive-order/peopleDetail/peopleDetail?id=${userId}`
+				url: `/pages/receive-order/peopleDetail/peopleDetail?id=${userId}&hideInfo=${
+					this.order.state == 10 || this.order.state == 20 || this.order.state == 90 ? 1 : 0}`
 			})
 		},
 		// 人员变更记录
