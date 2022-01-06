@@ -4,11 +4,13 @@
  		<back-container>
  			<view class="edit-addr">
  				<map style="width: 686rpx;height: 344rpx;margin: 0 32rpx 16rpx 0;" :latitude="oLatitude"
- 					:longitude="oLongitude" @regionchange="onRegionchange" />
+ 					:longitude="oLongitude" :enable-scroll="false" :enable-zoom="false" :enable-rotate="false" @regionchange="onRegionchange" />
 
  				<view class="edit-item">
  					<view class="edit-lable">所在地区</view>
- 					<view class="edit-midle input-sty">{{ address ? `${province} ${city} ${district}` : '定位中...'}}</view>
+					<picker class="edit-midle input-sty" mode="region" @change="onRegionChange">
+ 					  <view class="edit-midle input-sty">{{ province ? `${province} ${city} ${district}` : '请选择地址'}}</view>
+					</picker>
  				</view>
 
  				<view class="edit-item">
@@ -28,6 +30,11 @@
  					<input class="edit-midle input-sty" :value="phone" @input="onPhoneInput" placeholder="请输入"
  						placeholder-class="input-placeholder" />
  				</view>
+				
+				<view class="edit-item-flag">
+					<view class="edit-lable">设为默认地址</view>
+					<switch style="transform: scale(0.7, 0.7)" color="#3340A0" :checked="defaultFlag" @change="defaultChange"/>
+				</view>
 
  			</view>
  		</back-container>
@@ -141,7 +148,19 @@
  						this.provinceId = res.provinceId;
  					})
  			},
+			queryLocationByAddress() {
+				const address = this.province + this.city + this.city + this.address;
+				this.$http.post('/core/geo/queryLocationByAddress', { address })
+					.then(res => {
+						this.latitude = res.latitude;
+						this.longitude = res.longitude;
+						// 用于地图显示
+						this.oLatitude = res.latitude;
+						this.oLongitude = res.longitude;
+					})
+			},
  			onRegionchange(event) {
+				return;
  				console.log('onRegionchange event ', event);
  				if (event.type == 'end') {
  					this.latitude = event.target.centerLocation.latitude;
@@ -150,8 +169,21 @@
  					this.queryGeoAddressInfo(this.latitude, this.longitude);
  				}
  			},
+			onRegionChange(e) {
+				console.log('onRegionChange ', e);
+				const region = e.target.value;
+				const code = e.target.code[2];
+				this.province = region[0];
+				this.provinceId = Number(code.slice(0, 2));
+				this.city = region[1];
+				this.cityId = Number(code.slice(0, 4));
+				this.district = region[2];
+				this.districtId = Number(code.slice(0, 6));
+				this.queryLocationByAddress();
+			},
  			onAddressInput(event) {
  				this.address = event.target.value;
+				this.queryLocationByAddress();
  			},
  			onNameInput(event) {
  				this.name = event.target.value;
@@ -159,6 +191,9 @@
  			onPhoneInput(event) {
  				this.phone = event.target.value;
  			},
+			defaultChange() {
+				this.defaultFlag = this.defaultFlag == 1 ? 0 : 1;
+			},
  			checkParams() {
  				if (!this.city) {
  					uni.showToast({
@@ -257,7 +292,7 @@
  	.edit-address {
  		.edit-addr {
  			box-sizing: border-box;
- 			padding: 15rpx 0 32rpx 32rpx;
+ 			padding: 15rpx 0 0rpx 32rpx;
 
  			.edit-item {
  				display: flex;
@@ -287,6 +322,22 @@
  					padding-left: 18rpx;
  				}
  			}
+			
+			.edit-item-flag {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				height: 88rpx;
+				padding-right: 32rpx;
+				
+				.edit-lable {
+					flex-shrink: 0;
+					font-size: 28rpx;
+					font-family: PingFang SC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #323335;
+				}
+			}
  		}
 
  		/deep/.input-placeholder {
