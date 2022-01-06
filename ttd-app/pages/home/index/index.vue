@@ -148,9 +148,9 @@
 						text: '租聘'
 					},
 					{
-						image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-8.svg',
-						selectImage: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-9.svg',
-						text: '人员'
+						image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-6.svg',
+						selectImage: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-7.svg',
+						text: '培训'
 					},
 					{
 						image: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/tab-icon/Frame-12.svg',
