@@ -127,7 +127,7 @@
 						width: 300,
 						height: 300,
 					},
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
 					success: (res) => {
 						const path = res.tempFilePaths[0];
 						this.uploadImage(3, path);
