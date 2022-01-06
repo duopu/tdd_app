@@ -50,7 +50,6 @@
 							this.$tool.login(user)
 							this.$tool.showToast('登录成功', () => {
 								uni.navigateBack({})
-
 								// 更新协议版本号
 								uni.setStorageSync(config.storageKeys.agreementVersionStorage,
 									this.agreementDate)

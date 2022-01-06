@@ -76,11 +76,7 @@
 </template>
 
 <script>
-
 	export default {
-		components: {
-
-		},
 		data() {
 			return {
 				demo: true,
@@ -173,6 +169,8 @@
 			this.$tool.actionForLogin(() => {
 				this.refresh();
 			});
+			// 刷新一下用户信息 
+			this.$store.dispatch('queryUserInfo')
 		},
 		onPullDownRefresh() {
 			this.$tool.actionForLogin(() => {
