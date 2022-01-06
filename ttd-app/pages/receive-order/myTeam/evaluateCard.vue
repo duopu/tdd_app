@@ -13,6 +13,10 @@
       <view class="eva-right-2">{{ comment.addTime }}</view>
 
       <view class="eva-right-3">{{ comment.content }}</view>
+			
+			<view class="eva-img-list">
+			  <image class="eva-img-item" v-for="p in comment.imgUrlList" :key="p" :src="p" />
+			</view>
     </view>
 
   </view>
@@ -81,6 +85,19 @@ export default {
       line-height: 36rpx;
       padding-bottom: 32rpx;
     }
+		
+		.eva-img-list {
+		  display: flex;
+		  flex-flow: row wrap;
+		  padding-bottom: 32rpx;
+		
+		  .eva-img-item {
+		    width: 128rpx;
+		    height: 128rpx;
+		    border-radius: 8rpx;
+		    margin: 0 20rpx 20rpx 0;
+		  }
+		}
   }
 }
 </style>

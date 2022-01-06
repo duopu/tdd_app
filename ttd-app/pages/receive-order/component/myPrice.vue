@@ -35,6 +35,13 @@ export default {
 </script>
 <style scoped lang="scss">
 .my-price {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+
   .yang {
     color: #828282;
     font-size: 24rpx;

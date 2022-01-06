@@ -74,7 +74,7 @@
 
     <view class="order-dtl-team">
       <member-title :show-right="false" title="评价" />
-      <evaluate-card v-for="i in commentList" :key="i" />
+      <evaluate-card v-for="i in commentList" :key="i" :comment="i"/>
 			<list-empty v-if="!commentList.length" />
     </view>
 

@@ -11,7 +11,7 @@
         <quoted-iten :order="order"/>
       </view>
     </back-container>
-		
+
 		<view class="offer-9" v-if="isPlaceOrder">
 			<view class="offer-91" >
 				<view class="offer-91-text">承接方</view>
@@ -37,9 +37,9 @@
       <member-title title="参与人员" :show-right="!isPlaceOrder" right-text="选择人员" @add="toSelectPerson"/>
       <team-list-item v-for="(i, index) in memberList"
 			 :key="i.userId"
-			 :member="i" 
-			 :showDelete="!isPlaceOrder" 
-			 @onDelete="removePerson(i)" 
+			 :member="i"
+			 :showDelete="!isPlaceOrder"
+			 @onDelete="removePerson(i)"
 			 @onClick="toPersonDetail(i.userId)"
 			/>
     </view>
@@ -473,18 +473,18 @@ export default {
 .offer-9 {
 	background-color: white;
 	margin: 32rpx 0;
-	
+
 	.offer-91 {
 		height: 80rpx;
 		padding: 0 32rpx;
 		@include flexBetween;
-		
+
 		.offer-91-text {
 			font-size: 28rpx;
 			font-family: PingFang SC-Regular, PingFang SC;
 			font-weight: 400;
 		}
-		
+
 		.offer-91-icon {
 			padding: 0 12rpx;
 			height: 40rpx;
@@ -505,21 +505,21 @@ export default {
 		padding: 32rpx;
 		display: flex;
 		flex-flow: wrap row;
-		
+
 		.offer-92-item {
 		  margin-right: 58rpx;
 		  width: 127rpx;
-		
+
 		  &:nth-of-type(4n + 4) {
 		    margin: 0;
 		  }
-		
+
 		  .offer-92-img {
 		    width: 127rpx;
 		    height: 127rpx;
 		    border-radius: 8rpx;
 		  }
-		
+
 		  .offer-92-name {
 		    font-size: 28rpx;
 		    font-family: PingFang SC-Regular, PingFang SC;

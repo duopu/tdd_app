@@ -11,9 +11,9 @@
 
         <view class="add-i-item">
           <view class="add-i-lable">类别</view>
-					<picker class="add-i-midle" @change="softwareSelect" :disabled="!isEdit" :value="cateName" :range="softwareList" range-key="name">
-					  <view class="add-i-midle" :class="cateName ? 'add-i-acc' : ''">{{ cateName || '请选择' }}</view>
-					</picker>
+					<!-- <picker class="add-i-midle" @change="softwareSelect" :disabled="!isEdit" :value="cateName" :range="softwareList" range-key="name"> -->
+					  <view class="add-i-midle" :class="cateName ? 'add-i-acc' : ''" @click="softwareSelect">{{ cateName || '请选择' }}</view>
+					<!-- </picker> -->
           <uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
         </view>
 
@@ -79,6 +79,16 @@ export default {
 	onReady() {
 		this.querySoftwareList();
 	},
+	mounted() {
+		uni.$on('submitSelectUserroleTree',(userroleList)=>{
+			console.log('userroleList',userroleList);
+			this.cateId = userroleList[0].id || '';
+			this.cateName = userroleList[0].name || '';
+		})
+	},
+	destroyed() {
+		uni.$off('submitSelectUserroleTree');
+	},
   methods: {
 		querySoftwareList() {
 			this.$http.post('/b/softwareconf/queryList', {}, true)
@@ -87,9 +97,13 @@ export default {
 			})
 		},
 		softwareSelect(e) {
-			const index = e.target.value;
-			this.cateId = this.softwareList[index].id;
-			this.cateName = this.softwareList[index].name;
+			if (!this.isEdit) return;
+			uni.navigateTo({
+				url:`/pages/main/apply/tree?type=userrole`
+			})
+			// const index = e.target.value;
+			// this.cateId = this.softwareList[index].id;
+			// this.cateName = this.softwareList[index].name;
 		},
 		infoChange(t) {
 			if (!this.isEdit) return;
