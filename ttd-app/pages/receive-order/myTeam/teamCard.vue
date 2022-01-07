@@ -9,7 +9,10 @@
         <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconSet.svg" v-if="showSetting" @click="$emit('onSetting')" class="icon-sty" />
       </view>
 
-      <view class="team-card-dz">队长：{{ team.leaderName || '' }}</view>
+      <view class="team-card-dz">
+        <text class="team-card-dz-name">队长：{{ team.leaderName || '' }}</text>
+        <uni-rate :value="4" size="20" :margin="5" readonly allow-half />
+      </view>
 
       <view class="team-card-dtl">{{ team.teamIntroduce || '' }}</view>
 
@@ -89,12 +92,18 @@ export default {
     }
 
     .team-card-dz {
-      font-size: 28rpx;
-      font-family: PingFang SC-Regular, PingFang SC;
-      font-weight: 400;
-      color: #FFFFFF;
-      line-height: 36rpx;
       margin: 16rpx 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .team-card-dz-name {
+        font-size: 28rpx;
+        font-family: PingFang SC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        line-height: 36rpx;
+      }
     }
 
     .team-card-dtl {

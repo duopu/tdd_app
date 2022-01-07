@@ -19,7 +19,11 @@
 					src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconEditBlack.svg" />
 				<text class="pd-header-edtext">编辑头像</text>
 			</view>
-			<view class="pd-header-name">{{ name }}</view>
+
+			<view class="pd-header-name">
+        <text class="name-text">{{ name }}</text>
+        <uni-rate :value="4" size="20" :margin="5" readonly allow-half />
+      </view>
 
 			<view class="pd-header-phone pd-header-phone1">
 				<image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/linkPhoneIcon.svg"
@@ -56,7 +60,7 @@
 			<evaluate-card v-for="i in commentList" :key="i.id" :comment="i" />
 			<list-empty v-if="!commentList.length" />
 		</view>
-		
+
 		<update-header ref="updateHeader" :url="headImgUrl" @onSave="updateHeader"/>
 
 	</view>
@@ -89,7 +93,7 @@
 				allList: [{
 						title: '技能',
 						data: []
-					}, // 技能 
+					}, // 技能
 					{
 						title: '岗位',
 						data: []
@@ -104,7 +108,7 @@
 					}, // 工具
 				],
 				commentList: [], // 评论列表
-				userType: 'people' // 查看用户类型   people：看别人    self：看自己 
+				userType: 'people' // 查看用户类型   people：看别人    self：看自己
 			};
 		},
 		onLoad(option) {
@@ -247,10 +251,16 @@
 		.pd-header-name {
 			font-size: 52rpx;
 			margin-top: 120rpx;
-			font-family: PingFang SC-Medium, PingFang SC;
-			font-weight: 500;
-			color: #2C3580;
-			line-height: 64rpx;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .name-text {
+        font-family: PingFang SC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #2C3580;
+        line-height: 64rpx;
+      }
 		}
 
 		.pd-header-phone {
