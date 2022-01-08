@@ -124,8 +124,8 @@
 				uni.chooseImage({
 					sourceType: ['camera'],
 					crop: {
-						width: 300,
-						height: 300,
+						width: 1216,
+						height: 2560,
 					},
 					sizeType: ['compressed'], //可以指定是原图还是压缩图，默认二者都有
 					success: (res) => {
