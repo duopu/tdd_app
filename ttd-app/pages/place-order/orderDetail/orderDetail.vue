@@ -107,7 +107,7 @@
 				<view class="order-dtl-btn1" v-if="[10, 20].includes(order.state)" @click="toQuestionPage">咨询</view>
 				<view class="order-dtl-btn1" v-if="[10, 20].includes(order.state)" @click="toQuoteOrder">去报价</view>
 				<!-- 待确认 -->
-				<view class="order-dtl-btn1" v-if="[20].includes(order.state)" @click="toQuoteOrde">修改报价</view>
+				<view class="order-dtl-btn1" v-if="[20].includes(order.state)" @click="toQuoteOrder">修改报价</view>
 				<!-- 待开始 -->
 				<view class="order-dtl-btn1" v-if="[30, 40].includes(order.state) && order.subState != 7 && order.receiverType == 2" @click="toReviewTeam">变更人员</view>
 				<view class="order-dtl-btn1" v-if="[30, 40, 50].includes(order.state)" @click="toComplainPage">投诉</view>
