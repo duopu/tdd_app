@@ -266,7 +266,6 @@
 				const end = dayjs(time).valueOf();
 				// 时间差
 				const leftTime = end - now;
-				console.log('过期时间', time, leftTime);
 
 				if (leftTime <= 0) return '-';
 
