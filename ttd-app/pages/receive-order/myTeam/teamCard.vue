@@ -11,7 +11,7 @@
 
       <view class="team-card-dz">
         <text class="team-card-dz-name">队长：{{ team.leaderName || '' }}</text>
-        <uni-rate :value="4" size="20" :margin="5" readonly allow-half />
+        <uni-rate :value="team.commentAvgScore" size="20" :margin="5" readonly allow-half />
       </view>
 
       <view class="team-card-dtl">{{ team.teamIntroduce || '' }}</view>
