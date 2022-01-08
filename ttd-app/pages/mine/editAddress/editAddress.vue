@@ -86,7 +86,7 @@
  				this.id = Number(option.id);
  				this.queryAddressInfo(this.id);
  			} else {
- 				this.getLocation();
+ 				this.checkLocationPermission();
  			}
  		},
  		methods: {
@@ -113,6 +113,31 @@
  						this.oLongitude = res.longitude;
  					})
  			},
+			checkLocationPermission() {
+				uni.authorize({
+				    scope: 'scope.userLocation',
+				    success: () => {
+							this.getLocation();
+				    },
+						fail: (res) => {
+							uni.showModal({
+								title: '提示',
+								content: '您尚未授权获取定位信息，是否打开？',
+								confirmText: '去授权',
+								success: (res) => {
+									if (res.confirm) {
+										uni.openSetting({
+											success: (res) => {
+											  console.log(res.authSetting)
+												this.getLocation();
+											}
+										})
+									}
+								}
+							})
+						},
+				})
+			},
  			getLocation() {
  				console.log('getLocation');
  				uni.getLocation({

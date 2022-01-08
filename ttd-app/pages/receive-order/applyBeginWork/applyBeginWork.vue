@@ -27,11 +27,11 @@
         <view class="abwp-r">
           <view class="abwp-r1">
             <text class="abwp-r1l">开始工作</text>
-            <text v-if="startApplyInfo.address.latitude && order.subState == 4" class="abwp-r1r" @click="getLocation(1)">重新定位</text>
+            <text v-if="startApplyInfo.address.latitude && order.subState == 4" class="abwp-r1r" @click="checkLocationPermission(1)">重新定位</text>
           </view>
 
 					<map v-if="startApplyInfo.address.latitude" class="abwp-rmap" :latitude="startApplyInfo.address.latitude" :longitude="startApplyInfo.address.longitude" />
-					<view v-else class="abwp-bo-1" @click="getLocation(1)">
+					<view v-else class="abwp-bo-1" @click="checkLocationPermission(1)">
 					  <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
 					  <view class="abwp-bo-1text">添加位置</view>
 					</view>
@@ -50,13 +50,13 @@
           <view v-if="order.subState == 6 || order.subState == 7" class="iamaline" />
 
           <view v-if="order.subState == 6 || order.subState == 7" class="abwp-rend-text">结束工作</view>
-					<text v-if="completeApplyInfo.address.latitude && order.subState == 6" class="abwp-rend-text" @click="getLocation(2)">重新定位</text>
+					<text v-if="completeApplyInfo.address.latitude && order.subState == 6" class="abwp-rend-text" @click="checkLocationPermission(2)">重新定位</text>
         </view>
       </view>
 
       <view v-if="order.subState == 6 || order.subState == 7" class="abwp-bottom">
         <map v-if="completeApplyInfo.address.latitude" class="abwp-bo-1" :latitude="completeApplyInfo.address.latitude" :longitude="completeApplyInfo.address.longitude" />
-        <view v-else class="abwp-bo-1" @click="getLocation(2)">
+        <view v-else class="abwp-bo-1" @click="checkLocationPermission(2)">
           <image src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/iconCircleAdd.svg" class="apply-add-jia" />
           <view class="abwp-bo-1text">添加位置</view>
         </view>
@@ -172,6 +172,31 @@ export default {
 				if (res.completeApplyInfo.address) {
 			    this.completeApplyInfo = res.completeApplyInfo;
 				}
+			})
+		},
+		checkLocationPermission(type) {
+			uni.authorize({
+			    scope: 'scope.userLocation',
+			    success: () => {
+						this.getLocation(type);
+			    },
+					fail: (res) => {
+						uni.showModal({
+							title: '提示',
+							content: '您尚未授权获取定位信息，是否打开？',
+							confirmText: '去授权',
+							success: (res) => {
+								if (res.confirm) {
+									uni.openSetting({
+										success: (res) => {
+										  console.log(res.authSetting)
+											this.getLocation(type);
+										}
+									})
+								}
+							}
+						})
+					},
 			})
 		},
 		getLocation(type) {
