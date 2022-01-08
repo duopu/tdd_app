@@ -21,7 +21,7 @@
 				<view v-if="orderMode == 0" class="receipt-ac-item">
 					<view class="receipt-ac-lable">承接人手机号</view>
 					<input class="receipt-ac-midle input-sty" :value="appointPhone" @input="(e) => onInput(e, 'phone')"
-						placeholder="可选输入" placeholder-class="input-placeholder" />
+						placeholder="请输入手机号" placeholder-class="input-placeholder" />
 				</view>
 
 				<my-choose-time v-model="quoteTime" title="报价周期" format="YYYY-MM-DD HH:mm" placeholder="请选择报价周期" />
