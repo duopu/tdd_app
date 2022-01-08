@@ -22,7 +22,7 @@
 
 			<view class="pd-header-name">
         <text class="name-text">{{ name }}</text>
-        <uni-rate :value="4" size="20" :margin="5" readonly allow-half />
+        <uni-rate :value="commentAvgScore" size="20" :margin="5" readonly allow-half />
       </view>
 
 			<view class="pd-header-phone pd-header-phone1">
@@ -90,6 +90,7 @@
 				phone: '',
 				intro: '',
 				realAuthFlag: 0, // 是否实名认证 0：否 1：是
+				commentAvgScore: 0, // 人员评分
 				allList: [{
 						title: '技能',
 						data: []
@@ -138,6 +139,7 @@
 						this.phone = res.phone;
 						this.intro = res.intro || '';
 						this.realAuthFlag = res.realAuthFlag == 1;
+						this.commentAvgScore = res.commentAvgScore;
 						this.allList[0].data = res.skillSet;
 						this.allList[1].data = res.userRoleSet;
 						this.allList[2].data = res.projectSet;
