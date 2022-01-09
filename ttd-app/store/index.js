@@ -55,7 +55,11 @@ const store = new Vuex.Store({
 			state
 		}) {
 			http.post('/b/customer/query').then(res => {
-				commit('setUser', {...res,token:state.user.token});
+				commit('setUser', { 
+					...state.user,
+					...res,
+					token:state.user.token,
+				});
 			})
 		}
 	}

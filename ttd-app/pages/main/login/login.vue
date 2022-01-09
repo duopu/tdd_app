@@ -45,7 +45,10 @@
 						this.$http.post('/core/grant/miniPhone', param, true).then(res => {
 							const user = {
 								...res.user,
-								token: res.token
+								token: res.token,
+								openId: res.openid,
+								actType: res.actType,
+								userType: res.userType,
 							}
 							this.$tool.login(user)
 							this.$tool.showToast('登录成功', () => {
