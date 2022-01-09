@@ -105,7 +105,7 @@
 				<view class="order-dtl-btn1" v-if="[10, 20, 30].includes(order.state)" @click="cancelOrderTip">取消订单</view>
 				<!-- 待报价 待确认 -->
 				<view class="order-dtl-btn1" v-if="[10, 20].includes(order.state)" @click="toQuestionPage">咨询</view>
-				<view class="order-dtl-btn1" v-if="[10, 20].includes(order.state)" @click="toQuoteOrder">去报价</view>
+				<view class="order-dtl-btn1" v-if="[10].includes(order.state)" @click="toQuoteOrder">去报价</view>
 				<!-- 待确认 -->
 				<view class="order-dtl-btn1" v-if="[20].includes(order.state)" @click="toQuoteOrder">修改报价</view>
 				<!-- 待开始 -->

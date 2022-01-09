@@ -126,7 +126,7 @@
 								<!-- 待报价 待确认 -->
 								<view class="plo-btn1" v-if="[10, 20].includes(value)" @tap.stop="toQuestionPage(item)">
 									咨询</view>
-								<view class="plo-btn1" v-if="[10, 20].includes(value)" @tap.stop="toQuoteOrder(item)">
+								<view class="plo-btn1" v-if="[10].includes(value)" @tap.stop="toQuoteOrder(item)">
 									去报价</view>
 								<!-- 待确认 -->
 								<view class="plo-btn1" v-if="[20].includes(value)" @tap.stop="toQuoteOrder(item)">修改报价
