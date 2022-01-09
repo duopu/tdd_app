@@ -32,7 +32,13 @@
       <view class="c-card33" />
     </view>
 
-    <view class="c-card4" @click="$emit('useCoupon', coupon)">使用</view>
+<!--    <view class="c-card4" @click="$emit('useCoupon', coupon)">使用</view>-->
+
+    <!--未选中-->
+    <uni-icons v-if="true" type="circle" class="c-card5" size="28" color="#BDBDBD" @click="$emit('useCoupon', coupon)" />
+
+    <!-- 选中  自己判断 -->
+    <uni-icons v-if="false" type="circle-filled" class="c-card5" size="28" color="#3D49AB" @click="$emit('useCoupon', coupon)" />
 
   </view>
 </template>
@@ -225,6 +231,11 @@ export default {
     font-family: PingFang SC-Regular, PingFang SC;
     font-weight: 400;
     color: #FFFFFF;
+  }
+
+  .c-card5 {
+    align-self: center;
+    padding: 0 12rpx 0 10rpx;
   }
 }
 </style>
