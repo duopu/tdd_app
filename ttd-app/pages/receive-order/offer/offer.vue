@@ -350,33 +350,34 @@ export default {
 				appId: config.appId,
 				openId: user.openId,
 				orderId: orderId,
-				wayId: 12, // 12、宁波银行微信小程序支付
+				wayId: 6, // 6、微信小程序支付
 			}
+			console.log('user ', user);
 			this.$http.post('/core/pay/build4ReceiveOrder', params, true)
 			.then(res => {
-				// todo:吊起微信支付
-				// this.wxPay(res.payResult);
+				// 调起微信支付
+				this.wxPay(res.payResult);
 
-				uni.showToast({
-					title: '订单支付完成',
-					success: () => {
-						uni.navigateBack({});
-					}
-				})
+				// uni.showToast({
+				// 	title: '订单支付完成',
+				// 	success: () => {
+				// 		uni.navigateBack({});
+				// 	}
+				// })
 			})
 		},
 		wxPay(res) {
 			uni.requestPayment({
 				provider: 'wxpay',
-				timeStamp: String(Date.now()),
-				nonceStr: 'A1B2C3D4E5',
-				package: 'prepay_id=wx20180101abcdefg',
+				timeStamp: res.timestamp,
+				nonceStr: res.noncestr,
+				package: res.packageName,
 				signType: 'MD5',
-				paySign: '',
+				paySign: res.sign,
 				success: (res) => {
 				    console.log('success:' + JSON.stringify(res));
 						uni.showToast({
-							title: '订单支付完成',
+							title: '保证金支付完成',
 							success: () => {
 								uni.navigateBack({});
 							}
@@ -384,7 +385,7 @@ export default {
 				},
 				fail: function (err) {
 				    console.log('fail:' + JSON.stringify(err));
-						uni.showToast({ title: '订单支付完成', });
+						uni.showToast({ title: '保证金支付失败', icon: 'none' });
 				},
 			});
 		}
