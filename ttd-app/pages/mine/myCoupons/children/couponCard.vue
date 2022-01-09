@@ -32,13 +32,13 @@
       <view class="c-card33" />
     </view>
 
-<!--    <view class="c-card4" @click="$emit('useCoupon', coupon)">使用</view>-->
+   <view v-if="minusType == 1" class="c-card4" @click="$emit('useCoupon', coupon)">使用</view>
 
     <!--未选中-->
-    <uni-icons v-if="true" type="circle" class="c-card5" size="28" color="#BDBDBD" @click="$emit('useCoupon', coupon)" />
+    <uni-icons v-if="minusType == 2" type="circle" class="c-card5" size="28" color="#BDBDBD" @click="$emit('useCoupon', coupon)" />
 
-    <!-- 选中  自己判断 -->
-    <uni-icons v-if="false" type="circle-filled" class="c-card5" size="28" color="#3D49AB" @click="$emit('useCoupon', coupon)" />
+    <!-- 选中 -->
+    <uni-icons v-if="minusType == 3" type="circle-filled" class="c-card5" size="28" color="#3D49AB" @click="$emit('useCoupon', coupon)" />
 
   </view>
 </template>
@@ -47,8 +47,8 @@ export default {
   name: "couponCard",
   props: {
     minusType: {
-      type: String,
-      default: '1'
+      type: Number,
+      default: 1,  // 1: 使用    2: 未选中  3: 选中
     },
 		coupon: {
 			id: 0,

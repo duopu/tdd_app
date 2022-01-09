@@ -3,18 +3,27 @@
     <custom-navbar title="我的优惠券" />
 
     <back-container>
+			
 			<template v-slot:headerSlot>
 			  <blue-tab :active-key="activeKey" :list="tabList" @change="change" />
 			</template>
 
       <view class="my-coupon">
         <view class="my-coupon-item" v-for="(item, i) in couponsList" :key="i">
-          <coupon-card :minus-type="i" :coupon="item" @useCoupon="useCoupon" />
+          <coupon-card 
+					:coupon="item" 
+					@useCoupon="useCoupon"
+					:minus-type="couponType(item)"
+					/>
         </view>
 
         <list-empty v-if="!couponsList.length" />
       </view>
     </back-container>
+		
+		<iphonex-bottom v-if="isSelect">
+		  <big-btn button-text="确定" @click="toSelect"/>
+		</iphonex-bottom>
   </view>
 </template>
 
@@ -23,10 +32,12 @@ import BackContainer from "../addressManage/component/backContainer";
 import BlueTab from "../addressManage/component/blueTab";
 import CouponCard from "./children/couponCard";
 import ListEmpty from "../../place-order/orderList/listEmpty";
+import IphonexBottom from "../addressManage/component/iphonexBottom";
+import BigBtn from "../addressManage/component/bigBtn";
 
 export default {
   name: "myCoupons",
-  components: { ListEmpty, CouponCard, BlueTab, BackContainer },
+  components: { ListEmpty, CouponCard, BlueTab, BackContainer, BigBtn, IphonexBottom },
   data() {
     return {
       activeKey: '0',
@@ -37,6 +48,7 @@ export default {
       ],
 			couponsList: [],
 			isSelect: false,
+			selectList: [],
 			minUsePrice: 0,
 			orderType: 0,
 			state: 0,
@@ -81,18 +93,43 @@ export default {
 			  this.couponsList = res.dataList;
 			})
 		},
+		couponType(coupon) {
+			if (!this.isSelect) {
+				return 1;
+			} else {
+				const index = this.selectList.findIndex((c)  => c.id == coupon.id);
+				return index == -1 ? 2 : 3;
+			}
+		},
 		useCoupon(coupon) {
 			if (this.isSelect) {
-				const eventChannel = this.getOpenerEventChannel();
-				eventChannel.emit('onSelect', coupon);
-
-				uni.navigateBack({});
+				this.checkSelect(coupon);
 			} else {
 				uni.switchTab({
 				    url: '/pages/place-order/index/index'
 				});
 			}
-		}
+		},
+		checkSelect(coupon) {
+			const index = this.selectList.findIndex((c)  => c.id == coupon.id);
+			if (index != -1) {
+				this.selectList = [];
+			} else {
+				this.selectList = [coupon];
+			}
+			console.log('select ', index, this.selectList);
+		},
+		toSelect() {
+			if (this.selectList.length == 0) {
+				uni.showToast({ title: '请选择优惠券', icon: 'none' })
+				return;
+			}
+			const coupon = this.selectList[0];
+			const eventChannel = this.getOpenerEventChannel();
+			eventChannel.emit('onSelect', coupon);
+			
+			uni.navigateBack({});
+		},
   }
 }
 </script>
