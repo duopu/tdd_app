@@ -293,7 +293,7 @@ export default {
 		// 取消订单
 		cancelOrderTip() {
 			let warning = '取消订单会影响您的声誉，影响后续发单，并会扣除部分款项。您确定要取消订单吗？'
-			if (order.state == 10 || order.state == 20) {
+			if (this.order.state == 10 || this.order.state == 20) {
 				warning = '取消订单会影响您的声誉，影响后续发单。您确定要取消订单吗？'
 			}
 			uni.showModal({
