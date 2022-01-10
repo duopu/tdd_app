@@ -7,11 +7,18 @@
       <view class="complaint">
         <view class="complaint-text">评价内容：</view>
         <view class="complaint-content">
-					<input :value="content" class="input-sty" placeholder-class="input-placeholder" @input="onInput" placeholder="可以的话，多少写点！\n方便工作人员快速排队故障。可以的话，多少写点！方便工作人员快速排队故障。" />
+          <!-- <input :value="content" class="input-sty" placeholder-class="input-placeholder" @input="onInput" placeholder="可以的话，多少写点！\n方便工作人员快速排队故障。可以的话，多少写点！方便工作人员快速排队故障。" />-->
+
+          <textarea
+              class="complaint-area"
+              :value="content"
+              @input="onInput"
+              placeholder="可以的话，多少写点！"
+          />
         </view>
 
         <up-file v-model="resourceList" :showAudio="false"/>
-				
+
       </view>
 
     </back-container>
@@ -125,6 +132,17 @@
     color: #828282;
     line-height: 36rpx;
   }
+}
+
+.complaint-area {
+  height: 96rpx;
+  width: 100%;
+  overflow-y: scroll;
+  color: #828282;
+  font-size: 28rpx;
+  font-family: PingFang SC-Regular, PingFang SC;
+  font-weight: 400;
+  line-height: 36rpx;
 }
 </style>
 <style lang="scss">
