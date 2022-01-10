@@ -81,7 +81,7 @@
       <view class="order-fini-btn-box">
         <text class="order-fini-total-fee">总金额(含税)：</text>
         <my-price :price="showPayAmount()" />
-        <view class="order-fini-calcel">取消</view>
+        <view class="order-fini-calcel" @click="toCancel">取消</view>
         <view class="order-fini-sure" @click="createOrder">支付</view>
       </view>
     </iphonex-bottom>
@@ -203,15 +203,24 @@ export default {
 				url: `/pages/mine/myCoupons/myCoupons?isSelect=1&orderType=${this.order.orderType}&minUsePrice=${this.order.payAmount}&state=0`,
 				events: {
 					onSelect: (coupon) => {
-						this.coupon = coupon;
-						if (coupon.couponNature == 3) {
-							const discountAmount = (this.order.payAmount || 0) * this.coupon.discount / 100;
-							const couponAmount = discountAmount > this.coupon.useMaxPrice ? this.coupon.useMaxPrice : discountAmount;
-							this.couponName = `-${couponAmount / 100}`
+						if (coupon.id) {
+							this.coupon = coupon;
+							if (coupon.couponNature == 3) {
+								const discountAmount = (this.order.payAmount || 0) * this.coupon.discount / 100;
+								const couponAmount = discountAmount > this.coupon.useMaxPrice ? this.coupon.useMaxPrice : discountAmount;
+								this.couponName = `-${couponAmount / 100}`
+							} else {
+								this.couponName = `-${coupon.parvalue / 100}`;
+							}
 						} else {
-							this.couponName = `-${coupon.parvalue / 100}`;
+							this.coupon = {};
+							this.couponName = '请选择';
 						}
 					}
+				},
+				success: (res) => {
+					// 通过eventChannel向被打开页面传送数据
+					res.eventChannel.emit('selectCoupon', this.coupon);
 				}
 			})
 		},
@@ -224,6 +233,9 @@ export default {
 					}
 				}
 			})
+		},
+		toCancel() {
+			uni.navigateBack({});
 		},
 		createOrder() {
 

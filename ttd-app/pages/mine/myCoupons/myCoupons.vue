@@ -67,6 +67,12 @@ export default {
 		if (option.state) {
 			this.state = Number(option.state);
 		}
+		const eventChannel = this.getOpenerEventChannel();
+		eventChannel.on('selectCoupon', (coupon) => {
+			if (coupon.id) {
+				this.selectList = [coupon];
+			}
+		});
 	},
 	onReady() {},
 	onShow() {
@@ -117,16 +123,11 @@ export default {
 			} else {
 				this.selectList = [coupon];
 			}
-			console.log('select ', index, this.selectList);
 		},
 		toSelect() {
-			if (this.selectList.length == 0) {
-				uni.showToast({ title: '请选择优惠券', icon: 'none' })
-				return;
-			}
 			const coupon = this.selectList[0];
 			const eventChannel = this.getOpenerEventChannel();
-			eventChannel.emit('onSelect', coupon);
+			eventChannel.emit('onSelect', coupon ? coupon : {});
 			
 			uni.navigateBack({});
 		},
