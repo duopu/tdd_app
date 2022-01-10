@@ -1,12 +1,12 @@
 <template>
   <view class="evaluate-card">
 
-    <image v-if="comment.commenterHeadImg" :src="comment.commenterHeadImg" class="evaluate-img" />
-    <image v-else src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' class="evaluate-img" />
+    <image v-if="!sensitive && comment.commenterHeadImg" :src="comment.commenterHeadImg" class="evaluate-img" />
+    <image v-if="!sensitive && !comment.commenterHeadImg" src='https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon.png' class="evaluate-img" />
 
     <view class="eva-right">
       <view class="eva-right-1">
-        <view class="eva-right-name">{{ comment.commenterName }}</view>
+        <view class="eva-right-name">{{ sensitive ? `${comment.commenterName.slice(0, 1)}*` : comment.commenterName }}</view>
         <my-star :num="comment.score"/>
       </view>
 
@@ -35,7 +35,8 @@ export default {
 			content: '',
 			imgUrlList: [],
 			score: 0,
-		}
+		},
+		sensitive: false,
 	},
 }
 </script>

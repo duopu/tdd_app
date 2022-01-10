@@ -57,7 +57,7 @@
 
 		<view class="pd-comment">
 			<member-title :show-right="false" title="评价" />
-			<evaluate-card v-for="i in commentList" :key="i.id" :comment="i" />
+			<evaluate-card v-for="i in commentList" :key="i.id" :comment="i" :sensitive="true"/>
 			<list-empty v-if="!commentList.length" />
 		</view>
 

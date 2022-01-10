@@ -138,8 +138,8 @@
 				this.visible = false;
 			},
 			withdrawCheck() {
-				if (this.balance < 10) {
-					uni.showToast({ title: '最低提现金额10元', icon: 'none' })
+				if (this.balance < 20) {
+					uni.showToast({ title: '最低提现金额20元', icon: 'none' })
 					return;
 				}
 				

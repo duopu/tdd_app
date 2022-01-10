@@ -307,7 +307,7 @@ export default {
 		submitQuote() {
 			uni.showModal({
 				title: '提示',
-				content: '参与报价需要缴纳报价金额的5%作为保证金,正常开工或者流标之后保证金退回',
+				content: '参与报价需要缴纳报价保证金，正常服务完成或未被选中，保证金原路退回',
 				success: (res) => {
 					if (res.confirm) {
 						this.createQuote();

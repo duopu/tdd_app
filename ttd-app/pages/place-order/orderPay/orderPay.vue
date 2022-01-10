@@ -1,7 +1,7 @@
 <template>
   <view>
 
-    <custom-navbar title="发单" />
+    <custom-navbar title="支付订单" />
 
     <back-container>
       <template #headerSlot>
@@ -172,7 +172,7 @@ export default {
 		queryIntegralConfig() {
 			this.$http.post('/b/systemconfig/queryPlatformIntegralConf', { }, true)
 			.then(res => {
-			  this.integralUseMax = this.order.payAmount * res.consumerDeductPercent / 100;
+			  this.integralUseMax = Math.floor(this.order.payAmount * res.consumerDeductPercent / 100);
 			})
 		},
     change(data) {
