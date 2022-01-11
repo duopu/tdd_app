@@ -14,8 +14,11 @@
 					次抽奖机会
 				</view>
 
-				<wyb-noticeBar v-if="notices.length > 0" class="notice-bar" :text="notices" type="vert" color="#f5a300"
-					bgColor="transparent" time="2000" :showIcon="false" :showMore="false" />
+				<view class="notice-bar-box">
+					<wyb-noticeBar v-if="notices.length > 0" :aria-disabled="true" class="notice-bar" :text="notices" type="vert" color="#f5a300"
+												 bgColor="transparent" time="2000" :show-close="false" :showIcon="false" :showMore="false" />
+					<view class="zzc"></view>
+				</view>
 			</view>
 
 			<view class="wheel-boo0">
@@ -263,6 +266,26 @@
 			align-items: center;
 			margin-top: 28rpx;
 			align-self: center;
+		}
+		.notice-bar{
+			/*margin-top: 28rpx;*/
+		}
+		.notice-bar-box{
+			@extend .flex;
+			width: 100% !important;
+			position: relative;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			align-self: center;
+			.zzc{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 75rpx;
+				z-index: 10;
+			}
 		}
 	}
 
