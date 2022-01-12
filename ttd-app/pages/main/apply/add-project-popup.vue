@@ -6,7 +6,7 @@
 			<scroll-view scroll-y="true" class="scroll-content">
 				<view class="row flex-center-between">
 					<text class="text">参与项目</text>
-					<input class="input" v-model="name" placeholder-class="input-placeholder" type="text" placeholder="请输入项目名称">
+					<input class="input" v-model="name" maxlength="50" placeholder-class="input-placeholder" type="text" placeholder="请输入项目名称">
 				</view>
 				<view class="row flex-between">
 					<text class="text">履历</text>
