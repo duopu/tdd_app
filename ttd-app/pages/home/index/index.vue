@@ -2,7 +2,7 @@
 <template>
 	<view>
 		<!-- 搜索 -->
-		<home-search v-model="searchVal" :message-num="messageCount" @message="toMessage" @change="searchTextChange" />
+		<home-search v-model="searchVal" :message-num="messageCount"  @message="toMessage" />
 
 		<!-- 横向菜单 -->
 		<view class="home-her">
@@ -76,23 +76,6 @@
 			</view>
 		</view>
 
-		<!-- 滚动 单个 -->
-		<!--		<swiper class="swiper menu-content" :current="swiperIndex" @change="swiperChange">
-          <swiper-item class="swiper-item" v-for="(itemList, index) in itemListList" :key="index">
-            <view class="menu-arrow" :style="{ left: getArrowLeftDistance(index) }"></view>
-            <scroll-view scroll-y="true" class="scroll-content">
-              <view class="menu-lists">
-                <view class="item flex-column-center" v-for="(item, subIndex) in itemList" :key="subIndex"
-                  @click="onItemClick(item)">
-                  <image :src="item.icon" mode="aspectFill" class="image"></image>
-                  <text class="text">{{ item.name }}</text>
-                </view>
-              </view>
-            </scroll-view>
-          </swiper-item>
-        </swiper>
-        -->
-
 		<!-- 广告 -->
 		<swiper class="advertise-swiper" indicator-color="rgba(255,255,255,.3)" indicator-active-color="#ffffff"
 			:indicator-dots="true" :autoplay="true" :interval="3000" :duration="600">
@@ -159,34 +142,40 @@
 					}
 				],
 				// 菜单内容
-				itemListList: [],
+				homepageconfList:[],
 				imageButtonList: ['https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/home/imageButtonList1.png'],
 				bannerList: [],
 				searchVal: '',
-				testText: 'asd',
 				messageCount: 0,
 				oneItem: {},
 				twoItem: {},
 				threeItem: {},
 				fourItem: {},
 				fiveItem: {},
+				
 			};
 		},
 		onLoad(option) {
-			console.log('启动页传参', option);
 			if (option.contentMapId) { // 分享小程序 打开获取的参数
 				this.queryContentmapping(option.contentMapId)
 			} else if (option.scene) { // 扫码打开小程序  获取的参数
 				// scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
 				const contentMapId = decodeURIComponent(option.scene)
-				console.log('scene contentMapId', contentMapId);
 				this.queryContentmapping(contentMapId)
 			}
-
 		},
 		computed: {
 			itemList() {
-				return this.itemListList?. [this.swiperIndex]
+				return this.itemListList?.[this.swiperIndex]
+			},
+			itemListList(){
+				const listList = [[],[],[],[],[],[]];
+				this.homepageconfList.forEach(item=>{
+					if(item.name.includes(this.searchVal)){
+						listList[item.module - 1].push(item)
+					}
+				})
+				return listList;
 			}
 		},
 		onShow() {
@@ -196,9 +185,6 @@
 			this.refresh();
 		},
 		methods: {
-			searchTextChange(data) {
-				console.log('data', data);
-			},
 			refresh() {
 				this.queryHomeItemData();
 				this.queryBannerData();
@@ -227,15 +213,7 @@
 				};
 				this.$http.post('/b/homepageconf/queryList', param, true).then(res => {
 					uni.stopPullDownRefresh();
-					const dataList = res.dataList;
-					const itemListList = [];
-					itemListList.push(dataList.filter(m => m.module == 1));
-					itemListList.push(dataList.filter(m => m.module == 2));
-					itemListList.push(dataList.filter(m => m.module == 3));
-					itemListList.push(dataList.filter(m => m.module == 4));
-					itemListList.push(dataList.filter(m => m.module == 5));
-					itemListList.push(dataList.filter(m => m.module == 6));
-					this.itemListList = itemListList;
+					this.homepageconfList = res.dataList;
 				}).catch((e) => {
 					uni.stopPullDownRefresh();
 				})
