@@ -1,7 +1,7 @@
 <template>
 	<view class="agreement-view">
-		<view class="title">{{title}}</view>
-		<view class="content" v-for="text in content">{{text}}</view>
+		<view class="title">{{argument.title}}</view>
+		<text class="content">{{argument.content}}</text>
 	</view>
 </template>
 
@@ -9,25 +9,24 @@
 	export default {
 		data() {
 			return {
-				title: '',
-				content: [],
-				type: '',
+				argument: {}
 			};
 		},
 		onLoad(option) {
-			this.type = option.type;
-			this.loadAgreementData()
+			this.title = option.title;
+
 		},
 		onReady() {
+			this.loadAgreementData()
 			uni.setNavigationBarTitle({
-				title: this.type == 'userAgreement' ? '用户协议' : '隐私政策'
+				title: this.title
 			})
 		},
 		methods: {
 			loadAgreementData() {
-				this.$http.get('/core/softconf/agreement').then(res => {
-					this.title = res[this.type].title;
-					this.content = res[this.type].content.split('；');
+				this.$http.get('/core/softconf/agreement2').then(res => {
+					this.argument = res.agreementList.find(a => a.title == this.title);
+					console.log(this.argument);
 				})
 			},
 		}
@@ -35,18 +34,23 @@
 </script>
 
 <style lang="scss">
+	page {
+	  background-color: #ECEDF9;
+	  max-height: 100vh;
+	  overflow-y: scroll;
+	}
+	
 	view {
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
 		box-sizing: border-box;
-		position: relative;
 	}
 
 	.agreement-view {
 		background-color: #FFFFFF;
-		min-height: 100vh;
-
+		overflow: scroll;
+		overflow-y: scroll;
 		.title {
 			color: #333333;
 			font-size: 36rpx;
@@ -62,6 +66,8 @@
 			margin-top: 10rpx;
 			margin-left: 30rpx;
 			margin-right: 30rpx;
+			margin-bottom: 60rpx;
+			line-height: 34rpx;
 		}
 	}
 </style>

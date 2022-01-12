@@ -10,8 +10,7 @@
 
 		<view class="tip-view">
 			<view class="tip-text">
-				登录即表示同意<text class="link-text" @click="navAgreement('userAgreement')">《用户协议》</text>和
-				<text class="link-text" @click="navAgreement('privacyAgreement')">《隐私政策》</text>
+				登录即表示同意<text class="link-text" v-for="(item,index) in agreementList" @click="navAgreement(item.title)">《{{item.title}}》</text>
 			</view>
 		</view>
 	</view>
@@ -26,6 +25,8 @@
 				code: '',
 				// 协议版本号
 				agreementDate: '',
+				// 
+				agreementList:[]
 			};
 		},
 		onReady() {
@@ -68,7 +69,8 @@
 				});
 			},
 			loadAgreementData(localVersion) {
-				this.$http.get('/core/softconf/agreement').then(res => {
+				this.$http.get('/core/softconf/agreement2').then(res => {
+					this.agreementList = res.agreementList;
 					this.agreementDate = res.date;
 				})
 			},
@@ -79,9 +81,9 @@
 				});
 			},
 			// 去协议页面
-			navAgreement(type) {
+			navAgreement(title) {
 				uni.navigateTo({
-					url: `/pages/home/agreement/agreement?type=${type}`
+					url: `/pages/home/agreement/agreement?title=${title}`
 				})
 			},
 		}

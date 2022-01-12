@@ -1,512 +1,508 @@
 {
-  "pages": [
-    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-    {
-      "path": "pages/home/index/index",
-      "style": {
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/main/login/login",
-      "style": {
-        "navigationBarTitleText": "登录",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/index/index",
-      "style": {
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/place-order/index/index",
-      "style": {
-        "navigationBarTitleText": "发单",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/receive-order/index/index",
-      "style": {
-        "navigationBarTitleText": "接单",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/main/apply/apply",
-      "style": {
-        "navigationBarTitleText": "申请承接方",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/main/apply/list",
-      "style": {
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/main/apply/tree",
-      "style": {
-        "navigationBarTitleText": "",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/main/register/register",
-      "style": {
-        "navigationBarTitleText": "注册",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/invite/invite",
-      "style": {
-        "navigationBarTitleText": "我的邀请",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/distribute/distribute",
-      "style": {
-        "navigationBarTitleText": "我的分销",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/distribute-users/distribute-users",
-      "style": {
-        "navigationBarTitleText": "分享详情",
-        "enablePullDownRefresh": false
-      }
-    },
-    /*我的 - begin */
-    {
-      "path": "pages/mine/signIn/signIn",
-      "style": {
-        "navigationBarTitleText": "我的签到",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/addressManage/addressManage",
-      "style": {
-        "navigationBarTitleText": "地址管理",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/editAddress/editAddress",
-      "style": {
-        "navigationBarTitleText": "编辑地址",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/myIntegral/myIntegral",
-      "style": {
-        "navigationBarTitleText": "我的积分",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/mine/myWallet/myWallet",
-      "style": {
-        "navigationBarTitleText": "我的钱包",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/mine/myBankCard/myBankCard",
-      "style": {
-        "navigationBarTitleText": "我的银行卡",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/bankAccount/bankAccount",
-      "style": {
-        "navigationBarTitleText": "银行账户",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/myComplain/myComplain",
-      "style": {
-        "navigationBarTitleText": "我的投诉",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/myInvoice/myInvoice",
-      "style": {
-        "navigationBarTitleText": "我的发票",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/chooseLookUp/chooseLookUp",
-      "style": {
-        "navigationBarTitleText": "选择抬头",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/editInvoice/editInvoice",
-      "style": {
-        "navigationBarTitleText": "发票信息",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/myCoupons/myCoupons",
-      "style": {
-        "navigationBarTitleText": "我的优惠券",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/realNameAuth/realNameAuth",
-      "style": {
-        "navigationBarTitleText": "实名认证",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/undertakePartyApply/undertakePartyApply",
-      "style": {
-        "navigationBarTitleText": "承接方申请",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/helpCenter/helpCenter",
-      "style": {
-        "navigationBarTitleText": "帮助中心",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/aboutUs/aboutUs",
-      "style": {
-        "navigationBarTitleText": "关于我们",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    /*我的 - end */
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/main/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/index/index",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/place-order/index/index",
+			"style": {
+				"navigationBarTitleText": "发单",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/receive-order/index/index",
+			"style": {
+				"navigationBarTitleText": "接单",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/main/apply/apply",
+			"style": {
+				"navigationBarTitleText": "申请承接方",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/main/apply/list",
+			"style": {
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/main/apply/tree",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/main/register/register",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/invite/invite",
+			"style": {
+				"navigationBarTitleText": "我的邀请",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/distribute/distribute",
+			"style": {
+				"navigationBarTitleText": "我的分销",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/distribute-users/distribute-users",
+			"style": {
+				"navigationBarTitleText": "分享详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		/*我的 - begin */
+		{
+			"path": "pages/mine/signIn/signIn",
+			"style": {
+				"navigationBarTitleText": "我的签到",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/addressManage/addressManage",
+			"style": {
+				"navigationBarTitleText": "地址管理",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/editAddress/editAddress",
+			"style": {
+				"navigationBarTitleText": "编辑地址",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/myIntegral/myIntegral",
+			"style": {
+				"navigationBarTitleText": "我的积分",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/mine/myWallet/myWallet",
+			"style": {
+				"navigationBarTitleText": "我的钱包",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/mine/myBankCard/myBankCard",
+			"style": {
+				"navigationBarTitleText": "我的银行卡",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/bankAccount/bankAccount",
+			"style": {
+				"navigationBarTitleText": "银行账户",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/myComplain/myComplain",
+			"style": {
+				"navigationBarTitleText": "我的投诉",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/myInvoice/myInvoice",
+			"style": {
+				"navigationBarTitleText": "我的发票",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/chooseLookUp/chooseLookUp",
+			"style": {
+				"navigationBarTitleText": "选择抬头",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/editInvoice/editInvoice",
+			"style": {
+				"navigationBarTitleText": "发票信息",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/myCoupons/myCoupons",
+			"style": {
+				"navigationBarTitleText": "我的优惠券",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/realNameAuth/realNameAuth",
+			"style": {
+				"navigationBarTitleText": "实名认证",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/undertakePartyApply/undertakePartyApply",
+			"style": {
+				"navigationBarTitleText": "承接方申请",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/helpCenter/helpCenter",
+			"style": {
+				"navigationBarTitleText": "帮助中心",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/aboutUs/aboutUs",
+			"style": {
+				"navigationBarTitleText": "关于我们",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		/*我的 - end */
 
-    // 接单 begin
-    {
-      "path": "pages/receive-order/offer/offer",
-      "style": {
-        "navigationBarTitleText": "报价",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/incomeDistribute/incomeDistribute",
-      "style": {
-        "navigationBarTitleText": "收益分配",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/applyBeginWork/applyBeginWork",
-      "style": {
-        "navigationBarTitleText": "申请开始工作",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/complaint/complaint",
-      "style": {
-        "navigationBarTitleText": "投诉",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/myTeam/myTeam",
-      "style": {
-        "navigationBarTitleText": "我的团队",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/receive-order/teamDetail/teamDetail",
-      "style": {
-        "navigationBarTitleText": "团队详情",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/orderToSet/orderToSet",
-      "style": {
-        "navigationBarTitleText": "接单设置",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/selectPerson/selectPerson",
-      "style": {
-        "navigationBarTitleText": "选择人员",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/peopleDetail/peopleDetail",
-      "style": {
-        "navigationBarTitleText": "人员详情",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/personChange/personChange",
-      "style": {
-        "navigationBarTitleText": "人员变更",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/changeRecord/changeRecord",
-      "style": {
-        "navigationBarTitleText": "变更记录",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    // 接单 end
+		// 接单 begin
+		{
+			"path": "pages/receive-order/offer/offer",
+			"style": {
+				"navigationBarTitleText": "报价",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/incomeDistribute/incomeDistribute",
+			"style": {
+				"navigationBarTitleText": "收益分配",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/applyBeginWork/applyBeginWork",
+			"style": {
+				"navigationBarTitleText": "申请开始工作",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/complaint/complaint",
+			"style": {
+				"navigationBarTitleText": "投诉",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/myTeam/myTeam",
+			"style": {
+				"navigationBarTitleText": "我的团队",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/receive-order/teamDetail/teamDetail",
+			"style": {
+				"navigationBarTitleText": "团队详情",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/orderToSet/orderToSet",
+			"style": {
+				"navigationBarTitleText": "接单设置",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/selectPerson/selectPerson",
+			"style": {
+				"navigationBarTitleText": "选择人员",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/peopleDetail/peopleDetail",
+			"style": {
+				"navigationBarTitleText": "人员详情",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/personChange/personChange",
+			"style": {
+				"navigationBarTitleText": "人员变更",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/changeRecord/changeRecord",
+			"style": {
+				"navigationBarTitleText": "变更记录",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		// 接单 end
 
-    // 发单 begin
-    {
-      "path": "pages/place-order/placeOrder/placeOrder",
-      "style": {
-        "navigationBarTitleText": "发单",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/addImplementation/addImplementation",
-      "style": {
-        "navigationBarTitleText": "添加实施工作",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/addCanBeSetWork/addCanBeSetWork",
-      "style": {
-        "navigationBarTitleText": "添加勘设工作",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/addPersonWork/addPersonWork",
-      "style": {
-        "navigationBarTitleText": "添加人员工作",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/addLeaseWork/addLeaseWork",
-      "style": {
-        "navigationBarTitleText": "添加租赁工作",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/addSoftwareDevelop/addSoftwareDevelop",
-      "style": {
-        "navigationBarTitleText": "添加软件开发",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/orderList/orderList",
-      "style": {
-        "navigationBarTitleText": "订单列表",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },
-    {
-      "path": "pages/place-order/choosePrice/choosePrice",
-      "style": {
-        "navigationBarTitleText": "选价",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/orderDetail/orderDetail",
-      "style": {
-        "navigationBarTitleText": "订单详情",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/orderPay/orderPay",
-      "style": {
-        "navigationBarTitleText": "订单支付",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/place-order/evaluationOrder/evaluationOrder",
-      "style": {
-        "navigationBarTitleText": "评价订单",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/receive-order/questionAnswer/questionAnswer",
-      "style": {
-        "navigationBarTitleText": "问答",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/message/message",
-      "style": {
-        "navigationBarTitleText": "消息",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/messageDetail/messageDetail",
-      "style": {
-        "navigationBarTitleText": "消息详情",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/messageList/messageList",
-      "style": {
-        "navigationBarTitleText": "列表消息",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/helpDetail/helpDetail",
-      "style": {
-        "navigationBarTitleText": "帮助详情",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/myDistribution/myDistribution",
-      "style": {
-        "navigationBarTitleText": "我的分销",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/distributionDetail/distributionDetail",
-      "style": {
-        "navigationBarTitleText": "分销详情",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/lotteryCenter/lotteryCenter",
-      "style": {
-        "navigationBarTitleText": "抽奖中心",
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": false
-      }
-    }
-      ,{
-            "path" : "pages/home/agreement/agreement",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
-  "tabBar": {
-    "backgroundColor": "#FFFFFF",
-    "color": "#333333",
-    "selectedColor": "#214DE2",
-    "borderStyle": "white",
-    "list": [
-      {
-        "iconPath": "static/tabbars/home.png",
-        "selectedIconPath": "static/tabbars/home-s.png",
-        "text": "首页",
-        "pagePath": "pages/home/index/index"
-      },
-      {
-        "iconPath": "static/tabbars/place.png",
-        "selectedIconPath": "static/tabbars/place-s.png",
-        "text": "发单",
-        "pagePath": "pages/place-order/index/index"
-      },
-      {
-        "iconPath": "static/tabbars/receive.png",
-        "selectedIconPath": "static/tabbars/receive-s.png",
-        "text": "接单",
-        "pagePath": "pages/receive-order/index/index"
-      },
-      {
-        "iconPath": "static/tabbars/mine.png",
-        "selectedIconPath": "static/tabbars/mine-s.png",
-        "text": "我的",
-        "pagePath": "pages/mine/index/index"
-      }
-    ]
-  },
-  "globalStyle": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#FFFFFF",
-    "backgroundColor": "#F6F6F6"
-  }
+		// 发单 begin
+		{
+			"path": "pages/place-order/placeOrder/placeOrder",
+			"style": {
+				"navigationBarTitleText": "发单",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/place-order/addImplementation/addImplementation",
+			"style": {
+				"navigationBarTitleText": "添加实施工作",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/place-order/addCanBeSetWork/addCanBeSetWork",
+			"style": {
+				"navigationBarTitleText": "添加勘设工作",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/place-order/addPersonWork/addPersonWork",
+			"style": {
+				"navigationBarTitleText": "添加人员工作",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/place-order/addLeaseWork/addLeaseWork",
+			"style": {
+				"navigationBarTitleText": "添加租赁工作",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/place-order/addSoftwareDevelop/addSoftwareDevelop",
+			"style": {
+				"navigationBarTitleText": "添加软件开发",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/place-order/orderList/orderList",
+			"style": {
+				"navigationBarTitleText": "订单列表",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/place-order/choosePrice/choosePrice",
+			"style": {
+				"navigationBarTitleText": "选价",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/place-order/orderDetail/orderDetail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/place-order/orderPay/orderPay",
+			"style": {
+				"navigationBarTitleText": "订单支付",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/place-order/evaluationOrder/evaluationOrder",
+			"style": {
+				"navigationBarTitleText": "评价订单",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/receive-order/questionAnswer/questionAnswer",
+			"style": {
+				"navigationBarTitleText": "问答",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/message/message",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/messageDetail/messageDetail",
+			"style": {
+				"navigationBarTitleText": "消息详情",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/messageList/messageList",
+			"style": {
+				"navigationBarTitleText": "列表消息",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/helpDetail/helpDetail",
+			"style": {
+				"navigationBarTitleText": "帮助详情",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/myDistribution/myDistribution",
+			"style": {
+				"navigationBarTitleText": "我的分销",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/distributionDetail/distributionDetail",
+			"style": {
+				"navigationBarTitleText": "分销详情",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/lotteryCenter/lotteryCenter",
+			"style": {
+				"navigationBarTitleText": "抽奖中心",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/home/agreement/agreement",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"tabBar": {
+		"backgroundColor": "#FFFFFF",
+		"color": "#333333",
+		"selectedColor": "#214DE2",
+		"borderStyle": "white",
+		"list": [{
+				"iconPath": "static/tabbars/home.png",
+				"selectedIconPath": "static/tabbars/home-s.png",
+				"text": "首页",
+				"pagePath": "pages/home/index/index"
+			},
+			{
+				"iconPath": "static/tabbars/place.png",
+				"selectedIconPath": "static/tabbars/place-s.png",
+				"text": "发单",
+				"pagePath": "pages/place-order/index/index"
+			},
+			{
+				"iconPath": "static/tabbars/receive.png",
+				"selectedIconPath": "static/tabbars/receive-s.png",
+				"text": "接单",
+				"pagePath": "pages/receive-order/index/index"
+			},
+			{
+				"iconPath": "static/tabbars/mine.png",
+				"selectedIconPath": "static/tabbars/mine-s.png",
+				"text": "我的",
+				"pagePath": "pages/mine/index/index"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F6F6F6"
+	}
 }

@@ -4,8 +4,7 @@
 			<view class="title">用户协议和隐私</view>
 			<view class="wc-label">欢迎您使用妥妥弟！</view>
 			<view class="label-view" >
-				请充分阅读<text class="link-text" @click="navAgreement('userAgreement')" >《用户协议》</text>和
-				<text class="link-text"  @click="navAgreement('privacyAgreement')">《隐私政策》</text>，点击“同意并继续”代表您已经同意前述协议及约定。
+				请充分阅读<text class="link-text" v-for="(item,index) in agreementList" @click="navAgreement(item.title)" >《{{item.title}}》</text>，点击“同意并继续”代表您已经同意前述协议及约定。
 			</view>
 			<text class="label-view">妥妥弟将严格保守您的个人信息，确保信息安全。您再点击“同意并继续”前，务必审慎阅读，充分理解协议内容</text>
 
@@ -24,7 +23,8 @@
 		name: "agreement-modal",
 		data() {
 			return {
-				agreementDate: ''
+				agreementDate: '',
+				agreementList:[],
 			};
 		},
 		mounted() {
@@ -49,8 +49,9 @@
 				} 
 			},
 			loadAgreementData(localVersion) {
-				this.$http.get('/core/softconf/agreement').then(res => {
+				this.$http.get('/core/softconf/agreement2').then(res => {
 					this.agreementDate = res.date;
+					this.agreementList = res.agreementList;
 					if (res.date !== localVersion) {
 						// 弹框提示
 						this.open();
@@ -66,9 +67,9 @@
 				this.$refs.popup.close();
 			},
 			// 去协议页面
-			navAgreement(type){
+			navAgreement(title){
 				uni.navigateTo({
-					url:`/pages/home/agreement/agreement?type=${type}`
+					url:`/pages/home/agreement/agreement?title=${title}`
 				})
 			},
 			confirmClick() {

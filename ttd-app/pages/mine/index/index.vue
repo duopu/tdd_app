@@ -68,7 +68,7 @@
 
 		</view>
 
-		<view class="logout">退出登录</view>
+		<view class="logout" @click="logout">退出登录</view>
 		
 		<!-- 协议弹层 -->
 		<agreement-modal ref="agreementModal" ></agreement-modal>
@@ -259,6 +259,10 @@
 						url: row.url
 					})
 				});
+			},
+			logout(){
+				console.log('logout');
+				this.$tool.logout()
 			}
 		}
 	};
