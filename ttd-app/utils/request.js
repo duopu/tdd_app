@@ -9,7 +9,6 @@ export default {
 		let header = {
 			Accept: 'application/json',
 			'Content-Type': method == 'POST' ? 'application/json; charset=utf-8' : 'application/x-www-form-urlencoded',
-			'x-uid':1,
 			// Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDMTAwMDgzNzUwNjgxNDA4MCIsInVzZXJUeXBlIjoxLCJleHAiOjE2Mzk4NDQ2NzN9.wg4EkfwT6ulR7mfajwnnMEhseEQWr6NXrcxo8VxWcwA'
 			// Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDMTAwMDgyNzcwNDE1MjE5MiIsInVzZXJUeXBlIjoxLCJleHAiOjE2NDAzMjg0NDV9.lLD9jAbL8akmB5u9DKg-d-CwcMuH5K0uHE-Zq7BDzBE'
 		}

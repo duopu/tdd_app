@@ -50,7 +50,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxa191a75756adc164",
+        "appid" : "wxed5f92cfcafbc8c1",
         "setting" : {
             "urlCheck" : false,
             "minified" : false
@@ -61,7 +61,7 @@
                 "desc" : "获取您的当前位置,用于地址管理"
             }
         },
-		"requiredBackgroundModes": ["audio"]
+        "requiredBackgroundModes" : [ "audio" ]
     },
     "mp-alipay" : {
         "usingComponents" : true
