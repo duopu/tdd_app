@@ -179,10 +179,10 @@
 			// 提现申请
 			withdrawMoney() {
 				const params = {
-					cash: this.balance * 100,
+					// cash: this.balance * 100,
 					customerBankId: this.bankCard.id,
 				}
-				this.$http.post('/b/withdraworder/wechatWithdraw', params, true)
+				this.$http.post('/b/withdraworder/withdrawApply', params, true)
 					.then(res => {
 						uni.showToast({
 							title: '申请提现已提交，等待管理员审核'

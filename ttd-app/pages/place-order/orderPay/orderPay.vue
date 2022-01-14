@@ -280,23 +280,41 @@ export default {
 						}
 					})
 				} else {
-					uni.showModal({
-						title: '提示',
-						content: '恭喜您，订单支付成功',
-						cancelText: '返回首页',
-						confirmText: '查看订单',
-						success: (res) => {
-							if (res.confirm) {
-								uni.navigateTo({
-								  url: `/pages/place-order/orderDetail/orderDetail?id=${this.id}&isPlaceOrder=1`,
-								})
-							} else {
-								uni.switchTab({ url: '/pages/home/index/index' });
-							}
-						}
-					})
+					this.wxPay(res.payResult);
 				}
 			})
+		},
+		wxPay(res) {
+			uni.requestPayment({
+				provider: 'wxpay',
+				timeStamp: res.timestamp,
+				nonceStr: res.noncestr,
+				package: res.packageName,
+				signType: 'MD5',
+				paySign: res.sign,
+				success: (res) => {
+				  console.log('success:' + JSON.stringify(res));
+				  uni.showModal({
+				  	title: '提示',
+				  	content: '恭喜您，订单支付成功',
+				  	cancelText: '返回首页',
+				  	confirmText: '查看订单',
+				  	success: (res) => {
+				  		if (res.confirm) {
+				  			uni.navigateTo({
+				  			  url: `/pages/place-order/orderDetail/orderDetail?id=${this.id}&isPlaceOrder=1`,
+				  			})
+				  		} else {
+				  			uni.switchTab({ url: '/pages/home/index/index' });
+				  		}
+				  	}
+				  })
+				},
+				fail: function (err) {
+				    console.log('fail:' + JSON.stringify(err));
+						uni.showToast({ title: '订单支付失败', icon: 'none' });
+				},
+			});
 		},
 		queryBankCardInfo() {
 			this.$http.get('/core/softconf/bankcard', {}, true)
