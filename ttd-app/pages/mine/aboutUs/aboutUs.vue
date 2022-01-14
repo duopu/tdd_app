@@ -15,7 +15,7 @@
             <view class="list-item-right">
               <view class="list-title">{{ i.title }}</view>
               <view class="list-text">{{ i.text }}</view>
-              <view class="list-item-copy">复制</view>
+              <view class="list-item-copy" @click="copy(i.text)">复制</view>
             </view>
           </view>
         </view>
@@ -46,17 +46,17 @@ export default {
         {
           url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/weixin-icon1.svg',
           title: '官方微信：',
-          text: 'WX29384'
+          text: 'wx_hhhhlllllllll'
         },
         {
           url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/qq-icon1.svg',
           title: '官方 QQ：',
-          text: '234234u234'
+          text: '11729107382'
         },
         {
           url: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/sms-icon1.svg',
           title: '电子邮箱：',
-          text: 'ikoksdf@oks.com'
+          text: '1172910634@qq.com'
         },
       ]
     };
@@ -81,6 +81,12 @@ export default {
 				.then(res => {
 					uni.showToast({ title: '您的咨询已提交!' });
 				});
+		},
+		copy(text) {
+			uni.setClipboardData({
+				data: text,
+				showToast: true,
+			})
 		},
 	}
 }
