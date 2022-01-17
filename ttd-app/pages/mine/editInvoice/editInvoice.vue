@@ -1,16 +1,16 @@
 <template>
   <view class="edit-invoice">
 
-    <custom-navbar title="添加发票抬头" />
+    <custom-navbar :title="`${id === 0 ? '添加': '编辑'}发票抬头`" />
 
     <back-container>
       <template v-slot:headerSlot>
-        <blue-tab :active-key="activeKey" :list="tabList" @change="change" />
+        <blue-tab v-if="id == 0" :active-key="activeKey" :list="tabList" @change="change" />
       </template>
 
 
       <!--企业-->
-      <view class="edit-in-addr" v-if="activeKey === '0'">
+      <view class="edit-in-addr" v-if="activeKey === 0">
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">公司名称</view>
           <input class="edit-in-ac-midle input-sty" :value="name" @input="(e) => onInput(e, 'name')" placeholder="请务必输入" placeholder-class="input-placeholder" />
@@ -57,25 +57,25 @@
 
 
       <!--个人-->
-      <view class="edit-in-addr" v-if="activeKey === '1'">
+      <view class="edit-in-addr" v-if="activeKey === 1">
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">姓名</view>
-          <input class="edit-in-ac-midle input-sty" placeholder="请务必输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="name" @input="(e) => onInput(e, 'name')" placeholder="请务必输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">身份证</view>
-          <input class="edit-in-ac-midle input-sty" placeholder="请务必输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="dutyNo" @input="(e) => onInput(e, 'duty')" placeholder="请务必输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">电话</view>
-          <input class="edit-in-ac-midle input-sty" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="phone" @input="(e) => onInput(e, 'phone')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">地址</view>
-          <input class="edit-in-ac-midle input-sty" placeholder="请输入" placeholder-class="input-placeholder" />
+          <input class="edit-in-ac-midle input-sty" :value="address" @input="(e) => onInput(e, 'address')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
       </view>
 
@@ -106,10 +106,10 @@ export default {
 			openingBank: '',
 			bankAccount: '',
 			businessLicense: '',
-      activeKey: '0',
+      activeKey: 0,
       tabList: [
-        { text: '企业', key: '0' },
-        { text: '个人', key: '1' },
+        { text: '企业', key: 0 },
+        { text: '个人', key: 1 },
       ],
     }
   },
@@ -127,6 +127,7 @@ export default {
 			this.$http
 				.post('/b/customerinvoiceinfo/query', { id }, true)
 				.then(res => {
+					this.activeKey = res.type;
 					this.name = res.name;
 					this.phone = res.phone;
 					this.dutyNo = res.dutyNo;
@@ -172,30 +173,30 @@ export default {
 		},
 		checkParams() {
 			if (!this.name) {
-				uni.showToast({ title:  '请输入公司名称', icon:  'none' });
+				uni.showToast({ title:  `请输入${this.activeKey == 0 ? '公司名称' : '姓名'}`, icon:  'none' });
 				return false;
 			}
 			if (!this.dutyNo) {
-				uni.showToast({ title:  '请输入统一税号', icon:  'none' });
+				uni.showToast({ title: `请输入${this.activeKey == 0 ? '统一税号' : '身份证'}`, icon:  'none' });
 				return false;
 			}
 			if (!this.address) {
-				uni.showToast({ title:  '请输入单位地址', icon:  'none' });
+				uni.showToast({ title: `请输入${this.activeKey == 0 ? '单位地址' : '地址'}`, icon:  'none' });
 				return false;
 			}
 			if (!this.phone) {
 				uni.showToast({ title:  '请输入电话号码', icon:  'none' });
 				return false;
 			}
-			if (!this.openingBank) {
+			if (this.activeKey == 0 && !this.openingBank) {
 				uni.showToast({ title:  '请输入开户银行', icon:  'none' });
 				return false;
 			}
-			if (!this.bankAccount) {
+			if (this.activeKey == 0 && !this.bankAccount) {
 				uni.showToast({ title:  '请输入银行帐户', icon:  'none' });
 				return false;
 			}
-			if (!this.businessLicense) {
+			if (this.activeKey == 0 && !this.businessLicense) {
 				uni.showToast({ title:  '请选择营业执照', icon:  'none' });
 				return false;
 			}
@@ -208,6 +209,7 @@ export default {
 
 			const params  = {
 				id: this.id,
+				type: this.activeKey,
 				name: this.name,
 				phone: this.phone,
 				dutyNo: this.dutyNo,
