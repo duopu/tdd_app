@@ -50,7 +50,7 @@
 					<text v-if="index == 0" class="pd-skill-it3" v-for="b in s.brandList" :key="b">{{ b }}</text>
 					<text v-if="index == 1" class="pd-skill-it3" v-for="b in s.softwareList" :key="b">{{ b }}</text>
 					<text v-if="index == 2" class="pd-skill-it3">{{ s.resume }}</text>
-					<text v-if="index == 3" class="pd-skill-it3">{{ s.leaseFlag == 1 ? '租赁' : '' }}</text>
+					<text v-if="index == 3" class="pd-skill-it3">{{ s.leaseFlag == 1 ? '租赁' : '不租赁' }}</text>
 				</view>
 			</view>
 		</view>
