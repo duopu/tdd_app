@@ -255,9 +255,17 @@
 			},
 			toPage(row) {
 				this.$tool.actionForLogin(() => {
-					uni.navigateTo({
-						url: row.url
-					})
+					if (row.title == '承接方申请') {
+						this.$tool.actionForAuth(() => {
+							uni.navigateTo({
+								url: row.url
+							})
+						}) 
+					} else {
+						uni.navigateTo({
+							url: row.url
+						})
+					}
 				});
 			},
 			logout(){
