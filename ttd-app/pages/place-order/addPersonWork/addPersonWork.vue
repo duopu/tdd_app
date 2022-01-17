@@ -32,9 +32,7 @@
 
     </back-container>
 
-    <view class="add-im-tips" v-if="isEdit">
-			<red-star />上传完整清晰图片、视频，以便师傅更快接单
-		</view>
+    <view class="add-im-tips" v-if="isEdit">上传完整清晰图片、视频，以便师傅更快接单</view>
 
     <iphonex-bottom v-if="isEdit">
       <big-btn @click="onSubmit"/>
@@ -108,10 +106,6 @@ export default {
 			}
 			if (!this.requireInfo) {
 				uni.showToast({ title: '请输入要求', icon: 'none' })
-				return;
-			}
-			if (this.orderResourceList.length == 0) {
-				uni.showToast({ title: '请上传资料', icon: 'none' })
 				return;
 			}
 	  	const work = Object.assign({}, this.$data);
