@@ -10,7 +10,6 @@
 				success: res => {
 					console.log('从本地缓存取出用户数据', res.data);
 					this.$store.commit('setUser', res.data)
-					
 					this.$store.dispatch('queryUserInfo')
 				}
 			});
@@ -18,11 +17,9 @@
 			// ios端音频不能在静音下播放处理
 			let music = wx.setInnerAudioOption({
 				obeyMuteSwitch: false,
-
 				success: (res) => {
 					console.log("开启静音模式下播放音乐的功能", res);
 				},
-
 				fail: (err) => {
 					console.log("静音设置失败", err);
 				},
@@ -62,8 +59,8 @@
 		box-sizing: border-box;
 		overflow: hidden;
 	}
-	
-	.dlFlex{
+
+	.dlFlex {
 		display: flex;
 		box-sizing: border-box;
 		position: relative;
@@ -130,6 +127,10 @@
 
 	.justify-end {
 		justify-content: flex-end;
+	}
+
+	.m-top-16 {
+		margin-top: 16rpx;
 	}
 
 	// 文本省略
