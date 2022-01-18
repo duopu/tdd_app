@@ -5,7 +5,7 @@
 			class="image-logo"></image>
 
 		<button class="btn green" @click="loginAction">微信一键登录</button>
-
+		<button class="btn yellow" @click="pwdLoginAction">手机号密码登录</button>
 		<button class="btn primary" @click="onRegister">注册</button>
 
 		<view class="tip-view">
@@ -86,6 +86,12 @@
 					url: `/pages/home/agreement/agreement?title=${title}`
 				})
 			},
+			// 密码登录
+			pwdLoginAction(){
+				uni.navigateTo({
+					url:'/pages/main/password-login/password-login'
+				})
+			}
 		}
 	};
 </script>

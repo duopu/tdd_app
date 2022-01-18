@@ -20,7 +20,7 @@
 .name-view{
 	flex-direction: row;
 	align-items: center;
-	margin-top: 80rpx;
+	margin-top: 60rpx;
 	color: #333333;
 	font-size: 28rpx;
 	width:80%;
@@ -28,9 +28,13 @@
 	border-bottom-color: #dcdcdc;
 	border-bottom-style: solid;
 	border-bottom-width: 2rpx;
+	
+	.label-text{
+		width: 140rpx;
+	}
 }
 .btn{
-	margin-top: 40rpx;
+	margin-top: 80rpx;
 	width:80%;
 	height: 85rpx;
 	line-height: 85rpx;

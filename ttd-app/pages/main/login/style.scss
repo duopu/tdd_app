@@ -43,6 +43,10 @@
 		color: #FFFFFF;
 		background-color: $uni-color-success;
 	}
+	&.yellow{
+		color: #FFFFFF;
+		background-color: $uni-color-warning;
+	}
 }
 .login-result{
 	margin: 40rpx 100rpx;

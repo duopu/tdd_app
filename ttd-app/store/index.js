@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import http from '../utils/request.js';
+import config from '../utils/config.js';
 
 Vue.use(Vuex); //vue的插件机制
 
@@ -55,10 +56,17 @@ const store = new Vuex.Store({
 			state
 		}) {
 			http.post('/b/customer/query').then(res => {
-				commit('setUser', { 
+				const user = { 
 					...state.user,
 					...res,
 					token:state.user.token,
+				}
+				commit('setUser', user);
+				
+				// 本地保存
+				uni.setStorage({
+					key: config.storageKeys.loginUserKey,
+					data: user
 				});
 			})
 		}

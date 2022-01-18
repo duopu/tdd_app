@@ -467,7 +467,25 @@
 				"enablePullDownRefresh": false
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/main/password-login/password-login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "密码登录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/mine/reset-pwd/reset-pwd",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "重置密码",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"tabBar": {
 		"backgroundColor": "#FFFFFF",
 		"color": "#333333",

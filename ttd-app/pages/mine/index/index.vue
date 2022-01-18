@@ -134,6 +134,11 @@
 						url: '/pages/mine/addressManage/addressManage',
 						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-6.png'
 					},
+					{
+						title: '密码设置',
+						url: '/pages/mine/reset-pwd/reset-pwd',
+						img: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-6.png'
+					},
 				]
 			},
 			newList1() {

@@ -13,6 +13,8 @@ export default {
 		// 保存邀请信息
 		inviteInfoStorage:'inviteInfoStorage',
 		// 当前协议版本号保存
-		agreementVersionStorage:'agreementVersionStorage'
-	}
+		agreementVersionStorage:'agreementVersionStorage',
+	},
+	// 非对称加密公钥
+	rsaPublicKey:'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcwCya/V+LzWLaiYlb2ld5dorjlSOsCvY2kWXbJzzFyPH+R8D+aFvDzR98XOGc3R5wTtkwcR9ZqLSwRmM5MfSoDE3YRrZvA3HaGFaxsi1BR4qALd5BFfHL5k00aZ2a27PHe7TgPFlc+taSVDL8G5PaKP8/2xqyf++X6SxPnus+SQIDAQAB'
 }

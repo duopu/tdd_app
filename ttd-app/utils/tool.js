@@ -1,5 +1,6 @@
 import config from "./config.js"
 import store from '../store/index.js';
+	import WxmpRsa from 'wxmp-rsa'
 
 const showToastMessage = (title, icon, callback) => {
 	const duration = 1500;
@@ -108,6 +109,14 @@ const masterWorker = (action)=>{
 	})
 }
 
+
+// 加密密码
+const  encrypPwd = (pwd)=>{
+	const rsa = new WxmpRsa()
+	rsa.setPublicKey(config.rsaPublicKey)
+	return rsa.encryptLong(pwd)
+}
+
 // 订单
 // 订单类型
 const orderType = (type) => {
@@ -169,5 +178,6 @@ export default {
 	actionForAuth,
 	orderType,
 	orderState,
-	masterWorker
+	masterWorker,
+	encrypPwd
 }

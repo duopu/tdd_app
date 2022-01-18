@@ -5,15 +5,20 @@
 			class="image-logo"></image>
 		<text class="invite-text" v-if="inviteInfo.shareUserId">邀请人：{{inviteInfo.shareUserName}}</text>
 		<view class="name-view flex">
-			<text>姓名： </text>
+			<text class="label-text">姓名： </text>
 			<input type="text" v-model="name" placeholder="注册请输入姓名" />
+		</view>
+		<view class="name-view flex">
+			<text class="label-text">登录密码： </text>
+			<input type="text" v-model="loginPassword" placeholder="注册请输入登录密码" />
 		</view>
 
 		<button class="btn primary" open-type="getPhoneNumber" @getphonenumber="registerAction">微信号码一键注册</button>
 
 		<view class="tip-view">
 			<view class="tip-text">
-				注册即表示同意<text class="link-text" v-for="(item,index) in agreementList" @click="navAgreement(item.title)">《{{item.title}}》</text>
+				注册即表示同意<text class="link-text" v-for="(item,index) in agreementList"
+					@click="navAgreement(item.title)">《{{item.title}}》</text>
 			</view>
 		</view>
 	</view>
@@ -28,11 +33,13 @@
 				// code
 				code: '',
 				name: '',
+				// 密码
+				loginPassword: '',
 				// 邀请信息
 				inviteInfo: {},
 				// 协议版本号
 				agreementDate: '',
-				agreementList:[]
+				agreementList: []
 			};
 		},
 		onReady() {
@@ -68,6 +75,10 @@
 					this.$tool.showToast('注册操作需要输入姓名')
 				} else if (/\d/.test(this.name)) {
 					this.$tool.showToast('姓名中不能含有数字')
+				} else if (!this.loginPassword) {
+					this.$tool.showToast('请输入正确的登录密码')
+				} else if (this.loginPassword.length < 6) {
+					this.$tool.showToast('密码不能少于6位')
 				} else {
 					this.bindgetphonenumber(data)
 				}
@@ -75,7 +86,6 @@
 			// 用户授权手机号的回调
 			bindgetphonenumber(data) {
 				const info = data.detail;
-				console.log('ad', info);
 				const param = {
 					appId: config.appId,
 					code: this.code,
@@ -83,6 +93,7 @@
 					iv: info.iv,
 					loginName: this.name,
 					userType: 1,
+					loginPassword:this.$tool.encrypPwd(this.loginPassword),
 					...this.inviteInfo,
 				};
 				this.$http.post('/core/grant/miniPhone', param, true).then(res => {
