@@ -76,6 +76,9 @@
 					.then(res => {
 						uni.stopPullDownRefresh();
 						this.team = res;
+						if (this.team.leaderFlag) {
+							this.checkTeamSetting();
+						}
 					}).catch((e) => {
 				    uni.stopPullDownRefresh();
 			    })
@@ -95,6 +98,32 @@
 						this.totalProfits = res.allOrderQuotaAmount / 1000;
 						this.avgProfits = res.quotaAmountAvgMonth / 1000;
 					});
+			},
+			checkTeamSetting() {
+				uni.getStorage({
+					key: 'TeamSettingTip',
+					success: (res) => {
+						console.log('TeamSettingTip res ', res);
+					},
+					fail: (res) => {
+						uni.showModal({
+							title: '提示',
+							content: '请先去设置接单位置、距离，开启团队接单',
+							confirmText: '去设置',
+							success: (res) => {
+								if (res.confirm) {
+									this.toSettingPage();
+								}
+							},
+							complete: () => {
+								uni.setStorage({
+									key: 'TeamSettingTip',
+									data: 'TeamSettingTip',
+								})
+							}
+						})
+					}
+				})
 			},
 			updateTeam(teamLogo, teamName, teamIntroduce) {
 				if (!teamName) {
