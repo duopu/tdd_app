@@ -19,7 +19,7 @@
 			<view class="ind-52">
 				<offer-content-card v-for="(item, index) in memberList" :key="index" :title="item.name"
 					:image="item.headImgUrl" :specItem="[{label: '手机号：', value: item.phone}]"
-					:right-type="order.leaderFlag != 1 && showConfirm ? 6 : (item.amount ? 1 : 3)"
+					:right-type="order.leaderFlag != 1 ? 6 : (item.amount ? 1 : 3)"
 					:price="item.amount / 100" :state="item.confirmState"
 					:show-last-border-bottom="index < (memberList.length -1)" @onChange="changePrice(item)" />
 			</view>
@@ -27,7 +27,7 @@
 
 		<view style="height: 300rpx" />
 
-		<iphonex-bottom>
+		<iphonex-bottom v-if="order.leaderFlag == 1 || showConfirm">
 			<bottom-price-and-btn v-if="order.leaderFlag == 1" all-text="已分配" sure-text="确认分配" :price="getQuoteCount(3)"
 				@onCancel="cancelDistribute" @onConfirm="submitDistribute">
 				<view class="ind-8">
@@ -78,7 +78,7 @@
 		data() {
 			return {
 				id: '',
-				showConfirm: true,
+				showConfirm: false,
 				order: {},
 				totalAmount: 0,
 				memberList: [],
@@ -118,7 +118,9 @@
 						this.memberList = res;
 						const user = this.$store.state.user;
 						let mySelf = (res || []).filter((m) => m.id == user.id);
-						this.showConfirm = mySelf[0].confirmState != 1 && mySelf[0].confirmState != 2;
+						if (mySelf.length > 0) {
+						  this.showConfirm = mySelf[0].confirmState != 1 && mySelf[0].confirmState != 2;
+						}
 					})
 			},
 			changePrice(person) {
