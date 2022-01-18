@@ -10,13 +10,13 @@
 
         <view class="bank-ac-item">
           <view class="bank-ac-lable">开户行</view>
-          <view class="bank-ac-midle">{{ bankName || '请输入卡号' }}</view>
+          <view class="bank-ac-midle">{{ bankName || '输入卡号后自动识别，无需输入' }}</view>
           <!-- <uni-icons class="bank-ac-right" type="arrowright" size="18" color="#969799" /> -->
         </view>
 
         <view class="bank-ac-item">
           <view class="bank-ac-lable">开户网点</view>
-          <input class="bank-ac-midle input-sty" placeholder="可选输入" placeholder-class="input-placeholder" />
+          <input class="bank-ac-midle input-sty" :value="networkPointName" @input="(e) => onInput(e, 'point')" placeholder="可选输入" placeholder-class="input-placeholder" />
         </view>
 
         <view class="bank-ac-item">
@@ -44,7 +44,8 @@ export default {
 	data() {
 		return {
 			id: 0,
-			bankName: '',
+			bankName: '', // 开户行
+			networkPointName: '', // 开户网点
 			bankCardNo: '',
 			householderName: '',
 			bankList: [],
@@ -73,6 +74,7 @@ export default {
 				.then(res => {
 					this.bankName = res.bankName;
 					this.bankCardNo = res.bankCardNo;
+					this.networkPointName = res.networkPointName;
 					this.householderName = res.householderName;
 				})
 		},
@@ -89,6 +91,8 @@ export default {
 			const text = event.target.value;
 			if (type == 'name') {
 				this.householderName = text;
+			} else if (type == 'point') {
+				this.networkPointName = text;
 			} else if (type == 'number') {
 				this.bankCardNo = text;
 				if (text.length >= 16) {
@@ -120,6 +124,7 @@ export default {
 				id: this.id,
 				bankName: this.bankName,
 				bankCardNo: this.bankCardNo,
+				networkPointName: this.networkPointName,
 				householderName: this.householderName,
 			};
 
