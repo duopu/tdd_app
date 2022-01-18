@@ -310,7 +310,10 @@ export default {
 			const url = this.isPlaceOrder ? '/b/ordermaster/publishCancel' : '/b/orderreceive/receiveCancel';
 			this.$http.post(url, { id: this.id }, true)
 			.then(res => {
-				uni.showToast({ title: '订单已取消' });
+				const timer = setTimeout(() => {
+					timer && clearTimeout(timer);
+					uni.showToast({ title: '订单已取消' });
+				}, 500)
 				this.queryOrderList();
 			})
 		},
@@ -378,7 +381,10 @@ export default {
 			}
 			this.$http.post('/b/ordersettlement/partialSettlement', params, true)
 			.then(res => {
-				uni.showToast({ title: '部分付款成功' });
+				const timer = setTimeout(() => {
+					timer && clearTimeout(timer);
+					uni.showToast({ title: '部分付款成功' });
+				}, 500)
 				this.queryOrderList();
 			})
 		},
