@@ -6,11 +6,11 @@
 
 		<view class="name-view flex">
 			<text class="label-text">手机号： </text>
-			<input type="text" v-model="phone" :disabled="true" placeholder="注册请输入姓名" />
+			<input type="text" v-model="phone" :disabled="true" placeholder="请输入手机号" />
 		</view>
 		<view class="name-view flex">
 			<text class="label-text">新密码： </text>
-			<input type="text" v-model="loginPassword" placeholder="注册请输入新登录密码" />
+			<input type="text" v-model="loginPassword" placeholder="请输入新登录密码" />
 		</view>
 
 		<button class="btn primary" @click="resetAction">设置</button>

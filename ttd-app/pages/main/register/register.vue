@@ -6,11 +6,11 @@
 		<text class="invite-text" v-if="inviteInfo.shareUserId">邀请人：{{inviteInfo.shareUserName}}</text>
 		<view class="name-view flex">
 			<text class="label-text">姓名： </text>
-			<input type="text" v-model="name" placeholder="注册请输入姓名" />
+			<input type="text" v-model="name" placeholder="请输入姓名" />
 		</view>
 		<view class="name-view flex">
 			<text class="label-text">登录密码： </text>
-			<input type="text" v-model="loginPassword" placeholder="注册请输入登录密码" />
+			<input type="text" v-model="loginPassword" placeholder="请输入登录密码" />
 		</view>
 
 		<button class="btn primary" open-type="getPhoneNumber" @getphonenumber="registerAction">微信号码一键注册</button>
