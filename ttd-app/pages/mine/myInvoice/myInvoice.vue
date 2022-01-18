@@ -13,7 +13,7 @@
 
 				<!-- 发票 信息  -->
 				<invoice-info-card v-if="['3'].includes(activeKey)" v-for="(item, i) in myInvoiceList" :key="i"
-					:invoice="item" :item="{ iconType: i }" @onClick="toMyInvoice()" />
+					:invoice="item" :item="{ iconType: '1' }" @onClick="toMyInvoice()" />
 
 				<list-empty
 					v-if="(!invoiceList.length && ['1', '2'].includes(activeKey)) || (!myInvoiceList.length && ['3'].includes(activeKey))" />

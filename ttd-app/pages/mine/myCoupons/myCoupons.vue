@@ -5,7 +5,7 @@
     <back-container>
 			
 			<template v-slot:headerSlot>
-			  <blue-tab :active-key="activeKey" :list="tabList" @change="change" />
+			  <blue-tab v-if="!isSelect" :active-key="activeKey" :list="tabList" @change="change" />
 			</template>
 
       <view class="my-coupon">

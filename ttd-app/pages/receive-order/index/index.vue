@@ -46,9 +46,7 @@
 
 		<view class="ro-5">
 			<view class="ro-51" v-for="(item, i) in teamList" :key="i" @click="toTeamDetail(item)">
-				<image
-					:src="item.teamLogo || 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/MDicon-4.png'"
-					class="ro-52" />
+				<image :src="item.teamLogo" class="ro-52" />
 				<view class="ro-53">{{ item.teamName }}</view>
 			</view>
 		</view>
@@ -184,23 +182,20 @@
 				});
 			},
 			createTeam(teamLogo, teamName, teamIntroduce) {
-
+				if (!teamLogo) {
+					uni.showToast({ title: '请上传团队头像', icon: 'none' });
+					return;
+				}
 				if (!teamName) {
-					uni.showToast({
-						title: '请输入团队名称',
-						icon: 'none'
-					});
+					uni.showToast({ title: '请输入团队名称', icon: 'none' });
 					return;
 				}
 				if (!teamIntroduce) {
-					uni.showToast({
-						title: '请输入团队介绍',
-						icon: 'none'
-					});
+					uni.showToast({ title: '请输入团队介绍', icon: 'none' });
 					return;
 				}
 				const params = {
-					teamLogo: 'https://ttd-public.obs.cn-east-3.myhuaweicloud.com:443/public%2F2021%2F12%2F08%2F01%2F39%2FBN6YVGX89ULVUL388987718092178.jpeg',
+					teamLogo,
 					teamName,
 					teamIntroduce,
 				}
