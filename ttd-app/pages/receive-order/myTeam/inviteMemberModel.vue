@@ -37,7 +37,10 @@ export default {
   name: "inviteMemberModel",
   components: { ModalBox },
 	props: {
-		list: [],
+		list: {
+			type: Array,
+			default: [],
+		},
 	},
   data() {
     return {
