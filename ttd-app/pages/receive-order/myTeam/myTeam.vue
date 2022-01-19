@@ -21,7 +21,7 @@
     <view class="my-team">
       <member-title :showRight="team.leaderFlag" @add="showInvite"/>
 
-      <team-list-item v-for="(item, i) in memberList" :member="item" @onClick="toPersonDetail(item)" @onDelete="removePerson(item.id)"/>
+      <team-list-item v-for="(item, i) in memberList" :member="item" :showDelete="team.leaderFlag" @onClick="toPersonDetail(item)" @onDelete="removePerson(item.id)"/>
     </view>
 
     <invite-member-model ref="inviteMemberModel" :list="searchList" @onSearch="searchPerson" @onConfirm="invitePerson"/>
