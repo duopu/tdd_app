@@ -139,7 +139,7 @@
 			skillSelect() {
 				if (!this.isEdit) return;
 				uni.navigateTo({
-					url: `/pages/main/apply/tree?type=skill`
+					url: `/pages/main/apply/tree?type=skill&selectType=single`
 				});
 			},
 			brandSelect() {

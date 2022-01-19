@@ -99,7 +99,7 @@ export default {
 		deviceSelect() {
 			if (!this.isEdit) return;
 			uni.navigateTo({
-				url:`/pages/main/apply/tree?type=equipmenttool`
+				url:`/pages/main/apply/tree?type=equipmenttool&selectType=single`
 			})
 		},
 		inputChange(e) {

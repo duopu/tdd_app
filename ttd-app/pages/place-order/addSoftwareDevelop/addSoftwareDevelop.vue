@@ -97,7 +97,7 @@ export default {
 		softwareSelect(e) {
 			if (!this.isEdit) return;
 			uni.navigateTo({
-				url:`/pages/main/apply/tree?type=userrole`
+				url:`/pages/main/apply/tree?type=userrole&selectType=single`
 			})
 			// const index = e.target.value;
 			// this.cateId = this.softwareList[index].id;
