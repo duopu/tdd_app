@@ -148,7 +148,7 @@
 					this.$tool.showToast('请先选择技能')
 				} else {
 					uni.navigateTo({
-						url: `/pages/main/apply/list?type=brand&skillId=${this.skillList[0].id || ''}`
+						url: `/pages/main/apply/list?type=brand&skillId=${this.skillList[0].id || ''}&selectType=single`
 					})
 				}
 			},
