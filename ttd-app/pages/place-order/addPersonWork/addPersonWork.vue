@@ -92,7 +92,7 @@ export default {
 		roleSelect() {
 			if (!this.isEdit) return;
 			uni.navigateTo({
-				url:`/pages/main/apply/tree?type=userrole`
+				url:`/pages/main/apply/tree?type=userrole&selectType=single`
 			})
 		},
 		infoChange(t) {
