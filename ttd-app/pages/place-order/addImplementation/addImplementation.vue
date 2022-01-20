@@ -13,7 +13,7 @@
 
 				<view class="add-i-item">
 					<view class="add-i-lable">服务内容</view>
-					<view class="add-i-midle" :class="cateName ? 'add-i-acc' : ''" @click="skillSelect"> {{ cateName || '请选择' }}</view>
+					<view class="add-i-midle" :class="cateName ? 'add-i-acc' : ''"  @click="skillSelect"> {{ cateName || '请选择' }}</view>
 					<uni-icons class="add-i-right" type="arrowright" size="18" color="#969799" />
 				</view>
 
@@ -139,7 +139,7 @@
 			skillSelect() {
 				if (!this.isEdit) return;
 				uni.navigateTo({
-					url: `/pages/main/apply/tree?type=skill`
+					url: `/pages/main/apply/tree?type=skill&selectType=single`
 				});
 			},
 			brandSelect() {
@@ -148,7 +148,7 @@
 					this.$tool.showToast('请先选择技能')
 				} else {
 					uni.navigateTo({
-						url: `/pages/main/apply/list?type=brand&skillId=${this.skillList[0].id || ''}`
+						url: `/pages/main/apply/list?type=brand&skillId=${this.skillList[0].id || ''}&selectType=single`
 					})
 				}
 			},

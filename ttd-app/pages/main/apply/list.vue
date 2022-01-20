@@ -34,6 +34,8 @@
 				sourceType: '',
 				// 搜索文字
 				searchText:'',
+				// 选择类型 single：单选   multiple：多选
+				selectType:'multiple',
 				// 技能id
 				skillId:'',
 				// 当前展示的节点列表
@@ -66,6 +68,7 @@
 		onLoad(option) {
 			this.sourceType = option.type;
 			this.skillId = option.skillId;
+			this.selectType = option.selectType || 'multiple'
 			this.queryDataList()
 		},
 		onReady() {
@@ -100,10 +103,14 @@
 			},
 			// 选项选择事件
 			itemClick(item){
-				if(this.selectDataList.includes(item)){
-					this.selectDataList = this.selectDataList.filter(v=>v!=item)
-				}else{
-					this.selectDataList = [...this.selectDataList,item]
+				if(this.selectType == 'multiple'){
+					if(this.selectDataList.includes(item)){
+						this.selectDataList = this.selectDataList.filter(v=>v!=item)
+					}else{
+						this.selectDataList = [...this.selectDataList,item]
+					}
+				}else if(this.selectType == 'single'){
+					this.selectDataList = [item]
 				}
 			},
 			// 自定义事件

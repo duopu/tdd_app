@@ -40,7 +40,7 @@
 				</view>
 			</template>
 			<empty-view :tipText="dictInfo.emptyTip" v-if="nodeList.length == 0"></empty-view>
-			
+
 		</scroll-view>
 		<!-- 提交 -->
 		<view class="flex row">
@@ -67,52 +67,55 @@
 				type: 1,
 				// 搜索文字
 				searchText: '',
+				// 选择类型 single：单选   multiple：多选
+				selectType:'multiple',
 				// 信息字典
-				sourceDict:{
-					skill:{
-						listUrl:'/b/skill/queryListByPid',
-						queryUrl:'/b/skill/queryNodeLinkList',
-						submitKey:'submitSelectSkillTree',
-						navTitle:'选择技能',
-						customTitle:'自定义技能',
-						customPlaceholder:'请输入技能名称',
-						emptyTip:'请点击下方“自定义技能”按钮，添加技能；感谢您为平台新增加一个技能！',
+				sourceDict: {
+					skill: {
+						listUrl: '/b/skill/queryListByPid',
+						queryUrl: '/b/skill/queryNodeLinkList',
+						submitKey: 'submitSelectSkillTree',
+						navTitle: '选择技能',
+						customTitle: '自定义技能',
+						customPlaceholder: '请输入技能名称',
+						emptyTip: '请点击下方“自定义技能”按钮，添加技能；感谢您为平台新增加一个技能！',
 					},
-					userrole:{
-						listUrl:'/b/userrole/queryListByPid',
-						queryUrl:'/b/userrole/queryNodeLinkList',
-						submitKey:'submitSelectUserroleTree',
-						navTitle:'选择岗位',
-						customTitle:'自定义岗位',
-						customPlaceholder:'请输入岗位名称',
-						emptyTip:'请点击下方“自定义岗位”按钮，添加岗位；感谢您为平台新增加一个岗位！',
+					userrole: {
+						listUrl: '/b/userrole/queryListByPid',
+						queryUrl: '/b/userrole/queryNodeLinkList',
+						submitKey: 'submitSelectUserroleTree',
+						navTitle: '选择岗位',
+						customTitle: '自定义岗位',
+						customPlaceholder: '请输入岗位名称',
+						emptyTip: '请点击下方“自定义岗位”按钮，添加岗位；感谢您为平台新增加一个岗位！',
 					},
-					equipmenttool:{
-						listUrl:'/b/equipmenttool/queryListByPid',
-						queryUrl:'/b/equipmenttool/queryNodeLinkList',
-						submitKey:'submitSelectEquipmenttoolTree',
-						navTitle:'选择工具',
-						customTitle:'自定义工具',
-						customPlaceholder:'请输入工具名称',
-						emptyTip:'请点击下方“自定义工具”按钮，添加工具；感谢您为平台新增加一个工具！',
+					equipmenttool: {
+						listUrl: '/b/equipmenttool/queryListByPid',
+						queryUrl: '/b/equipmenttool/queryNodeLinkList',
+						submitKey: 'submitSelectEquipmenttoolTree',
+						navTitle: '选择工具',
+						customTitle: '自定义工具',
+						customPlaceholder: '请输入工具名称',
+						emptyTip: '请点击下方“自定义工具”按钮，添加工具；感谢您为平台新增加一个工具！',
 					}
 				}
 			};
 		},
 		onLoad(option) {
 			this.sourceType = option.type;
+			this.selectType = option.selectType || 'multiple'
 			this.queryNodeList()
 		},
 		onReady() {
 			uni.setNavigationBarTitle({
-				title:this.dictInfo.navTitle
+				title: this.dictInfo.navTitle
 			})
 		},
 		computed: {
 			fatherNode() {
 				return this.nodesLink[this.nodesLink.length - 1] || {}
 			},
-			dictInfo(){
+			dictInfo() {
 				return this.sourceDict[this.sourceType];
 			}
 		},
@@ -143,14 +146,18 @@
 			},
 			// 选中了选项
 			selectNode(node) {
-				if (this.type == 1) {
-					let select = !!this.selectNodeList.find(n => n.id == node.id);
-					if (select) {
-						this.selectNodeList = this.selectNodeList.filter(n => n.id != node.id);
+				if(this.selectType == 'multiple'){
+					if (this.type == 1) {
+						let select = !!this.selectNodeList.find(n => n.id == node.id);
+						if (select) {
+							this.selectNodeList = this.selectNodeList.filter(n => n.id != node.id);
+						} else {
+							this.selectNodeList = [...this.selectNodeList, node];
+						}
 					} else {
-						this.selectNodeList = [...this.selectNodeList, node];
+						this.selectNodeList = [node]
 					}
-				} else {
+				}else if(this.selectType == 'single'){
 					this.selectNodeList = [node]
 				}
 			},
@@ -184,12 +191,14 @@
 				uni.showModal({
 					title: this.dictInfo.customTitle,
 					editable: true,
-					content:this.searchText,
+					content: this.searchText,
 					placeholderText: this.dictInfo.customPlaceholder,
 					success: (res) => {
 						if (res.confirm) {
-							if(res.content){
-								this.selectNodeList = [{name:res.content}];
+							if (res.content) {
+								this.selectNodeList = [{
+									name: res.content
+								}];
 								this.submitAction();
 							}
 						}
@@ -198,7 +207,7 @@
 			},
 			// 提交事件
 			submitAction() {
-				console.log('树型选择页面 提交事件',this.selectNodeList);
+				console.log('树型选择页面 提交事件', this.selectNodeList);
 				uni.$emit(this.dictInfo.submitKey, this.selectNodeList)
 				uni.navigateBack({})
 			}
