@@ -86,7 +86,7 @@
 
 			<view class="require-order-set21">
 				<view class="require-order-set21-title">接单范围</view>
-				<input placeholder="请输入" class="require-input-so input-sty" :value="distance"
+				<input placeholder="请输入接单距离" class="require-input-so input-sty" :value="distance"
 					@input="(e) => onInput(e, 'distance')" placeholder-class="placeholder-class" />
 				<text class="require-order-set2-unit">公里</text>
 			</view>
@@ -171,7 +171,7 @@
 				orderMode: 1, // 下单模式 0指定承接人 1匹配承接人
 				orderModeText: '匹配承接人',
 				appointPhone: '', // 指定承接人手机
-				distance: 0, // 期望接单距离
+				distance: '', // 期望接单距离
 				invoiceType: 1, // 发票类型 1专票 2普票
 				orderAddress: {
 					name: '',
@@ -481,7 +481,7 @@
 					font-size: 28rpx;
 					font-family: PingFang SC-Regular, PingFang SC;
 					font-weight: 400;
-					color: #BDBDBD;
+					color: #333333;
 					text-align: right;
 				}
 

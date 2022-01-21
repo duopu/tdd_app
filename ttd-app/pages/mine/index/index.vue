@@ -274,8 +274,11 @@
 				});
 			},
 			logout(){
-				console.log('logout');
 				this.$tool.logout()
+				
+				uni.navigateTo({
+					url:'/pages/main/login/login'
+				})
 			}
 		}
 	};

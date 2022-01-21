@@ -12,18 +12,18 @@
 					console.log('从本地缓存取出用户数据', user);
 					this.$store.commit('setUser', user)
 					this.$store.dispatch('queryUserInfo')
-					
+
 					// 检查是否设置密码
-					if(!user.pswSetFlag){
+					if (!user.pswSetFlag) {
 						uni.showModal({
-							title:'提示',
-							content:'您尚未设置密码，设置密码之后您可以使用手机号、密码登录',
-							confirmText:'去设置',
-							cancelText:'取消',
+							title: '提示',
+							content: '您尚未设置密码，设置密码之后您可以使用手机号、密码登录',
+							confirmText: '去设置',
+							cancelText: '取消',
 							success: (res) => {
-								if(res.confirm){
+								if (res.confirm) {
 									uni.navigateTo({
-										url:'/pages/mine/reset-pwd/reset-pwd'
+										url: '/pages/mine/reset-pwd/reset-pwd'
 									})
 								}
 							}
