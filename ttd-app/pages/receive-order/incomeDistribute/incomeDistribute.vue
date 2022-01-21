@@ -174,7 +174,10 @@
 						uni.showToast({
 							title: '分配收益成功',
 							success: () => {
-								uni.navigateBack({});
+								const timer = setTimeout(() => {
+									timer && clearTimeout(timer);
+									uni.navigateBack({});
+								}, 1000)
 							}
 						})
 					})
@@ -188,7 +191,10 @@
 						uni.showToast({
 							title: '确认分配收益成功',
 							success: () => {
-								uni.navigateBack({});
+								const timer = setTimeout(() => {
+									timer && clearTimeout(timer);
+									uni.navigateBack({});
+								}, 1000)
 							}
 						})
 					})
@@ -202,7 +208,10 @@
 						uni.showToast({
 							title: '拒绝分配收益成功',
 							success: () => {
-								uni.navigateBack({});
+								const timer = setTimeout(() => {
+									timer && clearTimeout(timer);
+									uni.navigateBack({});
+								}, 1000)
 							}
 						})
 					})
