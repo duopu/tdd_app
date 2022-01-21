@@ -9,7 +9,7 @@
 
       <view class="abw">
 
-        <quoted-iten :order="order"/>
+        <quoted-iten :order="order" :isPlaceOrder="isPlaceOrder"/>
 
       </view>
 

@@ -9,7 +9,7 @@
 
 			<view class="offer">
 
-				<quoted-iten :order="order" />
+				<quoted-iten :order="order" :isPlaceOrder="false"/>
 				<view class="ind-2">可分配金额：{{ totalAmount / 100 }}元</view>
 			</view>
 		</back-container>

@@ -4,7 +4,7 @@
 		  <view class="order-dtl-12">
 		    <text v-if="order.state >= 30 && order.state != 90">订单金额：</text>
 		
-		    <my-price v-if="order.state >= 30 && order.state != 90" :scale="0.9" :price="order.payAmount / 100" />
+		    <my-price v-if="order.state >= 30 && order.state != 90" :scale="0.9" :price="isPlaceOrder ? (order.payAmount / 100) : (order.quoteAmount / 100)" />
 		  </view>
 		  <view 
 			 class="order-dtl-11"
@@ -46,6 +46,10 @@ export default {
 			workStart: '',
 			workEnd: '',
 			remark: '',
+		},
+		isPlaceOrder: {
+		  type: Boolean,
+		  default: true,
 		},
 		showPrice: {
 		  type: Boolean,

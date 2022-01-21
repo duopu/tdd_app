@@ -8,7 +8,7 @@
       </template>
 
       <view class="offer">
-        <quoted-iten :order="order"/>
+        <quoted-iten :order="order" :isPlaceOrder="isPlaceOrder"/>
       </view>
     </back-container>
 

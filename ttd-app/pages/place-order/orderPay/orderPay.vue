@@ -10,7 +10,7 @@
 
       <view class="order-fini">
 
-        <quoted-iten :order="order"/>
+        <quoted-iten :order="order" :isPlaceOrder="true"/>
 
       </view>
     </back-container>

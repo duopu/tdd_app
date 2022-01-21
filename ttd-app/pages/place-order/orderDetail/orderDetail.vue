@@ -7,7 +7,7 @@
 				<offer-head :title="$tool.orderType(order.orderType)" :text="`订单编号：${order.id}`" :copyText="order.id" />
 			</template>
 			<view class="order-dtl">
-				<quoted-iten :order="order" />
+				<quoted-iten :order="order" :isPlaceOrder="isPlaceOrder"/>
 			</view>
 		</back-container>
 
