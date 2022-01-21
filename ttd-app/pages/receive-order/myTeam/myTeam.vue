@@ -14,7 +14,7 @@
 				/>
       </template>
 
-      <earning-nums :order="orderNum" :total="totalProfits" :avg="avgProfits"/>
+      <earning-nums v-if="!sensitive" :order="orderNum" :total="totalProfits" :avg="avgProfits"/>
 
     </back-container>
 
@@ -47,6 +47,7 @@
 					teamIntroduce: '',
 					leaderFlag: false,
 				},
+				sensitive: false, // 是否脱敏 不显示数据汇总
 				orderNum: 0,
 				totalProfits: 0,
 				avgProfits: 0,
@@ -55,6 +56,9 @@
 			}
 		},
 		onLoad(option) {
+			if (option.sensitive) {
+				this.sensitive = option.sensitive == 1;
+			}
 			if (option.id) {
 			  this.id = option.id;
 				this.refresh()
@@ -68,7 +72,9 @@
 			refresh() {
 				this.queryTeamInfo();
 				this.queryTeamMember();
-				this.queryTeamProfits();
+				if (!this.sensitive) {
+					this.queryTeamProfits();
+				}
 			},
 			queryTeamInfo() {
 				this.$http
