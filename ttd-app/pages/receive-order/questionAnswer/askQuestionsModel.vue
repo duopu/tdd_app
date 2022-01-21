@@ -55,10 +55,20 @@ export default {
       this.visible = false;
     },
 		confirm() {
-			this.$emit('onConfirm', {
-				questionJob: this.type,
-				content: this.content,
-				pictureList: this.pictureList,
+			console.log('确定')
+			uni.showModal({
+				title: '提示',
+				content: '请不要输入个人联系电话等信息，如平台发现，平台有权永久取消用户平台交易资格',
+				confirmText: '提交',
+				success: (res) => {
+					if (res.confirm) {
+						this.$emit('onConfirm', {
+							questionJob: this.type,
+							content: this.content,
+							pictureList: this.pictureList,
+						})
+					}
+				}
 			})
 		},
 		pickerChange(e) {
