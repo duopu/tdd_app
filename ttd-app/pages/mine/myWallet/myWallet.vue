@@ -24,7 +24,7 @@
 					<!-- <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" /> -->
 				</view>
 
-				<view class="wallet-detail-item" v-for="(item, index) in balanceList" :key="index">
+				<view class="wallet-detail-item" v-for="(item, index) in balanceList" :key="item.id">
 					<view class="wallet-detail-item-left">
 						<view class="wallet-item-left1">{{ item.title }}</view>
 						<view class="wallet-item-left2">
@@ -130,7 +130,7 @@
 			showRule() {
 				uni.showModal({
 					title: '提现规则',
-					content: '一次性全部提出，提现申请通过后，将提现到您的银行卡',
+					content: '（1）每次提现需大于20元\n（2）提现申请审核通过后，36小时内打到您提供的本人有效银行卡上',
 					showCancel: false,
 				})
 			},
