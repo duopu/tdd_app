@@ -45,12 +45,12 @@
         <uni-icons type="arrowright" size="17" color="#969799" />
       </view> -->
 
-
-      <view class="fini-51">
+       <!-- 已隐藏（发单时已选择发票类型） -->
+      <!-- <view class="fini-51">
         <view class="fini-51m">
           <checkd-item label="发票类型" :value="invoiceType" @change="change" />
         </view>
-      </view>
+      </view> -->
 
     </view>
 
@@ -247,7 +247,7 @@ export default {
 			const params = {
 				couponId: this.coupon.id ? this.coupon.id : undefined,
 				// customerInvoiceId: this.invoice.id,
-				invoiceType: this.invoiceType,
+				// invoiceType: this.invoiceType,
 				recivierOrderId: this.id,
 				useIntegral: this.integral,
 				wayId: this.payWay,

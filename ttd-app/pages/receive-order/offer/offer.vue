@@ -17,7 +17,7 @@
 				<view class="offer-91-text">承接方</view>
 				<view class="offer-91-icon" :class="{
 					'offer-91-icon-yellow': order.receiverType == 1
-				}">{{ order.receiverType == 1 ? '个人' : '团队' }}</view>
+				}" @click="toTeamDetail">{{ order.receiverType == 1 ? '个人' : '团队' }}</view>
 			</view>
 			<view class="offer-92">
 				<view class="offer-92-item" v-if="order.receiverType == 1" @click="toPersonDetail(order.receiverId)">
@@ -299,6 +299,13 @@ export default {
 			uni.navigateTo({
 				url: `/pages/receive-order/peopleDetail/peopleDetail?id=${userId}&hideInfo=${
 					this.order.state == 10 || this.order.state == 20 || this.order.state == 90 ? 1 : 0}`
+			})
+		},
+		// 查看团队详情
+		toTeamDetail() {
+			if (this.order.receiverType == 1) return;
+			uni.navigateTo({
+				url: `/pages/receive-order/myTeam/myTeam?id=${this.order.receiverId}&sensitive=1`
 			})
 		},
 		cancelQuote() {
