@@ -35,7 +35,7 @@
 			<template v-if="item.resourceType == 1">
 				<image :src="item.url" mode="aspectFill" class="source-image"></image>
 			</template>
-			
+
 			<!-- 音频 -->
 			<template v-if="item.resourceType == 2">
 				<image class="source-icon"
@@ -53,12 +53,12 @@
 				</image>
 				<view class="source-text">文件</view>
 			</template>
-			
+
 			<!-- 视频 -->
 			<template v-if="item.resourceType == 4">
 				<video :src="item.url" :control="false" class="source-image" :show-play-btn="true" :show-center-play-btn="false"></video>
 			</template>
- 
+
 			<uni-icons class="clear-icon" v-if="modal == 'select'" type="clear" :size="24" color="#ff0000" @click.native.stop="deleteItem(item)"></uni-icons>
 		</view>
 	</view>
@@ -230,7 +230,7 @@
 	}
 
 	.up-file-view {
-		padding: 16rpx;
+		padding: 16rpx 16rpx 16rpx 0;
 		flex-direction: row;
 		flex-wrap: wrap;
 
@@ -241,8 +241,12 @@
 			border: 2rpx solid #EDEDED;
 			justify-content: center;
 			align-items: center;
-			margin: 16rpx;
+			margin: 16rpx 30rpx 16rpx 0;
 			overflow: hidden;
+
+      &:nth-child(4n + 4) {
+        margin-right: 0;
+      }
 
 			.btn-icon {
 				width: 48rpx;

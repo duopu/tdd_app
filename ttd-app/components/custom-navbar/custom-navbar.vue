@@ -1,6 +1,6 @@
 <template>
   <view class="custom-navbar">
-    <view class="navbar-top">
+    <view class="navbar-top" :style="{ zIndex: topZIndex }">
       <view class="bar1" :style="{height: statusBarHeight + 'px'}"></view>
       <view class="bar2" :style="{height: navbarHeight + 'px'}">
         <view>
@@ -40,6 +40,11 @@ export default {
     showLeftIcon: {
       type: Boolean,
       default: true,
+    },
+    // 高度
+    topZIndex: {
+      type: Number,
+      default: 999
     }
   },
   methods: {
@@ -122,7 +127,7 @@ export default {
   .navbar-top {
     width: 750rpx;
     position: fixed;
-    z-index: 999;
+    //z-index: 999;
     left: 0;
     top: 0;
   }

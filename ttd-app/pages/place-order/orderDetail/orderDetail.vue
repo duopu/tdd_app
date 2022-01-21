@@ -38,7 +38,7 @@
 			  <uni-icons class="oc-arrow" type="arrowright" size="20" color="#BDBDBD" />
 			</view>
     </view>
-		
+
 		<view class="offer-9" v-if="order.receiverId">
 			<view class="offer-91" >
 				<view class="offer-91-text">承接方</view>
@@ -275,7 +275,7 @@ export default {
 				}
 			})
 		},
-		
+
 		// 查看承接方个人详情
 		toPersonDetail(userId) {
 			uni.navigateTo({
@@ -289,7 +289,7 @@ export default {
 				url: `/pages/receive-order/changeRecord/changeRecord?id=${this.id}`,
 			})
 		},
-		
+
 		// 取消订单
 		cancelOrderTip() {
 			let warning = '取消订单会影响您的声誉，影响后续发单，并会扣除部分款项。您确定要取消订单吗？'
@@ -341,8 +341,8 @@ export default {
 				url: `/pages/receive-order/applyBeginWork/applyBeginWork?isPlaceOrder=${this.isPlaceOrder ? 1 : 0}&id=${this.id}`,
 			})
 		},
-		/* 
-		  *  发单方 
+		/*
+		  *  发单方
 		 */
 		// 选价
 		toChoosePrice() {
@@ -507,18 +507,18 @@ export default {
 .offer-9 {
 	background-color: white;
 	margin: 32rpx 0;
-	
+
 	.offer-91 {
 		height: 80rpx;
 		padding: 0 32rpx;
 		@include flexBetween;
-		
+
 		.offer-91-text {
 			font-size: 28rpx;
 			font-family: PingFang SC-Regular, PingFang SC;
 			font-weight: 400;
 		}
-		
+
 		.offer-91-icon {
 			padding: 0 12rpx;
 			height: 40rpx;
@@ -539,21 +539,21 @@ export default {
 		padding: 32rpx;
 		display: flex;
 		flex-flow: wrap row;
-		
+
 		.offer-92-item {
 		  margin-right: 58rpx;
 		  width: 127rpx;
-		
+
 		  &:nth-of-type(4n + 4) {
 		    margin: 0;
 		  }
-		
+
 		  .offer-92-img {
 		    width: 127rpx;
 		    height: 127rpx;
 		    border-radius: 8rpx;
 		  }
-		
+
 		  .offer-92-name {
 		    font-size: 28rpx;
 		    font-family: PingFang SC-Regular, PingFang SC;

@@ -1,6 +1,6 @@
 <template>
 	<view class="receipt">
-		<custom-navbar title="发单" />
+		<custom-navbar title="发单" top-z-index="9999" />
 
 		<back-container>
 			<template #headerSlot>
