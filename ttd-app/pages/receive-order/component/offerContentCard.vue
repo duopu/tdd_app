@@ -39,7 +39,7 @@
 	</view>
 </template>
 <script>
-	import MyPrice from "./myPrice";
+	import MyPrice from "./myPrice2";
 
 	export default {
 		name: "offerContentCard",
@@ -92,6 +92,9 @@
 				default: 0,
 			}
 		},
+		mounted() {
+			console.log(this.price);
+		}
 	}
 </script>
 <style scoped lang="scss">

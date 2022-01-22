@@ -47,7 +47,7 @@
 			<view class="offer-52">
 				<offer-content-card v-for="(item, index) in showWorkList" :key="index"
 					:right-type="isPlaceOrder ? 5 : item.quoteAmount ? 1 : 2" :title="getItemTitle(item)"
-					:specItem="getSpecList(item)" :image="itemImage" :price="item.quoteAmount / 100"
+					:specItem="getSpecList(item)" :image="itemImage" :price="item.quoteAmount ? item.quoteAmount / 100 : null"
 					:show-last-border-bottom="index < (showWorkList.length - 1)" @onClick="checkItem(item)"
 					@onChange="changeQuote(item)" />
 			</view>
@@ -159,7 +159,6 @@
 					.then(res => {
 						this.workList = res.orderItemList;
 						this.showWorkList = this.workList.slice(0, 5);
-						console.log('showWorkList ', this.showWorkList);
 					})
 			},
 			queryMemberList() {
@@ -319,7 +318,7 @@
 				// uni.navigateTo({
 				// 	url: `/pages/receive-order/myTeam/myTeam?id=${this.order.receiverId}&sensitive=1`
 				// })
-				
+
 				uni.navigateTo({
 					url: `/pages/receive-order/teamDetail/teamDetail?id=${this.order.receiverId}`,
 				})
