@@ -270,6 +270,18 @@
 						url: '/pages/mine/messageList/messageList'
 					})
 				});
+				wx.requestSubscribeMessage({
+					tmplIds: ['UlCGcGRwbieC9nn2l4Xc7a619_jyfDx4eV-6zuK9nhY'],
+					success: () => {
+						console.log('订阅消息成功');
+					},
+					fail: (error) => {
+						console.error('订阅消息失败', error);
+					},
+					complete:()=>{
+						
+					}
+				})
 			},
 			toInvite() {
 				this.$tool.actionForLogin(() => {
