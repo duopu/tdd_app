@@ -168,15 +168,17 @@
 			};
 		},
 		onLoad(option) {
-			if (option.id) {
-				this.id = option.id;
+			this.id = option.id;
+			if (option.isPlaceOrder) {
+				this.isPlaceOrder = option.isPlaceOrder == '1';
+			}
+		},
+		onShow() {
+			if (this.id) {
 				this.queryOrderInfo();
 				this.queryWorkList();
 				this.queryCommentList();
 				this.queryMemberList();
-			}
-			if (option.isPlaceOrder) {
-				this.isPlaceOrder = option.isPlaceOrder == '1';
 			}
 		},
 		methods: {
