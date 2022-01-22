@@ -107,6 +107,10 @@
 					return '订单抵扣';
 				} else if (t == 4) {
 					return '手动赠送';
+				}else if (t == 5) {
+					return '抽奖';
+				}else{
+					return `${t} 未知`
 				}
 				return '';
 			},

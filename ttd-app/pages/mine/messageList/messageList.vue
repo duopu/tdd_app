@@ -40,7 +40,7 @@ export default {
 	},
 	methods: {
 		readMessage() {
-			this.$http.post('/core/sitemessage/readMessage', { scenarioTypeList: [0, 3] })
+			this.$http.post('/core/sitemessage/readMessage', { scenarioTypeList: [0, 3,4] })
 				.then(res => {
 				})
 		},

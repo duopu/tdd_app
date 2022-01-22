@@ -2,13 +2,13 @@
   <model-slot v-if="visible" ref="modelSlot" @sure="confirm" @hide="hide" title="提问">
 
     <template #slot1>
-			<view v-if="showType" class="qus-model-input">
+			<!-- <view v-if="showType" class="qus-model-input">
 			  <view class="qus-model-input-title">相关工作</view>
 				<picker class="qus-model-inputs" @change="pickerChange" :range="cateList">
 			    <view class="qus-model-inputs">{{ type || '请选择' }}</view>
 				</picker>
 			  <uni-icons size="18" color="#BDBDBD" type="right" />
-			</view>
+			</view> -->
 
       <add-remark label="内容：" :value="content" @input="contentChange" placeholder="可以的话，多少写点！方便工作人员快速排队故障。" />
 
@@ -33,11 +33,7 @@ export default {
 		showType: {
 			type: Boolean,
 			default: false,
-		},
-		cateList: {
-			type: Array,
-			default: [],
-		},
+		}
 	},
   data() {
     return {
@@ -70,10 +66,6 @@ export default {
 					}
 				}
 			})
-		},
-		pickerChange(e) {
-			const index = e.target.value;
-			this.type = this.cateList[index];
 		},
 		contentChange(value) {
 			this.content = value;

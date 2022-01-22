@@ -115,7 +115,9 @@
 				showCreateBtn: false,
 			};
 		},
-		onReady() {},
+		onReady() {
+			this.$store.dispatch('queryAuthenticationInfo')
+		},
 		onShow() {
 			this.$tool.actionForLogin(() => {
 				this.refresh();

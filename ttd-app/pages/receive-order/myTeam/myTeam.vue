@@ -1,43 +1,42 @@
 <template>
 	<view>
-		<custom-navbar title="我的团队"/>
+		<custom-navbar title="我的团队" />
 
-    <back-container>
-      <template v-slot:headerSlot>
-        <team-card
-				 :team="team"
-				 :showEdit="team.leaderFlag"
-				 :showSetting="team.leaderFlag"
-				 @onSave="updateTeam"
-				 @onComment="toCommentPage"
-				 @onSetting="toSettingPage"
-				/>
-      </template>
+		<back-container>
+			<template v-slot:headerSlot>
+				<team-card :team="team" :showEdit="team.leaderFlag" :showSetting="team.leaderFlag" @onSave="updateTeam"
+					@onComment="toCommentPage" @onSetting="toSettingPage" />
+			</template>
+			<earning-nums v-if="!sensitive" :order="orderNum" :total="totalProfits" :avg="avgProfits" />
+		</back-container>
 
-      <earning-nums v-if="!sensitive" :order="orderNum" :total="totalProfits" :avg="avgProfits"/>
+		<view class="my-team">
+			<member-title :showRight="team.leaderFlag" @add="showInvite" />
+			<team-list-item v-for="(item, i) in memberList" :member="item" :showDelete="team.leaderFlag"
+				@onClick="toPersonDetail(item)" @onDelete="removePerson(item.id)" />
+		</view>
 
-    </back-container>
-
-    <view class="my-team">
-      <member-title :showRight="team.leaderFlag" @add="showInvite"/>
-
-      <team-list-item v-for="(item, i) in memberList" :member="item" :showDelete="team.leaderFlag" @onClick="toPersonDetail(item)" @onDelete="removePerson(item.id)"/>
-    </view>
-
-    <invite-member-model ref="inviteMemberModel" :list="searchList" @onSearch="searchPerson" @onConfirm="invitePerson"/>
-
+		<invite-member-model ref="inviteMemberModel" :list="searchList" @onSearch="searchPerson"
+			@onConfirm="invitePerson" />
 	</view>
 </template>
 <script>
 	import BackContainer from "../../mine/addressManage/component/backContainer";
-  import TeamCard from "./teamCard";
-  import EarningNums from "./earningNums";
-  import MemberTitle from "./memberTitle";
-  import TeamListItem from "./teamListItem";
-  import InviteMemberModel from "./inviteMemberModel";
-  export default {
+	import TeamCard from "./teamCard";
+	import EarningNums from "./earningNums";
+	import MemberTitle from "./memberTitle";
+	import TeamListItem from "./teamListItem";
+	import InviteMemberModel from "./inviteMemberModel";
+	export default {
 		name: "myTeam",
-    components: { InviteMemberModel, TeamListItem, MemberTitle, EarningNums, TeamCard, BackContainer },
+		components: {
+			InviteMemberModel,
+			TeamListItem,
+			MemberTitle,
+			EarningNums,
+			TeamCard,
+			BackContainer
+		},
 		data() {
 			return {
 				id: '',
@@ -60,7 +59,7 @@
 				this.sensitive = option.sensitive == 1;
 			}
 			if (option.id) {
-			  this.id = option.id;
+				this.id = option.id;
 				this.refresh()
 			}
 		},
@@ -78,7 +77,9 @@
 			},
 			queryTeamInfo() {
 				this.$http
-					.post('/b/teaminfo/query', { id: this.id }, true)
+					.post('/b/teaminfo/query', {
+						id: this.id
+					}, true)
 					.then(res => {
 						uni.stopPullDownRefresh();
 						this.team = res;
@@ -86,19 +87,23 @@
 							this.checkTeamSetting();
 						}
 					}).catch((e) => {
-				    uni.stopPullDownRefresh();
-			    })
+						uni.stopPullDownRefresh();
+					})
 			},
 			queryTeamMember() {
 				this.$http
-					.post('/b/teammember/queryList', { id: this.id }, true)
+					.post('/b/teammember/queryList', {
+						id: this.id
+					}, true)
 					.then(res => {
 						this.memberList = res;
 					});
 			},
 			queryTeamProfits() {
 				this.$http
-					.post('/b/teaminfo/teamProjectStatistics', { id: this.id }, true)
+					.post('/b/teaminfo/teamProjectStatistics', {
+						id: this.id
+					}, true)
 					.then(res => {
 						this.orderNum = res.completeOrderCount;
 						this.totalProfits = res.allOrderQuotaAmount / 1000;
@@ -133,11 +138,17 @@
 			},
 			updateTeam(teamLogo, teamName, teamIntroduce) {
 				if (!teamName) {
-					uni.showToast({ title:  '请输入团队名称', icon:  'none' });
+					uni.showToast({
+						title: '请输入团队名称',
+						icon: 'none'
+					});
 					return;
 				}
 				if (!teamIntroduce) {
-					uni.showToast({ title:  '请输入团队介绍', icon:  'none' });
+					uni.showToast({
+						title: '请输入团队介绍',
+						icon: 'none'
+					});
 					return;
 				}
 				const params = {
@@ -147,21 +158,27 @@
 					teamIntroduce,
 				}
 				this.$http.post('/b/teaminfo/update', params, true)
-				.then(res => {
-					uni.showToast({ title:  '修改成功' });
-					this.queryTeamInfo();
-				})
+					.then(res => {
+						uni.showToast({
+							title: '修改成功'
+						});
+						this.queryTeamInfo();
+					})
 			},
 			removePerson(id) {
 				uni.showModal({
 					content: '确定要删除该成员吗?',
 					success: (res) => {
 						if (res.confirm) {
-							this.$http.post('/b/teammember/delete', { id }, true)
-							.then(res => {
-								uni.showToast({ title:  '删除成功' });
-								this.queryTeamMember();
-							})
+							this.$http.post('/b/teammember/delete', {
+									id
+								}, true)
+								.then(res => {
+									uni.showToast({
+										title: '删除成功'
+									});
+									this.queryTeamMember();
+								})
 						}
 					}
 				})
@@ -171,24 +188,36 @@
 			},
 			searchPerson(phone) {
 				if (!phone) {
-					uni.showToast({ title: '请输入手机号', icon: 'none' });
+					uni.showToast({
+						title: '请输入手机号',
+						icon: 'none'
+					});
 					return;
 				}
-				this.$http.post('/b/customer/queryList', { phone }, true)
-				.then(res => {
-					this.searchList = res;
-				})
+				this.$http.post('/b/customer/queryList', {
+						phone
+					}, true)
+					.then(res => {
+						this.searchList = res;
+					})
 			},
 			invitePerson(inviteeId) {
 				if (!inviteeId) {
-					uni.showToast({ title: '请先查找被邀请人', icon: 'none' });
+					uni.showToast({
+						title: '请先查找被邀请人',
+						icon: 'none'
+					});
 					return;
 				}
-				this.$http.post('/b/teammember/invitationMember', { inviteeId }, true)
-				.then(res => {
-					uni.showToast({ title: '邀请成功' })
-					this.$refs.inviteMemberModel.hide();
-				})
+				this.$http.post('/b/teammember/invitationMember', {
+						inviteeId
+					}, true)
+					.then(res => {
+						uni.showToast({
+							title: '邀请成功'
+						})
+						this.$refs.inviteMemberModel.hide();
+					})
 			},
 			toCommentPage() {
 				uni.navigateTo({
@@ -214,11 +243,11 @@
 	}
 </script>
 <style lang="scss" scoped>
-.my-team {
-  background-color: white;
-  margin: 32rpx 0 200rpx 0;
-}
+	.my-team {
+		background-color: white;
+		margin: 32rpx 0 200rpx 0;
+	}
 </style>
 <style lang="scss">
-@import "../../mine/addressManage/_pageStyle.scss";
+	@import "../../mine/addressManage/_pageStyle.scss";
 </style>

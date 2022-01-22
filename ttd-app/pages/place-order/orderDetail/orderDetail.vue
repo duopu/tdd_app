@@ -188,6 +188,7 @@
 					}, true)
 					.then(res => {
 						this.order = res;
+						this.isPlaceOrder = res.publishUserId === this.$store.state.user.id
 						this.queryItemImg();
 					})
 			},
