@@ -270,18 +270,6 @@
 						url: '/pages/mine/messageList/messageList'
 					})
 				});
-				
-				console.log('订阅消息 ',wx.requestSubscribeMessage);
-				// 订阅消息 requestSubscribeMessage
-				wx.requestSubscribeMessage({
-					tmplIds:['UlCGcGRwbieC9nn2l4Xc7a619_jyfDx4eV-6zuK9nhY'],
-					success:()=>{
-						console.log('订阅消息成功');
-					},
-					fail:(error)=>{ 
-						console.error('订阅消息失败',error);
-					}
-				})
 			},
 			toInvite() {
 				this.$tool.actionForLogin(() => {

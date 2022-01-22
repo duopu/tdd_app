@@ -139,7 +139,7 @@
 									@tap.stop="toOrderWork(item,'start')">申请开始</view>
 								<!-- 待完工 -->
 								<view class="choose-change-btn"
-									v-if="item.receiverType == 2 && (item.settleState == 1 || item.settleState == 2)"
+									v-if="item.receiverType == 2 && item.distributorFlag == 1"
 									@tap.stop="toDistributionIncome(item)">收益分配</view>
 								<view class="choose-change-btn" v-if="[40].includes(value) && item.subState == 6"
 									@tap.stop="toOrderWork(item,'end')">申请完工</view>

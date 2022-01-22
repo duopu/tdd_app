@@ -116,12 +116,13 @@
 			};
 		},
 		onReady() {
-			this.$store.dispatch('queryAuthenticationInfo')
+			
 		},
 		onShow() {
 			this.$tool.actionForLogin(() => {
 				this.refresh();
 			});
+			this.$store.dispatch('queryAuthenticationInfo')
 		},
 		onPullDownRefresh() {
 			this.$tool.actionForLogin(() => {

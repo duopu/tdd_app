@@ -215,6 +215,8 @@
 				const integralAmount = this.integral;
 
 				const totalAmount = (orderAmount - couponAmount - integralAmount) / 100;
+				// 最低金额0元
+				if(totalAmount < 0) return 0;
 				return totalAmount;
 			},
 			toSelectCoupon() {
@@ -275,7 +277,11 @@
 				}
 				this.$http.post('/b/order/createOrder', params, true)
 					.then(res => {
-						this.payOrder(res.id);
+						if(res.payCash > 0){
+							this.payOrder(res.id);
+						}else{
+							this.paySuccess()
+						}
 					})
 			},
 			payOrder(orderId) {
@@ -315,23 +321,7 @@
 					paySign: res.sign,
 					success: (res) => {
 						console.log('success:' + JSON.stringify(res));
-						uni.showModal({
-							title: '提示',
-							content: '恭喜您，订单支付成功',
-							cancelText: '返回首页',
-							confirmText: '查看订单',
-							success: (res) => {
-								if (res.confirm) {
-									uni.redirectTo({
-										url: `/pages/place-order/orderDetail/orderDetail?id=${this.id}&isPlaceOrder=1`,
-									})
-								} else {
-									uni.switchTab({
-										url: '/pages/home/index/index'
-									});
-								}
-							}
-						})
+						this.paySuccess()
 					},
 					fail: function(err) {
 						console.log('fail:' + JSON.stringify(err));
@@ -341,6 +331,26 @@
 						});
 					},
 				});
+			},
+			// 订单支付成功
+			paySuccess(){
+				uni.showModal({
+					title: '提示',
+					content: '恭喜您，订单支付成功',
+					cancelText: '返回首页',
+					confirmText: '查看订单',
+					success: (res) => {
+						if (res.confirm) {
+							uni.redirectTo({
+								url: `/pages/place-order/orderDetail/orderDetail?id=${this.id}&isPlaceOrder=1`,
+							})
+						} else {
+							uni.switchTab({
+								url: '/pages/home/index/index'
+							});
+						}
+					}
+				})
 			},
 			queryBankCardInfo() {
 				this.$http.get('/core/softconf/bankcard', {}, true)

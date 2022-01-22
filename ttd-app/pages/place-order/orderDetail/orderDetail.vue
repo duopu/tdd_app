@@ -111,7 +111,7 @@
 					@click="toOrderWork">申请开始</view>
 				<!-- 待完工 -->
 				<view class="order-dtl-btn1 order-dtl-btn2"
-					v-if="order.receiverType == 2 && (order.settleState == 1 || order.settleState == 2)"
+					v-if="order.receiverType == 2 && order.distributorFlag == 1"
 					@click="toDistributionIncome">收益分配</view>
 				<view class="order-dtl-btn1 order-dtl-btn2" v-if="[40].includes(order.state) && order.subState == 6"
 					@click="toOrderWork">申请完工</view>

@@ -2,7 +2,7 @@
 	<view>
 		<custom-navbar title="列表消息" />
 		<back-container>
-			<view class="message-list">
+			<view class="message-list" @click="queryMessageAuth">
 				<view class="mist-item" v-for="(message, index) in messageList" :key="index" @click="toDtl(message)">
 					<view class="flex-center-between">
 						<view class="mist-item1">{{ message.title }}</view>
@@ -105,6 +105,21 @@
 						})
 					})
 			},
+			queryMessageAuth() {
+				console.log('订阅消息 ');
+				wx.requestSubscribeMessage({
+					tmplIds: ['UlCGcGRwbieC9nn2l4Xc7a619_jyfDx4eV-6zuK9nhY'],
+					success: () => {
+						console.log('订阅消息成功');
+					},
+					fail: (error) => {
+						console.error('订阅消息失败', error);
+					},
+					complete:()=>{
+						
+					}
+				})
+			}
 		}
 	}
 </script>
