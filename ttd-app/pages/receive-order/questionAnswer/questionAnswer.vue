@@ -40,7 +40,7 @@
 										src="https://ttd-public.obs.cn-east-3.myhuaweicloud.com/app-img/mine/empty-icon-11.svg"
 										class="qus-1img-empty-img" />
 									<view class="qus-1img-empty-text">目前没有回答</view>
-									<view class="qus-1img-empty-btn" v-if="this.isPlaceOrder" @click="answerQuestion(question.id)">回答</view>
+									<view class="qus-1img-empty-btn" v-if="isPlaceOrder" @click="answerQuestion(question.id)">回答</view>
 								</view>
 							</view>
 						</view>
