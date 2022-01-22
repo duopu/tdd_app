@@ -15,7 +15,6 @@
 						<view class="mist-item4 mist-item5" @click="progressMessage(message, 1)">接受</view>
 					</view>
 				</view>
-
 				<list-empty v-if="messageList.length == 0" />
 			</view>
 		</back-container>

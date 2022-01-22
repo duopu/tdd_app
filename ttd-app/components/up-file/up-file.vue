@@ -230,7 +230,7 @@
 	}
 
 	.up-file-view {
-		padding: 16rpx 16rpx 16rpx 0;
+		padding: 16rpx;
 		flex-direction: row;
 		flex-wrap: wrap;
 

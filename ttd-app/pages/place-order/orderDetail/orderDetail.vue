@@ -14,13 +14,11 @@
 		<view class="order-dtl-5">
 			<view class="order-dtl-51">工作内容</view>
 			<view class="order-dtl-52">
-
 				<offer-content-card v-for="(item, index) in showWorkList" :key="index"
 					:right-type="item.quoteAmount ? 5 : 4" :title="getItemTitle(item)" :specItem="getSpecList(item)"
 					:image="itemImage" :price="item.quoteAmount / 100"
 					:show-last-border-bottom="index < (showWorkList.length - 1)" @onClick="checkItem(item)"
 					@onChange="changeQuote(item)" />
-
 			</view>
 			<view v-if="workList.length > 5" class="order-dtl-53" @click="showWork">
 				<text class="order-dtl-531">{{ showWorkMore ? '收起' : '展开更多' }}</text>
@@ -28,12 +26,10 @@
 			</view>
 		</view>
 
-		<view class="offer-9" v-if="order.receiverId">
+		<view class="offer-9" v-if="order.state >= 30">
 			<view class="offer-91">
 				<view class="offer-91-text">承接方</view>
-				<view class="offer-91-icon" :class="{
-					'offer-91-icon-yellow': order.receiverType == 1
-				}" @click="toTeamDetail">{{ order.receiverType == 1 ? '个人' : '团队' }}</view>
+				<view class="offer-91-icon" :class="{'offer-91-icon-yellow': order.receiverType == 1}" @click="toTeamDetail">{{ order.receiverType == 1 ? '个人' : '团队' }}</view>
 			</view>
 			<view class="offer-92">
 				<view class="offer-92-item" v-if="order.receiverType == 1" @click="toPersonDetail(order.receiverId)">
@@ -69,9 +65,7 @@
 			<evaluate-card v-for="i in commentList" :key="i" :comment="i" />
 			<list-empty v-if="!commentList.length" />
 		</view>
-
 		<view class="order-dtl-botb" />
-
 		<iphonex-bottom>
 			<!-- 发单方 -->
 			<view v-if="isPlaceOrder" class="order-dtl-btn-box">

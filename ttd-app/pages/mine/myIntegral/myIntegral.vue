@@ -25,7 +25,7 @@
 						<view class="item-left2">{{ item.addTime }}</view>
 					</view>
 					<view class="detail-item-right" :class="i === 1 ? 'detail-item-right-minus' : ''">
-						{{ `${item.actNum ? '+ ' : ''}${item.actNum}`}}</view>
+						{{ `${item.actNum > 0 ? '+ ' : ''}${item.actNum}`}}</view>
 				</view>
 				<list-empty v-if="!integralList.length" />
 			</view>

@@ -41,7 +41,7 @@
 
 			<add-remark label="要求：" required :value="requireInfo" @input="infoChange" />
 			<!-- 上传文件 -->
-			<up-file v-model="orderResourceList" :modal="isEdit ? 'select' : 'show'"/>
+			<up-file v-model="orderResourceList" :modal="isEdit ? 'select' : 'show'" />
 
 		</back-container>
 

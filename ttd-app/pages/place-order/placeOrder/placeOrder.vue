@@ -172,7 +172,7 @@
 				orderModeText: '匹配承接人',
 				appointPhone: '', // 指定承接人手机
 				distance: '', // 期望接单距离
-				invoiceType: 1, // 发票类型 1专票 2普票
+				invoiceType: 2, // 发票类型 1专票 2普票
 				orderAddress: {
 					name: '',
 					phone: '',
@@ -222,7 +222,10 @@
 				this.orderModeText = this.modeArray[index].title;
 			},
 			change(data) {
-				this.invoiceType = data
+				if(data == 1){
+					this.$tool.showToast('暂不支持专票')
+				}
+				// this.invoiceType = data
 			},
 			onInput(e, type) {
 				const text = e.target.value;

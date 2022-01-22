@@ -4,7 +4,6 @@
 
 		<back-container>
 			<template #headerSlot>
-
 				<state-tab-list @change="changeVal" :active-value="value" />
 			</template>
 

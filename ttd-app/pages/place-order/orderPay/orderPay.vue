@@ -53,7 +53,6 @@
 
 		<view class="fini-5tips">不同发票类型支付的额外费用不同</view>
 
-
 		<view class="order-fini-5">
 			<view class="fini-51">
 				<text class="fini-51l">支付方式</text>
