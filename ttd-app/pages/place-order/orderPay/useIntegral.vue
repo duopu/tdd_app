@@ -15,7 +15,7 @@
           <text>积分，抵扣 <text class="use-in4">{{ integral / 100 }}</text>元</text>
         </view>
 
-        <view class="use-in7">规则：1 积分兑 0.01 元，当前订单最多可使用{{ maxIntegral }}积分</view>
+        <view class="use-in7">规则：1 积分兑 0.01 元，当前订单最多可使用 {{ maxIntegral }} 积分</view>
       </view>
     </template>
   </modal-box>

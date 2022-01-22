@@ -24,7 +24,6 @@
 						</view>
 
 						<view class="plo-imiddle">
-
 							<view class="state1-tip" v-if="value === 10">
 								<view class="plo-im-c">距离报价结束还有</view>
 								<text class="plo-im-r">{{ getCountDownDay(item.quotationEnd, 'day') }}</text>
@@ -105,12 +104,12 @@
 								<view class="plo-btn1" v-if="[30, 40, 50].includes(value)"
 									@tap.stop="toComplainPage(item)">投诉</view>
 								<view class="choose-change-btn" v-if="item.state == 30 && item.subState == 5"
-									@tap.stop="toOrderWork(item)">确认开始</view>
+									@tap.stop="toOrderWork(item,'start')">确认开始</view>
 								<!-- 待完工 -->
 								<view class="choose-change-btn" v-if="item.state == 40 && item.subState == 6"
 									@tap.stop="toPayPartMoney(item)">部分付款</view>
 								<view class="choose-change-btn" v-if="item.state == 40 && item.subState == 7"
-									@tap.stop="toOrderWork(item)">确认完工</view>
+									@tap.stop="toOrderWork(item,'end')">确认完工</view>
 								<!-- 已完工 -->
 								<!-- <view class="plo-btn1" v-if="[50].includes(value)" @tap.stop="toOrderInvoice(item)">开发票</view> -->
 								<view class="plo-btn1" v-if="[50].includes(value)" @tap.stop="toOrderComment(item)">去评价
@@ -138,13 +137,13 @@
 								<view class="plo-btn1" v-if="[30, 40, 50].includes(value)"
 									@tap.stop="toComplainPage(item)">投诉</view>
 								<view class="choose-change-btn" v-if="[30].includes(value) && item.subState == 4"
-									@tap.stop="toOrderWork(item)">申请开始</view>
+									@tap.stop="toOrderWork(item,'start')">申请开始</view>
 								<!-- 待完工 -->
 								<view class="choose-change-btn"
 									v-if="item.receiverType == 2 && (item.settleState == 1 || item.settleState == 2)"
 									@tap.stop="toDistributionIncome(item)">收益分配</view>
 								<view class="choose-change-btn" v-if="[40].includes(value) && item.subState == 6"
-									@tap.stop="toOrderWork(item)">申请完工</view>
+									@tap.stop="toOrderWork(item,'end')">申请完工</view>
 							</view>
 						</view>
 
@@ -233,8 +232,6 @@
 				this.queryOrderList();
 			},
 			loadMore() {
-				// this.$refs["list"].resetLoadmore();
-				console.log('loadmore ');
 				if (this.isNoMore) return;
 				this.queryOrderList(true);
 			},
@@ -348,9 +345,9 @@
 				})
 			},
 			// 开始/结束工作
-			toOrderWork(item) {
+			toOrderWork(item,type) {
 				uni.navigateTo({
-					url: `/pages/receive-order/applyBeginWork/applyBeginWork?isPlaceOrder=${this.isPlaceOrder ? 1 : 0}&id=${item.id}`,
+					url: `/pages/receive-order/applyBeginWork/applyBeginWork?isPlaceOrder=${this.isPlaceOrder ? 1 : 0}&id=${item.id}&type=${type}`,
 				})
 			},
 			/*
