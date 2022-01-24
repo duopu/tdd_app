@@ -15,8 +15,6 @@
 			<view class="integral-center">
 				<view class="integral-item" @click="toIntegralListPage()">
 					<view class="edit-lable">积分明细</view>
-					<!-- <view class="edit-midle">查看更多</view> -->
-					<!-- <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" /> -->
 				</view>
 
 				<view class="detail-item" v-for="(item, index) in integralList" :key="index">
@@ -25,7 +23,8 @@
 						<view class="item-left2">{{ item.addTime }}</view>
 					</view>
 					<view class="detail-item-right" :class="i === 1 ? 'detail-item-right-minus' : ''">
-						{{ `${item.actNum > 0 ? '+ ' : ''}${item.actNum}`}}</view>
+						{{ `${item.actNum > 0 ? '+ ' : ''}${item.actNum}`}}
+					</view>
 				</view>
 				<list-empty v-if="!integralList.length" />
 			</view>
@@ -95,7 +94,7 @@
 				}
 				this.$http.post('/b/integralrecord/queryPageList', param, true)
 					.then(res => {
-						this.integralList = res.dataList;
+						this.integralList = [...res.dataList,...res.dataList,...res.dataList,...res.dataList];
 					})
 			},
 			showIntegralType(t) {
@@ -107,9 +106,9 @@
 					return '订单抵扣';
 				} else if (t == 4) {
 					return '手动赠送';
-				}else if (t == 5) {
+				} else if (t == 5) {
 					return '抽奖';
-				}else{
+				} else {
 					return `${t} 未知`
 				}
 				return '';
@@ -136,7 +135,7 @@
 					url: '/pages/mine/invite/invite'
 				});
 			},
-		},
+		}
 	}
 </script>
 <style lang="scss" scoped>
@@ -186,6 +185,8 @@
 		.integral-center {
 			box-sizing: border-box;
 			padding: 15rpx 32rpx 0 32rpx;
+			height: 1200rpx;
+			overflow-y: auto;
 
 			.integral-item {
 				display: flex;

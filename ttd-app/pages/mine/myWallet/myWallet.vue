@@ -20,10 +20,8 @@
 			<view class="wallet-center">
 				<view class="wallet-item">
 					<view class="edit-lable">收支明细</view>
-					<!-- <view class="edit-midle">查看更多</view> -->
-					<!-- <uni-icons class="edit-right" type="arrowright" size="18" color="#969799" /> -->
 				</view>
-
+				
 				<view class="wallet-detail-item" v-for="(item, index) in balanceList" :key="item.id">
 					<view class="wallet-detail-item-left">
 						<view class="wallet-item-left1">{{ item.title }}</view>
@@ -251,6 +249,8 @@
 		.wallet-center {
 			box-sizing: border-box;
 			padding: 15rpx 32rpx 0 32rpx;
+			height: 1200rpx;
+			overflow-y: auto;
 
 			.wallet-item {
 				display: flex;
