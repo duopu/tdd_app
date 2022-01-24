@@ -30,6 +30,11 @@
           <view class="edit-in-ac-lable">电话号码</view>
           <input class="edit-in-ac-midle input-sty" :value="phone" @input="(e) => onInput(e, 'phone')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
+				
+				<view class="edit-in-ac-item">
+				  <view class="edit-in-ac-lable">邮箱地址</view>
+				  <input class="edit-in-ac-midle input-sty" :value="email" @input="(e) => onInput(e, 'email')" placeholder="请输入" placeholder-class="input-placeholder" />
+				</view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">开户银行</view>
@@ -72,6 +77,11 @@
           <view class="edit-in-ac-lable">电话</view>
           <input class="edit-in-ac-midle input-sty" :value="phone" @input="(e) => onInput(e, 'phone')" placeholder="请输入" placeholder-class="input-placeholder" />
         </view>
+				
+				<view class="edit-in-ac-item">
+				  <view class="edit-in-ac-lable">邮箱</view>
+				  <input class="edit-in-ac-midle input-sty" :value="email" @input="(e) => onInput(e, 'email')" placeholder="请输入" placeholder-class="input-placeholder" />
+				</view>
 
         <view class="edit-in-ac-item">
           <view class="edit-in-ac-lable">地址</view>
@@ -101,6 +111,7 @@ export default {
 			id: 0,
 			name: '',
 			phone: '',
+			email: '',
 			dutyNo: '',
 			address: '',
 			openingBank: '',
@@ -130,6 +141,7 @@ export default {
 					this.activeKey = res.type;
 					this.name = res.name;
 					this.phone = res.phone;
+					this.email = res.email;
 					this.dutyNo = res.dutyNo;
 					this.address = res.address;
 					this.openingBank = res.openingBank;
@@ -147,6 +159,8 @@ export default {
 				this.address = text;
 			} else if (type == 'phone') {
 				this.phone = text;
+			} else if (type == 'email') {
+				this.email = text;
 			} else if (type == 'bank') {
 				this.openingBank = text;
 			} else if (type == 'account') {
@@ -188,6 +202,10 @@ export default {
 				uni.showToast({ title:  '请输入电话号码', icon:  'none' });
 				return false;
 			}
+			if (!this.email) {
+				uni.showToast({ title:  '请输入邮箱地址', icon:  'none' });
+				return false;
+			}
 			if (this.activeKey == 0 && !this.openingBank) {
 				uni.showToast({ title:  '请输入开户银行', icon:  'none' });
 				return false;
@@ -212,6 +230,7 @@ export default {
 				type: this.activeKey,
 				name: this.name,
 				phone: this.phone,
+				email: this.email,
 				dutyNo: this.dutyNo,
 				address: this.address,
 				openingBank: this.openingBank,
