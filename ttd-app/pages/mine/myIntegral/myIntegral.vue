@@ -94,7 +94,7 @@
 				}
 				this.$http.post('/b/integralrecord/queryPageList', param, true)
 					.then(res => {
-						this.integralList = [...res.dataList,...res.dataList,...res.dataList,...res.dataList];
+						this.integralList = res.dataList;
 					})
 			},
 			showIntegralType(t) {

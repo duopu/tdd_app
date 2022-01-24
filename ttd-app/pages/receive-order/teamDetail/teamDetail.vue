@@ -1,11 +1,9 @@
 <template>
 	<view>
-
 		<custom-navbar title="团队详情" />
-
 		<back-container>
 			<template v-slot:headerSlot>
-				<team-card :team="team" :showEdit="false" :showView="false" :showSetting="false" />
+				<team-card :team="team" :showEdit="false" :showView="false" :showSetting="false" :showOut="!team.leaderFlag" @outTeam="outTeamClick" />
 			</template>
 			<view class="team-dtl">
 				<member-title :show-right="false" title="评价" />
@@ -13,7 +11,6 @@
 				<list-empty v-if="!commentList.length" />
 			</view>
 		</back-container>
-
 	</view>
 </template>
 
@@ -71,6 +68,24 @@
 						this.commentList = res.dataList;
 					});
 			},
+			// 退出团队
+			outTeamClick(){
+				uni.showModal({
+					title:'提示',
+					content:'您确定要退出团队',
+					success: (res) => {
+						if(res.confirm){
+							this.$http.post('/b/teammember/deleteOwner',{id:this.id},true).then(res=>{
+								this.$tool.showSuccess('成功退出',()=>{
+									uni.navigateBack({
+										delta:2
+									})
+								})
+							})
+						}
+					}
+				})
+			}
 		}
 	}
 </script>
@@ -78,6 +93,15 @@
 	.team-dtl {
 		background-color: white;
 		margin-bottom: 100rpx;
+	}
+	.out-btn{
+		position: absolute;
+		left: 100rpx;
+		right: 100rpx;
+		bottom: 60rpx;
+		height: 60rpx;
+		border-radius: 30rpx;
+		background-color: #323E99;
 	}
 </style>
 <style lang="scss">
