@@ -16,10 +16,12 @@
 		</view>
 		<view class="offer-2">
 		  <view class="offer-21">联系人：{{ order.orderAddress.name }} {{ order.state >= 30 && order.state != 90 ? order.orderAddress.phone : '' }}</view>
-		  <view class="offer-21">报价周期：{{ (order.quotationStart || '').slice(0, 10) }} 至 {{ (order.quotationEnd || '').slice(0, 10) }}</view>
+		  <view class="offer-21">报价周期：{{ (order.quotationStart || '').slice(0, 10) }}{{ order.quotationStart ? ' 至 ' : ''}}{{ (order.quotationEnd || '').slice(0, 10) }}</view>
 		  <view class="offer-21">工作周期：{{ (order.workStart || '').slice(0, 10) }} 至 {{ (order.workEnd || '').slice(0, 10) }}</view>
 		  <view class="offer-21">工作地址：{{ order.orderAddress.province }} {{ order.orderAddress.city }} {{ order.orderAddress.district }} {{ order.orderAddress.address }}</view>
 		  <view class="offer-21">工作内容：{{ order.detail }}</view>
+		  <view v-if="showIntegral" class="offer-21">积分抵扣：¥{{ integralAmout / 100 }}</view>
+		  <view v-if="showCoupon" class="offer-21">优惠券：{{ couponName }}</view>
 		  <view v-if="order.remark" class="offer-21">备注：{{ order.remark }}</view>
 		</view>
 	</view>
@@ -46,6 +48,7 @@ export default {
 			workStart: '',
 			workEnd: '',
 			remark: '',
+			orderOfferList: [],
 		},
 		isPlaceOrder: {
 		  type: Boolean,
@@ -54,6 +57,24 @@ export default {
 		showPrice: {
 		  type: Boolean,
 		  default: true,
+		},
+	},
+	computed: {
+		showIntegral() {
+			const integral = (this.order.orderOfferList || []).find((o) => o.offerType == 2);
+			return this.isPlaceOrder && (integral != undefined);
+		},
+		integralAmout() {
+			const integral = (this.order.orderOfferList || []).find((o) => o.offerType == 2);
+			return integral ? integral.offerAmount : 0
+		},
+		showCoupon() {
+			const coupon = (this.order.orderOfferList || []).find((o) => o.offerType == 1);
+			return this.isPlaceOrder && (coupon != undefined);
+		},
+		couponName() {
+			const coupon = (this.order.orderOfferList || []).find((o) => o.offerType == 2);
+			return coupon ? coupon.offerName : '';
 		},
 	},
 }
