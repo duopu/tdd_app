@@ -2,7 +2,7 @@
   <view class="ii-card" @click="$emit('onClick', invoice)">
     <view class="ii-card-left">
       <view class="ii-card-left-title">{{ invoice.name }}</view>
-      <view class="ii-card-left-text">统一税号：{{ invoice.dutyNo }}</view>
+      <view class="ii-card-left-text">{{ invoice.type == 0 ? '统一税号' : '手机号'}}：{{ invoice.dutyNo }}</view>
     </view>
 
     <!-- 右箭头 -->
