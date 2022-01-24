@@ -24,8 +24,17 @@
 						placeholder="请输入手机号" placeholder-class="input-placeholder" />
 				</view>
 
-				<my-choose-time v-model="quoteTime" title="报价周期" format="YYYY-MM-DD HH:mm" placeholder="请选择报价周期" />
-
+				<!-- <my-choose-time v-model="quoteTime" title="报价周期" format="YYYY-MM-DD HH:mm" placeholder="请选择报价周期" /> -->
+				
+				<!-- <view class="receipt-ac-item"> -->
+				<view class="choose-time">
+				  <view class="receipt-ac-lable">报价截止</view>
+					<view :class="['receipt-ac-midle', quoteEnd ? '' : 'middle-placeholder']" @click="$refs.datePicker.show()">{{ quoteEnd || '请选择截止日期' }}</view>
+					<uni-icons class="receipt-ac-right" type="arrowright" size="18" color="#969799" />
+					<uni-datetime-picker ref="datePicker" z-index="100" class="choose-picker" :value="quoteEnd" type="datetime"
+						:start="startTime" @change="quoteEndChange" :hide-second="true"/>
+				</view>
+				
 				<my-choose-time v-model="workTime" title="工作周期" format="YYYY-MM-DD HH:mm" placeholder="请选择工作周期" />
 
 				<checkd-item :value="invoiceType" @change="change" />
@@ -184,9 +193,15 @@
 				orderItemList: [], // 工作列表
 				itemImage: '',
 				quoteTime: [], // 报价周期
+				quoteEnd: '',
 				workTime: [], // 工作周期
 				remark: '', // 备注
 			}
+		},
+		computed: {
+			startTime() {
+				return dayjs().format('YYYY-MM-DD');
+			},
 		},
 		onLoad(option) {
 			if (option.orderType) {
@@ -220,6 +235,9 @@
 				const index = e.target.value;
 				this.orderMode = this.modeArray[index].id;
 				this.orderModeText = this.modeArray[index].title;
+			},
+			quoteEndChange(time) {
+				this.quoteEnd = dayjs(time).format('YYYY-MM-DD HH:mm');
 			},
 			change(data) {
 				if(data == 1){
@@ -336,10 +354,10 @@
 					});
 					return false;
 				}
-				const quoteEnd = this.quoteTime[1];
+				const quoteEnd = this.quoteEnd;
 				if (!quoteEnd) {
 					uni.showToast({
-						title: '请选择报价周期',
+						title: '请选择报价截止日期',
 						icon: 'none'
 					});
 					return false;
@@ -421,8 +439,9 @@
 					orderItemList: this.orderItemList,
 					orderMode: this.orderMode,
 					orderType: this.orderType,
-					quotationEnd: this.quoteTime[1],
-					quotationStart: this.quoteTime[0],
+					// quotationEnd: this.quoteTime[1],
+					// quotationStart: this.quoteTime[0],
+					quotationEnd: this.quoteEnd,
 					remark: this.remark,
 					workEnd: this.workTime[1],
 					workStart: this.workTime[0],
@@ -490,6 +509,48 @@
 
 				.receipt-ac-right {
 					padding-left: 18rpx;
+				}
+			}
+			
+			.choose-time {
+				display: flex;
+				align-items: center;
+				height: 88rpx;
+				padding-right: 32rpx;
+				border-bottom: 1rpx solid #EBEDF0;
+				position: relative;
+				z-index: 1000;
+				
+				.receipt-ac-lable {
+					flex-shrink: 0;
+					font-size: 28rpx;
+					font-family: PingFang SC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #323335;
+				}
+				
+				.receipt-ac-midle {
+					margin-left: auto;
+					font-size: 28rpx;
+					font-family: PingFang SC-Regular, PingFang SC;
+					font-weight: 400;
+					color: #828282;
+					text-align: right;
+				}
+				
+				.middle-placeholder {
+					color: #BDBDBD;
+				}
+				
+				.receipt-ac-right {
+					padding-left: 18rpx;
+				}
+				
+				// 把picker 藏的远远的  用 ref的方式调用
+				.choose-picker {
+					position: absolute;
+					left: -1000rpx;
+					top: 0;
 				}
 			}
 		}
