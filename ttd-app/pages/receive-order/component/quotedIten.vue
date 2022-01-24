@@ -73,7 +73,7 @@ export default {
 			return this.isPlaceOrder && (coupon != undefined);
 		},
 		couponName() {
-			const coupon = (this.order.orderOfferList || []).find((o) => o.offerType == 2);
+			const coupon = (this.order.orderOfferList || []).find((o) => o.offerType == 1);
 			return coupon ? coupon.offerName : '';
 		},
 	},
