@@ -363,7 +363,7 @@
 								title: '订单已取消'
 							});
 						}, 500)
-						this.queryOrderList();
+						this.queryOrderInfo();
 					})
 			},
 			// 查看问题/咨询
@@ -439,7 +439,7 @@
 								title: '部分付款成功'
 							});
 						}, 500)
-						this.queryOrderList();
+						this.queryOrderInfo();
 					})
 			},
 			// 评价订单
@@ -467,12 +467,7 @@
 				}
 				this.$http.post('/b/orderinvoice/applyInvoice', params, true)
 					.then(res => {
-						uni.showToast({
-							title: '开票成功',
-							success: () => {
-								this.queryOrderList();
-							}
-						})
+						this.$tool.showSuccess('开票申请已提交')
 					})
 			},
 			/*

@@ -110,10 +110,9 @@
 								<view class="choose-change-btn" v-if="item.state == 40 && item.subState == 7"
 									@tap.stop="toOrderWork(item,'end')">确认完工</view>
 								<!-- 已完工 -->
-								<!-- <view class="plo-btn1" v-if="[50].includes(value)" @tap.stop="toOrderInvoice(item)">开发票</view> -->
+								<view class="plo-btn1" v-if="[50].includes(value)" @tap.stop="toOrderInvoice(item)">开发票</view>
 								<view class="plo-btn1" v-if="[50].includes(value)" @tap.stop="toOrderComment(item)">去评价
 								</view>
-
 							</view>
 						</view>
 						<!-- 接单方 -->
@@ -424,12 +423,7 @@
 				}
 				this.$http.post('/b/orderinvoice/applyInvoice', params, true)
 					.then(res => {
-						uni.showToast({
-							title: '开票成功',
-							success: () => {
-								this.queryOrderList();
-							}
-						})
+						this.$tool.showSuccess('开票申请已提交')
 					})
 			},
 			/*

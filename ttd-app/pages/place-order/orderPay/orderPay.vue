@@ -261,16 +261,8 @@
 				uni.navigateBack({});
 			},
 			createOrder() {
-
-				// if (!this.invoice.id) {
-				// 	uni.showToast({ title:  '请选择发票', icon:  'none' });
-				// 	return;
-				// }
-
 				const params = {
 					couponId: this.coupon.id ? this.coupon.id : undefined,
-					// customerInvoiceId: this.invoice.id,
-					// invoiceType: this.invoiceType,
 					recivierOrderId: this.id,
 					useIntegral: this.integral,
 					wayId: this.payWay,
