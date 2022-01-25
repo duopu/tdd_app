@@ -17,11 +17,11 @@
 				</view>
 			</template>
 
-			<view class="wallet-center">
+			<view class="wallet-center" :style="{ height: `calc(100vh - ${(barHeight + 454)}rpx)` }">
 				<view class="wallet-item">
 					<view class="edit-lable">收支明细</view>
 				</view>
-				
+
 				<view class="wallet-detail-item" v-for="(item, index) in balanceList" :key="item.id">
 					<view class="wallet-detail-item-left">
 						<view class="wallet-item-left1">{{ item.title }}</view>
@@ -71,6 +71,8 @@
 	import ListEmpty from "../../place-order/orderList/listEmpty";
   import EmptyBankCardItem from "../myBankCard/emptyBankCardItem";
 
+  let systemInfo = uni.getSystemInfoSync();
+
 	export default {
 		name: 'myWallet',
 		components: {
@@ -83,6 +85,11 @@
 			IphonexBottom,
 			BackContainer
 		},
+    computed: {
+      barHeight() {
+        return (systemInfo.platform == 'ios' ? 44 : 48) + systemInfo.statusBarHeight - 32
+      }
+    },
 		data() {
 			return {
 				balance: 0,
@@ -92,7 +99,6 @@
 				bankCard: {},
 			};
 		},
-		onReady() {},
 		onShow() {
 			this.refresh();
 		},
@@ -140,8 +146,8 @@
 					uni.showToast({ title: '最低提现金额20元', icon: 'none' })
 					return;
 				}
-				
-				this.$tool.actionForAuth(() => { 
+
+				this.$tool.actionForAuth(() => {
 					this.checkBankCard();
 				})
 			},
@@ -249,8 +255,7 @@
 		.wallet-center {
 			box-sizing: border-box;
 			padding: 15rpx 32rpx 0 32rpx;
-			height: 1200rpx;
-			overflow-y: auto;
+      overflow-y: scroll;
 
 			.wallet-item {
 				display: flex;

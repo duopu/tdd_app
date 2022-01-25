@@ -12,7 +12,7 @@
 				</view>
 			</template>
 
-			<view class="integral-center">
+			<view class="integral-center" :style="{ height: `calc(100vh - ${(barHeight + 688)}rpx)` }">
 				<view class="integral-item" @click="toIntegralListPage()">
 					<view class="edit-lable">积分明细</view>
 				</view>
@@ -49,6 +49,8 @@
 	import BottomOperate from "../addressManage/component/bottomOperate";
 	import ListEmpty from "../../place-order/orderList/listEmpty";
 
+  let systemInfo = uni.getSystemInfoSync();
+
 	export default {
 		name: 'myIntegral',
 		components: {
@@ -63,7 +65,11 @@
 				integralList: [],
 			};
 		},
-		onReady() {},
+    computed: {
+      barHeight() {
+        return (systemInfo.platform == 'ios' ? 44 : 48) + systemInfo.statusBarHeight - 32
+      }
+    },
 		onShow() {
 			this.refresh();
 		},
@@ -185,8 +191,7 @@
 		.integral-center {
 			box-sizing: border-box;
 			padding: 15rpx 32rpx 0 32rpx;
-			height: 1200rpx;
-			overflow-y: auto;
+			overflow-y: scroll;
 
 			.integral-item {
 				display: flex;

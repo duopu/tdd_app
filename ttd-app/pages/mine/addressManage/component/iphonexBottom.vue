@@ -31,13 +31,18 @@
 			// 获取设备机型
 			uni.getSystemInfo({
 				success: res => {
-					let model = res.model;
-					if (/iphone\sx/i.test(model) || (/iphone/i.test(model) && /unknown/.test(model)) ||
-						/iphone\s11/i.test(model)) {
-						that.isIphoneXup = true;
-					} else {
-						that.isIphoneXup = false;
-					}
+          let model = res.model;
+          if (
+              /iphone\sx/i.test(model)
+              || (/iphone/i.test(model) && /unknown/.test(model))
+              || /iphone\s11/i.test(model)
+              || /iphone\s12/i.test(model)
+              || /iphone\s13/i.test(model)
+          ) {
+            that.isIphoneXup = true;
+          } else {
+            that.isIphoneXup = false;
+          }
 				}
 			})
 		}
@@ -59,7 +64,7 @@
 
 		.x-bottom {
 			width: 750rpx;
-			height: 68rpx;
+			height: 34px;
 			background: #FFFFFF;
 		}
 	}
