@@ -148,6 +148,8 @@
 
 <style lang="scss" scoped>
 	.my-coupon {
+    overflow-y: scroll;
+
 		.my-coupon-item {
 			box-sizing: border-box;
 			margin-left: 32rpx;
