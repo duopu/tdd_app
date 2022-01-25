@@ -19,7 +19,7 @@
 
     <view class="empty-height" />
 
-		<iphonex-bottom >
+		<iphonex-bottom v-if="isSelect">
 			<big-btn button-text="确定" @click="toSelect" />
 		</iphonex-bottom>
 	</view>
