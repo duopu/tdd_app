@@ -17,7 +17,12 @@
 				</view>
 			</template>
 
-			<view class="wallet-center" :style="{ height: `calc(100vh - ${(barHeight + 454)}rpx)` }">
+			<scroll-view class="wallet-center"
+                   scroll-y
+                   refresher-enabled
+                   :refresher-triggered="refresherTriggered"
+                   @refresherpulling="refresherpulling"
+                   :style="{ height: `calc(100vh - ${(barHeight + 454)}rpx)` }">
 				<view class="wallet-item">
 					<view class="edit-lable">收支明细</view>
 				</view>
@@ -37,7 +42,7 @@
 				</view>
 
 				<list-empty v-if="!balanceList.length" />
-			</view>
+			</scroll-view>
 		</back-container>
 
 		<!-- 提现弹窗 -->
@@ -97,15 +102,23 @@
 				showBalance: true,
 				visible: false,
 				bankCard: {},
+        refresherTriggered: false,
 			};
 		},
 		onShow() {
 			this.refresh();
 		},
-		onPullDownRefresh() {
-			this.refresh();
-		},
+		// onPullDownRefresh() {
+		// 	this.refresh();
+		// },
 		methods: {
+      refresherpulling(e) {
+        this.refresherTriggered = true
+        setTimeout(() => {
+          this.refresherTriggered = false
+        }, 3000)
+        console.log(e, 'refresherpulling-------------------');
+      },
 			refresh() {
 				this.queryBalanceInfo();
 				this.queryBalanceList();

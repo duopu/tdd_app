@@ -124,7 +124,7 @@
 			"style": {
 				"navigationBarTitleText": "我的钱包",
 				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -469,21 +469,21 @@
 		}
 	    ,{
             "path" : "pages/main/password-login/password-login",
-            "style" :                                                                                    
+            "style" :
             {
                 "navigationBarTitleText": "密码登录",
                 "enablePullDownRefresh": false
             }
-            
+
         }
         ,{
             "path" : "pages/mine/reset-pwd/reset-pwd",
-            "style" :                                                                                    
+            "style" :
             {
                 "navigationBarTitleText": "重置密码",
                 "enablePullDownRefresh": false
             }
-            
+
         }
     ],
 	"tabBar": {
