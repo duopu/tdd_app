@@ -17,7 +17,9 @@
 			</view>
 		</back-container>
 
-		<iphonex-bottom v-if="isSelect">
+    <view class="empty-height" />
+
+		<iphonex-bottom >
 			<big-btn button-text="确定" @click="toSelect" />
 		</iphonex-bottom>
 	</view>
@@ -161,6 +163,10 @@
 			}
 		}
 	}
+
+  .empty-height {
+    height: 200rpx;
+  }
 </style>
 <style lang="scss">
 	@import "../addressManage/_pageStyle.scss";
